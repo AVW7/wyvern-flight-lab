@@ -1,0 +1,33 @@
+{
+  "name": "wyvern-flight-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "tsx --test test/*.test.js",
+    "test:fast": "node scripts/test-fast.mjs",
+    "test:watch": "tsx --test --watch test/*.test.js",
+    "assets:validate-wyvern": "node tools/blender/runtime_rig_contract.mjs",
+    "assets:validate-source-clips": "node scripts/validate-wyvern-clips.mjs assets/blender/wyvern-gothic.glb",
+    "assets:audit-rig": "node tools/audit-wyvern-rig.mjs",
+    "assets:audit-clips": "node tools/audit-all-clips.mjs public/models/wyvern-v2-rig.glb",
+    "assets:audit-source-glb": "python3 scripts/blender/cli.py audit-glb assets/blender/wyvern-gothic.glb"
+  },
+  "dependencies": {
+    "next": "16.3.2",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "three": "^0.185.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/three": "^0.185.0",
+    "tsx": "^4.23.15",
+    "typescript": "^5.8.2"
+  }
+}

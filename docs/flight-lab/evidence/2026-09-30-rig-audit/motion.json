@@ -1,0 +1,55 @@
+{
+  "path": "public/models/wyvern-v2-rig.glb",
+  "skins": 1,
+  "bones": 92,
+  "results": [
+    {
+      "seamBone": "R_WingD0P2",
+      "clip": "bankLeft",
+      "duration": 6,
+      "samples": 577,
+      "peak": {
+        "degrees": 7.206264233602409,
+        "bone": "R_WingD2P2",
+        "seconds": 1.09375
+      },
+      "seamDegrees": 0.10097518175367996
+    },
+    {
+      "seamBone": "L_WingWrist",
+      "clip": "bankRight",
+      "duration": 6,
+      "samples": 577,
+      "peak": {
+        "degrees": 7.206385026702736,
+        "bone": "L_WingD2P2",
+        "seconds": 1.09375
+      },
+      "seamDegrees": 0.08647150534559399
+    },
+    {
+      "seamBone": "L_WingD0P2",
+      "clip": "cruise",
+      "duration": 6,
+      "samples": 577,
+      "peak": {
+        "degrees": 3.8337092399817903,
+        "bone": "R_WingD4P2",
+        "seconds": 5.666666666666667
+      },
+      "seamDegrees": 0.05876651708267512
+    },
+    {
+      "seamBone": "R_Toes",
+      "clip": "walk",
+      "duration": 2.4583332538604736,
+      "samples": 237,
+      "peak": {
+        "degrees": 5.7459802870785595,
+        "bone": "R_Toes",
+        "seconds": 2.1666665966227905
+      },
+      "seamDegrees": 0.07553644253670523
+    }
+  ]
+}

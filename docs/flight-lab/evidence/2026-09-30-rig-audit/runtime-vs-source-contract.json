@@ -1,0 +1,72 @@
+{
+  "clip_count": 18,
+  "clips": [
+    "attack",
+    "attack2",
+    "attackAir2",
+    "bankLeft",
+    "bankRight",
+    "breath",
+    "cruise",
+    "death",
+    "dive",
+    "glide",
+    "hover",
+    "idle",
+    "land",
+    "rest",
+    "scout",
+    "speed",
+    "takeoff",
+    "walk"
+  ],
+  "contract_asset_id": "wyvern-v2-gothic",
+  "errors": [
+    "SHA-256 differs from the pinned source asset",
+    "joint names/order/parents differ from the pinned contract",
+    "skin name differs from the contracted armature node name",
+    "contracted armature node is not a root of a glTF scene",
+    "mesh/node/skin/geometry metadata differs from the pinned contract"
+  ],
+  "joint_count": 92,
+  "mesh_objects": [
+    {
+      "meshName": "SKM_DaenerysDragon.001",
+      "nodes": [
+        {
+          "name": "WyvernBody_Rebuild",
+          "skinIndex": 0
+        }
+      ],
+      "primitiveCount": 2,
+      "secondaryJointAttributes": [],
+      "triangles": 34614,
+      "vertices": 24528
+    },
+    {
+      "meshName": "SKM_DaenerysDragon.002",
+      "nodes": [
+        {
+          "name": "WyvernMembrane_ExportSafe",
+          "skinIndex": 0
+        }
+      ],
+      "primitiveCount": 1,
+      "secondaryJointAttributes": [],
+      "triangles": 15258,
+      "vertices": 8249
+    }
+  ],
+  "passed": false,
+  "path": "/Users/ajadvanwyk/Documents/biome/fantasy-biomes-next/public/models/wyvern-v2-rig.glb",
+  "scene_roots": [
+    "WyvernRig.001",
+    "WyvernBody_Rebuild",
+    "WyvernMembrane_ExportSafe"
+  ],
+  "sha256": "3c50d2e04d75fd5cb0a54bab9e3adc4709fd8e54a340bd468bc16856f19f1e25",
+  "skin_count": 1,
+  "warnings": [
+    "GLB extension list differs from the pinned source contract"
+  ]
+}

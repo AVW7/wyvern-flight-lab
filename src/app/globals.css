@@ -1,0 +1,137 @@
+:root {
+  color-scheme: dark;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", "Helvetica Neue", ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #080a0f;
+  color: #f5f6f8;
+
+  /* Glass Design System Tokens */
+  --page: #0b0b0b;
+  --glass-ink: #0b0b0b;
+  --glass-text-primary: #f7f7f2;
+  --glass-text-secondary: #c5c5bf;
+  --glass-gold: #d2b574;
+  --glass-gold-wash: rgba(210, 181, 116, 0.14);
+  --glass-quiet: rgba(11, 11, 11, 0.58);
+  --glass-working: rgba(11, 11, 11, 0.76);
+  --glass-dense: rgba(11, 11, 11, 0.92);
+  --glass-fallback: #111111;
+  --glass-edge: rgba(255, 255, 255, 0.16);
+  --glass-divider: rgba(255, 255, 255, 0.09);
+
+  --panel: var(--glass-working);
+  --panel-solid: #0b0b0b;
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-raised: rgba(255, 255, 255, 0.07);
+  --surface-active: rgba(255, 255, 255, 0.12);
+  
+  --ink: #f7f7f2;
+  --muted-ink: #c5c5bf;
+  --quiet-ink: rgba(197, 197, 191, 0.6);
+
+  /* Accents */
+  --gold: #d2b574;
+  --gold-light: #e0ca97;
+  --gold-bright: #ebdcb5;
+  --gold-dark: #8f753c;
+  --gold-glow: rgba(210, 181, 116, 0.16);
+  --gold-glow-strong: rgba(210, 181, 116, 0.32);
+  --gold-border: rgba(255, 255, 255, 0.16);
+  --gold-border-bright: #d2b574;
+  --gold-surface: rgba(210, 181, 116, 0.08);
+  --gold-surface-hover: rgba(210, 181, 116, 0.16);
+
+  --line: rgba(255, 255, 255, 0.09);
+  --strong-line: rgba(255, 255, 255, 0.16);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.16);
+  --glass-highlight: rgba(255, 255, 255, 0.16);
+  --glass-specular: inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+
+  --control: rgba(255, 255, 255, 0.05);
+  --control-hover: rgba(255, 255, 255, 0.09);
+  --control-active: rgba(210, 181, 116, 0.14);
+
+  --accent: #d2b574;
+  --accent-ink: #0b0b0b;
+  --focus-ring: rgba(210, 181, 116, 0.45);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  background: #f4f5f8;
+  color: #0d1117;
+
+  --page: #f4f5f8;
+  --panel: rgba(255, 255, 255, 0.86);
+  --panel-solid: #ffffff;
+  --surface: rgba(0, 0, 0, 0.035);
+  --surface-raised: rgba(255, 255, 255, 0.94);
+  --surface-active: rgba(0, 0, 0, 0.08);
+
+  --ink: #0d1117;
+  --muted-ink: rgba(13, 17, 23, 0.76);
+  --quiet-ink: rgba(13, 17, 23, 0.48);
+
+  --gold: #b38b19;
+  --gold-light: #c99f2b;
+  --gold-bright: #d4af37;
+  --gold-dark: #7a5e0b;
+  --gold-glow: rgba(179, 139, 25, 0.22);
+  --gold-glow-strong: rgba(179, 139, 25, 0.4);
+  --gold-border: rgba(179, 139, 25, 0.3);
+  --gold-border-bright: rgba(179, 139, 25, 0.55);
+
+  --line: rgba(0, 0, 0, 0.08);
+  --strong-line: rgba(0, 0, 0, 0.16);
+  --glass-highlight: rgba(255, 255, 255, 0.98);
+
+  --control: rgba(0, 0, 0, 0.045);
+  --control-hover: rgba(0, 0, 0, 0.08);
+  --control-active: rgba(0, 0, 0, 0.14);
+
+  --accent: #b38b19;
+  --accent-ink: #ffffff;
+  --focus-ring: rgba(179, 139, 25, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: var(--page);
+  color: var(--ink);
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}

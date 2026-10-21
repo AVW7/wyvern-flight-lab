@@ -1,0 +1,31 @@
+<!doctype html><html><head><meta charset="utf-8"><title>V2 correction review</title><style>body{margin:0;background:#0b1219;color:#dae5ed;font:14px system-ui}header{position:absolute;top:18px;left:22px;z-index:2}h1{font-size:18px;margin:0 0 8px}pre{font:12px monospace;color:#afc1cb}canvas{display:block;width:100vw;height:100vh}</style><script type="importmap">{"imports":{"three":"/three/build/three.module.js","three/addons/":"/three/examples/jsm/"}}</script></head><body><header><h1>V2 cruise correction review</h1><div id="status">Loading original rig…</div><pre id="summary"></pre></header><script type="module">
+import * as THREE from 'three';import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';import {MeshoptDecoder} from 'three/addons/libs/meshopt_decoder.module.js';
+const status=document.querySelector('#status'),summary=document.querySelector('#summary');
+const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(1);renderer.setSize(innerWidth,innerHeight);renderer.setClearColor(0x16212b);document.body.appendChild(renderer.domElement);
+const scene=new THREE.Scene(),aspect=innerWidth/innerHeight,camera=new THREE.OrthographicCamera(-4000,4000,4000/aspect,-4000/aspect,1,20000);camera.position.set(0,2300,4200);camera.lookAt(0,1200,-100);
+scene.add(new THREE.HemisphereLight(0xe9f3ff,0x273640,2));const key=new THREE.DirectionalLight(0xfff0d6,3);key.position.set(3000,4000,4000);scene.add(key);
+const gl=renderer.getContext(),ext=gl.getExtension('EXT_disjoint_timer_query_webgl2'),debug=gl.getExtension('WEBGL_debug_renderer_info');
+const hardware={renderer:debug?gl.getParameter(debug.UNMASKED_RENDERER_WEBGL):gl.getParameter(gl.RENDERER),max_texture_size:renderer.capabilities.maxTextureSize,viewport:[innerWidth,innerHeight],pixel_ratio:1,timer_query_supported:!!ext};
+const percentile=(a,p)=>a.length?[...a].sort((x,y)=>x-y)[Math.floor((a.length-1)*p)]:null;
+let mixer,model,results=[];
+async function probe(label,url,keep){
+ status.textContent=`Measuring ${label}…`;
+ const start=performance.now(),gltf=await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(url);model=gltf.scene;scene.add(model);mixer=new THREE.AnimationMixer(model);mixer.clipAction(gltf.animations.find(a=>a.name==='cruise')).play();
+ const mesh=model.getObjectByName('WyvernMembrane_ExportSafe'),targets=mesh.morphTargetInfluences?.length??0,dataCount=mesh.geometry.morphAttributes.normal?.length?2:1;
+ const max=renderer.capabilities.maxTextureSize,logicalWidth=mesh.geometry.attributes.position.count*dataCount,width=Math.min(logicalWidth,max),height=Math.ceil(logicalWidth/max);
+ const morphBytes=targets?width*height*4*4*targets:0;const load=performance.now()-start;
+ const cpu=[],raf=[],gpu=[],pending=[];let frame=0,last=null;
+ await new Promise(resolve=>{function tick(now){
+  const delta=last===null?0:now-last;last=now;mixer.update(1/60);
+  let query;if(ext){query=gl.createQuery();gl.beginQuery(ext.TIME_ELAPSED_EXT,query);}
+  const begin=performance.now();renderer.render(scene,camera);const elapsed=performance.now()-begin;
+  if(ext){gl.endQuery(ext.TIME_ELAPSED_EXT);pending.push({query,sample:frame>=60});}
+  while(pending.length&&gl.getQueryParameter(pending[0].query,gl.QUERY_RESULT_AVAILABLE)){const item=pending.shift();if(item.sample&&!gl.getParameter(ext.GPU_DISJOINT_EXT))gpu.push(gl.getQueryParameter(item.query,gl.QUERY_RESULT)/1e6);gl.deleteQuery(item.query);}
+  if(frame>=60){cpu.push(elapsed);raf.push(delta);}frame++;if(frame<300)requestAnimationFrame(tick);else resolve();
+ }requestAnimationFrame(tick);});
+ for(const item of pending)gl.deleteQuery(item.query);
+ const result={label,load_ms:load,frames:cpu.length,cpu_render_p50_ms:percentile(cpu,.5),cpu_render_p95_ms:percentile(cpu,.95),frame_interval_p95_ms:percentile(raf,.95),gpu_p95_ms:percentile(gpu,.95),gpu_samples:gpu.length,triangles:renderer.info.render.triangles,draw_calls:renderer.info.render.calls,morph_targets:targets,morph_normal_attributes:mesh.geometry.morphAttributes.normal?.length??0,morph_texture_bytes:morphBytes,heap_bytes:performance.memory?.usedJSHeapSize??null};results.push(result);summary.textContent=results.map(r=>`${r.label}: GPU p95 ${r.gpu_p95_ms?.toFixed(2)??'unavailable'} ms | render p95 ${r.cpu_render_p95_ms.toFixed(2)} ms`).join('\n');
+ if(!keep){scene.remove(model);const geometries=new Set(),materials=new Set(),textures=new Set(),skeletons=new Set();model.traverse(o=>{if(o.geometry)geometries.add(o.geometry);for(const m of Array.isArray(o.material)?o.material:o.material?[o.material]:[]){materials.add(m);for(const value of Object.values(m))if(value?.isTexture)textures.add(value);}if(o.skeleton)skeletons.add(o.skeleton);});geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());textures.forEach(t=>t.dispose());skeletons.forEach(s=>s.dispose());}
+}
+try{const reverse=new URLSearchParams(location.search).has('reverse');const order=reverse?[['corrected','/model/candidate'],['original','/model/base']]:[['original','/model/base'],['corrected','/model/candidate']];for(let i=0;i<order.length;i++)await probe(...order[i],i===order.length-1);const report={hardware,results,measurement:'60 warmup frames and 240 measured frames per model; fixed 1/60-second animation step; actual source materials'};await fetch('/report',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(report)});status.textContent='Review complete';function play(){mixer.update(1/60);renderer.render(scene,camera);requestAnimationFrame(play);}play();}catch(error){status.textContent=error.message;await fetch('/report',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({error:error.message,hardware})});}
+</script></body></html>

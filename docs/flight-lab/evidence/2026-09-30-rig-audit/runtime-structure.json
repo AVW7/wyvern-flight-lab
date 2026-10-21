@@ -1,0 +1,244 @@
+{
+  "path": "public/models/wyvern-v2-rig.glb",
+  "sha256": "3c50d2e04d75fd5cb0a54bab9e3adc4709fd8e54a340bd468bc16856f19f1e25",
+  "bytes": 5922036,
+  "skins": 1,
+  "joints": 92,
+  "uniqueJointNames": 92,
+  "missingBones": [],
+  "extraBones": [],
+  "jointOrderMatches": true,
+  "hierarchyDiff": [],
+  "sceneRoots": [
+    [
+      "WyvernRig.001",
+      "WyvernBody_Rebuild",
+      "WyvernMembrane_ExportSafe"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "meshes": [
+    {
+      "node": "WyvernBody_Rebuild",
+      "primitive": 0,
+      "vertices": 14544,
+      "badIndices": 0,
+      "nonfinite": 0,
+      "negative": 0,
+      "unweightedVertices": 0,
+      "maxWeightSumError": 2.220446049250313e-16
+    },
+    {
+      "node": "WyvernBody_Rebuild",
+      "primitive": 1,
+      "vertices": 9984,
+      "badIndices": 0,
+      "nonfinite": 0,
+      "negative": 0,
+      "unweightedVertices": 0,
+      "maxWeightSumError": 0
+    },
+    {
+      "node": "WyvernMembrane_ExportSafe",
+      "primitive": 0,
+      "vertices": 8249,
+      "badIndices": 0,
+      "nonfinite": 0,
+      "negative": 0,
+      "unweightedVertices": 0,
+      "maxWeightSumError": 2.220446049250313e-16
+    }
+  ],
+  "clips": [
+    {
+      "name": "attack",
+      "channels": 276,
+      "firstKey": 0,
+      "duration": 1.5,
+      "nonfinite": 0,
+      "nonMonotonic": 0,
+      "invalidTargets": 0,
+      "duplicateTargets": 0
+    },
+    {
+      "name": "attack2",
+      "channels": 276,
+      "firstKey": 0,
+      "duration": 3.3333332538604736,
+      "nonfinite": 0,
+      "nonMonotonic": 0,
+      "invalidTargets": 0,
+      "duplicateTargets": 0
+    },
+    {
+      "name": "attackAir2",
+      "channels": 276,
+      "firstKey": 0,
+      "duration": 3.3333332538604736,
+      "nonfinite": 0,
+      "nonMonotonic": 0,
+      "invalidTargets": 0,
+      "duplicateTargets": 0
+    },
+    {
+      "name": "bankLeft",
+      "channels": 276,
+      "firstKey": 0,
+      "duration": 6,
+      "nonfinite": 0,
+      "nonMonotonic": 0,
+      "invalidTargets": 0,
+      "duplicateTargets": 0
+    },
+    {
+      "name": "bankRight",
+      "channels": 276,
+      "firstKey": 0,
+      "duration": 6,
+      "nonfinite": 0,
+      "nonMonotonic": 0,
+      "invalidTargets": 0,
+      "duplicateTargets": 0
+    },
+    {
+      "name": "breath",
+      "channels": 276,
+      "firstKey": 0,
+      "duration": 2,
+      "nonfinite": 0,
+      "nonMonotonic": 0,
+      "invalidTargets": 0,
+      "duplicateTargets": 0
+    },
+    {
+      "name": "cruise",
+      "channels": 276,
+      "firstKey": 0,
+      "duration": 6,
+      "nonfinite": 0,
+      "nonMonotonic": 0,
+      "invalidTargets": 0,
+      "duplicateTargets": 0
+    },
+    {
+      "name": "death",
+      "channels": 276,
+      "firstKey": 0,
+      "duration": 4,
+      "nonfinite": 0,
+      "nonMonotonic": 0,
+      "invalidTargets": 0,
+      "duplicateTargets": 0
+    },
+    {
+      "name": "dive",
+      "channels": 276,
+      "firstKey": 0,
+      "duration": 6,
+      "nonfinite": 0,
+      "nonMonotonic": 0,
+      "invalidTargets": 0,
+      "duplicateTargets": 0
+    },
+    {
+      "name": "glide",
+      "channels": 276,
+      "firstKey": 0,
+      "duration": 6,
+      "nonfinite": 0,
+      "nonMonotonic": 0,
+      "invalidTargets": 0,
+      "duplicateTargets": 0
+    },
+    {
+      "name": "hover",
+      "channels": 276,
+      "firstKey": 0,
+      "duration": 6,
+      "nonfinite": 0,
+      "nonMonotonic": 0,
+      "invalidTargets": 0,
+      "duplicateTargets": 0
+    },
+    {
+      "name": "idle",
+      "channels": 276,
+      "firstKey": 0,
+      "duration": 6,
+      "nonfinite": 0,
+      "nonMonotonic": 0,
+      "invalidTargets": 0,
+      "duplicateTargets": 0
+    },
+    {
+      "name": "land",
+      "channels": 276,
+      "firstKey": 0,
+      "duration": 3,
+      "nonfinite": 0,
+      "nonMonotonic": 0,
+      "invalidTargets": 0,
+      "duplicateTargets": 0
+    },
+    {
+      "name": "rest",
+      "channels": 276,
+      "firstKey": 0,
+      "duration": 6,
+      "nonfinite": 0,
+      "nonMonotonic": 0,
+      "invalidTargets": 0,
+      "duplicateTargets": 0
+    },
+    {
+      "name": "scout",
+      "channels": 276,
+      "firstKey": 0,
+      "duration": 6,
+      "nonfinite": 0,
+      "nonMonotonic": 0,
+      "invalidTargets": 0,
+      "duplicateTargets": 0
+    },
+    {
+      "name": "speed",
+      "channels": 276,
+      "firstKey": 0,
+      "duration": 5,
+      "nonfinite": 0,
+      "nonMonotonic": 0,
+      "invalidTargets": 0,
+      "duplicateTargets": 0
+    },
+    {
+      "name": "takeoff",
+      "channels": 276,
+      "firstKey": 0,
+      "duration": 3,
+      "nonfinite": 0,
+      "nonMonotonic": 0,
+      "invalidTargets": 0,
+      "duplicateTargets": 0
+    },
+    {
+      "name": "walk",
+      "channels": 276,
+      "firstKey": 0,
+      "duration": 2.4583332538604736,
+      "nonfinite": 0,
+      "nonMonotonic": 0,
+      "invalidTargets": 0,
+      "duplicateTargets": 0
+    }
+  ],
+  "issues": []
+}

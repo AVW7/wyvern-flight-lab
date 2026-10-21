@@ -1,0 +1,49 @@
+{
+  "clip_count": 18,
+  "clips": [
+    "attack",
+    "attack2",
+    "attackAir2",
+    "bankLeft",
+    "bankRight",
+    "breath",
+    "cruise",
+    "death",
+    "dive",
+    "glide",
+    "hover",
+    "idle",
+    "land",
+    "rest",
+    "scout",
+    "speed",
+    "takeoff",
+    "walk"
+  ],
+  "contract_asset_id": "wyvern-v2-gothic",
+  "errors": [],
+  "joint_count": 92,
+  "mesh_objects": [
+    {
+      "meshName": "SKM_DaenerysDragon.001",
+      "nodes": [
+        {
+          "name": "WyvernMesh",
+          "skinIndex": 0
+        }
+      ],
+      "primitiveCount": 2,
+      "secondaryJointAttributes": [],
+      "triangles": 39238,
+      "vertices": 27164
+    }
+  ],
+  "passed": true,
+  "path": "/Users/ajadvanwyk/Documents/biome/fantasy-biomes-next/assets/blender/wyvern-gothic.glb",
+  "scene_roots": [
+    "WyvernRig"
+  ],
+  "sha256": "f334e78569c701bbfefe43ef9816147e200c56bdcb3a8a58889a9f13c6d2956e",
+  "skin_count": 1,
+  "warnings": []
+}

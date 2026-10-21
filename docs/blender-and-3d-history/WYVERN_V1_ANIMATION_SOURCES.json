@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "purpose": "Immutable identity record for the v1 clips used to re-author the repaired v2 rig.",
+  "canonical_v1": {
+    "fps": 24,
+    "base": {
+      "path": "public/models/drogon.glb",
+      "sha256": "55c576eeabcf1d38c01aa8981833c514a62bcbf43e474f4cf93011004f351a81",
+      "clip_count": 52,
+      "clip_name_prefix": "SKM_DaenerysDragon|DaenerysDragon_",
+      "idle_clip": "SKM_DaenerysDragon|AA_DaenerysDragon_Battle_Stand"
+    },
+    "sanctuary_extension": {
+      "path": "public/models/drogon-sanctuary.glb",
+      "sha256": "41aa4d10c8f82d135c9eda3d981d1f92edcc387110a9ccea75b704b7e3597c5b",
+      "clip_count": 26,
+      "clip_name_prefix": "Sanct_"
+    },
+    "combined_clip_count": 78,
+    "measurements": {
+      "path": "validation/wyvern-animations/clip-signatures.json",
+      "clip_count": 78,
+      "fields": [
+        "duration_s",
+        "frames",
+        "loop",
+        "ground_clearance",
+        "cycle",
+        "wing_elevation",
+        "wing_arc_deg",
+        "head_reach",
+        "pelvis",
+        "foot_drop",
+        "tail"
+      ]
+    }
+  },
+  "target": {
+    "path": "public/models/wyvern.glb",
+    "authoring_source": "public/models/wyvern-rig.blend",
+    "review_gate": "pnpm assets:validate-wyvern"
+  },
+  "noncanonical_desktop_candidates": [
+    {
+      "path": "/Users/ajadvanwyk/Desktop/3d models animals/drogon__game_of_thrones_dragon.glb",
+      "sha256": "ba6e0000c1c47b014641e7b1449a2f17854968cd19b6129a20a4797f4bac7506"
+    },
+    {
+      "path": "/Users/ajadvanwyk/Desktop/3d models animals/drogon__game_of_thrones_dragon (1).glb",
+      "sha256": "ef0f41a75cf045e55ad3a5ab4351aa03766b1bb7fee3c45d4312fe0d69d20b55"
+    }
+  ]
+}
