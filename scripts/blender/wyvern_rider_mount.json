@@ -4,7 +4,7 @@
   "note": "Generated from geometry. Do not hand-edit; re-run the tool instead.",
   "wyvern": {
     "path": "public/models/wyvern-v2-rig.glb",
-    "sha256": "88adf57e5d769b26a382bbc94bced253473a88c87e071c4b3100cd43ce666d6d",
+    "sha256": "e10f1733d43213bea54c370b87fc4eeef64e10744174dfc30a9b9a7a3a78374d",
     "joint": "Spine3",
     "spine3World": [
       0,

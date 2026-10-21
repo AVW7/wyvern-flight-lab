@@ -99,7 +99,7 @@ test('stretching a clip in time halves its measured angular velocity', async () 
   assert.ok(stretched.duration > original.duration * 1.99);
 });
 
-test('V2 currently fails the gate, for three distinct measured reasons', async () => {
+test('V2 fails the gate on the D4 clips only, and the reshaped clips keep passing', async () => {
   const rig = await loadRig(resolve(ROOT, 'public/models/wyvern-v2-rig.glb'));
   const measured = measureDynamics(rig);
   const result = compareToReference(measured, reference);
@@ -139,17 +139,29 @@ test('V2 currently fails the gate, for three distinct measured reasons', async (
     `attack peak should still collapse to under 15% of reference, got ${(attack.got.peak / attack.want.peak).toFixed(3)}x`
   );
 
-  // 3. The opposite failure. V2's idle is not gently reduced, it is frozen
-  //    between rare twitches: p95 falls to 7.7% of reference while its crest
-  //    factor rises to 2.33x. A single peak-amplitude threshold would score this
-  //    clip as merely quiet and miss that it is dead for most of its duration.
-  const idle = row('idle');
-  assert.ok(
-    idle.got.p95 < idle.want.p95 * 0.1,
-    `idle p95 ${idle.got.p95.toFixed(1)} should be under 10% of ${idle.want.p95.toFixed(1)}`
-  );
-  assert.ok(
-    idle.got.peak / idle.got.mean > (idle.want.peak / idle.want.mean) * 1.5,
-    'idle should read as spikier than its reference, not just quieter'
-  );
+  // 3. The opposite failure, now fixed. V2's idle was not gently reduced, it
+  //    was frozen between rare twitches: p95 fell to 7.7% of reference while
+  //    its crest factor rose to 2.33x — a single peak-amplitude threshold
+  //    would have scored it as merely quiet and missed that it was dead for
+  //    most of its duration. Task D3 gave it a travelling secondary-motion
+  //    ripple (phase-offset per bone, so some bone is always moving) plus one
+  //    settle accent. Idle, walk and attack2 must now clear every channel.
+  for (const name of ['idle', 'walk', 'attack2']) {
+    const named = result.failures.filter((f) => f.clip === name);
+    assert.deepEqual(
+      named.map((f) => `${f.channel}=${f.value.toFixed(1)}`),
+      [],
+      `${name} was reshaped in D3 and must now pass the gate`
+    );
+  }
+
+  // What is left is the D4 slice: the two banks and cruise are uniformly weak
+  // (0.24x-0.48x peak), and attack still has 49 static channels.
+  for (const name of ['cruise', 'bankLeft', 'bankRight']) {
+    const r = row(name);
+    assert.ok(
+      r.got.peak < r.want.peak * 0.7,
+      `${name} peak ${r.got.peak.toFixed(1)} should still be under 70% of ${r.want.peak.toFixed(1)}`
+    );
+  }
 });
