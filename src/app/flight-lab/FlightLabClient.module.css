@@ -1,10 +1,15 @@
 .surface {
-  min-height: 100svh;
-  padding: clamp(16px, 2.5vw, 34px);
+  height: 100svh;
+  max-height: 100svh;
+  padding: clamp(10px, 1.5vw, 18px) clamp(16px, 2.2vw, 28px);
   color: #f5f5f5;
   background: radial-gradient(circle at 58% 18%, #1a1a1a 0, #0a0a0a 45%, #000000 90%);
   font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   transition: color .2s ease, background .2s ease;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 .surface * { box-sizing: border-box; }
 .surface button, .surface select, .surface input { font: inherit; }
@@ -15,16 +20,18 @@
 
 .header {
   max-width: 1600px;
-  margin: 0 auto 18px;
+  width: 100%;
+  margin: 0 auto 10px;
   display: flex;
   justify-content: space-between;
-  align-items: end;
-  gap: 24px;
+  align-items: flex-end;
+  gap: 20px;
+  flex-shrink: 0;
 }
 .eyebrow, .sectionLabel {
-  margin: 0 0 7px;
+  margin: 0 0 4px;
   color: #a3a3a3;
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .16em;
   text-transform: uppercase;
   font-weight: 600;
@@ -32,22 +39,23 @@
 .header h1 {
   margin: 0;
   color: #ffffff;
-  font: 600 clamp(28px, 4vw, 54px)/.95 Georgia, serif;
+  font: 600 clamp(22px, 3.2vw, 38px)/1.0 Georgia, serif;
   letter-spacing: -.035em;
 }
 .intro {
   max-width: 670px;
-  margin: 10px 0 0;
+  margin: 4px 0 0;
   color: #8c8c8c;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .nav { display: flex; gap: 8px; }
 .nav a, .themeToggle {
-  min-height: 44px;
+  min-height: 38px;
   display: grid;
   place-items: center;
-  padding: 0 16px;
+  padding: 0 14px;
+  font-size: 11px;
   color: #f0f0f0;
   text-decoration: none;
   border: 1px solid #333333;
@@ -63,10 +71,12 @@
 
 .lab {
   max-width: 1600px;
-  min-height: min(780px, calc(100svh - 150px));
-  margin: auto;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: 240px minmax(420px, 1fr) 350px;
+  grid-template-columns: 240px minmax(360px, 1fr) 350px;
   border: 1px solid #333333;
   background: #050505;
   box-shadow: 0 28px 90px rgba(0, 0, 0, 0.8);
@@ -75,9 +85,10 @@
 
 .specimens, .controls {
   min-width: 0;
-  padding: 20px;
+  padding: 16px;
   background: rgba(12, 12, 12, 0.94);
-  max-height: min(780px, calc(100svh - 150px));
+  height: 100%;
+  max-height: 100%;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #525252 transparent;
@@ -267,7 +278,8 @@
 .stage {
   position: relative;
   min-width: 0;
-  min-height: 580px;
+  height: 100%;
+  min-height: 0;
   overflow: hidden;
   background: #080808;
 }
@@ -321,17 +333,24 @@
   z-index: 10;
   top: 48px;
   left: 18px;
+  max-width: calc(100% - 195px);
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 8px;
-  background: rgba(14, 14, 14, 0.82);
+  gap: 4px;
+  padding: 3px 6px;
+  background: rgba(14, 14, 14, 0.85);
   backdrop-filter: blur(24px) saturate(190%);
   -webkit-backdrop-filter: blur(24px) saturate(190%);
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 20px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  overflow-x: auto;
+  scrollbar-width: none;
+  white-space: nowrap;
   transition: all 0.2s ease;
+}
+.stageToolbar::-webkit-scrollbar {
+  display: none;
 }
 .toolbarCluster {
   display: flex;
@@ -562,13 +581,18 @@
 
 /* --- Apple & Antigravity Controls Deck Architecture --- */
 .deckTabsBar {
+  position: sticky;
+  top: -16px;
+  z-index: 10;
   display: flex;
   gap: 4px;
-  padding: 3px;
-  background: rgba(20, 20, 24, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  margin-bottom: 14px;
+  padding: 4px;
+  background: rgba(12, 12, 12, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0 0 6px 6px;
+  margin: -16px -16px 14px -16px;
 }
 .deckTabBtn {
   flex: 1;
@@ -2269,8 +2293,10 @@
 }
 
 .surface[data-theme="light"] .deckTabsBar {
-  background: #f1f5f9;
-  border-color: #cbd5e1;
+  background: rgba(245, 245, 245, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 .surface[data-theme="light"] .deckTabBtn {
   color: #475569;
@@ -2283,6 +2309,38 @@
   background: #ffffff;
   color: #0f172a;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.surface[data-theme="light"] .hoverLandmarkCard {
+  background: rgba(255, 255, 255, 0.94);
+  border-color: #0284c7;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+.surface[data-theme="light"] .hoverBoneCode {
+  background: #f1f5f9;
+  color: #0369a1;
+  border-color: #cbd5e1;
+}
+.surface[data-theme="light"] .hoverLandmarkLabel {
+  color: #0f172a;
+}
+.surface[data-theme="light"] .hoverCoordsRow {
+  color: #64748b;
+}
+.surface[data-theme="light"] .hoverCoordsRow code {
+  color: #0f172a;
+}
+
+.surface[data-theme="light"] .pinBanner {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: #0284c7;
+  box-shadow: 0 6px 24px rgba(2, 132, 199, 0.2);
+}
+.surface[data-theme="light"] .pinDetails strong {
+  color: #0f172a;
+}
+.surface[data-theme="light"] .pinMetaTime {
+  color: #64748b;
 }
 
 .surface[data-theme="light"] .quickActionBtn {

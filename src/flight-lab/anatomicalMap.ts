@@ -498,7 +498,7 @@ export function computeCenterOfMassAnchor(
     const shoulderMidZ = (lShoulder.worldPosition.z + rShoulder.worldPosition.z) * 0.5;
     targetOut.set(
       (pelvis.worldPosition.x + shoulderMidX) * 0.5,
-      (pelvis.worldPosition.y + shoulderMidY) * 0.5,
+      (pelvis.worldPosition.y + shoulderMidY) * 0.5 - targetSize * 0.1,
       (pelvis.worldPosition.z + shoulderMidZ) * 0.5
     );
     return;
@@ -506,14 +506,16 @@ export function computeCenterOfMassAnchor(
 
   if (pelvis) {
     targetOut.copy(pelvis.worldPosition);
+    targetOut.y -= targetSize * 0.1;
     return;
   }
 
   if (spine) {
     targetOut.copy(spine.worldPosition);
+    targetOut.y -= targetSize * 0.1;
     return;
   }
 
   model.getWorldPosition(targetOut);
-  targetOut.y += targetSize * 0.2;
+  targetOut.y += targetSize * 0.1;
 }
