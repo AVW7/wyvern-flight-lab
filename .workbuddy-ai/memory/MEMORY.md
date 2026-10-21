@@ -2,9 +2,10 @@
 
 ## Start here
 
-- **Doc-41 task list state:** A1–A3, B1–B3, C1–C3, D1, D2, D3, D5 done and committed.
+- **Doc-41 task list state:** A1–A3, B1–B3, C1–C4, D1, D2, D3, D5 done.
   **D4 is partial:** attack is done; cruise + both banks are blocked by product invariants
-  (see below). HEAD `541b3e8`. Suite 165/165, tsc clean, contract validates 92 joints.
+  (see below). **C5–C7, D4 remainder and E1–E4 are open.** Suite 165/165 + 21/21 Blender
+  unit tests, tsc clean, contract validates 92 joints.
 - **Runtime GLB + contract pinned at** sha256 `950c4321…`, 6,368,564 B.
 - **GLB rebuild order** (each stage is NOT idempotent — rebuild from the previous stage's
   asset via `git show <commit>:public/models/wyvern-v2-rig.glb`, never from its own output):
@@ -28,6 +29,22 @@ they do. Measured, not assumed:
   without that gain.
 - The fix for both is **authored motion**, not a scale factor — the "49 static channels"
   work doc 41 describes.
+
+## Blender control rig (`scripts/blender/rigging/control_rig.py`) — C4 measured facts
+
+- **`CANONICAL_CONTACT_PLANE_Z = -2.6549`** is the measured world-`Z` sole (1,084 foot-group
+  verts). Not `-184.0` (glTF `Body`-relative) and **not `+142.2`** — that is `Foot.tail.z`,
+  the bone tail, 144.9 units above the sole.
+- **`CTRL_Pole_Elbow_L/R`** sit on the outward bisector of the rest shoulder/elbow/wrist apex;
+  `pole_angle` `L = 164.0°`, `R = 9.5°`. On the wrong branch the wing displaces **176.47°** at
+  rest. Verify with `tools/blender/audit_v2_control_rig.py` (`--json-out`, `--sweep`).
+- **Panel bisect must be solved, never constrained**: for a 20° digit the panel owes 10.00°;
+  rigid parenting gives 20.00°, a LOCAL `COPY_ROTATION` pair gives 28.20°, WORLD +
+  `use_offset` gives 110.86°. Use `apply_panel_bisect()` / `cli.py control-rig --panel-bisect`.
+- **Blender measurement traps:** `pose_bone.matrix_basis` ignores constraints (read `pb.matrix`);
+  flush `view_layer.update()` **3×** after touching a driver-driven influence; mutating a
+  constraint property repeatedly in one session leaves stale state, so only a **reopened-file**
+  pass is authoritative; a bend-plane test cannot see a 180° pole flip (the plane survives it).
 
 ## Rig geometry facts that constrain every edit
 
@@ -92,9 +109,9 @@ Full analysis: `docs/flight-lab/40-architecture-audit-and-prioritized-path.md`.
 
 ## Docs map
 
-- `39-v2-development-roadmap.md` — master plan, M1–M11.
-- `40-architecture-audit-and-prioritized-path.md` — the audit.
-- `41-v2-and-blender-rig-audit-task-list.md` — Workstreams A–E task list (A, B, C, D1, D5 done).
+- `39-v2-development-roadmap.md` — master plan, `M1–M11` (updated with `Tasks C4–C7` Blender rig/control-rig/skinning tasks and `Workstream E` Flight Lab AI tasks).
+- `40-architecture-audit-and-prioritized-path.md` — the architecture audit.
+- `41-v2-and-blender-rig-audit-task-list.md` — `Workstreams A–E` task list (`A1–A3`, `B1–B3`, `C1–C3`, `D1–D3`, `D5`, `D4-attack` done; `C4–C7` Blender rig/control-rig/skinning tasks, `D4` cruise/banks remainder, and `E1–E4` Flight Lab AI tasks open).
 
 ## Header responsive contract
 

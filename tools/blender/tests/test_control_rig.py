@@ -12,12 +12,14 @@ if str(PKG) not in sys.path:
 
 from contract import CONTRACT_PATH, load_contract
 from audit_scene import build_report
+from core.actions_compat import ActionCompat
 from rigging.control_rig import (
     CANONICAL_CONTACT_PLANE_Z,
     CONTROL_BONE_NAMES,
     CONTROL_COLLECTION_NAME,
     DEFORM_COLLECTION_NAME,
     WING_FOLD_RATIOS,
+    apply_panel_bisect,
     bake_control_rig_to_deform,
     build_control_rig,
     compute_canonical_contact_plane,
@@ -68,6 +70,7 @@ class FakeConstraint:
         self.chain_count = 0
         self.influence = 1.0
         self.mix_mode = "REPLACE"
+        self.use_offset = False
         self.track_axis = "TRACK_Y"
         self.drivers = {}
 
@@ -192,8 +195,8 @@ class ControlRigTest(unittest.TestCase):
             SimpleNamespace(index=1, name="L_WingHand"),
         ]
         verts = [
-            SimpleNamespace(co=(282.0, -558.0, -184.0), groups=[SimpleNamespace(group=0, weight=0.95)]),
-            SimpleNamespace(co=(810.0, -1667.0, -138.0), groups=[SimpleNamespace(group=1, weight=0.85)]),
+            SimpleNamespace(co=(282.0, -558.0, -2.6549), groups=[SimpleNamespace(group=0, weight=0.95)]),
+            SimpleNamespace(co=(810.0, -1667.0, 188.5), groups=[SimpleNamespace(group=1, weight=0.85)]),
         ]
         self.mesh = SimpleNamespace(
             name="WyvernBody_Rebuild",
@@ -251,9 +254,12 @@ class ControlRigTest(unittest.TestCase):
 
     def test_contact_plane_is_derived_from_vertices_not_bone_heads(self):
         plane = compute_canonical_contact_plane(self.bpy, self.armature, [self.mesh])
-        self.assertEqual(plane["contact_plane_z"], -184.0)
-        self.assertEqual(plane["foot_surface_min_z"], -184.0)
-        self.assertEqual(plane["knuckle_surface_min_z"], -138.0)
+        self.assertEqual(plane["contact_plane_z"], -2.6549)
+        self.assertEqual(plane["foot_surface_min_z"], -2.6549)
+        self.assertEqual(plane["knuckle_surface_min_z"], 188.5)
+        # Blender world +Z of the sole, not the glTF Body-relative -184.0 and not the
+        # `Foot.tail` height of +142.2.
+        self.assertEqual(CANONICAL_CONTACT_PLANE_Z, -2.6549)
 
     def test_build_control_rig_creates_10_controls_and_preserves_audit_scene_abi(self):
         report = build_control_rig(self.bpy, self.armature, contract=self.contract)
@@ -277,6 +283,70 @@ class ControlRigTest(unittest.TestCase):
             scene_audit["armature"]["bone_collections"],
             [DEFORM_COLLECTION_NAME, CONTROL_COLLECTION_NAME],
         )
+
+    def test_wing_knuckle_ik_has_elbow_pole(self):
+        report = build_control_rig(self.bpy, self.armature, contract=self.contract)
+        self.assertEqual(report["ground_contact_ik"], 0.0)
+
+        elbow_ik = next(
+            c for c in self.armature.pose.bones["L_WingElbow"].constraints
+            if c.name == "CTRL_WingKnuckleIK_L"
+        )
+        self.assertEqual(elbow_ik.subtarget, "CTRL_IK_WingWrist_L")
+        self.assertEqual(elbow_ik.pole_target, self.armature)
+        self.assertEqual(elbow_ik.pole_subtarget, "CTRL_Pole_Elbow_L")
+        self.assertEqual(elbow_ik.chain_count, 2)
+        for side in ("L", "R"):
+            self.assertIn(f"CTRL_Pole_Elbow_{side}", CONTROL_BONE_NAMES)
+        knee_ik = next(
+            c for c in self.armature.pose.bones["L_Calf"].constraints
+            if c.name == "CTRL_FootIK_L"
+        )
+        self.assertEqual(knee_ik.pole_subtarget, "CTRL_Pole_Knee_L")
+
+    def test_panel_bisect_is_a_back_solved_pass_not_a_constraint(self):
+        build_control_rig(self.bpy, self.armature, contract=self.contract)
+        for side in ("L", "R"):
+            for panel in range(4):
+                for segment in range(2):
+                    pb = self.armature.pose.bones[f"{side}_WingPanel{panel}_{segment}"]
+                    names = [c.name for c in pb.constraints]
+                    self.assertFalse(
+                        any(n.startswith("CTRL_PanelBisect_") for n in names),
+                        "a COPY_ROTATION pair over-rotates panels; the bisect must be solved, not constrained",
+                    )
+                    self.assertIn(f"CTRL_WingFold_{side}", names)
+        self.assertTrue(callable(apply_panel_bisect))
+
+    def test_tail_chain_is_additive_local_copy_rotation_not_damped_track(self):
+        build_control_rig(self.bpy, self.armature, contract=self.contract)
+        for seg in range(1, 11):
+            pb = self.armature.pose.bones[f"Tail{seg}"]
+            con = next(c for c in pb.constraints if c.name == f"CTRL_TailRot_{seg}")
+            self.assertEqual(con.type, "COPY_ROTATION")
+            self.assertEqual(con.mix_mode, "ADD")
+            self.assertEqual(con.target_space, "LOCAL")
+            self.assertEqual(con.owner_space, "LOCAL")
+
+    def test_bake_binds_the_armature_slot_before_nla_bake(self):
+        build_control_rig(self.bpy, self.armature, contract=self.contract)
+        calls: list[tuple[str, str]] = []
+        original = ActionCompat.__dict__["setup_slotted_action"]
+
+        def record(action, armature, layer_name="Base"):
+            calls.append((action.name, armature.name))
+            return original(action, armature, layer_name)
+
+        ActionCompat.setup_slotted_action = staticmethod(record)
+        try:
+            bake_report = bake_control_rig_to_deform(self.bpy, self.armature, contract=self.contract)
+        finally:
+            ActionCompat.setup_slotted_action = staticmethod(original)
+
+        self.assertEqual(len(calls), len(self.contract["clips"]))
+        self.assertTrue(all(name == "WyvernRig" for _, name in calls))
+        self.assertEqual(len(bake_report["baked_actions"]), len(self.contract["clips"]))
+        self.assertEqual(len(self.baked_calls), len(self.contract["clips"]))
 
     def test_bake_control_rig_strips_controls_and_restores_exact_92_bone_deform_contract(self):
         build_control_rig(self.bpy, self.armature, contract=self.contract)

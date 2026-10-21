@@ -179,6 +179,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_ctrl.add_argument("--armature", default="WyvernRig", help="Name of armature object")
     p_ctrl.add_argument("--contact-plane-z", type=float, default=None, help="Override canonical ground contact Z")
     p_ctrl.add_argument("--bake", action="store_true", help="Bake control rig onto 92 deform bones and strip controls")
+    p_ctrl.add_argument("--panel-bisect", action="store_true", help="Solve the 16 membrane panels to the inter-digital half-angle at the current frame")
     p_ctrl.add_argument("--json-out", type=Path, help="Write output to JSON file")
     p_ctrl.set_defaults(func=cmd_control_rig)
 
@@ -188,13 +189,15 @@ def build_parser() -> argparse.ArgumentParser:
 def cmd_control_rig(args: argparse.Namespace) -> int:
     bpy = _ensure_bpy()
     from core.context import get_armature_and_mesh
-    from rigging.control_rig import bake_control_rig_to_deform, build_control_rig
+    from rigging.control_rig import apply_panel_bisect, bake_control_rig_to_deform, build_control_rig
 
     armature, _mesh = get_armature_and_mesh(bpy, args.armature)
     if args.bake:
         report = bake_control_rig_to_deform(bpy, armature, strip_controls=True)
     else:
         report = build_control_rig(bpy, armature, contact_plane_z=args.contact_plane_z)
+    if getattr(args, "panel_bisect", False):
+        report["panel_bisect"] = apply_panel_bisect(bpy, armature)
     out_json = json.dumps(report, indent=2, sort_keys=True)
     if args.json_out:
         Path(args.json_out).write_text(out_json + "\n")
@@ -228,6 +231,11 @@ def command_arguments(args: argparse.Namespace) -> list[str]:
             forwarded.append(str(value.resolve()) if isinstance(value, Path) else str(value))
             continue
         forwarded.append('--' + key.replace('_', '-'))
+        if isinstance(value, bool):
+            # `store_true` flags take no argument; forwarding `--bake True` is an argparse error.
+            if not value:
+                forwarded.pop()
+            continue
         if isinstance(value, list):
             forwarded.extend(str(v) for v in value)
         else:

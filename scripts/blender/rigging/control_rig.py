@@ -9,29 +9,60 @@ Responsibilities:
      (`CTRL_Pole_Knee_L/R`) with world-space floor `LIMIT_LOCATION` constraints (`Z >= contact_plane_z`).
    - Wing-knuckle ground-contact IK targets (`CTRL_IK_WingWrist_L/R`, `CTRL_IK_WingHand_L/R`)
      with floor `LIMIT_LOCATION` constraints (`Z >= contact_plane_z`), active on grounded clips
-     (`walk`, `idle`, `takeoff`, `land`).
+     (`walk`, `idle`, `takeoff`, `land`), with `CTRL_Pole_Elbow_L/R` pinning the shoulder/elbow
+     bend plane so enabling `ground_contact_ik` never rolls `WingShoulder`.
    - Master wing-fold controls (`CTRL_Wing_L`, `CTRL_Wing_R`) and custom properties
      `CTRL_WingFold_L` / `CTRL_WingFold_R` driving `WingElbow` -> `WingWrist` -> `WingHand` -> `WingD0..5`.
    - Caudal control chain (`CTRL_Tail_Base`, `CTRL_Tail_Mid`, `CTRL_Tail_Tip`) driving `Tail1..10`
-     via progressive `DAMPED_TRACK` / `COPY_ROTATION` constraints.
+     via progressive local-space additive `COPY_ROTATION` constraints.
+4. Solve the inter-digital membrane panels (`apply_panel_bisect`) as a back-solved world-space
+   half-angle between adjacent digits. This is a bake-time pass, not a constraint: no Blender
+   constraint can express it (see the function docstring for the measured numbers).
 3. Bake evaluated visual transforms back onto the 92 canonical deform bones and strip control
    bones/constraints prior to GLB export so `wyvern_v2_rig_contract.json` stays 100% intact.
 """
 
 from __future__ import annotations
 
+import math
 from typing import Any, Iterable, Sequence
 
 from contract import CONTRACT_PATH, iter_action_fcurves, load_contract
+from core.actions_compat import ActionCompat
 
 DEFORM_COLLECTION_NAME = "00 Deform"
 CONTROL_COLLECTION_NAME = "10 Controls"
-CANONICAL_CONTACT_PLANE_Z = -184.0
+
+# Blender world-space `+Z` of the grounded footpad surface in rest pose, measured from the
+# skinned vertices of `WyvernBody_Rebuild` (1,084 foot-group vertices, 2026-10-21):
+# `-2.6549`. Neither of the two numbers this constant has carried before is that value:
+# `-184.0` is the glTF `Body`-relative foot height (clamps every floor control 181 units
+# underground), and `+142.2` is `L/R_Foot.tail.z` — the *bone tail*, 144.9 units above the
+# sole, which would float the feet. `compute_canonical_contact_plane` prefers the measured
+# vertex minimum; this is only the fallback when no skinned mesh is resolvable.
+CANONICAL_CONTACT_PLANE_Z = -2.6549
 
 GROUND_CONTACT_CLIPS = ("idle", "walk", "rest", "takeoff", "land")
 
 FOOT_CONTACT_GROUPS = ("L_Foot", "R_Foot", "L_Toes", "R_Toes")
 KNUCKLE_CONTACT_GROUPS = ("L_WingWrist", "R_WingWrist", "L_WingHand", "R_WingHand")
+
+# Knee pole targets sit forward of the calf (`-Y` is the head/forward axis on this rig) so the
+# hock bends forward. `pole_angle` is calibrated so the IK solution reproduces the rest pose.
+KNEE_POLE_OFFSET = (0.0, -200.0, 0.0)
+KNEE_POLE_ANGLES: dict[str, float] = {"L": -70.18, "R": -109.81}
+
+# Elbow pole targets sit on the outward bisector of the rest shoulder/elbow/wrist apex, so the
+# bend plane is correct by construction and only the roll convention (`pole_angle`) is calibrated.
+# A hand-guessed offset leaves a measured 7.04 deg bend-plane residual; the geometric placement
+# removes that degree of freedom.
+ELBOW_POLE_DISTANCE = 200.0
+ELBOW_POLE_LENGTH = 40.0
+ELBOW_POLE_ANGLES: dict[str, float] = {"L": 164.0, "R": 9.5}
+
+PANEL_BONE_NAMES: tuple[str, ...] = tuple(
+    f"WingPanel{panel}_{segment}" for panel in range(4) for segment in range(2)
+)
 
 WING_FOLD_RATIOS: dict[str, float] = {
     "WingElbow": 0.45,
@@ -47,20 +78,43 @@ CONTROL_BONE_SPECS: tuple[dict[str, Any], ...] = (
     {"name": "CTRL_IK_Foot_R", "source": "R_Foot", "parent": "Root", "offset": (0.0, 0.0, 0.0), "length": 45.0, "floor_clamp": True},
     {"name": "CTRL_IK_Toes_L", "source": "L_Toes", "parent": "CTRL_IK_Foot_L", "offset": (0.0, 0.0, 0.0), "length": 35.0, "floor_clamp": True},
     {"name": "CTRL_IK_Toes_R", "source": "R_Toes", "parent": "CTRL_IK_Foot_R", "offset": (0.0, 0.0, 0.0), "length": 35.0, "floor_clamp": True},
-    {"name": "CTRL_Pole_Knee_L", "source": "L_Calf", "parent": "Root", "offset": (0.0, -180.0, 40.0), "length": 35.0, "floor_clamp": False},
-    {"name": "CTRL_Pole_Knee_R", "source": "R_Calf", "parent": "Root", "offset": (0.0, -180.0, 40.0), "length": 35.0, "floor_clamp": False},
+    {"name": "CTRL_Pole_Knee_L", "source": "L_Calf", "parent": "Root", "offset": KNEE_POLE_OFFSET, "length": 35.0, "floor_clamp": False},
+    {"name": "CTRL_Pole_Knee_R", "source": "R_Calf", "parent": "Root", "offset": KNEE_POLE_OFFSET, "length": 35.0, "floor_clamp": False},
+    {"name": "CTRL_Pole_Elbow_L", "source": "L_WingElbow", "parent": "Root", "offset": None, "length": ELBOW_POLE_LENGTH, "floor_clamp": False, "pole_from_geometry": True},
+    {"name": "CTRL_Pole_Elbow_R", "source": "R_WingElbow", "parent": "Root", "offset": None, "length": ELBOW_POLE_LENGTH, "floor_clamp": False, "pole_from_geometry": True},
     {"name": "CTRL_IK_WingWrist_L", "source": "L_WingWrist", "parent": "Root", "offset": (0.0, 0.0, 0.0), "length": 55.0, "floor_clamp": True},
     {"name": "CTRL_IK_WingWrist_R", "source": "R_WingWrist", "parent": "Root", "offset": (0.0, 0.0, 0.0), "length": 55.0, "floor_clamp": True},
     {"name": "CTRL_IK_WingHand_L", "source": "L_WingHand", "parent": "CTRL_IK_WingWrist_L", "offset": (0.0, 0.0, 0.0), "length": 45.0, "floor_clamp": True},
     {"name": "CTRL_IK_WingHand_R", "source": "R_WingHand", "parent": "CTRL_IK_WingWrist_R", "offset": (0.0, 0.0, 0.0), "length": 45.0, "floor_clamp": True},
     {"name": "CTRL_Wing_L", "source": "L_WingShoulder", "parent": "Spine3", "offset": (0.0, 0.0, 80.0), "length": 60.0, "floor_clamp": False},
     {"name": "CTRL_Wing_R", "source": "R_WingShoulder", "parent": "Spine3", "offset": (0.0, 0.0, 80.0), "length": 60.0, "floor_clamp": False},
-    {"name": "CTRL_Tail_Base", "source": "Tail3", "parent": "Body", "offset": (0.0, 0.0, 50.0), "length": 50.0, "floor_clamp": False},
-    {"name": "CTRL_Tail_Mid", "source": "Tail6", "parent": "CTRL_Tail_Base", "offset": (0.0, 0.0, 50.0), "length": 50.0, "floor_clamp": False},
-    {"name": "CTRL_Tail_Tip", "source": "Tail10", "parent": "CTRL_Tail_Mid", "offset": (0.0, 0.0, 50.0), "length": 50.0, "floor_clamp": False},
+    {"name": "CTRL_Tail_Base", "source": "Tail3", "parent": "Body", "offset": (0.0, 0.0, 0.0), "length": 50.0, "floor_clamp": False},
+    {"name": "CTRL_Tail_Mid", "source": "Tail6", "parent": "CTRL_Tail_Base", "offset": (0.0, 0.0, 0.0), "length": 50.0, "floor_clamp": False},
+    {"name": "CTRL_Tail_Tip", "source": "Tail10", "parent": "CTRL_Tail_Mid", "offset": (0.0, 0.0, 0.0), "length": 50.0, "floor_clamp": False},
 )
 
 CONTROL_BONE_NAMES: frozenset[str] = frozenset(spec["name"] for spec in CONTROL_BONE_SPECS)
+
+
+def _sub(a: Sequence[float], b: Sequence[float]) -> tuple[float, float, float]:
+    return (a[0] - b[0], a[1] - b[1], a[2] - b[2])
+
+
+def _add(a: Sequence[float], b: Sequence[float]) -> tuple[float, float, float]:
+    return (a[0] + b[0], a[1] + b[1], a[2] + b[2])
+
+
+def _scale(a: Sequence[float], factor: float) -> tuple[float, float, float]:
+    return (a[0] * factor, a[1] * factor, a[2] * factor)
+
+
+def _length(a: Sequence[float]) -> float:
+    return math.sqrt(a[0] ** 2 + a[1] ** 2 + a[2] ** 2)
+
+
+def _unit(a: Sequence[float]) -> tuple[float, float, float]:
+    norm = _length(a)
+    return _scale(a, 1.0 / norm) if norm > 1e-12 else (0.0, 0.0, 0.0)
 
 
 def compute_canonical_contact_plane(
@@ -165,7 +219,7 @@ def build_control_rig(
     # Custom rig properties for master wing fold and ground contact IK
     armature["CTRL_WingFold_L"] = float(armature.get("CTRL_WingFold_L", 0.0))
     armature["CTRL_WingFold_R"] = float(armature.get("CTRL_WingFold_R", 0.0))
-    armature["ground_contact_ik"] = float(armature.get("ground_contact_ik", 1.0))
+    armature["ground_contact_ik"] = float(armature.get("ground_contact_ik", 0.0))
     armature["contact_plane_z"] = floor_z
 
     view_layer = bpy.context.view_layer
@@ -182,10 +236,29 @@ def build_control_rig(
         if src is None:
             continue
         cb = edit_bones.get(cname) or edit_bones.new(cname)
-        ox, oy, oz = spec["offset"]
-        cb.head = (src.head[0] + ox, src.head[1] + oy, src.head[2] + oz)
-        cb.tail = (src.head[0] + ox, src.head[1] + oy + spec["length"], src.head[2] + oz)
-        cb.roll = getattr(src, "roll", 0.0)
+        if spec.get("pole_from_geometry"):
+            # Place the pole on the outward bisector of the shoulder/elbow/wrist apex, which lies
+            # in the rest bend plane by construction.
+            side = cname[-1]
+            shoulder = edit_bones.get(f"{side}_WingShoulder")
+            outward = _unit(_sub(src.head, shoulder.head) if shoulder is not None else src.head)
+            bisector = _add(outward, _unit(_sub(src.head, src.tail)))
+            if _length(bisector) < 1e-6:
+                bisector = _unit(_sub(src.tail, src.head))
+            direction = _unit(bisector)
+            head = _add(src.head, _scale(direction, ELBOW_POLE_DISTANCE))
+            cb.head = head
+            cb.tail = _add(head, _scale(direction, spec["length"]))
+            cb.roll = getattr(src, "roll", 0.0)
+        elif cname.startswith("CTRL_Tail_"):
+            cb.head = (src.head[0], src.head[1], src.head[2])
+            cb.tail = (src.tail[0], src.tail[1], src.tail[2])
+            cb.roll = getattr(src, "roll", 0.0)
+        else:
+            ox, oy, oz = spec["offset"]
+            cb.head = (src.head[0] + ox, src.head[1] + oy, src.head[2] + oz)
+            cb.tail = (src.head[0] + ox, src.head[1] + oy + spec["length"], src.head[2] + oz)
+            cb.roll = getattr(src, "roll", 0.0)
         cb.use_deform = False
         cb.use_connect = False
         parent_eb = edit_bones.get(spec["parent"])
@@ -246,6 +319,7 @@ def build_control_rig(
             ik.pole_target = armature
             ik.pole_subtarget = f"CTRL_Pole_Knee_{side}"
             ik.chain_count = 2
+            ik.pole_angle = math.radians(KNEE_POLE_ANGLES[side])
             ik.influence = 1.0
 
         for part, target_name in (("Foot", f"CTRL_IK_Foot_{side}"), ("Toes", f"CTRL_IK_Toes_{side}")):
@@ -262,6 +336,9 @@ def build_control_rig(
                 cr.influence = 1.0
 
         # 3. Wing-knuckle ground-contact IK (`WingElbow` -> `CTRL_IK_WingWrist_L/R`, `WingHand` -> `CTRL_IK_WingHand_L/R`)
+        #    The 2-bone chain is `WingShoulder -> WingElbow`, so `WingElbow.tail` (= `WingWrist.head`)
+        #    is what reaches the target. Without a pole the shoulder rolls freely whenever the
+        #    target leaves the rest plane, so the bend plane is pinned by `CTRL_Pole_Elbow_L/R`.
         elbow_pb = pose_bones.get(f"{side}_WingElbow")
         if elbow_pb is not None:
             _clear_Managed_constraints(elbow_pb)
@@ -269,7 +346,10 @@ def build_control_rig(
             ik.name = f"CTRL_WingKnuckleIK_{side}"
             ik.target = armature
             ik.subtarget = f"CTRL_IK_WingWrist_{side}"
+            ik.pole_target = armature
+            ik.pole_subtarget = f"CTRL_Pole_Elbow_{side}"
             ik.chain_count = 2
+            ik.pole_angle = math.radians(ELBOW_POLE_ANGLES[side])
             ik.influence = float(armature["ground_contact_ik"])
             if hasattr(ik, "driver_add"):
                 fcurve = ik.driver_add("influence")
@@ -310,7 +390,7 @@ def build_control_rig(
             knuckle_rot.owner_space = "LOCAL"
             knuckle_rot.influence = float(armature["ground_contact_ik"])
 
-    # 5. Tail1..10 progressive DAMPED_TRACK / COPY_ROTATION chain
+    # 6. Tail1..10 progressive local-space additive `COPY_ROTATION` chain
     tail_targets = (
         (1, 3, "CTRL_Tail_Base", 0.35),
         (4, 7, "CTRL_Tail_Mid", 0.45),
@@ -322,12 +402,14 @@ def build_control_rig(
             if pb is None:
                 continue
             _clear_Managed_constraints(pb)
-            dt = pb.constraints.new(type="DAMPED_TRACK")
-            dt.name = f"CTRL_TailTrack_{seg}"
-            dt.target = armature
-            dt.subtarget = ctrl_name
-            dt.track_axis = "TRACK_Y"
-            dt.influence = round(base_inf * ((seg - start_idx + 1) / (end_idx - start_idx + 1)), 4)
+            cr = pb.constraints.new(type="COPY_ROTATION")
+            cr.name = f"CTRL_TailRot_{seg}"
+            cr.target = armature
+            cr.subtarget = ctrl_name
+            cr.target_space = "LOCAL"
+            cr.owner_space = "LOCAL"
+            cr.mix_mode = "ADD"
+            cr.influence = round(base_inf * ((seg - start_idx + 1) / (end_idx - start_idx + 1)), 4)
 
     if prev_mode != "POSE":
         bpy.ops.object.mode_set(mode=prev_mode)
@@ -343,7 +425,78 @@ def build_control_rig(
         "control_bones": sorted(b.name for b in armature.data.bones if not b.use_deform),
         "floor_clamped_controls": sorted(floor_clamped_controls),
         "contact_plane": plane_info,
+        "ground_contact_ik": float(armature["ground_contact_ik"]),
         "wing_fold_driven_bones_per_side": len(WING_FOLD_RATIOS),
+    }
+
+
+def apply_panel_bisect(bpy: Any, armature: Any, digits: Sequence[str] | None = None) -> dict[str, Any]:
+    """Set all 16 membrane panels to the world-space half-angle between their adjacent digits.
+
+    Mirrors `tools/blender/coordinate_all_v2_clips.mjs`: each adjacent digit's world delta from
+    bind is slerped at `0.5`, applied to the panel's bind world matrix, then back-solved through
+    the panel's *current* parent. Segment 0 bisects phalanx `P1` of digits `K`/`K+1`, segment 1
+    bisects `P2`, matching the GLB solver.
+
+    Why this is not a constraint (all measured on `wyvern-v2-master.blend`, 2026-10-21): for a
+    `20°` rotation of `WingD0P0`, rigid parenting moves `WingPanel0_0` by `20.00°`, a chained
+    LOCAL-space `COPY_ROTATION` pair (digit K at 1.0, digit K+1 at 0.5, `REPLACE`) moves it by
+    `28.20°` — worse than doing nothing, because the panel re-inherits the parent rotation — and
+    WORLD space with `use_offset` moves it by `110.86°`, because `use_offset` adds the *owner's*
+    rest rotation rather than the owner-to-target offset. Only back-solving through the parent
+    reaches the required `10.00°`.
+
+    Returns per-panel errors: `angle(panel_world_delta, slerp(delta_K, delta_K+1, 0.5))`.
+    """
+    from mathutils import Matrix
+
+    bone_names = digits or [f"{side}_{name}" for side in ("L", "R") for name in PANEL_BONE_NAMES]
+    needed = set(bone_names)
+    for name in bone_names:
+        side = name[0]
+        panel, segment = (int(part) for part in name.split("Panel")[1].split("_"))
+        needed.add(f"{side}_WingD{panel}P{segment + 1}")
+        needed.add(f"{side}_WingD{panel + 1}P{segment + 1}")
+    bind_world = {
+        name: armature.data.bones[name].matrix_local.copy()
+        for name in needed
+        if name in armature.data.bones
+    }
+
+    def _delta(name: str) -> Any:
+        return armature.pose.bones[name].matrix @ bind_world[name].inverted()
+
+    errors: dict[str, float] = {}
+    for name in bone_names:
+        side = name[0]
+        panel, segment = (int(part) for part in name.split("Panel")[1].split("_"))
+        phalanx = segment + 1
+        adjacent = (f"{side}_WingD{panel}P{phalanx}", f"{side}_WingD{panel + 1}P{phalanx}")
+        if any(bone not in bind_world for bone in adjacent):
+            continue
+
+        delta_a, delta_b = (_delta(bone) for bone in adjacent)
+        q_a, q_b = delta_a.to_quaternion(), delta_b.to_quaternion()
+        if q_a.dot(q_b) < 0.0:
+            q_b.negate()
+        q_avg = q_a.slerp(q_b, 0.5)
+
+        bind_head = bind_world[name].translation.copy()
+        head_avg = (delta_a @ bind_head + delta_b @ bind_head) * 0.5
+        target = Matrix.Translation(head_avg) @ (q_avg.to_matrix().to_4x4() @ bind_world[name].to_3x3().to_4x4())
+
+        pb = armature.pose.bones[name]
+        pb.matrix = target
+        bpy.context.view_layer.update()
+
+        measured = pb.matrix.to_quaternion() @ bind_world[name].to_quaternion().inverted()
+        errors[name] = round(abs(measured.rotation_difference(q_avg).angle), 6)
+
+    return {
+        "panels": len(errors),
+        "max_error_rad": max(errors.values()) if errors else 0.0,
+        "max_error_deg": round(math.degrees(max(errors.values())) if errors else 0.0, 6),
+        "per_panel_error_deg": {k: round(math.degrees(v), 6) for k, v in errors.items()},
     }
 
 
@@ -407,6 +560,10 @@ def bake_control_rig_to_deform(
 
         for action in actions:
             armature.animation_data.action = action
+            # Blender 4.4+ actions are layered and multi-slot; without binding the
+            # `OBWyvernRig` slot first, `bpy.ops.nla.bake()` bakes into whichever slot happens
+            # to be active (often none), silently producing an empty bake.
+            ActionCompat.setup_slotted_action(action, armature)
             start_f, end_f = int(round(action.frame_range[0])), int(round(action.frame_range[1]))
             if hasattr(bpy.ops, "nla") and hasattr(bpy.ops.nla, "bake"):
                 for bone in armature.data.bones:
