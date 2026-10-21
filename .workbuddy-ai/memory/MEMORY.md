@@ -30,3 +30,39 @@
   Evidence: docs/flight-lab/evidence/2026-10-21-idle-{before,after,after-candidate}.png.
 - Shipped GLB is meshopt-compressed (5.7 MB); fresh exports are uncompressed (17.8 MB) — run through
   `tools/blender/compact_v2_glb.mjs` if a full re-export is ever needed.
+
+## Flight Lab header — responsive contract (set 2026-10-21)
+
+- Header styles live near the TOP of `src/app/flight-lab/FlightLabClient.module.css` (`.header`,
+  `.brand`, `.nav`, `.menuToggle`…); breakpoints: inline nav above 768px, collapsible dropdown
+  menu at ≤768px, icon-only toggle at ≤400px, 44px touch floor under `pointer: coarse`.
+- **The CSS module has a second, pre-existing responsive system at the BOTTOM of the file**
+  (`@media (max-width: 1050px)` → lab side panels become overlay drawers; `@media (max-width: 720px)`
+  → phone chrome: safe-area surface padding, telemetry, camera dock, stage toolbar). Those later
+  blocks win the cascade over header rules near the top — the old ≤720 block's
+  `.header { flex-direction: column }` silently stacked the brand and menu toggle. When touching
+  the header, check both regions.
+- Regression harness spec: `~/.workbuddy-ai/harness/specs/wyvern-flight-lab-header.mjs`
+  (chromium + webkit, dark + light, 5 viewports; theme key `flight-lab-theme`).
+  Run against a dev server: `node bin/render.mjs --spec wyvern-flight-lab-header --base http://localhost:<port>`.
+  Gotcha: only ONE `next dev` per project dir (`.next/dev/lock`); a stale lock after an OOM-killed
+  server must be deleted by hand. Next dev + WebGL page + browser on this 8GB box is tight —
+  run browsers sequentially, never concurrently with tsc/tests.
+
+## Repo conventions
+
+- **`.workbuddy-ai/` (project memory + agent workspace data) is tracked in git** — re-added
+  2026-10-21 at Aj's request ("add work buddy back for other agents to work from"), reversing the
+  same-day exclusion. Other agents/sessions clone the repo and work from the committed memory, so
+  keep `memory/YYYY-MM-DD.md` (append-only daily log) and `MEMORY.md` current and commit them
+  alongside the work they describe.
+
+## Tooling
+
+- **playwright-cli** (browser automation skill): installed 2026-10-21 at
+  `/Users/ajadvanwyk/.workbuddy-ai/binaries/node/workspace/node_modules/.bin/playwright-cli`
+  (`@playwright/cli` 0.1.22). Browsers in `~/Library/Caches/ms-playwright/` (chromium-1247,
+  headless shell, firefox-1553, webkit-2368, ffmpeg-1011). NOT on PATH — use the absolute
+  path or `export PATH=…/node_modules/.bin:$PATH`. The skill's bootstrap line
+  (`command -v playwright-cli || npm bin -g …`) is broken on npm ≥9 (`npm bin` removed);
+  global npm installs are prohibited in this sandbox — the managed workspace is the way.
