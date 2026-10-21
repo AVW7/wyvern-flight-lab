@@ -1,0 +1,5752 @@
+{
+  "generatedAt": "2026-10-21T08:19:50.073Z",
+  "target": "public/models/wyvern-v2-rig.glb",
+  "fitMetresPerUnit": 0.0009255055271956991,
+  "fitMetresPerUnitLab": 0.0013403873152489437,
+  "bindExtentRigUnits": 6266.845339729218,
+  "displayTarget": {
+    "player": 5.8,
+    "flightLab": 8.4
+  },
+  "sampleHz": 60,
+  "limits": {
+    "loopSeamRad": 0.05,
+    "loopSeamRigUnits": 0.05,
+    "rootTravelRigUnits": 0.0001,
+    "mirrorMetres": 0.25
+  },
+  "outlierRule": {
+    "iqrFactor": 4,
+    "accelFactor": 12
+  },
+  "contactBandMetres": 0.01,
+  "structure": {
+    "file": {
+      "path": "public/models/wyvern-v2-rig.glb",
+      "sha256": "e8edd574d95b388e85a1b5c1a695f879a78c8ee161b8f934f32f167992c35698",
+      "bytes": 5740476
+    },
+    "generator": "glTF-Transform v4.5.0",
+    "gltfVersion": "2.0",
+    "extensionsUsed": [
+      "EXT_meshopt_compression",
+      "EXT_texture_webp",
+      "KHR_mesh_quantization"
+    ],
+    "counts": {
+      "nodes": 95,
+      "meshes": 2,
+      "primitives": 3,
+      "skins": 1,
+      "joints": 92,
+      "animations": 18,
+      "materials": 2,
+      "accessors": 4934
+    },
+    "sceneRoots": [
+      "WyvernRig",
+      "WyvernBody_Rebuild",
+      "WyvernMembrane_ExportSafe"
+    ],
+    "triangles": 49872,
+    "boneNames": [
+      "Root",
+      "RootMotion",
+      "Body",
+      "Spine1",
+      "Spine2",
+      "Spine3",
+      "Neck1",
+      "Neck2",
+      "Head",
+      "Jaw",
+      "L_WingRoot",
+      "L_WingShoulder",
+      "L_WingElbow",
+      "L_WingWrist",
+      "L_WingHand",
+      "L_WingD5P0",
+      "L_WingD5P1",
+      "L_WingD5P2",
+      "L_WingD4P0",
+      "L_WingD4P1",
+      "L_WingD4P2",
+      "L_WingD0P0",
+      "L_WingD0P1",
+      "L_WingD0P2",
+      "L_WingPanel0_0",
+      "L_WingPanel0_1",
+      "L_WingD1P0",
+      "L_WingD1P1",
+      "L_WingD1P2",
+      "L_WingPanel1_0",
+      "L_WingPanel1_1",
+      "L_WingD2P0",
+      "L_WingD2P1",
+      "L_WingD2P2",
+      "L_WingPanel2_0",
+      "L_WingPanel2_1",
+      "L_WingD3P0",
+      "L_WingD3P1",
+      "L_WingD3P2",
+      "L_WingPanel3_0",
+      "L_WingPanel3_1",
+      "R_WingRoot",
+      "R_WingShoulder",
+      "R_WingElbow",
+      "R_WingWrist",
+      "R_WingHand",
+      "R_WingD5P0",
+      "R_WingD5P1",
+      "R_WingD5P2",
+      "R_WingD4P0",
+      "R_WingD4P1",
+      "R_WingD4P2",
+      "R_WingD0P0",
+      "R_WingD0P1",
+      "R_WingD0P2",
+      "R_WingPanel0_0",
+      "R_WingPanel0_1",
+      "R_WingD1P0",
+      "R_WingD1P1",
+      "R_WingD1P2",
+      "R_WingPanel1_0",
+      "R_WingPanel1_1",
+      "R_WingD2P0",
+      "R_WingD2P1",
+      "R_WingD2P2",
+      "R_WingPanel2_0",
+      "R_WingPanel2_1",
+      "R_WingD3P0",
+      "R_WingD3P1",
+      "R_WingD3P2",
+      "R_WingPanel3_0",
+      "R_WingPanel3_1",
+      "L_LegRoot",
+      "L_Thigh",
+      "L_Calf",
+      "L_Foot",
+      "L_Toes",
+      "R_LegRoot",
+      "R_Thigh",
+      "R_Calf",
+      "R_Foot",
+      "R_Toes",
+      "Tail1",
+      "Tail2",
+      "Tail3",
+      "Tail4",
+      "Tail5",
+      "Tail6",
+      "Tail7",
+      "Tail8",
+      "Tail9",
+      "Tail10"
+    ],
+    "meshes": [
+      {
+        "name": "SKM_DaenerysDragon.001",
+        "primitives": 2,
+        "attributes": [
+          [
+            "NORMAL",
+            "JOINTS_0",
+            "POSITION",
+            "TEXCOORD_0",
+            "WEIGHTS_0"
+          ],
+          [
+            "NORMAL",
+            "TEXCOORD_0",
+            "JOINTS_0",
+            "POSITION",
+            "WEIGHTS_0"
+          ]
+        ],
+        "morphTargets": 0
+      },
+      {
+        "name": "SKM_DaenerysDragon.002",
+        "primitives": 1,
+        "attributes": [
+          [
+            "NORMAL",
+            "JOINTS_0",
+            "POSITION",
+            "TEXCOORD_0",
+            "WEIGHTS_0"
+          ]
+        ],
+        "morphTargets": 0
+      }
+    ],
+    "skin": {
+      "joints": 92,
+      "inverseBindMatricesAccessor": 9,
+      "skeletonRoot": null
+    },
+    "positionEncoding": [
+      {
+        "mesh": "SKM_DaenerysDragon001",
+        "type": "Int16Array",
+        "normalized": true
+      },
+      {
+        "mesh": "SKM_DaenerysDragon001_1",
+        "type": "Int16Array",
+        "normalized": true
+      },
+      {
+        "mesh": "WyvernMembrane_ExportSafe",
+        "type": "Float32Array",
+        "normalized": false
+      }
+    ]
+  },
+  "hierarchy": {
+    "regions": {
+      "root": 2,
+      "spine": 4,
+      "head": 4,
+      "wing": 62,
+      "leg": 10,
+      "tail": 10
+    },
+    "byDepth": {
+      "0": 1,
+      "1": 1,
+      "2": 1,
+      "3": 2,
+      "4": 4,
+      "5": 4,
+      "6": 6,
+      "7": 6,
+      "8": 6,
+      "9": 4,
+      "10": 3,
+      "11": 13,
+      "12": 21,
+      "13": 20
+    },
+    "maxDepth": 13
+  },
+  "skin": {
+    "meshes": [
+      {
+        "name": "SKM_DaenerysDragon001",
+        "vertices": 14544,
+        "unweighted": 0,
+        "maxSumError": 2.220446049250313e-16,
+        "singleInfluence": 3991,
+        "singleInfluenceFraction": 0.2744086908690869,
+        "influenceHistogram": {
+          "1": 3991,
+          "2": 4986,
+          "3": 2475,
+          "4": 3092
+        }
+      },
+      {
+        "name": "SKM_DaenerysDragon001_1",
+        "vertices": 9984,
+        "unweighted": 0,
+        "maxSumError": 0,
+        "singleInfluence": 8719,
+        "singleInfluenceFraction": 0.8732972756410257,
+        "influenceHistogram": {
+          "1": 8719,
+          "2": 1262,
+          "3": 3
+        }
+      },
+      {
+        "name": "WyvernMembrane_ExportSafe",
+        "vertices": 8249,
+        "unweighted": 0,
+        "maxSumError": 2.220446049250313e-16,
+        "singleInfluence": 608,
+        "singleInfluenceFraction": 0.07370590374590859,
+        "influenceHistogram": {
+          "1": 608,
+          "2": 413,
+          "3": 653,
+          "4": 6575
+        }
+      }
+    ],
+    "totalVertices": 32777,
+    "unweighted": 0,
+    "nonFinite": 0,
+    "maxSumError": 2.220446049250313e-16,
+    "maxInfluences": 4,
+    "jointsWithMass": 85,
+    "nonDeformingJoints": [
+      "Root",
+      "RootMotion",
+      "L_WingPanel0_0",
+      "L_WingPanel1_0",
+      "R_WingPanel0_0",
+      "R_WingPanel1_0",
+      "Tail1"
+    ],
+    "sharedSkeleton": true,
+    "skeletonInstances": 1,
+    "quantizationStep": 0.00392156862745098,
+    "topJoints": [
+      {
+        "joint": "Head",
+        "mass": 12151.21176470566
+      },
+      {
+        "joint": "Spine3",
+        "mass": 5971.301960784073
+      },
+      {
+        "joint": "Neck2",
+        "mass": 1032.3098039215624
+      },
+      {
+        "joint": "Tail2",
+        "mass": 543.0941176470606
+      },
+      {
+        "joint": "R_Toes",
+        "mass": 454.2313725490199
+      },
+      {
+        "joint": "L_Toes",
+        "mass": 450.0666666666667
+      },
+      {
+        "joint": "Neck1",
+        "mass": 414.011764705882
+      },
+      {
+        "joint": "L_WingD3P2",
+        "mass": 363.5647058823529
+      },
+      {
+        "joint": "R_WingD3P2",
+        "mass": 361.99999999999994
+      },
+      {
+        "joint": "Tail10",
+        "mass": 340.73333333333295
+      },
+      {
+        "joint": "L_WingD2P2",
+        "mass": 297.1843137254904
+      },
+      {
+        "joint": "R_WingD2P2",
+        "mass": 294.6078431372553
+      }
+    ]
+  },
+  "restScale": {
+    "noClip": {
+      "median": 2187.9562280121336,
+      "p99": 4584.730457110657,
+      "edges": 58544
+    },
+    "idleFrameZero": {
+      "median": 2187.9562283222995,
+      "p99": 4584.730474737901,
+      "edges": 58544
+    },
+    "note": "Ratio of skinned edge length to bind-space length. The node rest pose is not the display pose."
+  },
+  "translationChannels": {
+    "Body": {
+      "bone": "Body",
+      "magnitude": 1187.6713597769196,
+      "range": [
+        0.01282208925113082,
+        439.2572326660156,
+        1103.45654296875
+      ],
+      "clip": "takeoff"
+    },
+    "L_WingPanel0_0": {
+      "bone": "L_WingPanel0_0",
+      "magnitude": 347.2136073705976,
+      "range": [
+        238.8977565765381,
+        87.85784912109375,
+        236.14857482910156
+      ],
+      "clip": "bankRight"
+    },
+    "R_WingPanel0_0": {
+      "bone": "R_WingPanel0_0",
+      "magnitude": 347.2131472612389,
+      "range": [
+        238.89717483520508,
+        87.85858154296875,
+        236.14821434020996
+      ],
+      "clip": "bankRight"
+    },
+    "R_WingPanel1_0": {
+      "bone": "R_WingPanel1_0",
+      "magnitude": 334.48590274665446,
+      "range": [
+        286.3859443664551,
+        63.169342041015625,
+        160.85255432128906
+      ],
+      "clip": "land"
+    },
+    "L_WingPanel1_0": {
+      "bone": "L_WingPanel1_0",
+      "magnitude": 334.4854137028959,
+      "range": [
+        286.3857936859131,
+        63.16864013671875,
+        160.85208129882812
+      ],
+      "clip": "land"
+    },
+    "L_WingPanel2_1": {
+      "bone": "L_WingPanel2_1",
+      "magnitude": 273.832731542751,
+      "range": [
+        127.88680648803711,
+        149.16091918945312,
+        190.73633575439453
+      ],
+      "clip": "cruise"
+    },
+    "R_WingPanel2_1": {
+      "bone": "R_WingPanel2_1",
+      "magnitude": 273.8320372328086,
+      "range": [
+        127.88616561889648,
+        149.16012573242188,
+        190.73638916015625
+      ],
+      "clip": "bankRight"
+    },
+    "R_WingPanel2_0": {
+      "bone": "R_WingPanel2_0",
+      "magnitude": 234.29678281904492,
+      "range": [
+        217.81646156311035,
+        65.65399169921875,
+        56.04038619995117
+      ],
+      "clip": "land"
+    },
+    "L_WingPanel2_0": {
+      "bone": "L_WingPanel2_0",
+      "magnitude": 234.29633351999092,
+      "range": [
+        217.81589317321777,
+        65.654541015625,
+        56.04007339477539
+      ],
+      "clip": "land"
+    },
+    "L_WingPanel0_1": {
+      "bone": "L_WingPanel0_1",
+      "magnitude": 221.10469830464382,
+      "range": [
+        215.88500213623047,
+        29.8447265625,
+        37.28599953651428
+      ],
+      "clip": "bankLeft"
+    },
+    "R_WingPanel0_1": {
+      "bone": "R_WingPanel0_1",
+      "magnitude": 221.10453123892304,
+      "range": [
+        215.88494873046875,
+        29.844970703125,
+        37.28512263298035
+      ],
+      "clip": "bankLeft"
+    },
+    "L_WingPanel1_1": {
+      "bone": "L_WingPanel1_1",
+      "magnitude": 215.43260461805698,
+      "range": [
+        196.75906372070312,
+        71.27655029296875,
+        51.15399646759033
+      ],
+      "clip": "bankLeft"
+    },
+    "R_WingPanel1_1": {
+      "bone": "R_WingPanel1_1",
+      "magnitude": 215.43171574829904,
+      "range": [
+        196.75755310058594,
+        71.278076171875,
+        51.153937339782715
+      ],
+      "clip": "bankLeft"
+    },
+    "R_WingPanel3_1": {
+      "bone": "R_WingPanel3_1",
+      "magnitude": 162.90049145267716,
+      "range": [
+        43.30973243713379,
+        39.88787841796875,
+        151.8874397277832
+      ],
+      "clip": "bankRight"
+    },
+    "L_WingPanel3_1": {
+      "bone": "L_WingPanel3_1",
+      "magnitude": 162.89958424797632,
+      "range": [
+        43.30976486206055,
+        39.888336181640625,
+        151.88633728027344
+      ],
+      "clip": "bankLeft"
+    },
+    "R_WingPanel3_0": {
+      "bone": "R_WingPanel3_0",
+      "magnitude": 161.9912839137568,
+      "range": [
+        154.52424240112305,
+        35.9228515625,
+        32.75642395019531
+      ],
+      "clip": "land"
+    },
+    "L_WingPanel3_0": {
+      "bone": "L_WingPanel3_0",
+      "magnitude": 161.99092352364738,
+      "range": [
+        154.5239028930664,
+        35.92303466796875,
+        32.75604248046875
+      ],
+      "clip": "land"
+    }
+  },
+  "tracks": {
+    "attack": {
+      "duration": 1.5,
+      "tracks": 276,
+      "byPath": {
+        "translation": 0,
+        "rotation": 0,
+        "scale": 92
+      },
+      "constantTracks": 93,
+      "stepChannels": 82,
+      "stepVarying": 1,
+      "maxStepRange": 0.0000011324882507324219,
+      "animatedJoints": 0,
+      "minKeys": 2,
+      "maxKeys": 37,
+      "maxScaleDeviation": 0.0000012516975402832031,
+      "translatedBones": 17,
+      "maxTranslationRigUnits": 29.223255805963667,
+      "maxTranslationBone": "R_WingPanel3_0",
+      "bodyTranslationRigUnits": 26.000019959420452
+    },
+    "attack2": {
+      "duration": 3.3333332538604736,
+      "tracks": 276,
+      "byPath": {
+        "translation": 0,
+        "rotation": 0,
+        "scale": 92
+      },
+      "constantTracks": 94,
+      "stepChannels": 82,
+      "stepVarying": 0,
+      "maxStepRange": 0,
+      "animatedJoints": 0,
+      "minKeys": 2,
+      "maxKeys": 81,
+      "maxScaleDeviation": 0.0000011920928955078125,
+      "translatedBones": 8,
+      "maxTranslationRigUnits": 7.320654988222861,
+      "maxTranslationBone": "R_WingPanel0_1",
+      "bodyTranslationRigUnits": 0
+    },
+    "attackAir2": {
+      "duration": 3.3333332538604736,
+      "tracks": 276,
+      "byPath": {
+        "translation": 0,
+        "rotation": 0,
+        "scale": 92
+      },
+      "constantTracks": 94,
+      "stepChannels": 82,
+      "stepVarying": 0,
+      "maxStepRange": 0,
+      "animatedJoints": 0,
+      "minKeys": 2,
+      "maxKeys": 81,
+      "maxScaleDeviation": 0.0000011324882507324219,
+      "translatedBones": 17,
+      "maxTranslationRigUnits": 108.09880594855709,
+      "maxTranslationBone": "R_WingPanel0_0",
+      "bodyTranslationRigUnits": 34.999998888693085
+    },
+    "bankLeft": {
+      "duration": 6,
+      "tracks": 276,
+      "byPath": {
+        "translation": 0,
+        "rotation": 0,
+        "scale": 92
+      },
+      "constantTracks": 90,
+      "stepChannels": 82,
+      "stepVarying": 4,
+      "maxStepRange": 0.000007510185241699219,
+      "animatedJoints": 0,
+      "minKeys": 2,
+      "maxKeys": 145,
+      "maxScaleDeviation": 0.000007510185241699219,
+      "translatedBones": 16,
+      "maxTranslationRigUnits": 347.2131790685368,
+      "maxTranslationBone": "L_WingPanel0_0",
+      "bodyTranslationRigUnits": 0
+    },
+    "bankRight": {
+      "duration": 6,
+      "tracks": 276,
+      "byPath": {
+        "translation": 0,
+        "rotation": 0,
+        "scale": 92
+      },
+      "constantTracks": 89,
+      "stepChannels": 82,
+      "stepVarying": 5,
+      "maxStepRange": 0.0000073909759521484375,
+      "animatedJoints": 0,
+      "minKeys": 2,
+      "maxKeys": 145,
+      "maxScaleDeviation": 0.000007510185241699219,
+      "translatedBones": 16,
+      "maxTranslationRigUnits": 347.2136073705976,
+      "maxTranslationBone": "L_WingPanel0_0",
+      "bodyTranslationRigUnits": 0
+    },
+    "breath": {
+      "duration": 2,
+      "tracks": 276,
+      "byPath": {
+        "translation": 0,
+        "rotation": 0,
+        "scale": 92
+      },
+      "constantTracks": 93,
+      "stepChannels": 82,
+      "stepVarying": 1,
+      "maxStepRange": 0.0000011324882507324219,
+      "animatedJoints": 0,
+      "minKeys": 2,
+      "maxKeys": 49,
+      "maxScaleDeviation": 0.0000012516975402832031,
+      "translatedBones": 16,
+      "maxTranslationRigUnits": 36.818230181958256,
+      "maxTranslationBone": "L_WingPanel3_0",
+      "bodyTranslationRigUnits": 0
+    },
+    "cruise": {
+      "duration": 6,
+      "tracks": 276,
+      "byPath": {
+        "translation": 0,
+        "rotation": 0,
+        "scale": 92
+      },
+      "constantTracks": 89,
+      "stepChannels": 82,
+      "stepVarying": 5,
+      "maxStepRange": 0.0000069141387939453125,
+      "animatedJoints": 0,
+      "minKeys": 2,
+      "maxKeys": 145,
+      "maxScaleDeviation": 0.000007033348083496094,
+      "translatedBones": 16,
+      "maxTranslationRigUnits": 347.21282357745633,
+      "maxTranslationBone": "R_WingPanel0_0",
+      "bodyTranslationRigUnits": 0
+    },
+    "death": {
+      "duration": 4,
+      "tracks": 276,
+      "byPath": {
+        "translation": 0,
+        "rotation": 0,
+        "scale": 92
+      },
+      "constantTracks": 92,
+      "stepChannels": 82,
+      "stepVarying": 2,
+      "maxStepRange": 0.0000011324882507324219,
+      "animatedJoints": 0,
+      "minKeys": 2,
+      "maxKeys": 97,
+      "maxScaleDeviation": 0.0000012516975402832031,
+      "translatedBones": 17,
+      "maxTranslationRigUnits": 539.9998982388106,
+      "maxTranslationBone": "Body",
+      "bodyTranslationRigUnits": 539.9998982388106
+    },
+    "dive": {
+      "duration": 6,
+      "tracks": 276,
+      "byPath": {
+        "translation": 0,
+        "rotation": 0,
+        "scale": 92
+      },
+      "constantTracks": 92,
+      "stepChannels": 82,
+      "stepVarying": 2,
+      "maxStepRange": 0.00000667572021484375,
+      "animatedJoints": 0,
+      "minKeys": 2,
+      "maxKeys": 145,
+      "maxScaleDeviation": 0.0000069141387939453125,
+      "translatedBones": 17,
+      "maxTranslationRigUnits": 14.98762925266389,
+      "maxTranslationBone": "Body",
+      "bodyTranslationRigUnits": 14.98762925266389
+    },
+    "glide": {
+      "duration": 6,
+      "tracks": 276,
+      "byPath": {
+        "translation": 0,
+        "rotation": 0,
+        "scale": 92
+      },
+      "constantTracks": 90,
+      "stepChannels": 82,
+      "stepVarying": 4,
+      "maxStepRange": 0.0000073909759521484375,
+      "animatedJoints": 0,
+      "minKeys": 2,
+      "maxKeys": 145,
+      "maxScaleDeviation": 0.0000073909759521484375,
+      "translatedBones": 17,
+      "maxTranslationRigUnits": 10.475439406658207,
+      "maxTranslationBone": "R_WingPanel0_1",
+      "bodyTranslationRigUnits": 10.000312036555568
+    },
+    "hover": {
+      "duration": 6,
+      "tracks": 276,
+      "byPath": {
+        "translation": 0,
+        "rotation": 0,
+        "scale": 92
+      },
+      "constantTracks": 91,
+      "stepChannels": 82,
+      "stepVarying": 3,
+      "maxStepRange": 0.0000064373016357421875,
+      "animatedJoints": 0,
+      "minKeys": 2,
+      "maxKeys": 145,
+      "maxScaleDeviation": 0.00000667572021484375,
+      "translatedBones": 17,
+      "maxTranslationRigUnits": 15.939155030004944,
+      "maxTranslationBone": "Body",
+      "bodyTranslationRigUnits": 15.939155030004944
+    },
+    "idle": {
+      "duration": 6,
+      "tracks": 276,
+      "byPath": {
+        "translation": 0,
+        "rotation": 0,
+        "scale": 92
+      },
+      "constantTracks": 93,
+      "stepChannels": 82,
+      "stepVarying": 1,
+      "maxStepRange": 0.0000010728836059570312,
+      "animatedJoints": 0,
+      "minKeys": 2,
+      "maxKeys": 145,
+      "maxScaleDeviation": 0.0000010728836059570312,
+      "translatedBones": 8,
+      "maxTranslationRigUnits": 7.22994548670622,
+      "maxTranslationBone": "L_WingPanel0_1",
+      "bodyTranslationRigUnits": 0
+    },
+    "land": {
+      "duration": 3,
+      "tracks": 276,
+      "byPath": {
+        "translation": 0,
+        "rotation": 0,
+        "scale": 92
+      },
+      "constantTracks": 91,
+      "stepChannels": 82,
+      "stepVarying": 3,
+      "maxStepRange": 0.0000013113021850585938,
+      "animatedJoints": 0,
+      "minKeys": 2,
+      "maxKeys": 73,
+      "maxScaleDeviation": 0.0000012516975402832031,
+      "translatedBones": 17,
+      "maxTranslationRigUnits": 334.48590274665446,
+      "maxTranslationBone": "R_WingPanel1_0",
+      "bodyTranslationRigUnits": 64.99995854425886
+    },
+    "rest": {
+      "duration": 6,
+      "tracks": 276,
+      "byPath": {
+        "translation": 0,
+        "rotation": 0,
+        "scale": 92
+      },
+      "constantTracks": 93,
+      "stepChannels": 82,
+      "stepVarying": 1,
+      "maxStepRange": 0.000006556510925292969,
+      "animatedJoints": 0,
+      "minKeys": 2,
+      "maxKeys": 145,
+      "maxScaleDeviation": 0.000006556510925292969,
+      "translatedBones": 8,
+      "maxTranslationRigUnits": 7.2299233145397315,
+      "maxTranslationBone": "R_WingPanel0_1",
+      "bodyTranslationRigUnits": 0
+    },
+    "scout": {
+      "duration": 6,
+      "tracks": 276,
+      "byPath": {
+        "translation": 0,
+        "rotation": 0,
+        "scale": 92
+      },
+      "constantTracks": 90,
+      "stepChannels": 82,
+      "stepVarying": 4,
+      "maxStepRange": 0.000006794929504394531,
+      "animatedJoints": 0,
+      "minKeys": 2,
+      "maxKeys": 145,
+      "maxScaleDeviation": 0.000006794929504394531,
+      "translatedBones": 16,
+      "maxTranslationRigUnits": 9.783798902845813,
+      "maxTranslationBone": "R_WingPanel0_1",
+      "bodyTranslationRigUnits": 0
+    },
+    "speed": {
+      "duration": 5,
+      "tracks": 276,
+      "byPath": {
+        "translation": 0,
+        "rotation": 0,
+        "scale": 92
+      },
+      "constantTracks": 91,
+      "stepChannels": 82,
+      "stepVarying": 3,
+      "maxStepRange": 0.00000762939453125,
+      "animatedJoints": 0,
+      "minKeys": 2,
+      "maxKeys": 121,
+      "maxScaleDeviation": 0.00000762939453125,
+      "translatedBones": 9,
+      "maxTranslationRigUnits": 7.606729461589722,
+      "maxTranslationBone": "L_WingPanel0_1",
+      "bodyTranslationRigUnits": 5.112393738152387
+    },
+    "takeoff": {
+      "duration": 3,
+      "tracks": 276,
+      "byPath": {
+        "translation": 0,
+        "rotation": 0,
+        "scale": 92
+      },
+      "constantTracks": 93,
+      "stepChannels": 82,
+      "stepVarying": 1,
+      "maxStepRange": 0.0000012516975402832031,
+      "animatedJoints": 0,
+      "minKeys": 2,
+      "maxKeys": 73,
+      "maxScaleDeviation": 0.0000017285346984863281,
+      "translatedBones": 17,
+      "maxTranslationRigUnits": 1187.6713597769196,
+      "maxTranslationBone": "Body",
+      "bodyTranslationRigUnits": 1187.6713597769196
+    },
+    "walk": {
+      "duration": 2.4583332538604736,
+      "tracks": 276,
+      "byPath": {
+        "translation": 0,
+        "rotation": 0,
+        "scale": 92
+      },
+      "constantTracks": 93,
+      "stepChannels": 82,
+      "stepVarying": 1,
+      "maxStepRange": 0.0000011920928955078125,
+      "animatedJoints": 0,
+      "minKeys": 2,
+      "maxKeys": 60,
+      "maxScaleDeviation": 0.0000013709068298339844,
+      "translatedBones": 17,
+      "maxTranslationRigUnits": 226.7933687086252,
+      "maxTranslationBone": "Body",
+      "bodyTranslationRigUnits": 226.7933687086252
+    }
+  },
+  "clips": [
+    {
+      "name": "attack",
+      "duration": 1.5,
+      "frames": 91,
+      "loops": false,
+      "angular": {
+        "peak": {
+          "value": 8.831423386799425,
+          "joint": "Head",
+          "frame": 34,
+          "time": 0.5666666666666667
+        },
+        "mean": 1.4541712399250881,
+        "localMean": 0.20731242761461666,
+        "localPeak": {
+          "value": 4.095712170596838,
+          "joint": "Head",
+          "frame": 34
+        },
+        "p95": 6.040996866287015,
+        "accelMax": 392.48844188139697,
+        "accelP95": 58.41927404375255,
+        "outlierThreshold": 48.03471846034317,
+        "outlier": false,
+        "accelSpike": false
+      },
+      "linear": {
+        "maxWorldSpeed": {
+          "value": 14564.654427565009,
+          "joint": "R_WingD0P2",
+          "frame": 37
+        },
+        "p95": 5856.044407175169
+      },
+      "translate": {
+        "Root": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "RootMotion": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "Body": {
+          "worldRange": [
+            0.0006621163778737174,
+            25.924878509459745,
+            1.9752477766485868
+          ],
+          "localRange": 26.000019959420452,
+          "startEnd": 0
+        }
+      },
+      "seam": {
+        "rotationRad": 2.919981050990416e-7,
+        "joint": "L_WingD0P0",
+        "positionRigUnits": 0.00126674940917981,
+        "velocity": 0.000024411189546528223,
+        "meanVelocity": 1.4541712399250881
+      },
+      "contact": {
+        "L_Toes": {
+          "minY": 120.71595617962649,
+          "verticalRange": 33.57634438114596,
+          "duty": 0.13186813186813187,
+          "slipRigUnits": 68.55466629538793,
+          "slipMetres": 0.06344772257143823
+        },
+        "R_Toes": {
+          "minY": 120.71627838926395,
+          "verticalRange": 33.57646325713972,
+          "duty": 0.13186813186813187,
+          "slipRigUnits": 68.55627172992911,
+          "slipMetres": 0.06344920840997964
+        },
+        "L_Foot": {
+          "minY": 265.4888906373055,
+          "verticalRange": 45.355847135278566,
+          "duty": 0.0989010989010989,
+          "slipRigUnits": 33.61668165631702,
+          "slipMetres": 0.03111242467889967
+        },
+        "R_Foot": {
+          "minY": 265.4889996175729,
+          "verticalRange": 45.356083197928,
+          "duty": 0.0989010989010989,
+          "slipRigUnits": 33.61738259453358,
+          "slipMetres": 0.03111307340109332
+        },
+        "L_WingHand": {
+          "minY": 718.8052556049256,
+          "verticalRange": 698.7745575893682,
+          "duty": 0.4725274725274725,
+          "slipRigUnits": 12.327207812324064,
+          "slipMetres": 0.011408898965195922
+        },
+        "R_WingHand": {
+          "minY": 718.8053902315065,
+          "verticalRange": 698.773774948868,
+          "duty": 0.4725274725274725,
+          "slipRigUnits": 12.331567097911389,
+          "slipMetres": 0.011412933508101616
+        }
+      },
+      "groundMin": 120.71595617962649,
+      "mesh": {
+        "minY": -41.661923282397765,
+        "maxY": 3125.608796867837,
+        "perMesh": [
+          {
+            "mesh": "SKM_DaenerysDragon001",
+            "minY": -7.067729677499074,
+            "maxY": 1467.7661471331987
+          },
+          {
+            "mesh": "SKM_DaenerysDragon001_1",
+            "minY": 157.9632902078733,
+            "maxY": 1025.1975979699505
+          },
+          {
+            "mesh": "WyvernMembrane_ExportSafe",
+            "minY": -41.661923282397765,
+            "maxY": 3125.608796867837
+          }
+        ]
+      },
+      "foot": {
+        "min": -7.672308561155091,
+        "max": 0.6240599565306866,
+        "range": 8.296368517685778,
+        "vertices": 1084
+      },
+      "edge": {
+        "p99Max": 1.4102489501260937,
+        "maxMax": 10.192998871851886,
+        "p01Min": 0.8358662510093386,
+        "edges": 58547
+      },
+      "footBelowOrigin": -7.672308561155091,
+      "belowFeetRigUnits": 33.989614721242674,
+      "belowOriginRigUnits": 41.661923282397765,
+      "runtimeBelowOriginRigUnits": -1.2963648149225264,
+      "contactSummary": {
+        "lowestDuty": 0.0989010989010989,
+        "highestDuty": 0.4725274725274725,
+        "totalDuty": 1.4065934065934065,
+        "maxSlipRigUnits": 68.55627172992911
+      },
+      "ms": 411
+    },
+    {
+      "name": "attack2",
+      "duration": 3.3333332538604736,
+      "frames": 201,
+      "loops": false,
+      "angular": {
+        "peak": {
+          "value": 29.577751661339,
+          "joint": "Tail10",
+          "frame": 127,
+          "time": 2.116666616201401
+        },
+        "mean": 1.301136173008746,
+        "localMean": 0.1904632829927385,
+        "localPeak": {
+          "value": 16.22584725401173,
+          "joint": "R_WingShoulder",
+          "frame": 79
+        },
+        "p95": 3.5859077663960055,
+        "accelMax": 1460.646992641239,
+        "accelP95": 27.69440521465208,
+        "outlierThreshold": 48.03471846034317,
+        "outlier": false,
+        "accelSpike": true
+      },
+      "linear": {
+        "maxWorldSpeed": {
+          "value": 11180.161049331173,
+          "joint": "R_WingD0P2",
+          "frame": 80
+        },
+        "p95": 2844.68714854868
+      },
+      "translate": {
+        "Root": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "RootMotion": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "Body": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        }
+      },
+      "seam": {
+        "rotationRad": 0.37110061200682526,
+        "joint": "Tail10",
+        "positionRigUnits": 20.233538245176426,
+        "velocity": 69.06537282062202,
+        "meanVelocity": 1.301136173008746
+      },
+      "contact": {
+        "L_Toes": {
+          "minY": 199.01593120156423,
+          "verticalRange": 112.6759749088975,
+          "duty": 0.263681592039801,
+          "slipRigUnits": 189.5227892592228,
+          "slipMetres": 0.17540438898895638
+        },
+        "R_Toes": {
+          "minY": 206.9538009602304,
+          "verticalRange": 214.2536091311631,
+          "duty": 0.14925373134328357,
+          "slipRigUnits": 59.90815241051769,
+          "slipMetres": 0.05544532618001646
+        },
+        "L_Foot": {
+          "minY": 355.66135802894314,
+          "verticalRange": 112.95896671350192,
+          "duty": 0.19402985074626866,
+          "slipRigUnits": 88.07342819836637,
+          "slipMetres": 0.08151244459666161
+        },
+        "R_Foot": {
+          "minY": 375.5959446175051,
+          "verticalRange": 177.2476392820405,
+          "duty": 0.14925373134328357,
+          "slipRigUnits": 40.55370436937369,
+          "slipMetres": 0.03753267754211572
+        },
+        "L_WingHand": {
+          "minY": 57.586189396592886,
+          "verticalRange": 715.5073033754869,
+          "duty": 0.05472636815920398,
+          "slipRigUnits": 32.94309257359,
+          "slipMetres": 0.030489014259777132
+        },
+        "R_WingHand": {
+          "minY": 72.01573508071453,
+          "verticalRange": 766.7112394303932,
+          "duty": 0.05472636815920398,
+          "slipRigUnits": 58.67191550789249,
+          "slipMetres": 0.054301182093713554
+        }
+      },
+      "groundMin": 57.586189396592886,
+      "mesh": {
+        "minY": -1669.558536109909,
+        "maxY": 1763.6942042888672,
+        "perMesh": [
+          {
+            "mesh": "SKM_DaenerysDragon001",
+            "minY": -199.8873780502599,
+            "maxY": 1196.5977491755714
+          },
+          {
+            "mesh": "SKM_DaenerysDragon001_1",
+            "minY": -78.72655142707141,
+            "maxY": 1074.7271295061623
+          },
+          {
+            "mesh": "WyvernMembrane_ExportSafe",
+            "minY": -1669.558536109909,
+            "maxY": 1763.6942042888672
+          }
+        ]
+      },
+      "foot": {
+        "min": 24.46776069705811,
+        "max": 71.39007000633023,
+        "range": 46.92230930927212,
+        "vertices": 1084
+      },
+      "edge": {
+        "p99Max": 1.382161861595083,
+        "maxMax": 7.073107858726993,
+        "p01Min": 0.6295402119207271,
+        "edges": 58547
+      },
+      "footBelowOrigin": 24.46776069705811,
+      "belowFeetRigUnits": 1694.0262968069671,
+      "belowOriginRigUnits": 1669.558536109909,
+      "runtimeBelowOriginRigUnits": -1629.1929776424338,
+      "contactSummary": {
+        "lowestDuty": 0.05472636815920398,
+        "highestDuty": 0.263681592039801,
+        "totalDuty": 0.8656716417910447,
+        "maxSlipRigUnits": 189.5227892592228
+      },
+      "ms": 582
+    },
+    {
+      "name": "attackAir2",
+      "duration": 3.3333332538604736,
+      "frames": 201,
+      "loops": false,
+      "angular": {
+        "peak": {
+          "value": 18.793201690953452,
+          "joint": "Tail9",
+          "frame": 115,
+          "time": 1.9166666209697723
+        },
+        "mean": 2.850457674433848,
+        "localMean": 0.4326459891360078,
+        "localPeak": {
+          "value": 11.135753526270769,
+          "joint": "Tail9",
+          "frame": 117
+        },
+        "p95": 7.102167214897099,
+        "accelMax": 468.10511316714053,
+        "accelP95": 71.80703508163802,
+        "outlierThreshold": 48.03471846034317,
+        "outlier": false,
+        "accelSpike": false
+      },
+      "linear": {
+        "maxWorldSpeed": {
+          "value": 16975.74328008712,
+          "joint": "L_WingD0P2",
+          "frame": 94
+        },
+        "p95": 6031.766426615521
+      },
+      "translate": {
+        "Root": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "RootMotion": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "Body": {
+          "worldRange": [
+            0.0008908341663698524,
+            34.880224553062135,
+            2.657518210380829
+          ],
+          "localRange": 34.999998888693085,
+          "startEnd": 0
+        }
+      },
+      "seam": {
+        "rotationRad": 0.0008887461643641598,
+        "joint": "L_WingD0P2",
+        "positionRigUnits": 0.15966216967120853,
+        "velocity": 0.053312894487369714,
+        "meanVelocity": 2.850457674433848
+      },
+      "contact": {
+        "L_Toes": {
+          "minY": 65.01740806910843,
+          "verticalRange": 459.54502921818596,
+          "duty": 0.13930348258706468,
+          "slipRigUnits": 305.278840042871,
+          "slipMetres": 0.2825372537955688
+        },
+        "R_Toes": {
+          "minY": 65.01683194034635,
+          "verticalRange": 461.2330583146231,
+          "duty": 0.13930348258706468,
+          "slipRigUnits": 305.2767314926463,
+          "slipMetres": 0.2825353023206815
+        },
+        "L_Foot": {
+          "minY": 219.3907990693466,
+          "verticalRange": 457.6154578303764,
+          "duty": 0.1044776119402985,
+          "slipRigUnits": 157.2565244346605,
+          "slipMetres": 0.14554178255186379
+        },
+        "R_Foot": {
+          "minY": 219.39046811775336,
+          "verticalRange": 458.67787494465927,
+          "duty": 0.1044776119402985,
+          "slipRigUnits": 157.25503069554222,
+          "slipMetres": 0.14554040008805363
+        },
+        "L_WingHand": {
+          "minY": 55.42819446341616,
+          "verticalRange": 633.5761227684621,
+          "duty": 0.01990049751243781,
+          "slipRigUnits": 152.13139659187772,
+          "slipMetres": 0.14079844840578376
+        },
+        "R_WingHand": {
+          "minY": 45.8770384176708,
+          "verticalRange": 505.6309208737154,
+          "duty": 0.01990049751243781,
+          "slipRigUnits": 179.8111607489962,
+          "slipMetres": 0.16641622312467033
+        }
+      },
+      "groundMin": 45.8770384176708,
+      "mesh": {
+        "minY": -1626.8914229265847,
+        "maxY": 2882.8490249452716,
+        "perMesh": [
+          {
+            "mesh": "SKM_DaenerysDragon001",
+            "minY": -354.2318606982228,
+            "maxY": 2882.8490249452716
+          },
+          {
+            "mesh": "SKM_DaenerysDragon001_1",
+            "minY": -499.17501809838177,
+            "maxY": 1360.8229887720881
+          },
+          {
+            "mesh": "WyvernMembrane_ExportSafe",
+            "minY": -1626.8914229265847,
+            "maxY": 2055.5783199232524
+          }
+        ]
+      },
+      "foot": {
+        "min": -168.4600270905347,
+        "max": 311.3610213132605,
+        "range": 479.8210484037952,
+        "vertices": 1084
+      },
+      "edge": {
+        "p99Max": 1.573453934998521,
+        "maxMax": 7.616079776784273,
+        "p01Min": 0.6996699652573423,
+        "edges": 58547
+      },
+      "footBelowOrigin": -168.4600270905347,
+      "belowFeetRigUnits": 1458.43139583605,
+      "belowOriginRigUnits": 1626.8914229265847,
+      "runtimeBelowOriginRigUnits": -1586.5258644591095,
+      "contactSummary": {
+        "lowestDuty": 0.01990049751243781,
+        "highestDuty": 0.13930348258706468,
+        "totalDuty": 0.527363184079602,
+        "maxSlipRigUnits": 305.278840042871
+      },
+      "ms": 419
+    },
+    {
+      "name": "bankLeft",
+      "duration": 6,
+      "frames": 361,
+      "loops": true,
+      "angular": {
+        "peak": {
+          "value": 12.072854150425547,
+          "joint": "R_WingD2P2",
+          "frame": 66,
+          "time": 1.1
+        },
+        "mean": 1.7534195143739402,
+        "localMean": 0.4913684463594261,
+        "localPeak": {
+          "value": 6.574998245161535,
+          "joint": "R_WingShoulder",
+          "frame": 312
+        },
+        "p95": 6.132681325309383,
+        "accelMax": 344.1182903643101,
+        "accelP95": 50.191127145363936,
+        "outlierThreshold": 48.03471846034317,
+        "outlier": false,
+        "accelSpike": false
+      },
+      "linear": {
+        "maxWorldSpeed": {
+          "value": 26788.846068112878,
+          "joint": "R_WingD0P2",
+          "frame": 67
+        },
+        "p95": 5486.186790193309
+      },
+      "translate": {
+        "Root": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "RootMotion": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "Body": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        }
+      },
+      "seam": {
+        "rotationRad": 4.527626027293399e-7,
+        "joint": "R_WingD3P0",
+        "positionRigUnits": 0.0025892028218688426,
+        "velocity": 0.000034164592259282036,
+        "meanVelocity": 1.7534195143739402
+      },
+      "contact": {
+        "L_Toes": {
+          "minY": 348.03407378204497,
+          "verticalRange": 0,
+          "duty": 1,
+          "slipRigUnits": 0,
+          "slipMetres": 0
+        },
+        "R_Toes": {
+          "minY": 158.0480245353554,
+          "verticalRange": 0,
+          "duty": 1,
+          "slipRigUnits": 0,
+          "slipMetres": 0
+        },
+        "L_Foot": {
+          "minY": 483.9524291385705,
+          "verticalRange": 0,
+          "duty": 1,
+          "slipRigUnits": 0,
+          "slipMetres": 0
+        },
+        "R_Foot": {
+          "minY": 328.30871465964043,
+          "verticalRange": 0,
+          "duty": 1,
+          "slipRigUnits": 0,
+          "slipMetres": 0
+        },
+        "L_WingHand": {
+          "minY": 557.9482447054506,
+          "verticalRange": 721.2270813424127,
+          "duty": 0.008310249307479225,
+          "slipRigUnits": 0,
+          "slipMetres": 0
+        },
+        "R_WingHand": {
+          "minY": -289.1345543000277,
+          "verticalRange": 919.0204524434216,
+          "duty": 0.024930747922437674,
+          "slipRigUnits": 232.92749721196301,
+          "slipMetres": 0.21557568610553254
+        }
+      },
+      "groundMin": -289.1345543000277,
+      "mesh": {
+        "minY": -2033.4921640518935,
+        "maxY": 2887.7750172807323,
+        "perMesh": [
+          {
+            "mesh": "SKM_DaenerysDragon001",
+            "minY": -465.853067278495,
+            "maxY": 1371.8415323141767
+          },
+          {
+            "mesh": "SKM_DaenerysDragon001_1",
+            "minY": 387.89519074146335,
+            "maxY": 862.2398807914515
+          },
+          {
+            "mesh": "WyvernMembrane_ExportSafe",
+            "minY": -2033.4921640518935,
+            "maxY": 2887.7750172807323
+          }
+        ]
+      },
+      "foot": {
+        "min": -82.5093535232279,
+        "max": -82.5093535232279,
+        "range": 0,
+        "vertices": 1084
+      },
+      "edge": {
+        "p99Max": 1.598478975207412,
+        "maxMax": 46.41499501573054,
+        "p01Min": 0.6789255371673294,
+        "edges": 58547
+      },
+      "footBelowOrigin": -82.5093535232279,
+      "belowFeetRigUnits": 1950.9828105286656,
+      "belowOriginRigUnits": 2033.4921640518935,
+      "runtimeBelowOriginRigUnits": -1993.1266055844183,
+      "contactSummary": {
+        "lowestDuty": 0.008310249307479225,
+        "highestDuty": 1,
+        "totalDuty": 4.0332409972299175,
+        "maxSlipRigUnits": 232.92749721196301
+      },
+      "ms": 409
+    },
+    {
+      "name": "bankRight",
+      "duration": 6,
+      "frames": 361,
+      "loops": true,
+      "angular": {
+        "peak": {
+          "value": 12.072848459029254,
+          "joint": "L_WingD2P2",
+          "frame": 66,
+          "time": 1.1
+        },
+        "mean": 1.7534192581207975,
+        "localMean": 0.49136845998411566,
+        "localPeak": {
+          "value": 6.57499087566694,
+          "joint": "L_WingShoulder",
+          "frame": 312
+        },
+        "p95": 6.132680667965338,
+        "accelMax": 344.1174928595671,
+        "accelP95": 50.19197469987819,
+        "outlierThreshold": 48.03471846034317,
+        "outlier": false,
+        "accelSpike": false
+      },
+      "linear": {
+        "maxWorldSpeed": {
+          "value": 26788.734166966467,
+          "joint": "L_WingD0P2",
+          "frame": 67
+        },
+        "p95": 5486.181084160005
+      },
+      "translate": {
+        "Root": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "RootMotion": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "Body": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        }
+      },
+      "seam": {
+        "rotationRad": 1.9961164586446736e-7,
+        "joint": "L_WingD1P0",
+        "positionRigUnits": 0.0015577140832207382,
+        "velocity": 0.000016781491914658574,
+        "meanVelocity": 1.7534192581207975
+      },
+      "contact": {
+        "L_Toes": {
+          "minY": 158.0467339944332,
+          "verticalRange": 0,
+          "duty": 1,
+          "slipRigUnits": 0,
+          "slipMetres": 0
+        },
+        "R_Toes": {
+          "minY": 348.03380956569777,
+          "verticalRange": 0,
+          "duty": 1,
+          "slipRigUnits": 0,
+          "slipMetres": 0
+        },
+        "L_Foot": {
+          "minY": 328.307505018963,
+          "verticalRange": 0,
+          "duty": 1,
+          "slipRigUnits": 0,
+          "slipMetres": 0
+        },
+        "R_Foot": {
+          "minY": 483.9519261208816,
+          "verticalRange": 0,
+          "duty": 1,
+          "slipRigUnits": 0,
+          "slipMetres": 0
+        },
+        "L_WingHand": {
+          "minY": -289.1328562732382,
+          "verticalRange": 919.0180459581003,
+          "duty": 0.024930747922437674,
+          "slipRigUnits": 232.92663808423148,
+          "slipMetres": 0.21557489097806845
+        },
+        "R_WingHand": {
+          "minY": 557.9487968926773,
+          "verticalRange": 721.2274316124605,
+          "duty": 0.008310249307479225,
+          "slipRigUnits": 0,
+          "slipMetres": 0
+        }
+      },
+      "groundMin": -289.1328562732382,
+      "mesh": {
+        "minY": -2031.7927294800197,
+        "maxY": 2889.9553564329567,
+        "perMesh": [
+          {
+            "mesh": "SKM_DaenerysDragon001",
+            "minY": -465.8533772482184,
+            "maxY": 1350.3298371097833
+          },
+          {
+            "mesh": "SKM_DaenerysDragon001_1",
+            "minY": 387.89593349255887,
+            "maxY": 862.2393722016916
+          },
+          {
+            "mesh": "WyvernMembrane_ExportSafe",
+            "minY": -2031.7927294800197,
+            "maxY": 2889.9553564329567
+          }
+        ]
+      },
+      "foot": {
+        "min": -82.51066238845635,
+        "max": -82.51066238845635,
+        "range": 0,
+        "vertices": 1084
+      },
+      "edge": {
+        "p99Max": 1.597620837313681,
+        "maxMax": 52.37456227775635,
+        "p01Min": 0.6781693526879149,
+        "edges": 58547
+      },
+      "footBelowOrigin": -82.51066238845635,
+      "belowFeetRigUnits": 1949.2820670915635,
+      "belowOriginRigUnits": 2031.7927294800197,
+      "runtimeBelowOriginRigUnits": -1991.4271710125445,
+      "contactSummary": {
+        "lowestDuty": 0.008310249307479225,
+        "highestDuty": 1,
+        "totalDuty": 4.0332409972299175,
+        "maxSlipRigUnits": 232.92663808423148
+      },
+      "ms": 397
+    },
+    {
+      "name": "breath",
+      "duration": 2,
+      "frames": 121,
+      "loops": false,
+      "angular": {
+        "peak": {
+          "value": 24.915123121519407,
+          "joint": "L_WingD3P1",
+          "frame": 46,
+          "time": 0.7666666666666667
+        },
+        "mean": 2.0811346712610868,
+        "localMean": 0.23705156245746606,
+        "localPeak": {
+          "value": 24.67190092748696,
+          "joint": "L_WingD4P0",
+          "frame": 47
+        },
+        "p95": 6.4436840809987785,
+        "accelMax": 1385.401193814415,
+        "accelP95": 99.09259814965047,
+        "outlierThreshold": 48.03471846034317,
+        "outlier": false,
+        "accelSpike": true
+      },
+      "linear": {
+        "maxWorldSpeed": {
+          "value": 18384.017098869765,
+          "joint": "L_WingD0P2",
+          "frame": 14
+        },
+        "p95": 6404.786578064948
+      },
+      "translate": {
+        "Root": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "RootMotion": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "Body": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        }
+      },
+      "seam": {
+        "rotationRad": 1.787570629605649e-7,
+        "joint": "R_WingPanel3_0",
+        "positionRigUnits": 0.0003835151713747634,
+        "velocity": 0.00001072542375604632,
+        "meanVelocity": 2.0811346712610868
+      },
+      "contact": {
+        "L_Toes": {
+          "minY": 135.88195420730767,
+          "verticalRange": 25.718346600951406,
+          "duty": 0.5454545454545454,
+          "slipRigUnits": 272.40326588194813,
+          "slipMetres": 0.2521107281999026
+        },
+        "R_Toes": {
+          "minY": 135.88266462340067,
+          "verticalRange": 25.71821191982488,
+          "duty": 0.5454545454545454,
+          "slipRigUnits": 272.4055139164706,
+          "slipMetres": 0.25211280876827846
+        },
+        "L_Foot": {
+          "minY": 279.3763937621357,
+          "verticalRange": 37.44329595079353,
+          "duty": 0.19008264462809918,
+          "slipRigUnits": 86.03890248574878,
+          "slipMetres": 0.07962947980441226
+        },
+        "R_Foot": {
+          "minY": 279.37725724430015,
+          "verticalRange": 37.4427660094064,
+          "duty": 0.19008264462809918,
+          "slipRigUnits": 86.03998359203108,
+          "slipMetres": 0.07963048037425202
+        },
+        "L_WingHand": {
+          "minY": 724.6180477252881,
+          "verticalRange": 980.7315328722052,
+          "duty": 0.06611570247933884,
+          "slipRigUnits": 1.8147301632663533,
+          "slipMetres": 0.0016795427964717633
+        },
+        "R_WingHand": {
+          "minY": 724.6179281202355,
+          "verticalRange": 980.7318120513303,
+          "duty": 0.06611570247933884,
+          "slipRigUnits": 1.8144879707036752,
+          "slipMetres": 0.001679318645916359
+        }
+      },
+      "groundMin": 135.88195420730767,
+      "mesh": {
+        "minY": -41.66214664624022,
+        "maxY": 3632.989922334815,
+        "perMesh": [
+          {
+            "mesh": "SKM_DaenerysDragon001",
+            "minY": -2.654205695701876,
+            "maxY": 1753.3039195973342
+          },
+          {
+            "mesh": "SKM_DaenerysDragon001_1",
+            "minY": 31.767479380825954,
+            "maxY": 1146.6298025823114
+          },
+          {
+            "mesh": "WyvernMembrane_ExportSafe",
+            "minY": -41.66214664624022,
+            "maxY": 3632.989922334815
+          }
+        ]
+      },
+      "foot": {
+        "min": -2.654205695701876,
+        "max": 82.65899433670182,
+        "range": 85.3132000324037,
+        "vertices": 1084
+      },
+      "edge": {
+        "p99Max": 2.009213413177777,
+        "maxMax": 14.164946692900966,
+        "p01Min": 0.7105846509857162,
+        "edges": 58547
+      },
+      "footBelowOrigin": -2.654205695701876,
+      "belowFeetRigUnits": 39.00794095053834,
+      "belowOriginRigUnits": 41.66214664624022,
+      "runtimeBelowOriginRigUnits": -1.2965881787649778,
+      "contactSummary": {
+        "lowestDuty": 0.06611570247933884,
+        "highestDuty": 0.5454545454545454,
+        "totalDuty": 1.603305785123967,
+        "maxSlipRigUnits": 272.4055139164706
+      },
+      "ms": 393
+    },
+    {
+      "name": "cruise",
+      "duration": 6,
+      "frames": 361,
+      "loops": true,
+      "angular": {
+        "peak": {
+          "value": 6.420041096761368,
+          "joint": "R_WingD4P2",
+          "frame": 340,
+          "time": 5.666666666666667
+        },
+        "mean": 1.6777388252985528,
+        "localMean": 0.538939122559287,
+        "localPeak": {
+          "value": 5.570986413084653,
+          "joint": "L_WingHand",
+          "frame": 124
+        },
+        "p95": 4.476537641851657,
+        "accelMax": 81.71237154479702,
+        "accelP95": 32.268712152719154,
+        "outlierThreshold": 48.03471846034317,
+        "outlier": false,
+        "accelSpike": false
+      },
+      "linear": {
+        "maxWorldSpeed": {
+          "value": 11996.829669547365,
+          "joint": "L_WingD0P2",
+          "frame": 340
+        },
+        "p95": 4458.441257575277
+      },
+      "translate": {
+        "Root": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "RootMotion": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "Body": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        }
+      },
+      "seam": {
+        "rotationRad": 4.974756253865709e-16,
+        "joint": "L_WingPanel2_0",
+        "positionRigUnits": 0.00023940501442044971,
+        "velocity": 5.33037140202782e-14,
+        "meanVelocity": 1.6777388252985528
+      },
+      "contact": {
+        "L_Toes": {
+          "minY": 275.55419542258903,
+          "verticalRange": 0,
+          "duty": 1,
+          "slipRigUnits": 0,
+          "slipMetres": 0
+        },
+        "R_Toes": {
+          "minY": 275.5541552332516,
+          "verticalRange": 0,
+          "duty": 1,
+          "slipRigUnits": 0,
+          "slipMetres": 0
+        },
+        "L_Foot": {
+          "minY": 438.0005561672829,
+          "verticalRange": 0,
+          "duty": 1,
+          "slipRigUnits": 0,
+          "slipMetres": 0
+        },
+        "R_Foot": {
+          "minY": 438.0007957165541,
+          "verticalRange": 0,
+          "duty": 1,
+          "slipRigUnits": 0,
+          "slipMetres": 0
+        },
+        "L_WingHand": {
+          "minY": 238.3936317885197,
+          "verticalRange": 1265.69682334976,
+          "duty": 0.04155124653739612,
+          "slipRigUnits": 192.13469885821812,
+          "slipMetres": 0.17782172575936203
+        },
+        "R_WingHand": {
+          "minY": 238.39423043249502,
+          "verticalRange": 1265.695519327498,
+          "duty": 0.04155124653739612,
+          "slipRigUnits": 192.13392459197297,
+          "slipMetres": 0.17782100917167262
+        }
+      },
+      "groundMin": 238.3936317885197,
+      "mesh": {
+        "minY": -739.0302431661987,
+        "maxY": 3019.616071800382,
+        "perMesh": [
+          {
+            "mesh": "SKM_DaenerysDragon001",
+            "minY": 19.163210161664324,
+            "maxY": 1578.5037049517996
+          },
+          {
+            "mesh": "SKM_DaenerysDragon001_1",
+            "minY": 398.529162493776,
+            "maxY": 848.1305219722401
+          },
+          {
+            "mesh": "WyvernMembrane_ExportSafe",
+            "minY": -739.0302431661987,
+            "maxY": 3019.616071800382
+          }
+        ]
+      },
+      "foot": {
+        "min": 27.123833435431038,
+        "max": 27.123833435431038,
+        "range": 0,
+        "vertices": 1084
+      },
+      "edge": {
+        "p99Max": 1.6729090170501144,
+        "maxMax": 34.72733495494647,
+        "p01Min": 0.6872704412792071,
+        "edges": 58547
+      },
+      "footBelowOrigin": 27.123833435431038,
+      "belowFeetRigUnits": 766.1540766016298,
+      "belowOriginRigUnits": 739.0302431661987,
+      "runtimeBelowOriginRigUnits": -698.6646846987235,
+      "contactSummary": {
+        "lowestDuty": 0.04155124653739612,
+        "highestDuty": 1,
+        "totalDuty": 4.083102493074792,
+        "maxSlipRigUnits": 192.13469885821812
+      },
+      "ms": 415
+    },
+    {
+      "name": "death",
+      "duration": 4,
+      "frames": 241,
+      "loops": false,
+      "angular": {
+        "peak": {
+          "value": 10.829295414244692,
+          "joint": "R_WingPanel0_0",
+          "frame": 146,
+          "time": 2.433333333333333
+        },
+        "mean": 0.6795445696686079,
+        "localMean": 0.13527408237900848,
+        "localPeak": {
+          "value": 10.834107106795505,
+          "joint": "R_WingD0P0",
+          "frame": 147
+        },
+        "p95": 1.2440106786723,
+        "accelMax": 366.8193587515274,
+        "accelP95": 6.192353229809301,
+        "outlierThreshold": 48.03471846034317,
+        "outlier": false,
+        "accelSpike": true
+      },
+      "linear": {
+        "maxWorldSpeed": {
+          "value": 15887.735683930061,
+          "joint": "R_WingD0P2",
+          "frame": 147
+        },
+        "p95": 1033.7597346195412
+      },
+      "translate": {
+        "Root": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "RootMotion": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "Body": {
+          "worldRange": [
+            0.013751642280174042,
+            538.4393199464228,
+            41.02382132081368
+          ],
+          "localRange": 539.9998982388106,
+          "startEnd": 519.9998503240115
+        }
+      },
+      "seam": {
+        "rotationRad": 1.4645235127688387,
+        "joint": "R_WingD1P0",
+        "positionRigUnits": 2565.188536960864,
+        "velocity": 158.05158341956073,
+        "meanVelocity": 0.6795445696686079
+      },
+      "contact": {
+        "L_Toes": {
+          "minY": -121.77778240050836,
+          "verticalRange": 271.3998014339169,
+          "duty": 0.31950207468879666,
+          "slipRigUnits": 2.6438767517413315,
+          "slipMetres": 0.0024469225469608133
+        },
+        "R_Toes": {
+          "minY": -213.94443414653267,
+          "verticalRange": 363.56787325752873,
+          "duty": 0.31950207468879666,
+          "slipRigUnits": 2.8137033093536234,
+          "slipMetres": 0.002604097964695608
+        },
+        "L_Foot": {
+          "minY": 49.12307994031112,
+          "verticalRange": 248.29026685925766,
+          "duty": 0.31950207468879666,
+          "slipRigUnits": 2.7113674142424355,
+          "slipMetres": 0.0025093855281396846
+        },
+        "R_Foot": {
+          "minY": -65.27152681598264,
+          "verticalRange": 362.51338060810394,
+          "duty": 0.31950207468879666,
+          "slipRigUnits": 3.0067746533531365,
+          "slipMetres": 0.00278278656071026
+        },
+        "L_WingHand": {
+          "minY": 398.0494821617122,
+          "verticalRange": 532.1370115232367,
+          "duty": 0.27800829875518673,
+          "slipRigUnits": 11.411040498846802,
+          "slipMetres": 0.010560981052736682
+        },
+        "R_WingHand": {
+          "minY": -332.1775276725763,
+          "verticalRange": 1262.3647099652908,
+          "duty": 0.02074688796680498,
+          "slipRigUnits": 6.109816055203742,
+          "slipMetres": 0.005654668529240086
+        }
+      },
+      "groundMin": -332.1775276725763,
+      "mesh": {
+        "minY": -783.4923811142264,
+        "maxY": 2454.6290136737266,
+        "perMesh": [
+          {
+            "mesh": "SKM_DaenerysDragon001",
+            "minY": -614.5572605379355,
+            "maxY": 2454.6290136737266
+          },
+          {
+            "mesh": "SKM_DaenerysDragon001_1",
+            "minY": -729.0107473218573,
+            "maxY": 1669.7675763205339
+          },
+          {
+            "mesh": "WyvernMembrane_ExportSafe",
+            "minY": -783.4923811142264,
+            "maxY": 2055.635201681231
+          }
+        ]
+      },
+      "foot": {
+        "min": -394.07034175390845,
+        "max": 34.17271179347051,
+        "range": 428.24305354737896,
+        "vertices": 1084
+      },
+      "edge": {
+        "p99Max": 2.145271494983537,
+        "maxMax": 13.419112525886808,
+        "p01Min": 0.6502063552937665,
+        "edges": 58547
+      },
+      "footBelowOrigin": -394.07034175390845,
+      "belowFeetRigUnits": 389.42203936031797,
+      "belowOriginRigUnits": 783.4923811142264,
+      "runtimeBelowOriginRigUnits": -743.1268226467512,
+      "contactSummary": {
+        "lowestDuty": 0.02074688796680498,
+        "highestDuty": 0.31950207468879666,
+        "totalDuty": 1.5767634854771782,
+        "maxSlipRigUnits": 11.411040498846802
+      },
+      "ms": 484
+    },
+    {
+      "name": "dive",
+      "duration": 6,
+      "frames": 361,
+      "loops": true,
+      "angular": {
+        "peak": {
+          "value": 0.7557947047697323,
+          "joint": "Tail10",
+          "frame": 139,
+          "time": 2.316666666666667
+        },
+        "mean": 0.06370198982583705,
+        "localMean": 0.01577280464243722,
+        "localPeak": {
+          "value": 0.13148497820158342,
+          "joint": "Tail10",
+          "frame": 92
+        },
+        "p95": 0.20644388929608076,
+        "accelMax": 5.915163257942408,
+        "accelP95": 0.6175679770862303,
+        "outlierThreshold": 48.03471846034317,
+        "outlier": false,
+        "accelSpike": false
+      },
+      "linear": {
+        "maxWorldSpeed": {
+          "value": 872.8720346557692,
+          "joint": "Tail10",
+          "frame": 72
+        },
+        "p95": 121.7626571563918
+      },
+      "translate": {
+        "Root": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "RootMotion": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "Body": {
+          "worldRange": [
+            0.0003833087149568076,
+            13.51144414638452,
+            6.486115027390326
+          ],
+          "localRange": 14.98762925266389,
+          "startEnd": 0
+        }
+      },
+      "seam": {
+        "rotationRad": 1.0439048236028313e-7,
+        "joint": "Tail2",
+        "positionRigUnits": 0.0009559088732751965,
+        "velocity": 0.000006155003142206988,
+        "meanVelocity": 0.06370198982583705
+      },
+      "contact": {
+        "L_Toes": {
+          "minY": 615.998059695981,
+          "verticalRange": 23.045420801583987,
+          "duty": 0.43490304709141275,
+          "slipRigUnits": 16.08277216824431,
+          "slipMetres": 0.014884694534339268
+        },
+        "R_Toes": {
+          "minY": 615.9991563817362,
+          "verticalRange": 23.04675364876357,
+          "duty": 0.43490304709141275,
+          "slipRigUnits": 16.082386071876755,
+          "slipMetres": 0.014884337200017065
+        },
+        "L_Foot": {
+          "minY": 755.3581457222781,
+          "verticalRange": 20.365704472359994,
+          "duty": 0.5096952908587258,
+          "slipRigUnits": 7.788337145598968,
+          "slipMetres": 0.0072081490759154185
+        },
+        "R_Foot": {
+          "minY": 755.3597882415755,
+          "verticalRange": 20.36668095848961,
+          "duty": 0.5096952908587258,
+          "slipRigUnits": 7.7886126183258995,
+          "slipMetres": 0.007208404027446786
+        },
+        "L_WingHand": {
+          "minY": -368.79584641864034,
+          "verticalRange": 20.526387967418486,
+          "duty": 0.5069252077562327,
+          "slipRigUnits": 26.834372434878023,
+          "slipMetres": 0.02483536000730752
+        },
+        "R_WingHand": {
+          "minY": -368.78248648595314,
+          "verticalRange": 20.525467831815433,
+          "duty": 0.5069252077562327,
+          "slipRigUnits": 26.839357975919,
+          "slipMetres": 0.024839974153097005
+        }
+      },
+      "groundMin": -368.79584641864034,
+      "mesh": {
+        "minY": -1434.9165623135677,
+        "maxY": 2596.548951379322,
+        "perMesh": [
+          {
+            "mesh": "SKM_DaenerysDragon001",
+            "minY": -683.4973589316611,
+            "maxY": 2596.548951379322
+          },
+          {
+            "mesh": "SKM_DaenerysDragon001_1",
+            "minY": -413.91025039909846,
+            "maxY": 84.7744238999012
+          },
+          {
+            "mesh": "WyvernMembrane_ExportSafe",
+            "minY": -1434.9165623135677,
+            "maxY": 1201.927814151992
+          }
+        ]
+      },
+      "foot": {
+        "min": 360.5226751810807,
+        "max": 381.98461841224207,
+        "range": 21.4619432311614,
+        "vertices": 1084
+      },
+      "edge": {
+        "p99Max": 1.004449044684967,
+        "maxMax": 1.1655986248071606,
+        "p01Min": 0.9956406552206092,
+        "edges": 58547
+      },
+      "footBelowOrigin": 360.5226751810807,
+      "belowFeetRigUnits": 1795.4392374946483,
+      "belowOriginRigUnits": 1434.9165623135677,
+      "runtimeBelowOriginRigUnits": -1394.5510038460925,
+      "contactSummary": {
+        "lowestDuty": 0.43490304709141275,
+        "highestDuty": 0.5096952908587258,
+        "totalDuty": 2.903047091412742,
+        "maxSlipRigUnits": 26.839357975919
+      },
+      "ms": 406
+    },
+    {
+      "name": "glide",
+      "duration": 6,
+      "frames": 361,
+      "loops": true,
+      "angular": {
+        "peak": {
+          "value": 0.38442814638494427,
+          "joint": "Tail10",
+          "frame": 131,
+          "time": 2.183333333333333
+        },
+        "mean": 0.05642192266917092,
+        "localMean": 0.013738540127179951,
+        "localPeak": {
+          "value": 0.07773264354438285,
+          "joint": "Tail10",
+          "frame": 64
+        },
+        "p95": 0.1259755725498056,
+        "accelMax": 1.916732874543806,
+        "accelP95": 0.4097100957265087,
+        "outlierThreshold": 48.03471846034317,
+        "outlier": false,
+        "accelSpike": false
+      },
+      "linear": {
+        "maxWorldSpeed": {
+          "value": 428.79163405236676,
+          "joint": "Tail10",
+          "frame": 117
+        },
+        "p95": 148.47884175646809
+      },
+      "translate": {
+        "Root": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "RootMotion": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "Body": {
+          "worldRange": [
+            0.00025490287155125824,
+            9.97751377975942,
+            0.6352499639107236
+          ],
+          "localRange": 10.000312036555568,
+          "startEnd": 0
+        }
+      },
+      "seam": {
+        "rotationRad": 1.0877541645372756e-7,
+        "joint": "L_WingD0P0",
+        "positionRigUnits": 0.0008045669483682662,
+        "velocity": 0.00001118143307376715,
+        "meanVelocity": 0.05642192266917092
+      },
+      "contact": {
+        "L_Toes": {
+          "minY": 382.8048595442262,
+          "verticalRange": 15.243581624436047,
+          "duty": 0.7313019390581718,
+          "slipRigUnits": 7.617210746360241,
+          "slipMetres": 0.007049770647570879
+        },
+        "R_Toes": {
+          "minY": 382.80545435468264,
+          "verticalRange": 15.243837373703457,
+          "duty": 0.7313019390581718,
+          "slipRigUnits": 7.618491086025622,
+          "slipMetres": 0.007050955609007877
+        },
+        "L_Foot": {
+          "minY": 537.2674397359183,
+          "verticalRange": 14.506954597658705,
+          "duty": 0.7562326869806094,
+          "slipRigUnits": 4.241423653803417,
+          "slipMetres": 0.00392546103477364
+        },
+        "R_Foot": {
+          "minY": 537.2677497198174,
+          "verticalRange": 14.507200780185144,
+          "duty": 0.7562326869806094,
+          "slipRigUnits": 4.242714090701184,
+          "slipMetres": 0.00392665534125502
+        },
+        "L_WingHand": {
+          "minY": 753.6568520965689,
+          "verticalRange": 51.523256670979094,
+          "duty": 0.31024930747922436,
+          "slipRigUnits": 5.059578276695966,
+          "slipMetres": 0.004682667660361407
+        },
+        "R_WingHand": {
+          "minY": 753.6569782832536,
+          "verticalRange": 51.523451772703766,
+          "duty": 0.31024930747922436,
+          "slipRigUnits": 5.0592551387353595,
+          "slipMetres": 0.004682368594392818
+        }
+      },
+      "groundMin": 382.8048595442262,
+      "mesh": {
+        "minY": 103.4437551878242,
+        "maxY": 1488.7008418129672,
+        "perMesh": [
+          {
+            "mesh": "SKM_DaenerysDragon001",
+            "minY": 117.97338287041475,
+            "maxY": 1488.7008418129672
+          },
+          {
+            "mesh": "SKM_DaenerysDragon001_1",
+            "minY": 232.21172514376468,
+            "maxY": 695.6111433819417
+          },
+          {
+            "mesh": "WyvernMembrane_ExportSafe",
+            "minY": 103.4437551878242,
+            "maxY": 1479.5863719559675
+          }
+        ]
+      },
+      "foot": {
+        "min": 117.95197074917121,
+        "max": 132.1795817897031,
+        "range": 14.227611040531883,
+        "vertices": 1084
+      },
+      "edge": {
+        "p99Max": 1.0457562507735008,
+        "maxMax": 2.089488497438852,
+        "p01Min": 0.9608180063403694,
+        "edges": 58547
+      },
+      "footBelowOrigin": 117.95197074917121,
+      "belowFeetRigUnits": 14.508215561347015,
+      "belowOriginRigUnits": -103.4437551878242,
+      "runtimeBelowOriginRigUnits": 143.80931365529943,
+      "contactSummary": {
+        "lowestDuty": 0.31024930747922436,
+        "highestDuty": 0.7562326869806094,
+        "totalDuty": 3.5955678670360114,
+        "maxSlipRigUnits": 7.618491086025622
+      },
+      "ms": 426
+    },
+    {
+      "name": "hover",
+      "duration": 6,
+      "frames": 361,
+      "loops": true,
+      "angular": {
+        "peak": {
+          "value": 8.70861383878589,
+          "joint": "R_WingD5P2",
+          "frame": 269,
+          "time": 4.483333333333333
+        },
+        "mean": 1.5288044875998,
+        "localMean": 0.1192943561844824,
+        "localPeak": {
+          "value": 7.914144541042548,
+          "joint": "L_WingRoot",
+          "frame": 359
+        },
+        "p95": 3.957785082952133,
+        "accelMax": 431.56615605605595,
+        "accelP95": 31.994715325678314,
+        "outlierThreshold": 48.03471846034317,
+        "outlier": false,
+        "accelSpike": true
+      },
+      "linear": {
+        "maxWorldSpeed": {
+          "value": 12095.995661773079,
+          "joint": "L_WingD0P2",
+          "frame": 269
+        },
+        "p95": 5861.554841652575
+      },
+      "translate": {
+        "Root": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "RootMotion": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "Body": {
+          "worldRange": [
+            0.00040590756698342066,
+            15.893090870522428,
+            1.210842795667645
+          ],
+          "localRange": 15.939155030004944,
+          "startEnd": 0
+        }
+      },
+      "seam": {
+        "rotationRad": 4.449694634739067e-16,
+        "joint": "Tail10",
+        "positionRigUnits": 0.0003798846942344971,
+        "velocity": 5.958309246248454e-14,
+        "meanVelocity": 1.5288044875998
+      },
+      "contact": {
+        "L_Toes": {
+          "minY": 259.1582451984298,
+          "verticalRange": 30.37830804297215,
+          "duty": 0.4099722991689751,
+          "slipRigUnits": 46.83859947132061,
+          "slipMetres": 0.04334938269681277
+        },
+        "R_Toes": {
+          "minY": 259.1667638407416,
+          "verticalRange": 30.378179099678448,
+          "duty": 0.4099722991689751,
+          "slipRigUnits": 46.836187404282434,
+          "slipMetres": 0.043347150315436976
+        },
+        "L_Foot": {
+          "minY": 427.6602043754022,
+          "verticalRange": 31.291723675301228,
+          "duty": 0.3988919667590028,
+          "slipRigUnits": 25.443231206096502,
+          "slipMetres": 0.023547851110960406
+        },
+        "R_Foot": {
+          "minY": 427.66749997734894,
+          "verticalRange": 31.29176575065992,
+          "duty": 0.3988919667590028,
+          "slipRigUnits": 25.440257006666993,
+          "slipMetres": 0.023545098472949413
+        },
+        "L_WingHand": {
+          "minY": 214.0602047973553,
+          "verticalRange": 1080.3135511024411,
+          "duty": 0.07756232686980609,
+          "slipRigUnits": 483.1829721915423,
+          "slipMetres": 0.4471885114101182
+        },
+        "R_WingHand": {
+          "minY": 214.09574787581107,
+          "verticalRange": 1080.3369135917374,
+          "duty": 0.07756232686980609,
+          "slipRigUnits": 483.18229313700823,
+          "slipMetres": 0.4471878829413936
+        }
+      },
+      "groundMin": 214.0602047973553,
+      "mesh": {
+        "minY": -664.3637368774691,
+        "maxY": 2703.5980098424648,
+        "perMesh": [
+          {
+            "mesh": "SKM_DaenerysDragon001",
+            "minY": 37.87925019967622,
+            "maxY": 1381.6096641222407
+          },
+          {
+            "mesh": "SKM_DaenerysDragon001_1",
+            "minY": 342.0669273228563,
+            "maxY": 858.6396176484939
+          },
+          {
+            "mesh": "WyvernMembrane_ExportSafe",
+            "minY": -664.3637368774691,
+            "maxY": 2703.5980098424648
+          }
+        ]
+      },
+      "foot": {
+        "min": 37.57291697526125,
+        "max": 72.2310726335246,
+        "range": 34.658155658263354,
+        "vertices": 1084
+      },
+      "edge": {
+        "p99Max": 1.170002858903572,
+        "maxMax": 2.864250215690889,
+        "p01Min": 0.8547812941448517,
+        "edges": 58547
+      },
+      "footBelowOrigin": 37.57291697526125,
+      "belowFeetRigUnits": 701.9366538527304,
+      "belowOriginRigUnits": 664.3637368774691,
+      "runtimeBelowOriginRigUnits": -623.9981784099939,
+      "contactSummary": {
+        "lowestDuty": 0.07756232686980609,
+        "highestDuty": 0.4099722991689751,
+        "totalDuty": 1.7728531855955678,
+        "maxSlipRigUnits": 483.1829721915423
+      },
+      "ms": 432
+    },
+    {
+      "name": "idle",
+      "duration": 6,
+      "frames": 361,
+      "loops": true,
+      "angular": {
+        "peak": {
+          "value": 2.7344939048690913,
+          "joint": "L_WingPanel0_1",
+          "frame": 360,
+          "time": 6
+        },
+        "mean": 0.05448751539995329,
+        "localMean": 0.00901219528312471,
+        "localPeak": {
+          "value": 2.6448193760538405,
+          "joint": "L_WingRoot",
+          "frame": 359
+        },
+        "p95": 0.15541969188200688,
+        "accelMax": 81.38805999249914,
+        "accelP95": 0.2775240392057617,
+        "outlierThreshold": 48.03471846034317,
+        "outlier": false,
+        "accelSpike": true
+      },
+      "linear": {
+        "maxWorldSpeed": {
+          "value": 4952.691283524488,
+          "joint": "R_WingD0P2",
+          "frame": 359
+        },
+        "p95": 110.78006699494199
+      },
+      "translate": {
+        "Root": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "RootMotion": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "Body": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        }
+      },
+      "seam": {
+        "rotationRad": 5.20740757162067e-16,
+        "joint": "R_WingShoulder",
+        "positionRigUnits": 0.00010519051025386092,
+        "velocity": 7.57315343829084e-14,
+        "meanVelocity": 0.05448751539995329
+      },
+      "contact": {
+        "L_Toes": {
+          "minY": 71.12055865204084,
+          "verticalRange": 0.0006215174347801167,
+          "duty": 1,
+          "slipRigUnits": 0.03230573291413902,
+          "slipMetres": 0.00002989913437214368
+        },
+        "R_Toes": {
+          "minY": 71.11982418728732,
+          "verticalRange": 0.000688313210588376,
+          "duty": 1,
+          "slipRigUnits": 0.03370139130213477,
+          "slipMetres": 0.00003119082392431079
+        },
+        "L_Foot": {
+          "minY": 226.25042490463596,
+          "verticalRange": 0.0005085522942636089,
+          "duty": 1,
+          "slipRigUnits": 0.029853122838025128,
+          "slipMetres": 0.00002762923019064441
+        },
+        "R_Foot": {
+          "minY": 226.2498312751335,
+          "verticalRange": 0.0005351484330446965,
+          "duty": 1,
+          "slipRigUnits": 0.0292028596506019,
+          "slipMetres": 0.000027027408016552318
+        },
+        "L_WingHand": {
+          "minY": -154.91293606695288,
+          "verticalRange": 53.98416501338167,
+          "duty": 0.008310249307479225,
+          "slipRigUnits": 13.72565381774827,
+          "slipMetres": 0.012703168472700772
+        },
+        "R_WingHand": {
+          "minY": -154.9129434847439,
+          "verticalRange": 53.98387904779264,
+          "duty": 0.008310249307479225,
+          "slipRigUnits": 13.726302917497156,
+          "slipMetres": 0.012703769218106068
+        }
+      },
+      "groundMin": -154.9129434847439,
+      "mesh": {
+        "minY": -1718.2776382548416,
+        "maxY": 1200.3739535269779,
+        "perMesh": [
+          {
+            "mesh": "SKM_DaenerysDragon001",
+            "minY": -456.03792378412544,
+            "maxY": 1200.3739535269779
+          },
+          {
+            "mesh": "SKM_DaenerysDragon001_1",
+            "minY": 485.7517914782571,
+            "maxY": 927.0984178378314
+          },
+          {
+            "mesh": "WyvernMembrane_ExportSafe",
+            "minY": -1718.2776382548416,
+            "maxY": 551.3066785589144
+          }
+        ]
+      },
+      "foot": {
+        "min": -184.135537836602,
+        "max": -184.13502521902365,
+        "range": 0.0005126175783516373,
+        "vertices": 1084
+      },
+      "edge": {
+        "p99Max": 1.093478855901166,
+        "maxMax": 1.9074775769318435,
+        "p01Min": 0.9548026447463352,
+        "edges": 58547
+      },
+      "footBelowOrigin": -184.135537836602,
+      "belowFeetRigUnits": 1534.1421004182396,
+      "belowOriginRigUnits": 1718.2776382548416,
+      "runtimeBelowOriginRigUnits": -1677.9120797873663,
+      "contactSummary": {
+        "lowestDuty": 0.008310249307479225,
+        "highestDuty": 1,
+        "totalDuty": 4.016620498614959,
+        "maxSlipRigUnits": 13.726302917497156
+      },
+      "ms": 415
+    },
+    {
+      "name": "land",
+      "duration": 3,
+      "frames": 181,
+      "loops": false,
+      "angular": {
+        "peak": {
+          "value": 14.955547036233515,
+          "joint": "R_WingD3P2",
+          "frame": 16,
+          "time": 0.26666666666666666
+        },
+        "mean": 1.2063905345684418,
+        "localMean": 0.5064666824012259,
+        "localPeak": {
+          "value": 6.654377787885316,
+          "joint": "R_WingPanel2_0",
+          "frame": 17
+        },
+        "p95": 4.3178693409242195,
+        "accelMax": 630.1312877249254,
+        "accelP95": 38.35774085960824,
+        "outlierThreshold": 48.03471846034317,
+        "outlier": false,
+        "accelSpike": true
+      },
+      "linear": {
+        "maxWorldSpeed": {
+          "value": 8327.554962248923,
+          "joint": "R_WingD0P2",
+          "frame": 40
+        },
+        "p95": 2918.8854687280973
+      },
+      "translate": {
+        "Root": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "RootMotion": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "Body": {
+          "worldRange": [
+            0.001655290833080176,
+            64.81210696899302,
+            4.93810659526099
+          ],
+          "localRange": 64.99995854425886,
+          "startEnd": 35.00005771428817
+        }
+      },
+      "seam": {
+        "rotationRad": 1.2525241007160417,
+        "joint": "L_WingD0P0",
+        "positionRigUnits": 1787.3078135075511,
+        "velocity": 107.26539761163654,
+        "meanVelocity": 1.2063905345684418
+      },
+      "contact": {
+        "L_Toes": {
+          "minY": 198.04774883445282,
+          "verticalRange": 241.74172262314903,
+          "duty": 0.09392265193370165,
+          "slipRigUnits": 202.45655303785335,
+          "slipMetres": 0.18737465885352247
+        },
+        "R_Toes": {
+          "minY": 198.04899456990202,
+          "verticalRange": 241.73997189260766,
+          "duty": 0.09392265193370165,
+          "slipRigUnits": 202.45854518835887,
+          "slipMetres": 0.18737650259982633
+        },
+        "L_Foot": {
+          "minY": 335.833000563213,
+          "verticalRange": 250.53020555796138,
+          "duty": 0.35911602209944754,
+          "slipRigUnits": 198.0054263920129,
+          "slipMetres": 0.1832551165405491
+        },
+        "R_Foot": {
+          "minY": 335.8337169154531,
+          "verticalRange": 250.5288742316169,
+          "duty": 0.35911602209944754,
+          "slipRigUnits": 198.00576213920723,
+          "slipMetres": 0.18325542727643318
+        },
+        "L_WingHand": {
+          "minY": 100.12407748232442,
+          "verticalRange": 757.0087609764208,
+          "duty": 0.09392265193370165,
+          "slipRigUnits": 34.41813083427944,
+          "slipMetres": 0.031854170322870336
+        },
+        "R_WingHand": {
+          "minY": 100.12481030748467,
+          "verticalRange": 757.0140642270774,
+          "duty": 0.09392265193370165,
+          "slipRigUnits": 34.42099202154238,
+          "slipMetres": 0.031856818367496535
+        }
+      },
+      "groundMin": 100.12407748232442,
+      "mesh": {
+        "minY": -1745.2730983480633,
+        "maxY": 1753.7133879728817,
+        "perMesh": [
+          {
+            "mesh": "SKM_DaenerysDragon001",
+            "minY": -197.61772320879217,
+            "maxY": 1753.7133879728817
+          },
+          {
+            "mesh": "SKM_DaenerysDragon001_1",
+            "minY": 288.7097114261038,
+            "maxY": 1199.1451550312875
+          },
+          {
+            "mesh": "WyvernMembrane_ExportSafe",
+            "minY": -1745.2730983480633,
+            "maxY": 1196.9089324970985
+          }
+        ]
+      },
+      "foot": {
+        "min": 10.08165416778661,
+        "max": 262.67376440874995,
+        "range": 252.59211024096334,
+        "vertices": 1084
+      },
+      "edge": {
+        "p99Max": 1.7125892725211553,
+        "maxMax": 11.666169662631926,
+        "p01Min": 0.5043809164374538,
+        "edges": 58547
+      },
+      "footBelowOrigin": 10.08165416778661,
+      "belowFeetRigUnits": 1755.35475251585,
+      "belowOriginRigUnits": 1745.2730983480633,
+      "runtimeBelowOriginRigUnits": -1704.907539880588,
+      "contactSummary": {
+        "lowestDuty": 0.09392265193370165,
+        "highestDuty": 0.35911602209944754,
+        "totalDuty": 1.093922651933702,
+        "maxSlipRigUnits": 202.45854518835887
+      },
+      "ms": 454
+    },
+    {
+      "name": "rest",
+      "duration": 6,
+      "frames": 361,
+      "loops": true,
+      "angular": {
+        "peak": {
+          "value": 0.11053933956599378,
+          "joint": "Jaw",
+          "frame": 357,
+          "time": 5.95
+        },
+        "mean": 0.03147912071043745,
+        "localMean": 0.0018955346289128267,
+        "localPeak": {
+          "value": 0.024029840011986922,
+          "joint": "Spine3",
+          "frame": 5
+        },
+        "p95": 0.057751784829559775,
+        "accelMax": 1.5944187931508476,
+        "accelP95": 0.1325562276225842,
+        "outlierThreshold": 48.03471846034317,
+        "outlier": false,
+        "accelSpike": true
+      },
+      "linear": {
+        "maxWorldSpeed": {
+          "value": 155.6093844960347,
+          "joint": "Tail10",
+          "frame": 4
+        },
+        "p95": 64.62227739203821
+      },
+      "translate": {
+        "Root": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "RootMotion": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "Body": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        }
+      },
+      "seam": {
+        "rotationRad": 4.458745546780758e-16,
+        "joint": "L_WingPanel0_1",
+        "positionRigUnits": 0.0005538373140052159,
+        "velocity": 6.423961869778975e-14,
+        "meanVelocity": 0.03147912071043745
+      },
+      "contact": {
+        "L_Toes": {
+          "minY": 23.1012862388842,
+          "verticalRange": 4.717756697019297,
+          "duty": 1,
+          "slipRigUnits": 34.65021039128815,
+          "slipMetres": 0.03206896123563103
+        },
+        "R_Toes": {
+          "minY": 23.101219447118382,
+          "verticalRange": 4.717849635307402,
+          "duty": 1,
+          "slipRigUnits": 34.650173882869666,
+          "slipMetres": 0.03206892744688793
+        },
+        "L_Foot": {
+          "minY": 193.34085291293883,
+          "verticalRange": 4.732344681957187,
+          "duty": 1,
+          "slipRigUnits": 20.385379465704858,
+          "slipMetres": 0.018866781369491555
+        },
+        "R_Foot": {
+          "minY": 193.34076269124012,
+          "verticalRange": 4.7324091380121445,
+          "duty": 1,
+          "slipRigUnits": 20.38514993446915,
+          "slipMetres": 0.018866568937064242
+        },
+        "L_WingHand": {
+          "minY": 38.74493436797377,
+          "verticalRange": 63.467375769653984,
+          "duty": 0.2742382271468144,
+          "slipRigUnits": 15.75243357475573,
+          "slipMetres": 0.014578964340219531
+        },
+        "R_WingHand": {
+          "minY": 38.745065057101954,
+          "verticalRange": 63.467780629967876,
+          "duty": 0.2742382271468144,
+          "slipRigUnits": 15.753066142825825,
+          "slipMetres": 0.014579549785464732
+        }
+      },
+      "groundMin": 23.101219447118382,
+      "mesh": {
+        "minY": -1569.564684184459,
+        "maxY": 831.1956170011454,
+        "perMesh": [
+          {
+            "mesh": "SKM_DaenerysDragon001",
+            "minY": -260.0027887238261,
+            "maxY": 831.1956170011454
+          },
+          {
+            "mesh": "SKM_DaenerysDragon001_1",
+            "minY": 88.19880816889145,
+            "maxY": 610.0427411563028
+          },
+          {
+            "mesh": "WyvernMembrane_ExportSafe",
+            "minY": -1569.564684184459,
+            "maxY": 729.1939646081312
+          }
+        ]
+      },
+      "foot": {
+        "min": -203.02215734901836,
+        "max": -201.77192423841518,
+        "range": 1.250233110603176,
+        "vertices": 1084
+      },
+      "edge": {
+        "p99Max": 1.012762843842095,
+        "maxMax": 1.2067092207763834,
+        "p01Min": 0.9884960160262068,
+        "edges": 58547
+      },
+      "footBelowOrigin": -203.02215734901836,
+      "belowFeetRigUnits": 1366.5425268354406,
+      "belowOriginRigUnits": 1569.564684184459,
+      "runtimeBelowOriginRigUnits": -1529.1991257169839,
+      "contactSummary": {
+        "lowestDuty": 0.2742382271468144,
+        "highestDuty": 1,
+        "totalDuty": 4.548476454293629,
+        "maxSlipRigUnits": 34.65021039128815
+      },
+      "ms": 423
+    },
+    {
+      "name": "scout",
+      "duration": 6,
+      "frames": 361,
+      "loops": true,
+      "angular": {
+        "peak": {
+          "value": 7.681898018778756,
+          "joint": "L_WingD5P2",
+          "frame": 179,
+          "time": 2.9833333333333334
+        },
+        "mean": 0.29617157245666925,
+        "localMean": 0.02453524688183189,
+        "localPeak": {
+          "value": 7.634775473659529,
+          "joint": "L_WingRoot",
+          "frame": 360
+        },
+        "p95": 0.7052709523317022,
+        "accelMax": 434.3955695043202,
+        "accelP95": 2.190420481807434,
+        "outlierThreshold": 48.03471846034317,
+        "outlier": false,
+        "accelSpike": true
+      },
+      "linear": {
+        "maxWorldSpeed": {
+          "value": 7611.022346453032,
+          "joint": "L_WingD3P2",
+          "frame": 180
+        },
+        "p95": 350.29318343754574
+      },
+      "translate": {
+        "Root": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "RootMotion": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "Body": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        }
+      },
+      "seam": {
+        "rotationRad": 6.473657049138938e-16,
+        "joint": "L_WingD4P0",
+        "positionRigUnits": 0.00019815677693658186,
+        "velocity": 4.951395542680039e-14,
+        "meanVelocity": 0.29617157245666925
+      },
+      "contact": {
+        "L_Toes": {
+          "minY": 274.1903640795507,
+          "verticalRange": 19.363077138189624,
+          "duty": 0.5623268698060941,
+          "slipRigUnits": 34.93384065111251,
+          "slipMetres": 0.03233146260877843
+        },
+        "R_Toes": {
+          "minY": 274.1997198678386,
+          "verticalRange": 19.36343767924518,
+          "duty": 0.5623268698060941,
+          "slipRigUnits": 34.93193164666433,
+          "slipMetres": 0.0323296958146102
+        },
+        "L_Foot": {
+          "minY": 437.38762031996896,
+          "verticalRange": 16.097928307868756,
+          "duty": 0.6565096952908587,
+          "slipRigUnits": 25.673332456333455,
+          "slipMetres": 0.023760811089869344
+        },
+        "R_Foot": {
+          "minY": 437.3958489279648,
+          "verticalRange": 16.09822517620563,
+          "duty": 0.6565096952908587,
+          "slipRigUnits": 25.669290840323004,
+          "slipMetres": 0.02375707055191287
+        },
+        "L_WingHand": {
+          "minY": 815.9004802696958,
+          "verticalRange": 174.80564935718064,
+          "duty": 0.11634349030470914,
+          "slipRigUnits": 5.510742838081819,
+          "slipMetres": 0.005100222955598837
+        },
+        "R_WingHand": {
+          "minY": 815.9639240822778,
+          "verticalRange": 174.80485831548015,
+          "duty": 0.11634349030470914,
+          "slipRigUnits": 5.510956792152106,
+          "slipMetres": 0.005100420971273454
+        }
+      },
+      "groundMin": 274.1903640795507,
+      "mesh": {
+        "minY": 25.371120351708555,
+        "maxY": 1693.9042522265327,
+        "perMesh": [
+          {
+            "mesh": "SKM_DaenerysDragon001",
+            "minY": 25.371120351708555,
+            "maxY": 1101.3419055194763
+          },
+          {
+            "mesh": "SKM_DaenerysDragon001_1",
+            "minY": 360.817973177689,
+            "maxY": 878.5132242889956
+          },
+          {
+            "mesh": "WyvernMembrane_ExportSafe",
+            "minY": 299.6477334812862,
+            "maxY": 1693.9042522265327
+          }
+        ]
+      },
+      "foot": {
+        "min": 25.178489093235726,
+        "max": 32.324865479697905,
+        "range": 7.14637638646218,
+        "vertices": 1084
+      },
+      "edge": {
+        "p99Max": 1.4536714272543703,
+        "maxMax": 16.98903373205193,
+        "p01Min": 0.7874919946995051,
+        "edges": 58547
+      },
+      "footBelowOrigin": 25.178489093235726,
+      "belowFeetRigUnits": -0.19263125847282936,
+      "belowOriginRigUnits": -25.371120351708555,
+      "runtimeBelowOriginRigUnits": 65.7366788191838,
+      "contactSummary": {
+        "lowestDuty": 0.11634349030470914,
+        "highestDuty": 0.6565096952908587,
+        "totalDuty": 2.6703601108033244,
+        "maxSlipRigUnits": 34.93384065111251
+      },
+      "ms": 432
+    },
+    {
+      "name": "speed",
+      "duration": 5,
+      "frames": 301,
+      "loops": true,
+      "angular": {
+        "peak": {
+          "value": 8.410304495126322,
+          "joint": "L_WingPanel0_1",
+          "frame": 149,
+          "time": 2.4833333333333334
+        },
+        "mean": 0.8629900710747576,
+        "localMean": 0.04052315941788271,
+        "localPeak": {
+          "value": 8.022178181161195,
+          "joint": "L_WingRoot",
+          "frame": 299
+        },
+        "p95": 1.9673677264347589,
+        "accelMax": 432.37527885459434,
+        "accelP95": 15.636833178177266,
+        "outlierThreshold": 48.03471846034317,
+        "outlier": false,
+        "accelSpike": true
+      },
+      "linear": {
+        "maxWorldSpeed": {
+          "value": 20362.14567569391,
+          "joint": "L_WingD0P2",
+          "frame": 149
+        },
+        "p95": 2796.846229204568
+      },
+      "translate": {
+        "Root": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "RootMotion": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "Body": {
+          "worldRange": [
+            0.0001304910704156079,
+            5.024461408772936,
+            0.9441153023424818
+          ],
+          "localRange": 5.112393738152387,
+          "startEnd": 0
+        }
+      },
+      "seam": {
+        "rotationRad": 8.89972707850313e-8,
+        "joint": "Tail8",
+        "positionRigUnits": 0.0005650909175969104,
+        "velocity": 0.00000830308938725015,
+        "meanVelocity": 0.8629900710747576
+      },
+      "contact": {
+        "L_Toes": {
+          "minY": 573.1775897159412,
+          "verticalRange": 18.48125810158149,
+          "duty": 0.6046511627906976,
+          "slipRigUnits": 38.524187487864324,
+          "slipMetres": 0.03565434845074183
+        },
+        "R_Toes": {
+          "minY": 573.1794417033076,
+          "verticalRange": 18.48118013038163,
+          "duty": 0.6046511627906976,
+          "slipRigUnits": 38.529748845892094,
+          "slipMetres": 0.03565949551833524
+        },
+        "L_Foot": {
+          "minY": 699.0484349814799,
+          "verticalRange": 15.45406676835728,
+          "duty": 0.8039867109634552,
+          "slipRigUnits": 21.858069900971444,
+          "slipMetres": 0.02022976450717902
+        },
+        "R_Foot": {
+          "minY": 699.0504289529224,
+          "verticalRange": 15.453601192732776,
+          "duty": 0.8039867109634552,
+          "slipRigUnits": 21.86246684614152,
+          "slipMetres": 0.0202338339042367
+        },
+        "L_WingHand": {
+          "minY": -174.63015400309564,
+          "verticalRange": 556.3853107266027,
+          "duty": 0.026578073089700997,
+          "slipRigUnits": 28.50583892516935,
+          "slipMetres": 0.02638231148259454
+        },
+        "R_WingHand": {
+          "minY": -174.62524950417514,
+          "verticalRange": 556.3853456687209,
+          "duty": 0.026578073089700997,
+          "slipRigUnits": 28.506996596214442,
+          "slipMetres": 0.026383382913545445
+        }
+      },
+      "groundMin": -174.63015400309564,
+      "mesh": {
+        "minY": -1642.838061655174,
+        "maxY": 2325.1272742092815,
+        "perMesh": [
+          {
+            "mesh": "SKM_DaenerysDragon001",
+            "minY": -498.7877479651274,
+            "maxY": 2325.1272742092815
+          },
+          {
+            "mesh": "SKM_DaenerysDragon001_1",
+            "minY": 3.9976403176042288,
+            "maxY": 456.11073088636175
+          },
+          {
+            "mesh": "WyvernMembrane_ExportSafe",
+            "minY": -1642.838061655174,
+            "maxY": 2126.965117922993
+          }
+        ]
+      },
+      "foot": {
+        "min": 300.46502234446984,
+        "max": 319.47376080131994,
+        "range": 19.008738456850097,
+        "vertices": 1084
+      },
+      "edge": {
+        "p99Max": 1.0562514160545,
+        "maxMax": 6.774318570521716,
+        "p01Min": 0.9447043281577032,
+        "edges": 58547
+      },
+      "footBelowOrigin": 300.46502234446984,
+      "belowFeetRigUnits": 1943.3030839996438,
+      "belowOriginRigUnits": 1642.838061655174,
+      "runtimeBelowOriginRigUnits": -1602.4725031876987,
+      "contactSummary": {
+        "lowestDuty": 0.026578073089700997,
+        "highestDuty": 0.8039867109634552,
+        "totalDuty": 2.8704318936877082,
+        "maxSlipRigUnits": 38.529748845892094
+      },
+      "ms": 422
+    },
+    {
+      "name": "takeoff",
+      "duration": 3,
+      "frames": 181,
+      "loops": false,
+      "angular": {
+        "peak": {
+          "value": 6.611086562170965,
+          "joint": "Tail10",
+          "frame": 92,
+          "time": 1.5333333333333334
+        },
+        "mean": 2.008801348989847,
+        "localMean": 0.2548161379253872,
+        "localPeak": {
+          "value": 3.423758847416415,
+          "joint": "L_Calf",
+          "frame": 61
+        },
+        "p95": 5.169643895162488,
+        "accelMax": 385.8933486908219,
+        "accelP95": 41.32383049236506,
+        "outlierThreshold": 48.03471846034317,
+        "outlier": false,
+        "accelSpike": false
+      },
+      "linear": {
+        "maxWorldSpeed": {
+          "value": 13383.3958832815,
+          "joint": "L_WingD0P2",
+          "frame": 30
+        },
+        "p95": 7114.660724133107
+      },
+      "translate": {
+        "Root": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "RootMotion": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "Body": {
+          "worldRange": [
+            0.01306873104301394,
+            280.3373967584695,
+            1143.6552633628485
+          ],
+          "localRange": 1187.6713597769196,
+          "startEnd": 1177.5128099162712
+        }
+      },
+      "seam": {
+        "rotationRad": 1.13651909212113,
+        "joint": "L_WingD0P0",
+        "positionRigUnits": 1785.850876714056,
+        "velocity": 94.93466076640276,
+        "meanVelocity": 2.008801348989847
+      },
+      "contact": {
+        "L_Toes": {
+          "minY": 30.838424332744708,
+          "verticalRange": 244.71583544797033,
+          "duty": 0.04419889502762431,
+          "slipRigUnits": 179.70687106173628,
+          "slipMetres": 0.16631970244268174
+        },
+        "R_Toes": {
+          "minY": 30.838671117534517,
+          "verticalRange": 244.71619310553226,
+          "duty": 0.04419889502762431,
+          "slipRigUnits": 179.70572643411043,
+          "slipMetres": 0.16631864308348746
+        },
+        "L_Foot": {
+          "minY": 128.11312747005633,
+          "verticalRange": 309.88771422955466,
+          "duty": 0.04419889502762431,
+          "slipRigUnits": 231.05175169567588,
+          "slipMetres": 0.21383967326259626
+        },
+        "R_Foot": {
+          "minY": 128.11376826305658,
+          "verticalRange": 309.88748966379796,
+          "duty": 0.04419889502762431,
+          "slipRigUnits": 231.0510157015192,
+          "slipMetres": 0.21383899209593626
+        },
+        "L_WingHand": {
+          "minY": -209.6442243428601,
+          "verticalRange": 1342.731316746124,
+          "duty": 0.09392265193370165,
+          "slipRigUnits": 8.634538301420266,
+          "slipMetres": 0.007991312922747419
+        },
+        "R_WingHand": {
+          "minY": -209.64442676131202,
+          "verticalRange": 1342.73081295652,
+          "duty": 0.09392265193370165,
+          "slipRigUnits": 8.63449066513792,
+          "slipMetres": 0.007991268835104813
+        }
+      },
+      "groundMin": -209.64442676131202,
+      "mesh": {
+        "minY": -1449.915255029532,
+        "maxY": 2662.3774112103674,
+        "perMesh": [
+          {
+            "mesh": "SKM_DaenerysDragon001",
+            "minY": -513.6800631828754,
+            "maxY": 1232.7917493729979
+          },
+          {
+            "mesh": "SKM_DaenerysDragon001_1",
+            "minY": -34.93886225214344,
+            "maxY": 948.2639982422082
+          },
+          {
+            "mesh": "WyvernMembrane_ExportSafe",
+            "minY": -1449.915255029532,
+            "maxY": 2662.3774112103674
+          }
+        ]
+      },
+      "foot": {
+        "min": -184.21684095563216,
+        "max": 57.723007114635955,
+        "range": 241.9398480702681,
+        "vertices": 1084
+      },
+      "edge": {
+        "p99Max": 2.5586218766855757,
+        "maxMax": 31.589099164109026,
+        "p01Min": 0.6306952701507839,
+        "edges": 58547
+      },
+      "footBelowOrigin": -184.21684095563216,
+      "belowFeetRigUnits": 1265.6984140739,
+      "belowOriginRigUnits": 1449.915255029532,
+      "runtimeBelowOriginRigUnits": -1409.5496965620569,
+      "contactSummary": {
+        "lowestDuty": 0.04419889502762431,
+        "highestDuty": 0.09392265193370165,
+        "totalDuty": 0.3646408839779005,
+        "maxSlipRigUnits": 231.05175169567588
+      },
+      "ms": 396
+    },
+    {
+      "name": "walk",
+      "duration": 2.4583332538604736,
+      "frames": 148,
+      "loops": true,
+      "angular": {
+        "peak": {
+          "value": 9.65495489480592,
+          "joint": "R_Toes",
+          "frame": 129,
+          "time": 2.1573128554285788
+        },
+        "mean": 0.7188479233327534,
+        "localMean": 0.2782203722251973,
+        "localPeak": {
+          "value": 7.751601041406492,
+          "joint": "R_Toes",
+          "frame": 129
+        },
+        "p95": 1.779651008206818,
+        "accelMax": 269.91384874436034,
+        "accelP95": 10.569249611160345,
+        "outlierThreshold": 48.03471846034317,
+        "outlier": false,
+        "accelSpike": true
+      },
+      "linear": {
+        "maxWorldSpeed": {
+          "value": 2467.039402815556,
+          "joint": "R_Toes",
+          "frame": 146
+        },
+        "p95": 1334.4520211858014
+      },
+      "translate": {
+        "Root": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "RootMotion": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "Body": {
+          "worldRange": [
+            204.04082455360538,
+            10.880198229771963,
+            98.19625193397644
+          ],
+          "localRange": 226.7933687086252,
+          "startEnd": 0
+        }
+      },
+      "seam": {
+        "rotationRad": 5.50232848217619e-16,
+        "joint": "L_WingD2P0",
+        "positionRigUnits": 0.00039364417057274334,
+        "velocity": 7.644683682433436e-14,
+        "meanVelocity": 0.7188479233327534
+      },
+      "contact": {
+        "L_Toes": {
+          "minY": -48.11025002933786,
+          "verticalRange": 189.45602241684128,
+          "duty": 0.0945945945945946,
+          "slipRigUnits": 179.22431739025166,
+          "slipMetres": 0.16587309635255415
+        },
+        "R_Toes": {
+          "minY": -43.14025911987292,
+          "verticalRange": 197.8776636821753,
+          "duty": 0.13513513513513514,
+          "slipRigUnits": 293.4030077884235,
+          "slipMetres": 0.2715461054040287
+        },
+        "L_Foot": {
+          "minY": 99.06955327156763,
+          "verticalRange": 162.53756796364448,
+          "duty": 0.08108108108108109,
+          "slipRigUnits": 139.8289810644803,
+          "slipMetres": 0.12941249483731926
+        },
+        "R_Foot": {
+          "minY": 100.27202128553171,
+          "verticalRange": 180.36930167898407,
+          "duty": 0.10810810810810811,
+          "slipRigUnits": 221.35584164950362,
+          "slipMetres": 0.20486605492367152
+        },
+        "L_WingHand": {
+          "minY": -37.84341608482788,
+          "verticalRange": 351.897743468947,
+          "duty": 0.07432432432432433,
+          "slipRigUnits": 26.596770255071608,
+          "slipMetres": 0.024615457876622934
+        },
+        "R_WingHand": {
+          "minY": -67.58952471182232,
+          "verticalRange": 404.7231425080347,
+          "duty": 0.0472972972972973,
+          "slipRigUnits": 19.69706814658257,
+          "slipMetres": 0.018229745439212512
+        }
+      },
+      "groundMin": -67.58952471182232,
+      "mesh": {
+        "minY": -1711.7881003288824,
+        "maxY": 1264.189867012136,
+        "perMesh": [
+          {
+            "mesh": "SKM_DaenerysDragon001",
+            "minY": -293.5081883877162,
+            "maxY": 1264.189867012136
+          },
+          {
+            "mesh": "SKM_DaenerysDragon001_1",
+            "minY": 227.9334991041897,
+            "maxY": 686.822312739022
+          },
+          {
+            "mesh": "WyvernMembrane_ExportSafe",
+            "minY": -1711.7881003288824,
+            "maxY": 815.2368912683322
+          }
+        ]
+      },
+      "foot": {
+        "min": -184.12681260621753,
+        "max": -106.95380883313197,
+        "range": 77.17300377308555,
+        "vertices": 1084
+      },
+      "edge": {
+        "p99Max": 1.4042525335860812,
+        "maxMax": 6.6732299586148605,
+        "p01Min": 0.7516896226934351,
+        "edges": 58547
+      },
+      "footBelowOrigin": -184.12681260621753,
+      "belowFeetRigUnits": 1527.6612877226648,
+      "belowOriginRigUnits": 1711.7881003288824,
+      "runtimeBelowOriginRigUnits": -1671.4225418614071,
+      "contactSummary": {
+        "lowestDuty": 0.0472972972972973,
+        "highestDuty": 0.13513513513513514,
+        "totalDuty": 0.5405405405405406,
+        "maxSlipRigUnits": 293.4030077884235
+      },
+      "ms": 471
+    }
+  ],
+  "jointPeak": {
+    "attack": [
+      0,
+      0,
+      1.1519595703834367,
+      1.1519595703834522,
+      1.1519595703834105,
+      1.1519595703834096,
+      2.943834582426241,
+      4.735711216602938,
+      8.831423386799425,
+      7.626253633404722,
+      1.1519595703834054,
+      2.313430907090532,
+      3.236191850114922,
+      3.9323215756804233,
+      3.9323215756804135,
+      3.9323215756804157,
+      3.932321575680409,
+      3.9323215756804117,
+      7.403005974479211,
+      7.403005974479208,
+      7.403005974479218,
+      7.4105965905865725,
+      7.410596583220242,
+      7.410596578885067,
+      7.423309135001495,
+      7.425311739656171,
+      7.410648991175191,
+      7.410648956778213,
+      7.41064896330181,
+      7.42169507534157,
+      7.422676690797755,
+      7.403141398809413,
+      7.403141398809408,
+      7.403141398809407,
+      7.412277726326369,
+      7.412071851008005,
+      7.402949097977135,
+      7.402949097977134,
+      7.402949097977147,
+      7.401912888830286,
+      7.40142060413171,
+      1.1519595703834078,
+      2.313434515360693,
+      3.2361948238749734,
+      3.932330385243153,
+      3.9323303852431444,
+      3.9323303852431404,
+      3.9323303852431426,
+      3.9323303852431435,
+      7.403004780129689,
+      7.403004780129686,
+      7.403004780129686,
+      7.41059400315825,
+      7.410593992005995,
+      7.41059399936868,
+      7.423305918467558,
+      7.425308249579898,
+      7.4106507807585205,
+      7.410650789131207,
+      7.41065084859856,
+      7.421694964006215,
+      7.422676527741005,
+      7.4031534009678355,
+      7.403153400967829,
+      7.4031534009678355,
+      7.4122893905937275,
+      7.412083301981172,
+      7.4029369244651875,
+      7.402936924465184,
+      7.40293692446519,
+      7.401900428627333,
+      7.401407660510672,
+      1.1519595703834353,
+      1.1519595703834336,
+      1.1519595703834333,
+      1.15195957038344,
+      1.1519595703834393,
+      1.1519595703834469,
+      1.1519595703834513,
+      1.1519595703834524,
+      1.1519595703834509,
+      1.151959570383447,
+      0.9425176444456571,
+      1.1440396554382914,
+      1.4930098117199428,
+      1.956880728361658,
+      2.3804244059218753,
+      2.703114721239296,
+      2.703114721239302,
+      2.703114721239324,
+      2.7031147212393143,
+      2.703114721239314
+    ],
+    "attack2": [
+      0,
+      0,
+      0.9236686187450838,
+      2.6579632761985557,
+      2.636468910947282,
+      5.611974184304895,
+      5.683144504607815,
+      5.727131401291117,
+      5.75802198700847,
+      5.758021798703692,
+      11.18779329693386,
+      8.53055512683255,
+      4.589800930048406,
+      4.266415353731562,
+      4.559897481177852,
+      4.559897453635442,
+      4.5598974542853385,
+      4.55989746878041,
+      4.559897498202843,
+      4.559897490493022,
+      4.559897509065854,
+      4.55989757202399,
+      4.559897570315576,
+      4.559897590299583,
+      4.563432952980559,
+      4.563827189632436,
+      4.559897537274544,
+      4.559897585080005,
+      4.5598975946473015,
+      4.562801534567957,
+      4.562836534676403,
+      4.559897498747713,
+      4.559897510738978,
+      4.559897494470811,
+      4.560182316184376,
+      4.559289533374078,
+      4.559897487145063,
+      4.559897485240807,
+      4.559897504136936,
+      4.557833726113424,
+      4.557100608317984,
+      11.1877957970063,
+      8.847111767514594,
+      6.161693676469505,
+      5.767244881485975,
+      5.475529833001695,
+      5.475529805833594,
+      5.475529805207831,
+      5.475529768404645,
+      5.475529809654133,
+      5.475529812860469,
+      5.475529824204216,
+      5.475529830104626,
+      5.475529847769882,
+      5.475529864100007,
+      5.467465701227833,
+      5.4679373574276875,
+      5.475529815052588,
+      5.475529820299893,
+      5.475529833039811,
+      5.468143339607398,
+      5.468978159639282,
+      5.475529824246891,
+      5.4755298253371505,
+      5.47552982748921,
+      5.471446139213273,
+      5.472883066569572,
+      5.475529800035736,
+      5.475529738661864,
+      5.475529750388949,
+      5.474835150951213,
+      5.475393711495374,
+      2.657963270842289,
+      2.657963271844823,
+      2.6579633215704352,
+      2.6579633215704455,
+      2.6579632898677157,
+      2.6579632741156907,
+      2.6579632686571393,
+      2.6579632840299463,
+      2.657963298816672,
+      2.6579632576642798,
+      1.1271042509935343,
+      1.4712680450127669,
+      1.9223323105873082,
+      2.4779749852331787,
+      3.1292691551044403,
+      4.187301628247995,
+      7.688122065702822,
+      12.852299134459514,
+      20.021154362276427,
+      29.577751661339
+    ],
+    "attackAir2": [
+      0,
+      0,
+      1.673040603251032,
+      3.601414750206977,
+      4.32577933912962,
+      6.8495490615335255,
+      9.815658303655022,
+      9.910143571421504,
+      10.808164676921729,
+      11.27807834862717,
+      9.815670768823107,
+      9.90397990908682,
+      9.958890123082963,
+      10.016833731593154,
+      9.914750183443566,
+      9.914750185671643,
+      9.914750336926524,
+      9.91475030131266,
+      9.510166496609894,
+      9.510057457716039,
+      9.509742504805034,
+      10.275996779386029,
+      10.275996765502,
+      10.275961303283422,
+      10.124229760795783,
+      10.121313830600634,
+      9.975574971704544,
+      9.975426007032654,
+      9.975510835387608,
+      9.799527747636,
+      9.799264080430813,
+      9.642984580724121,
+      9.643016301157477,
+      9.642659229730903,
+      9.544513301968179,
+      9.540070210908219,
+      9.471359186026413,
+      9.471323296723758,
+      9.471239854216826,
+      9.482048625802776,
+      9.485689486106601,
+      9.815656658018163,
+      9.903981073463754,
+      9.958890150019807,
+      10.01682709388528,
+      9.914768982762883,
+      9.914768982762885,
+      9.914768982762896,
+      9.914768982762888,
+      9.53506820399405,
+      9.535068203994044,
+      9.535068203994046,
+      10.19125351552904,
+      10.19125351552904,
+      10.191253515529029,
+      10.078228487580237,
+      10.074393780446156,
+      9.976272857474115,
+      9.97627285747411,
+      9.976272857474124,
+      9.85285745714113,
+      9.853396049970918,
+      9.750255806952888,
+      9.750255806952874,
+      9.750255806952852,
+      9.641230754943148,
+      9.637089287753556,
+      9.55859136241321,
+      9.558591362413217,
+      9.558591362413237,
+      9.537881338023986,
+      9.54169853655589,
+      3.601414750206988,
+      5.412597807516163,
+      7.075141364656472,
+      4.888231893796663,
+      4.077936062644433,
+      3.60141475020697,
+      5.424129837393648,
+      7.078942039271264,
+      4.87783513229695,
+      3.6459105037922783,
+      1.673040603251011,
+      5.701109178461004,
+      9.828796880122633,
+      10.514583585417546,
+      10.342926708992035,
+      13.708494489439053,
+      15.834041070086027,
+      17.516253832095025,
+      18.793201690953452,
+      18.362836791925133
+    ],
+    "bankLeft": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.06561044833118009,
+      0.14741609468037903,
+      0.24435102810639817,
+      0.26047134186373533,
+      0,
+      3.2728313194643817,
+      4.6407181826259505,
+      4.584038956803173,
+      7.3726670470561375,
+      7.372667047056134,
+      7.3726670470561375,
+      7.372667047056143,
+      7.273126684202035,
+      6.436436706783634,
+      6.417152041879565,
+      7.396696333851176,
+      7.020944504281353,
+      7.1247414729153835,
+      7.052967706765053,
+      7.280610835651656,
+      7.2359593082157385,
+      7.083668051876032,
+      7.432528485647438,
+      7.332675113982327,
+      7.8803684931116695,
+      7.149485610996623,
+      7.560535418052964,
+      8.278177908136877,
+      7.510644420820501,
+      7.915151184466438,
+      7.2412566256340405,
+      7.403171668060389,
+      7.38318931787061,
+      6.919365967926302,
+      6.75535270486475,
+      0,
+      6.574998245161528,
+      8.678949812779326,
+      8.62168661632848,
+      11.297762346129879,
+      11.297762346129883,
+      11.297762346129883,
+      11.297762346129884,
+      11.19728085452958,
+      10.383502674937956,
+      9.890252637116918,
+      11.332014777103764,
+      10.927867353476032,
+      10.84803326526293,
+      10.960483041611768,
+      11.019278725618584,
+      11.166882544099561,
+      10.990907009556954,
+      11.180615032346314,
+      11.244041505499563,
+      11.650957848871528,
+      11.079976995964062,
+      11.476786730378784,
+      12.072854150425547,
+      11.4267339318397,
+      11.716132206765922,
+      11.167977914586233,
+      11.299501358903184,
+      11.116458164476969,
+      10.812430618859073,
+      10.379117332093008,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.06563548883745234,
+      0.15645920088112622,
+      0.27082158497286224,
+      0.4065669752881981,
+      0.5617330656036276,
+      0.7341011843629263,
+      0.9210239394817575,
+      1.1183277473290991,
+      1.3246307569606397,
+      1.5363893776982356
+    ],
+    "bankRight": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.0656102696214597,
+      0.1474153592850716,
+      0.24434876988488585,
+      0.2604075104784542,
+      0,
+      6.5749908756669475,
+      8.678932707640326,
+      8.621673030424438,
+      11.297750087898343,
+      11.297750087898333,
+      11.297750087898342,
+      11.297750087898338,
+      11.197270155268859,
+      10.383487049451043,
+      9.8902347520529,
+      11.332009943213713,
+      10.927860434598328,
+      10.848028373103764,
+      10.960475037431827,
+      11.01925241347164,
+      11.166865588605697,
+      10.99089738488346,
+      11.18060567526677,
+      11.24403696746155,
+      11.650951987467407,
+      11.079966521184328,
+      11.476775807362166,
+      12.072848459029254,
+      11.426741844242006,
+      11.716140537509368,
+      11.167958386696869,
+      11.299484702941959,
+      11.116440081821251,
+      10.812440336849114,
+      10.379125110705866,
+      0,
+      3.272826853099509,
+      4.640714668115284,
+      4.584026482596948,
+      7.372654273482825,
+      7.372654273482826,
+      7.37265427348283,
+      7.372654273482825,
+      7.2731142036754495,
+      6.436426740077704,
+      6.41715963282017,
+      7.39668002669914,
+      7.020933641399748,
+      7.124736895052956,
+      7.05295435962038,
+      7.280606863924056,
+      7.235948266014727,
+      7.083655361717091,
+      7.432520233241032,
+      7.332654558367652,
+      7.880350828456862,
+      7.149449656586317,
+      7.560502082076011,
+      8.278147645922129,
+      7.510626328715416,
+      7.915145719156262,
+      7.2412527792797174,
+      7.403170135647372,
+      7.383193264682872,
+      6.919348292091519,
+      6.755359542750356,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.06563471335925888,
+      0.15645906896589348,
+      0.2708233591510081,
+      0.40656753759318437,
+      0.5617327432366718,
+      0.7340988965999222,
+      0.9210266510352703,
+      1.1183311687869875,
+      1.3246262451646418,
+      1.536388904355723
+    ],
+    "breath": [
+      0,
+      0,
+      0.71320469899052,
+      1.8818150551195107,
+      3.0577279979765843,
+      4.23364186789907,
+      4.668037580745737,
+      5.102432230648092,
+      5.983726934095937,
+      10.897930741619964,
+      4.2336418678990695,
+      4.179714868244538,
+      4.244274376490429,
+      4.795819194184949,
+      4.79581919418495,
+      4.795819194184954,
+      4.795819194184944,
+      4.795819194184935,
+      24.915073076380835,
+      24.915073076380853,
+      24.915073076380843,
+      9.473540097947332,
+      9.473540097947325,
+      9.473540097947339,
+      9.490258550132749,
+      9.488794381949159,
+      9.473564076806497,
+      9.47356407680649,
+      9.4735640768065,
+      9.488226235299411,
+      9.486293989690818,
+      9.477272892584004,
+      9.477272892583999,
+      9.477272892584015,
+      9.483845546362478,
+      9.482471862769346,
+      24.915123121519404,
+      24.915123121519407,
+      24.915123121519407,
+      24.914846878789195,
+      24.914504179482208,
+      4.233641867899059,
+      4.179710105828173,
+      4.244270766104572,
+      4.795821540711042,
+      4.795821540711053,
+      4.79582154071105,
+      4.795821540711041,
+      4.795821540711044,
+      9.478879490809575,
+      9.478879490809575,
+      9.478879490809579,
+      9.473531896648495,
+      9.473531896648483,
+      9.473531896648478,
+      9.490251141703206,
+      9.488786611307974,
+      9.47356252193981,
+      9.47356252193981,
+      9.473562521939815,
+      9.48822341943148,
+      9.486290967561914,
+      9.477252625009196,
+      9.477252625009196,
+      9.477252625009198,
+      9.483825400444577,
+      9.482451426424506,
+      9.47887971155324,
+      9.478879711553228,
+      9.478879711553216,
+      9.479011907601453,
+      9.478868190544093,
+      1.8818150551195252,
+      1.8818150551195252,
+      1.8818150551195347,
+      1.8818150551195407,
+      3.5041556805072966,
+      1.8818150551195003,
+      1.881815055119496,
+      1.8818150551194976,
+      1.8818150551194937,
+      3.5041458726248838,
+      0.7364082171072249,
+      0.7862399963758453,
+      0.8640361905330293,
+      1.1133640967801015,
+      1.3293468095640926,
+      1.4733395331962595,
+      1.473339533196265,
+      1.4733395331962469,
+      1.4733395331962456,
+      1.4733395331962467
+    ],
+    "cruise": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.06561062703729514,
+      0.1475053623675838,
+      0.24468260068722106,
+      0.260794365227473,
+      1.3526792309231412,
+      1.5039299068842875,
+      5.4705508325105425,
+      5.465167009077194,
+      4.531615659503668,
+      4.531615659503678,
+      4.53161565950368,
+      4.531615659503679,
+      4.535555631412508,
+      5.27445135148037,
+      6.42002169474189,
+      4.556025273220021,
+      5.082708484324202,
+      6.071927873862707,
+      5.004483536560475,
+      5.8973412497414825,
+      4.536068686319467,
+      4.929652592049857,
+      5.742628692614499,
+      4.772083276678022,
+      5.388448992626223,
+      4.538853573883486,
+      4.626437969310949,
+      5.380100137691285,
+      4.660115232852341,
+      5.446725887742189,
+      4.53491082649615,
+      4.791782394075949,
+      5.77558891081256,
+      5.01473517431047,
+      6.025934914141997,
+      1.35268149329555,
+      1.5039212228517749,
+      5.470548138805143,
+      5.465163200466939,
+      4.531613747204763,
+      4.5316137472047675,
+      4.531613747204768,
+      4.531613747204747,
+      4.535540100939853,
+      5.2744623657913206,
+      6.420041096761368,
+      4.556017969147418,
+      5.082704388595216,
+      6.071919378123205,
+      5.00447664138222,
+      5.897333774358619,
+      4.536075067663356,
+      4.929658159200483,
+      5.74263102028975,
+      4.772091135534361,
+      5.388451627576723,
+      4.5388463843213716,
+      4.626432961782431,
+      5.380114485443465,
+      4.660123260962537,
+      5.446716015812106,
+      4.534905072961484,
+      4.7917819874845975,
+      5.775584327743523,
+      5.0147382179955216,
+      6.025933375651767,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.0681054533410414,
+      0.16292776506249157,
+      0.28321749606205326,
+      0.42719111494841866,
+      0.5923919396173087,
+      0.7757666483713253,
+      0.9741432893900235,
+      1.1838613456338252,
+      1.4002550593070089,
+      1.619045241915497
+    ],
+    "death": [
+      0,
+      0,
+      0.4956158660970446,
+      0.49561586396553536,
+      0.49561586404153085,
+      0.49561583091445643,
+      2.1546499533245975,
+      2.1540561490047767,
+      1.977933066738766,
+      3.930545983616816,
+      0.4956158359619401,
+      1.2235987073401655,
+      1.191966752468865,
+      1.0884159105155826,
+      1.2551881820577775,
+      1.2551881751949727,
+      1.2551881892626,
+      1.255188232205814,
+      8.778028196434779,
+      8.77802824364134,
+      8.77802823501436,
+      10.82474099456655,
+      10.824740985217367,
+      10.824740986976868,
+      10.829279536033477,
+      10.828290836260182,
+      10.824724497850763,
+      10.824724471635166,
+      10.824724462074293,
+      10.54992935146127,
+      10.549103699145647,
+      9.928629315669967,
+      9.92862932216948,
+      9.928629305437722,
+      9.575365872329547,
+      9.575179112593954,
+      8.778047289995845,
+      8.778047276129469,
+      8.778047281466089,
+      8.77819625803976,
+      8.77809320903237,
+      0.4956157740461427,
+      0.8937904974994628,
+      1.1236724694846236,
+      1.0741518201782978,
+      1.2531640833819269,
+      1.2531640621716844,
+      1.25316407012597,
+      1.2531640653492564,
+      8.778058146139507,
+      8.778058141235029,
+      8.77805814621841,
+      10.82475649272814,
+      10.824756514668923,
+      10.824756520571492,
+      10.829295414244692,
+      10.828306584003695,
+      10.824737269384046,
+      10.824737243257037,
+      10.824737216084712,
+      10.549939586296745,
+      10.549113381419401,
+      9.928661966455424,
+      9.928661978243149,
+      9.928661987978547,
+      9.575398868198032,
+      9.575211762669563,
+      8.778090863283287,
+      8.778090853610864,
+      8.778090855839663,
+      8.77823949214018,
+      8.77813585223567,
+      0.49561584778969786,
+      0.4687904137965425,
+      0.7406292876462919,
+      0.6430981018621545,
+      0.6430980748263844,
+      0.4956158629529609,
+      0.5835005242269891,
+      0.6479182503172154,
+      0.5904374706337501,
+      0.590437460072353,
+      0.4956126042985088,
+      0.495615834142108,
+      0.49562036112024016,
+      0.4956205313327837,
+      0.49561993489420236,
+      0.49561975607338327,
+      0.4956181654768559,
+      0.495618415760536,
+      0.49561757308394855,
+      0.4956178769255731
+    ],
+    "dive": [
+      0,
+      0,
+      0.043743955941974715,
+      0.04374395594198325,
+      0.04374395594197444,
+      0.04374395594196506,
+      0.06561659651181916,
+      0.09295252609264001,
+      0.12029220173371555,
+      0.13668478237580067,
+      0.043743955941969656,
+      0.03697610667031252,
+      0.04450321944466195,
+      0.05236660602665173,
+      0.07260627426701123,
+      0.05578985202623737,
+      0.06921050519185959,
+      0.08174843079918245,
+      0.06983954614638577,
+      0.08790566109802006,
+      0.10637915237176446,
+      0.06770506260848043,
+      0.06572976972444262,
+      0.06338252947438258,
+      0.06828959816125998,
+      0.06681626865400662,
+      0.06697982364336617,
+      0.06891325163127433,
+      0.06940282438621571,
+      0.07503859217921266,
+      0.07593691476111789,
+      0.06831029953108489,
+      0.07490076563820237,
+      0.077412627557444,
+      0.08213814050931474,
+      0.08664362260382641,
+      0.07015647931851046,
+      0.08021242518501158,
+      0.08916515239752743,
+      0.08761027437618038,
+      0.09915482464612685,
+      0.0437439559419574,
+      0.036978663328920254,
+      0.04450530861992443,
+      0.05236896135730465,
+      0.07260919948304698,
+      0.05578706704967292,
+      0.06920983614490792,
+      0.08174617968011594,
+      0.06984192260374064,
+      0.087900617228085,
+      0.10637289203781973,
+      0.06770867457841509,
+      0.06573309926248007,
+      0.06338692905055307,
+      0.06829034458266722,
+      0.06681620209507969,
+      0.06698244622861649,
+      0.06891387600065296,
+      0.06940147281371972,
+      0.07503739444916505,
+      0.07593544724885762,
+      0.06830922475875378,
+      0.07490231601911389,
+      0.0774172236198578,
+      0.08214271823976059,
+      0.08664811923141341,
+      0.0701535317796923,
+      0.08020688591940771,
+      0.08917087843014682,
+      0.08760555015949002,
+      0.09914912488769112,
+      0.043743955941988176,
+      0.04374395594198821,
+      0.04374395594199822,
+      0.04374395594199211,
+      0.043743955941982,
+      0.043743955941985393,
+      0.04374395594198103,
+      0.0437439559419858,
+      0.04374395594198453,
+      0.04374395594198681,
+      0.07654785896816733,
+      0.12009495560045798,
+      0.1731220702330444,
+      0.2350370767213283,
+      0.3059063578365787,
+      0.38435765351815804,
+      0.4695223165553732,
+      0.5605004438197969,
+      0.6562562110323478,
+      0.7557947047697323
+    ],
+    "glide": [
+      0,
+      0,
+      0.0073109508669434945,
+      0.007310950866934521,
+      0.007310950866963579,
+      0.007310950866955512,
+      0.037479733060479185,
+      0.0784777064756627,
+      0.13152939860445356,
+      0.14048734730848556,
+      0.007310950866950244,
+      0.024278703125728402,
+      0.04427841147385528,
+      0.06579665876137385,
+      0.07315776690703965,
+      0.07927628031018576,
+      0.09079346848099383,
+      0.1055135783660744,
+      0.08244980200241403,
+      0.09413517896660326,
+      0.10975706276728224,
+      0.08733048992510714,
+      0.10740728628083583,
+      0.1279970918771652,
+      0.11131396118704917,
+      0.13045705232889662,
+      0.08524246519256046,
+      0.10529742931972565,
+      0.12471188172289821,
+      0.10914792457050229,
+      0.1255689512265702,
+      0.08429015570676,
+      0.10275355318452581,
+      0.11859006141330135,
+      0.10388859957093236,
+      0.11729661813593117,
+      0.08301977851769841,
+      0.09696870883302718,
+      0.11095099349343195,
+      0.0976190168680902,
+      0.11107961193366263,
+      0.007310950866947111,
+      0.024274219787983664,
+      0.04427418849151286,
+      0.06579228937241384,
+      0.07315541950983613,
+      0.07927469270209694,
+      0.09079315400788271,
+      0.10551463412862608,
+      0.0824497125868641,
+      0.09413324496672831,
+      0.10975525228414768,
+      0.08732940364829482,
+      0.10740840579669536,
+      0.12799885836184866,
+      0.11131590029041968,
+      0.13045609961879379,
+      0.08523807689421896,
+      0.10529448155623797,
+      0.12471036550850094,
+      0.10914059493757924,
+      0.1255618281751462,
+      0.08428636062265633,
+      0.10275162014301817,
+      0.11859087494973243,
+      0.10388274523079188,
+      0.11729135232498267,
+      0.08301591370383458,
+      0.09696560810794723,
+      0.11095252496824516,
+      0.09761510810112287,
+      0.11107611588203462,
+      0.007310950866929095,
+      0.00731095086693646,
+      0.0073109508669378835,
+      0.007310950866927473,
+      0.007310950866900874,
+      0.007310950866931558,
+      0.007310950866934687,
+      0.0073109508669359875,
+      0.0073109508669378055,
+      0.007310950866933403,
+      0.025566644611195972,
+      0.04961498579177568,
+      0.07895308012174121,
+      0.11471553727245981,
+      0.15560085165436865,
+      0.19946877917270014,
+      0.24532058343893426,
+      0.2921875999329538,
+      0.3389704236585981,
+      0.38442814638494427
+    ],
+    "hover": [
+      0,
+      0,
+      0.1687637905120756,
+      0.037937526088577055,
+      0.17916724005974372,
+      0.24431220654228833,
+      0.28909041719316025,
+      0.4223688932778499,
+      0.5836644132210023,
+      0.5582150720295675,
+      7.866411806080224,
+      8.49957988905889,
+      8.14350037489114,
+      8.414535959948108,
+      8.592439662643718,
+      8.647692829880125,
+      8.684051451276778,
+      8.708613838757994,
+      8.605016722449879,
+      8.638608394660725,
+      8.653787474939303,
+      8.592613291710801,
+      8.585955351328387,
+      8.58240401416828,
+      8.5938607028047,
+      8.59343849651988,
+      8.589701982562108,
+      8.596030430186547,
+      8.601931303172563,
+      8.591741623099095,
+      8.593148737474676,
+      8.58913294545956,
+      8.604133688468622,
+      8.611265837851871,
+      8.594058574047631,
+      8.595737372763129,
+      8.591773316865318,
+      8.609961617245625,
+      8.614746178975809,
+      8.601602303147297,
+      8.604112968129256,
+      7.866411806080849,
+      8.499579889074852,
+      8.143500374908763,
+      8.414535959975403,
+      8.592439662671403,
+      8.647692829907458,
+      8.684051451304448,
+      8.70861383878589,
+      8.605016722476787,
+      8.638608394688042,
+      8.65378747496699,
+      8.592613291737722,
+      8.585955351355773,
+      8.582404014195987,
+      8.59386074292747,
+      8.593438493586195,
+      8.589701982589004,
+      8.596030430213956,
+      8.601931303200331,
+      8.591741151967183,
+      8.593148222039586,
+      8.589132945486448,
+      8.604133688496045,
+      8.61126583787969,
+      8.594058531604873,
+      8.595737111610891,
+      8.591773316892205,
+      8.60996161727308,
+      8.614746179003657,
+      8.601602304653364,
+      8.604112772861878,
+      0.03793752608859284,
+      0.10722723245339635,
+      0.07603773394694706,
+      0.13460875959332513,
+      0.1346087595933282,
+      0.03793752608854795,
+      0.10722616556926474,
+      0.07603701517473328,
+      0.13461046254218254,
+      0.13461046254217965,
+      0.28126942074976213,
+      0.4208937506458705,
+      0.5682551189621192,
+      0.6969647441811829,
+      0.7781455358899946,
+      0.7856052538263006,
+      0.8887355421949952,
+      0.9529648867406427,
+      1.0419370765719382,
+      1.0567871398870319
+    ],
+    "idle": [
+      0,
+      0,
+      0,
+      0,
+      0.06857596959467976,
+      0.17204637916102303,
+      0.27079435903654436,
+      0.37046572689277635,
+      0.23131789524260843,
+      0.2498245792099232,
+      2.7326463290738388,
+      2.7299691537663398,
+      2.729969153766327,
+      2.7299691537663193,
+      2.729969153766325,
+      2.7299691537663233,
+      2.729969153766325,
+      2.7299691537663198,
+      2.729969153766318,
+      2.7299691537663366,
+      2.7299691537663375,
+      2.7299691537663295,
+      2.7299691537663344,
+      2.7299691537663295,
+      2.733900973014518,
+      2.7344939048690913,
+      2.7299691537663158,
+      2.7299691537663375,
+      2.7299691537663167,
+      2.733569301974491,
+      2.733569970941346,
+      2.729969153766311,
+      2.7299691537663224,
+      2.729969153766321,
+      2.733527901444726,
+      2.7329438179978456,
+      2.7299691537663264,
+      2.7299691537663238,
+      2.729969153766309,
+      2.7329321410493703,
+      2.732354495598343,
+      2.732646196987617,
+      2.72996808506332,
+      2.729968085063314,
+      2.729968085063308,
+      2.7299680850633052,
+      2.729968085063306,
+      2.729968085063309,
+      2.7299680850633123,
+      2.7299680850632986,
+      2.729968085063281,
+      2.7299680850632755,
+      2.7299680850633115,
+      2.729968085063313,
+      2.7299680850633123,
+      2.7338999998219453,
+      2.734493293912988,
+      2.7299680850633052,
+      2.7299680850633035,
+      2.729968085063302,
+      2.7335683525871164,
+      2.733569055520558,
+      2.7299680850632932,
+      2.729968085063289,
+      2.7299680850632915,
+      2.7335264140507847,
+      2.7329421219891903,
+      2.7299680850633083,
+      2.7299680850633288,
+      2.7299680850633368,
+      2.732931986012997,
+      2.7323540450554415,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.015324546449839627,
+      0.03520343434336859,
+      0.05891687925280844,
+      0.08353011687220656,
+      0.10514704185426121,
+      0.13668069091958882,
+      0.1750418444596893,
+      0.21579415270167832,
+      0.2565919179175237,
+      0.29357679107734175
+    ],
+    "land": [
+      0,
+      0,
+      0.861959202527667,
+      0.8619592025276489,
+      0.861959214937171,
+      0.8619592124551513,
+      0.7156872904342476,
+      0.7156872322066541,
+      1.020762455740056,
+      1.0325253121385607,
+      3.1699240026311566,
+      3.6298962003900264,
+      3.880665177402065,
+      3.6750808929952266,
+      3.970442319526609,
+      3.9704423195266014,
+      3.9704388821962326,
+      3.970440771306824,
+      3.94187912815718,
+      6.8355349909954,
+      13.257005162589621,
+      3.975313220769228,
+      7.104923767693881,
+      13.485236222538145,
+      7.049058628433874,
+      13.41744873758218,
+      4.022718365100815,
+      7.095145866677162,
+      13.602742941846348,
+      7.208790471322843,
+      13.505705195114583,
+      4.470085402661008,
+      7.616215371687255,
+      14.142168850023724,
+      7.474218274383239,
+      13.413308740450246,
+      3.9069636185087613,
+      8.585289034934117,
+      14.95549598749233,
+      7.267910094149465,
+      13.50380593105086,
+      3.169925533263974,
+      3.6298951820574135,
+      3.8806668089106076,
+      3.6750801382233775,
+      3.970446955911998,
+      3.970447744170012,
+      3.9704452971304276,
+      3.970445264300527,
+      3.941880556248179,
+      6.835590328687556,
+      13.257058791113296,
+      3.9753165478869006,
+      7.104947141481502,
+      13.485252430544444,
+      7.049074533036295,
+      13.417457698649542,
+      4.022720316403382,
+      7.095167389147988,
+      13.602754031387178,
+      7.208812953186992,
+      13.50572222798635,
+      4.470100605977005,
+      7.616238027680625,
+      14.142182817565054,
+      7.474241232124956,
+      13.413358647749435,
+      3.906961756606783,
+      8.585340185352257,
+      14.955547036233515,
+      7.267964369444746,
+      13.503860295886543,
+      0.8619591599564219,
+      1.6237880095128276,
+      3.0978056519184984,
+      5.467926333941892,
+      6.34709208852517,
+      0.8619591944418336,
+      1.6237951623392834,
+      3.0978090994716716,
+      5.467929391771435,
+      6.347093839843273,
+      0.6791225405818409,
+      0.4571071429444238,
+      0.3082104979586813,
+      0.35783685111123287,
+      0.4440325711080817,
+      0.8227622956899535,
+      1.240672274059602,
+      1.6977616422821178,
+      2.1940297904595014,
+      2.7294769076897136
+    ],
+    "rest": [
+      0,
+      0,
+      0.019230060526677157,
+      0.02884219433806341,
+      0.045662184920447914,
+      0.06969147916902084,
+      0.07930408075168294,
+      0.09131848796573813,
+      0.10573665293755667,
+      0.11053933956599378,
+      0.06969147916901307,
+      0.06962951461665365,
+      0.06962951461665194,
+      0.06962951461665048,
+      0.06962951461665348,
+      0.06962951461666508,
+      0.06962951461667095,
+      0.06962951461667284,
+      0.06962951461665186,
+      0.06962951461664865,
+      0.06962951461667434,
+      0.06962951461666468,
+      0.06962951461666436,
+      0.06962951461665765,
+      0.07460483429817677,
+      0.07496708145750806,
+      0.06962951461667483,
+      0.06962951461667889,
+      0.06962951461667712,
+      0.0741571594011291,
+      0.07410225195573619,
+      0.06962951461666941,
+      0.06962951461666213,
+      0.0696295146166505,
+      0.07367765283480242,
+      0.07307379103991521,
+      0.06962951461665941,
+      0.0696295146166775,
+      0.06962951461667508,
+      0.07283639244041828,
+      0.0722521746993846,
+      0.0696914791690178,
+      0.06962815966251866,
+      0.06962815966251817,
+      0.06962815966252191,
+      0.0696281596625211,
+      0.06962815966252169,
+      0.06962815966252943,
+      0.06962815966253223,
+      0.06962815966251693,
+      0.06962815966250968,
+      0.06962815966249326,
+      0.06962815966252554,
+      0.06962815966252468,
+      0.06962815966251967,
+      0.07460340201024021,
+      0.07497452669841045,
+      0.06962815966251162,
+      0.06962815966250284,
+      0.06962815966250671,
+      0.07416469806778106,
+      0.0741097924956978,
+      0.06962815966253331,
+      0.06962815966253173,
+      0.06962815966253515,
+      0.07368504017550238,
+      0.07308116896091303,
+      0.06962815966252542,
+      0.06962815966253791,
+      0.06962815966253064,
+      0.07284381228827431,
+      0.07225960619771712,
+      0.028842194338049854,
+      0.028842194338048188,
+      0.028842194338059266,
+      0.02884219433806217,
+      0.028842194338064082,
+      0.028842194338062066,
+      0.02884219433806637,
+      0.028842194338066715,
+      0.02884219433806675,
+      0.028842194338057393,
+      0.0264402484391107,
+      0.03489440854464557,
+      0.04418448288130793,
+      0.053752195496464365,
+      0.06293666934899937,
+      0.07100681413523353,
+      0.07720859968906256,
+      0.08081443432137582,
+      0.08492742850192048,
+      0.09365636615090213
+    ],
+    "scout": [
+      0,
+      0,
+      0.04729440043780684,
+      0.047294400437806944,
+      0.047294400437809046,
+      0.047294400437809,
+      0.13229119248806484,
+      0.3664776594662716,
+      0.6657246899568796,
+      0.6652213012728838,
+      7.649572705370967,
+      7.652811077134738,
+      7.651064067941639,
+      7.65169081703627,
+      7.66993531274381,
+      7.655019852154382,
+      7.668378964698392,
+      7.681898018778756,
+      7.664354059076849,
+      7.674607008050846,
+      7.680442274212911,
+      7.669342068180777,
+      7.669073519019466,
+      7.6690315835077225,
+      7.670900055935369,
+      7.671848204157832,
+      7.6691443061183575,
+      7.672628405705167,
+      7.675847568314903,
+      7.67100019986613,
+      7.672902467693871,
+      7.668905770370337,
+      7.674306266594982,
+      7.6758165865748245,
+      7.6681378705699075,
+      7.668595062610855,
+      7.667764631962194,
+      7.672065675979118,
+      7.671182733760846,
+      7.668099383990167,
+      7.670993611058018,
+      7.649240357374485,
+      7.65232422741843,
+      7.6504213491514825,
+      7.6508943673985845,
+      7.669133485359329,
+      7.65413287653719,
+      7.667459104063569,
+      7.680946769151703,
+      7.663489760280934,
+      7.673741619362727,
+      7.679559047315534,
+      7.668452908724937,
+      7.668051759220478,
+      7.667880521290151,
+      7.669958013247763,
+      7.670800946017554,
+      7.668275357481158,
+      7.671650477392425,
+      7.674780217671178,
+      7.670096153302718,
+      7.67193205135568,
+      7.668044967734964,
+      7.673367294184694,
+      7.674834941351495,
+      7.667257935498758,
+      7.66768170477438,
+      7.666910829889531,
+      7.671183064129806,
+      7.670280851243165,
+      7.667470927557865,
+      7.670104329790087,
+      0.047294400437817324,
+      0.04729440043782478,
+      0.0472944004378176,
+      0.04729440043782317,
+      0.047294400437824506,
+      0.04729440043779697,
+      0.04729440043780014,
+      0.04729440043779449,
+      0.04729440043779242,
+      0.04729440043778832,
+      0.06079261464923317,
+      0.09704880988712734,
+      0.14271061200268215,
+      0.18961133994209403,
+      0.23139724202899892,
+      0.26180981344060233,
+      0.2839261343734695,
+      0.32746258263483646,
+      0.36845486419238643,
+      0.4060263545992546
+    ],
+    "speed": [
+      0,
+      0,
+      0.10861225248040174,
+      0.1086122524804166,
+      0.108612252480407,
+      0.10861225248040739,
+      0.1493378096403363,
+      0.20364335468765227,
+      0.2579458241942774,
+      0.2579458241942629,
+      8.081102704711281,
+      8.402694410489234,
+      8.402694410489236,
+      8.40269441048923,
+      8.402694410489222,
+      8.402694410489223,
+      8.402694410489229,
+      8.402694410489222,
+      8.402694410489223,
+      8.402694410489223,
+      8.402694410489223,
+      8.402694410489215,
+      8.402694410489227,
+      8.40269441048923,
+      8.41007238413389,
+      8.410304495126322,
+      8.402694410489223,
+      8.402694410489234,
+      8.402694410489225,
+      8.408462334325806,
+      8.408679998342311,
+      8.402694410489232,
+      8.402694410489232,
+      8.402694410489238,
+      8.404391910809535,
+      8.404411926201863,
+      8.402694410489227,
+      8.402694410489225,
+      8.402694410489223,
+      8.401011256569475,
+      8.401231514177402,
+      8.081097984330714,
+      8.40269084205081,
+      8.40269084205081,
+      8.402690842050804,
+      8.402690842050799,
+      8.4026908420508,
+      8.402690842050802,
+      8.402690842050802,
+      8.402690842050795,
+      8.4026908420508,
+      8.4026908420508,
+      8.402690842050797,
+      8.402690842050797,
+      8.402690842050795,
+      8.410067902837255,
+      8.41030017401487,
+      8.4026908420508,
+      8.402690842050813,
+      8.402690842050824,
+      8.408457677896873,
+      8.408675490976737,
+      8.402690842050797,
+      8.402690842050797,
+      8.4026908420508,
+      8.404386892900225,
+      8.404407131654603,
+      8.402690842050788,
+      8.40269084205079,
+      8.40269084205079,
+      8.401006617144716,
+      8.401227054009397,
+      0.10861225248041888,
+      0.10861225248042468,
+      0.1086122524804237,
+      0.1086122524804095,
+      0.10861225248041241,
+      0.10861225248042282,
+      0.1086122524804131,
+      0.10861225248041463,
+      0.10861225248040657,
+      0.10861225248042523,
+      0.14934146918438185,
+      0.201037700894833,
+      0.26225433236836165,
+      0.33009988989710026,
+      0.40074999818015233,
+      0.46947932292117994,
+      0.5311569842014906,
+      0.580396670660546,
+      0.611878107527925,
+      0.6174442764399997
+    ],
+    "takeoff": [
+      0,
+      0,
+      0.6257421979481691,
+      0.6257421979481721,
+      0.6257421929843693,
+      0.6257421905023637,
+      0.695268763188958,
+      1.309474289996444,
+      2.4395551300055383,
+      2.4395551349100852,
+      0.7361747332211703,
+      3.004934067680635,
+      3.337839917165132,
+      5.345283502418276,
+      5.792658905021866,
+      5.805048409541271,
+      5.759489403975346,
+      6.028209597182913,
+      5.659107495380036,
+      5.659111669477829,
+      5.659109569913133,
+      5.73146572928623,
+      5.857706971647524,
+      6.406099590549832,
+      5.659108469424486,
+      5.822476091776036,
+      5.65911412259667,
+      5.659115708039129,
+      5.659114898958364,
+      5.659115144626559,
+      5.659114963186623,
+      5.659107016226849,
+      5.659105955738532,
+      5.659105425911464,
+      5.659104683968935,
+      5.659103732719264,
+      5.6591152046148,
+      5.65911246078612,
+      5.659111239780791,
+      5.659110964813812,
+      5.6591096700287284,
+      0.7361759252154666,
+      3.00491855959452,
+      3.3378402597158927,
+      5.345277842085743,
+      5.792658600720675,
+      5.805047121866861,
+      5.759486305559834,
+      6.02820219128178,
+      5.659126239457299,
+      5.659121210787101,
+      5.6591231409126745,
+      5.731475812374017,
+      5.857723229361207,
+      6.406105864824248,
+      5.659130992977692,
+      5.82248532569766,
+      5.659127696652617,
+      5.659128590951664,
+      5.659129438642054,
+      5.659125938757426,
+      5.659124834270944,
+      5.65912401066309,
+      5.6591243031273155,
+      5.659124022467192,
+      5.659125985829737,
+      5.659125450285263,
+      5.659129337994169,
+      5.659129477360379,
+      5.659129879181925,
+      5.659128045428977,
+      5.6591302007513375,
+      0.6257422040878279,
+      1.339768915376857,
+      2.4876069702581742,
+      5.210307657981557,
+      6.520737795536952,
+      0.6257421733531787,
+      1.3397756762927684,
+      2.4875813098382893,
+      5.210293264696847,
+      6.52071925902573,
+      0.6257421979481477,
+      0.6489178345800797,
+      0.8175673677794038,
+      1.1271515476577023,
+      1.4551812491311644,
+      2.067064759367924,
+      3.214251551826382,
+      4.437512349724292,
+      5.61452651748135,
+      6.611086562170965
+    ],
+    "walk": [
+      0,
+      0,
+      1.3216313840046643,
+      0.7625208727080379,
+      1.4605919707540311,
+      1.015883804348352,
+      2.5683251419489044,
+      1.856999073122543,
+      1.2395798644097913,
+      1.2395798644097902,
+      1.0605269387744163,
+      1.2038394097815297,
+      1.0325775712031022,
+      1.1128701467135889,
+      1.1113754879123474,
+      1.6047887421367448,
+      1.2126723889487365,
+      1.0716504936464903,
+      1.1112451107589987,
+      1.1108285890400271,
+      1.1069945794497922,
+      1.1112884992487928,
+      1.1092130937149072,
+      1.1115583044544803,
+      1.1009902565347303,
+      1.1053304203176113,
+      1.1112135978427657,
+      1.1094105669892385,
+      1.1119966705019773,
+      1.1039536492435433,
+      1.1057127383552954,
+      1.111104093246981,
+      1.110735590215692,
+      1.1099812969485676,
+      1.1098602223857474,
+      1.108623336306312,
+      1.1113456916901507,
+      1.1110230600012276,
+      1.108569615524792,
+      1.112656394780529,
+      1.1094421938418801,
+      1.0604192064609388,
+      1.089681226551036,
+      1.174933640025497,
+      1.135201294188257,
+      1.1180956570296827,
+      1.118095657029695,
+      1.1508048435438518,
+      1.118095657029686,
+      1.1173264861828114,
+      1.1046306448627703,
+      1.091260018705888,
+      1.1173795757363927,
+      1.0965860306949693,
+      1.0799710738710395,
+      1.0942415620606447,
+      1.0815336992969402,
+      1.1177318203808735,
+      1.1002533226491298,
+      1.0881129496567856,
+      1.1008062662696976,
+      1.0903669041049115,
+      1.1177672671829193,
+      1.1049493159446688,
+      1.0947104386428161,
+      1.1048906371380924,
+      1.0930594862067786,
+      1.1175705516014554,
+      1.1048804479029581,
+      1.092161959709047,
+      1.1045753038326391,
+      1.0909574951205856,
+      0.7625208727080375,
+      4.124032016348766,
+      5.3125402107528865,
+      4.395866378519689,
+      5.181432585571809,
+      0.7625208727080474,
+      6.977264553287307,
+      4.504978987302387,
+      4.025354973618272,
+      9.65495489480592,
+      1.3216313840046647,
+      0.752199695065254,
+      0.9445269705531923,
+      1.3021842983043728,
+      1.5992557005505805,
+      2.0813242988183984,
+      2.705671574482197,
+      3.3639702404786282,
+      4.631743032181473,
+      5.98216030602585
+    ]
+  },
+  "transitions": {
+    "bestPredecessor": {
+      "attack": {
+        "from": "breath",
+        "to": "attack",
+        "maxRad": 1.787570629605649e-7,
+        "rmsRad": 2.760903240703712e-8,
+        "worstJoint": "R_WingPanel3_0",
+        "maxPosRigUnits": 0.00043945303128545596,
+        "median": 1.1813101599571025
+      },
+      "attack2": {
+        "from": "attackAir2",
+        "to": "attack2",
+        "maxRad": 0.8272864508437879,
+        "rmsRad": 0.21847494735665735,
+        "worstJoint": "R_Thigh",
+        "maxPosRigUnits": 1247.1115939389877,
+        "median": 1.4438550035723146
+      },
+      "attackAir2": {
+        "from": "attack2",
+        "to": "attackAir2",
+        "maxRad": 0.8272864089640067,
+        "rmsRad": 0.225483407598497,
+        "worstJoint": "R_Thigh",
+        "maxPosRigUnits": 1247.1118611828365,
+        "median": 1.772521675444495
+      },
+      "bankLeft": {
+        "from": "cruise",
+        "to": "bankLeft",
+        "maxRad": 0.6967561760036864,
+        "rmsRad": 0.13133985346756344,
+        "worstJoint": "R_WingElbow",
+        "maxPosRigUnits": 2468.269133000997,
+        "median": 1.141391329943021
+      },
+      "bankRight": {
+        "from": "cruise",
+        "to": "bankRight",
+        "maxRad": 0.6967562064773799,
+        "rmsRad": 0.13135122908496022,
+        "worstJoint": "L_WingElbow",
+        "maxPosRigUnits": 2468.2661255822086,
+        "median": 1.1413913900423371
+      },
+      "breath": {
+        "from": "attack",
+        "to": "breath",
+        "maxRad": 2.919981050990416e-7,
+        "rmsRad": 5.84867883691076e-8,
+        "worstJoint": "L_WingD0P0",
+        "maxPosRigUnits": 0.0013006367008241287,
+        "median": 1.1813101599571025
+      },
+      "cruise": {
+        "from": "takeoff",
+        "to": "cruise",
+        "maxRad": 0.07694861494863843,
+        "rmsRad": 0.015596115284807163,
+        "worstJoint": "Tail10",
+        "maxPosRigUnits": 66.48904790081819,
+        "median": 1.1413915044198604
+      },
+      "death": {
+        "from": "scout",
+        "to": "death",
+        "maxRad": 0.3898702094755192,
+        "rmsRad": 0.15152975619071232,
+        "worstJoint": "R_Thigh",
+        "maxPosRigUnits": 1247.3823872669698,
+        "median": 1.1813101419753633
+      },
+      "dive": {
+        "from": "speed",
+        "to": "dive",
+        "maxRad": 0.6849849090028411,
+        "rmsRad": 0.1749816256974331,
+        "worstJoint": "R_Thigh",
+        "maxPosRigUnits": 864.9011175176917,
+        "median": 1.1270605402529972
+      },
+      "glide": {
+        "from": "scout",
+        "to": "glide",
+        "maxRad": 0.15411704696315873,
+        "rmsRad": 0.035444860795985494,
+        "worstJoint": "Head",
+        "maxPosRigUnits": 426.0649965191511,
+        "median": 1.1819595603657356
+      },
+      "hover": {
+        "from": "attack",
+        "to": "hover",
+        "maxRad": 0.4508120510916674,
+        "rmsRad": 0.1272895152634052,
+        "worstJoint": "L_WingElbow",
+        "maxPosRigUnits": 922.5705138674425,
+        "median": 1.1814069112748478
+      },
+      "idle": {
+        "from": "land",
+        "to": "idle",
+        "maxRad": 0.29628772269130654,
+        "rmsRad": 0.07513464939730492,
+        "worstJoint": "R_Foot",
+        "maxPosRigUnits": 1458.5411935013321,
+        "median": 1.3116397621529385
+      },
+      "land": {
+        "from": "idle",
+        "to": "land",
+        "maxRad": 1.252524118898626,
+        "rmsRad": 0.4635592796976767,
+        "worstJoint": "L_WingD0P0",
+        "maxPosRigUnits": 1911.1729156552642,
+        "median": 2.4120378401557105
+      },
+      "rest": {
+        "from": "land",
+        "to": "rest",
+        "maxRad": 0.34138165156945727,
+        "rmsRad": 0.05624159532474607,
+        "worstJoint": "Neck2",
+        "maxPosRigUnits": 1044.4916817007677,
+        "median": 1.3116391926070663
+      },
+      "scout": {
+        "from": "glide",
+        "to": "scout",
+        "maxRad": 0.15411704696315873,
+        "rmsRad": 0.035444860816617275,
+        "worstJoint": "Head",
+        "maxPosRigUnits": 426.06523081898996,
+        "median": 1.1819595019819544
+      },
+      "speed": {
+        "from": "hover",
+        "to": "speed",
+        "maxRad": 0.5643660401912052,
+        "rmsRad": 0.2042947474301433,
+        "worstJoint": "R_WingShoulder",
+        "maxPosRigUnits": 1634.349332303888,
+        "median": 1.1413913900423371
+      },
+      "takeoff": {
+        "from": "idle",
+        "to": "takeoff",
+        "maxRad": 0.20943950476395223,
+        "rmsRad": 0.04458679500930254,
+        "worstJoint": "Neck1",
+        "maxPosRigUnits": 405.59672420385436,
+        "median": 1.3116396907495402
+      },
+      "walk": {
+        "from": "rest",
+        "to": "walk",
+        "maxRad": 0.7712664493310436,
+        "rmsRad": 0.18879817050869008,
+        "worstJoint": "L_Toes",
+        "maxPosRigUnits": 1426.7623867546288,
+        "median": 1.3021146792471552
+      }
+    },
+    "worst": [
+      {
+        "from": "attack2",
+        "to": "land",
+        "maxRad": 3.0846625045266425,
+        "rmsRad": 0.5568303495466315,
+        "worstJoint": "R_WingD5P0",
+        "maxPosRigUnits": 1552.0252276702915
+      },
+      {
+        "from": "attackAir2",
+        "to": "land",
+        "maxRad": 2.9916951297968835,
+        "rmsRad": 0.5242139310599003,
+        "worstJoint": "R_WingD5P0",
+        "maxPosRigUnits": 1208.8360295303191
+      },
+      {
+        "from": "attackAir2",
+        "to": "idle",
+        "maxRad": 2.501650823118344,
+        "rmsRad": 0.3875238415087234,
+        "worstJoint": "R_WingD5P0",
+        "maxPosRigUnits": 1664.9600491901135
+      },
+      {
+        "from": "idle",
+        "to": "attackAir2",
+        "maxRad": 2.501650823118344,
+        "rmsRad": 0.3875222365093718,
+        "worstJoint": "R_WingD5P0",
+        "maxPosRigUnits": 1664.9598271256853
+      },
+      {
+        "from": "land",
+        "to": "attackAir2",
+        "maxRad": 2.501650823118344,
+        "rmsRad": 0.37936835317092454,
+        "worstJoint": "R_WingD5P0",
+        "maxPosRigUnits": 772.3535171849297
+      },
+      {
+        "from": "attackAir2",
+        "to": "takeoff",
+        "maxRad": 2.5016507985397873,
+        "rmsRad": 0.38331081129902705,
+        "worstJoint": "R_WingD5P0",
+        "maxPosRigUnits": 1588.9788975117026
+      },
+      {
+        "from": "attackAir2",
+        "to": "rest",
+        "maxRad": 2.5016507137007613,
+        "rmsRad": 0.3770750502834154,
+        "worstJoint": "R_WingD5P0",
+        "maxPosRigUnits": 841.8917786482342
+      },
+      {
+        "from": "rest",
+        "to": "attackAir2",
+        "maxRad": 2.5016507137007613,
+        "rmsRad": 0.37707335544351533,
+        "worstJoint": "R_WingD5P0",
+        "maxPosRigUnits": 841.8925523303241
+      }
+    ]
+  },
+  "selfTests": [
+    {
+      "name": "loop seam detector bites on a 0.30 rad closing error",
+      "value": 0.29999999268425254,
+      "pass": true
+    },
+    {
+      "name": "motion detector separates a frozen clip from the original",
+      "value": 0,
+      "pass": true
+    },
+    {
+      "name": "edge-stretch detector bites on a 300-unit translation ramp",
+      "value": 62.61349467517839,
+      "pass": true
+    },
+    {
+      "name": "ground detector responds to a downward root translation",
+      "value": -254.9129434847439,
+      "pass": true
+    }
+  ],
+  "checks": {
+    "mode": "report",
+    "failures": [],
+    "warnings": [
+      "Body translates up to 1187.7 rig units (1.10 m) — gameplay owns position",
+      "grounded foot surface spans 419 rig units (0.39 m) across clips"
+    ],
+    "footSpread": 419.2488308471442,
+    "bodyTravelMax": 1187.6713597769196,
+    "edgeCount": 58544
+  }
+}

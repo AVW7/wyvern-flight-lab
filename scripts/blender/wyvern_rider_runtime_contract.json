@@ -1,0 +1,88 @@
+{
+  "contractVersion": 1,
+  "asset": {
+    "id": "wyvern-rider-runtime",
+    "path": "public/models/wyvern-rider.glb",
+    "sha256": "fea609c3d565f56693808e4db1111e6feaf11e936c36e443082012cc145b8ad7",
+    "bytes": 608728
+  },
+  "provenance": {
+    "builder": "tools/blender/build_rider.py",
+    "validator": "tools/blender/rider_runtime_contract.mjs",
+    "unitsPerMetre": 400,
+    "unitsPerMetreDerivation": "Wyvern body mesh measures 4162.2 world units nose-to-tail (tools/measure-wyvern-saddle.mjs); treating that build as 10.4 m gives 400.2 u/m. Rounded to 400: body 10.4 m, shoulder height 2.67 m.",
+    "riderHeightMetres": 1.8,
+    "note": "RDR_Root carries no geometry by design; it exists so the asset has a single origin to mount."
+  },
+  "signature": {
+    "boneCount": 24,
+    "boneNames": [
+      "RDR_Head",
+      "RDR_Neck2",
+      "RDR_Neck1",
+      "RDR_Cloak",
+      "RDR_HandL",
+      "RDR_ArmL_Fore",
+      "RDR_ArmL_Upper",
+      "RDR_ShoulderL",
+      "RDR_HandR",
+      "RDR_ArmR_Fore",
+      "RDR_ArmR_Upper",
+      "RDR_ShoulderR",
+      "RDR_Chest",
+      "RDR_Spine3",
+      "RDR_Spine2",
+      "RDR_Spine1",
+      "RDR_FootL",
+      "RDR_CalfL",
+      "RDR_ThighL",
+      "RDR_FootR",
+      "RDR_CalfR",
+      "RDR_ThighR",
+      "RDR_Pelvis",
+      "RDR_Root"
+    ],
+    "skinCount": 1,
+    "meshCount": 1,
+    "primitiveCount": 1,
+    "triCount": 2860,
+    "clipCount": 4,
+    "clips": [
+      {
+        "name": "rider_brace",
+        "duration": 1.1333
+      },
+      {
+        "name": "rider_idle",
+        "duration": 2
+      },
+      {
+        "name": "rider_leanLeft",
+        "duration": 1.0667
+      },
+      {
+        "name": "rider_leanRight",
+        "duration": 1.0667
+      }
+    ],
+    "upAxis": "+Y",
+    "forwardAxis": "+Z"
+  },
+  "geometry": {
+    "headWorld": [
+      0,
+      296,
+      8
+    ],
+    "pelvisWorld": [
+      0,
+      48,
+      0
+    ],
+    "footWorld": [
+      52,
+      -136,
+      144
+    ]
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "contractVersion": 1,
+  "generatedBy": "tools/calibrate-rider-mount.mjs",
+  "note": "Generated from geometry. Do not hand-edit; re-run the tool instead.",
+  "wyvern": {
+    "path": "public/models/wyvern-v2-rig.glb",
+    "sha256": "e8edd574d95b388e85a1b5c1a695f879a78c8ee161b8f934f32f167992c35698",
+    "joint": "Spine3",
+    "spine3World": [
+      0,
+      783.439,
+      25.186
+    ],
+    "spine3Quaternion": "0.647637,-0.000002,-0.000003,0.761949"
+  },
+  "seat": {
+    "point": [
+      0,
+      999.21,
+      25.186
+    ],
+    "surfaceY": 999.21,
+    "sampleRadius": 80,
+    "samples": 39,
+    "quantile": 0.98,
+    "derivation": "p98 of body-mesh vertex heights within SEAT_RADIUS of Spine3's x/z, in bind pose",
+    "sensitivity": [
+      {
+        "radius": 60,
+        "p98": 992.27,
+        "samples": 13
+      },
+      {
+        "radius": 80,
+        "p98": 999.21,
+        "samples": 39
+      },
+      {
+        "radius": 120,
+        "p98": 992.27,
+        "samples": 221
+      },
+      {
+        "radius": 200,
+        "p98": 1037.4,
+        "samples": 1444
+      }
+    ]
+  },
+  "rider": {
+    "path": "public/models/wyvern-rider.glb",
+    "sha256": "fea609c3d565f56693808e4db1111e6feaf11e936c36e443082012cc145b8ad7",
+    "pelvisLocal": [
+      0,
+      48,
+      0
+    ],
+    "origin": [
+      0,
+      951.21,
+      25.186
+    ]
+  },
+  "mount": {
+    "offsetLocal": [
+      -0.001,
+      27.033,
+      -165.579
+    ],
+    "offsetWorld": [
+      0,
+      167.772,
+      0
+    ],
+    "unitsPerMetre": 400,
+    "seatHeightMetres": 2.498
+  }
+}
