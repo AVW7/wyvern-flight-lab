@@ -2,16 +2,60 @@
 
 ## Start here
 
-- **Doc-41 task list state:** A1–A3, B1–B3, C1–C4, D1, D2, D3, D5 done.
+- **Doc-41 task list state:** A1–A3, B1–B3, C1–C5, D1, D2, D3, D5 done.
   **D4 is partial:** attack is done; cruise + both banks are blocked by product invariants
-  (see below). **C5–C7, D4 remainder and E1–E4 are open.** Suite 165/165 + 21/21 Blender
+  (see below). **C6–C7, D4 remainder and E1–E4 are open.** Suite 165/165 + 21/21 Blender
   unit tests, tsc clean, contract validates 92 joints.
-- **Runtime GLB + contract pinned at** sha256 `950c4321…`, 6,368,564 B.
+- **Runtime GLB + contract pinned at** sha256 `bef7a09a…`, 6,368,564 B (C5 reweighted the
+  skin; same byte count as `950c4321…` because the accessor layout is unchanged).
 - **GLB rebuild order** (each stage is NOT idempotent — rebuild from the previous stage's
   asset via `git show <commit>:public/models/wyvern-v2-rig.glb`, never from its own output):
   `reshape_buzz_clips` (D2) → `stabilize_v2_body_and_feet` → `coordinate_all_v2_clips` →
-  `reshape_d3_clips` → `reshape_d4_clips` → pin contract → sync candidates → `npm test`.
+  `reshape_d3_clips` → `reshape_d4_clips` → **`rebalance_v2_skin_weights --write` (C5, weights
+  only — does not touch geometry or clips)** → pin contract → sync candidates → `npm test`.
+  C5 is **not idempotent** (each run hands more mass to the panels); the tool refuses when the
+  median panel web share is already >15% (pre-C5 1.7%, post-C5 43.5%) — apply it to the pre-C5
+  asset or pass `--force`. Verified reproducible: pre-C5 asset + the tool + `compactGlb` yields
+  `bef7a09aa131…` byte-for-byte.
+  Any weight change invalidates `src/flight-lab/rider/mountData.ts`: re-run
+  `node tools/calibrate-rider-mount.mjs --write` or `rider-mount.test.js` fails on the hash
+  comment (geometry is unchanged; only the `(sha)` prefix moves).
 - **Never `git checkout -- <asset>` mid-session.** HEAD is stale while you work.
+
+## Vertex coordinates are NOT world coordinates (C5, measured)
+
+This cost a whole session of "the passes select zero vertices". Three separate traps, all in
+`tools/blender/glb_skin_io.mjs` now:
+
+- **Mesh-local → bind world is `jointWorld(j) · inverseBindMatrix(j)`**, joint-invariant
+  (max deviation 2.4e-3 across 92 joints on elements of magnitude 2188), uniform scale
+  **2187.9565**, translation `(0, 531, −1042.85)`. It is NOT the mesh node transform — both
+  mesh nodes are roots with identity matrices.
+- **`WyvernBody_Rebuild` `POSITION` is normalized `SHORT`** (`componentType 5122`,
+  `normalized: true`; `KHR_mesh_quantization` is in `extensionsRequired`), so it must be
+  divided by 32767. `WyvernMembrane_ExportSafe` `POSITION` is float.
+- Use `readSkin()` / `editSkinWeights()` — they return bind-world positions and honour
+  normalization. Do not read `decodeAccessor(...POSITION).get()` directly for anything spatial.
+  Mirror-keying must use `{ space: "local" }`: the bind matrix carries a ~0.0002 rotation term,
+  so world `X` is not an exact mirror (~0.4 units of drift at z≈1000).
+
+## Skin weights: what the numbers actually mean (C5)
+
+- **`Spine3`'s mass is the neck, not the chest.** 92% sits above `Neck1.head`; the chest
+  (t 0.24–0.90 of the `Body→Neck1` axis) carries ~63 of 5,624.8. Doc 41's "20× thoracic cliff /
+  `Spine2 → Spine3` hinge" is a metric artifact — redistributing to `Spine1/Spine2` moves ~63.
+  The real defect was `Spine3` owning the `Neck1` span (3,832 verts nearest `Neck1`).
+- **`dominant bone == nearest bone segment`** is the only pose-independent weight sanity test
+  (reported, not gated, in `audit_v2_skin_weights.mjs`). Baseline 28.8% overall / 20.1% neck
+  slab; after C5 51.7% / 59.9%. A healthy rig still scores low overall — surface vertices are
+  often marginally nearer an unrelated bone through the body.
+- **Full four-influence vertices have no free slot**, so any "add an influence" pass must evict
+  something. Evict the smallest **non-protected** influence, not the global smallest: the
+  global-smallest rule refused every web vertex whose smallest slot was the adjacent digit,
+  which is exactly the vertex the panel exists to own (825 skipped → 410).
+- `cruise` `maxMembraneX` is **2780.9 with and without C5** — the membrane's extent comes from
+  digit-tip-dominated vertices, which the web pass does not touch. Do not expect weight work to
+  move D4's cruise gate.
 
 ## D4 remainder — why cruise/banks are not shipped
 
@@ -111,7 +155,7 @@ Full analysis: `docs/flight-lab/40-architecture-audit-and-prioritized-path.md`.
 
 - `39-v2-development-roadmap.md` — master plan, `M1–M11` (updated with `Tasks C4–C7` Blender rig/control-rig/skinning tasks and `Workstream E` Flight Lab AI tasks).
 - `40-architecture-audit-and-prioritized-path.md` — the architecture audit.
-- `41-v2-and-blender-rig-audit-task-list.md` — `Workstreams A–E` task list (`A1–A3`, `B1–B3`, `C1–C3`, `D1–D3`, `D5`, `D4-attack` done; `C4–C7` Blender rig/control-rig/skinning tasks, `D4` cruise/banks remainder, and `E1–E4` Flight Lab AI tasks open).
+- `41-v2-and-blender-rig-audit-task-list.md` — `Workstreams A–E` task list (`A1–A3`, `B1–B3`, `C1–C5`, `D1–D3`, `D5`, `D4-attack` done; `C6–C7` Blender bone-geometry/donor-rig tasks, `D4` cruise/banks remainder, and `E1–E4` Flight Lab AI tasks open).
 
 ## Header responsive contract
 

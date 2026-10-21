@@ -1,0 +1,321 @@
+{
+  "asset": "/tmp/c5-backup.glb",
+  "passes": {
+    "web": {
+      "mesh": "WyvernMembrane_ExportSafe",
+      "webVertices": 2319,
+      "skippedNoSlot": 410,
+      "movedMass": 437.94,
+      "totalMassBefore": 8249,
+      "totalMassAfter": 8249,
+      "panels": [
+        {
+          "bone": "L_WingPanel0_0",
+          "webVertices": 191,
+          "skipped": 45,
+          "addedMass": 18.06
+        },
+        {
+          "bone": "L_WingPanel0_1",
+          "webVertices": 219,
+          "skipped": 12,
+          "addedMass": 51.56
+        },
+        {
+          "bone": "L_WingPanel1_0",
+          "webVertices": 171,
+          "skipped": 20,
+          "addedMass": 25.11
+        },
+        {
+          "bone": "L_WingPanel1_1",
+          "webVertices": 58,
+          "skipped": 1,
+          "addedMass": 11.84
+        },
+        {
+          "bone": "L_WingPanel2_0",
+          "webVertices": 136,
+          "skipped": 53,
+          "addedMass": 12.4
+        },
+        {
+          "bone": "L_WingPanel2_1",
+          "webVertices": 193,
+          "skipped": 12,
+          "addedMass": 46.52
+        },
+        {
+          "bone": "L_WingPanel3_0",
+          "webVertices": 240,
+          "skipped": 45,
+          "addedMass": 23.41
+        },
+        {
+          "bone": "L_WingPanel3_1",
+          "webVertices": 163,
+          "skipped": 17,
+          "addedMass": 31.35
+        },
+        {
+          "bone": "R_WingPanel0_0",
+          "webVertices": 192,
+          "skipped": 45,
+          "addedMass": 18.27
+        },
+        {
+          "bone": "R_WingPanel0_1",
+          "webVertices": 215,
+          "skipped": 11,
+          "addedMass": 51.01
+        },
+        {
+          "bone": "R_WingPanel1_0",
+          "webVertices": 170,
+          "skipped": 19,
+          "addedMass": 25.05
+        },
+        {
+          "bone": "R_WingPanel1_1",
+          "webVertices": 57,
+          "skipped": 1,
+          "addedMass": 11.51
+        },
+        {
+          "bone": "R_WingPanel2_0",
+          "webVertices": 134,
+          "skipped": 53,
+          "addedMass": 11.99
+        },
+        {
+          "bone": "R_WingPanel2_1",
+          "webVertices": 190,
+          "skipped": 11,
+          "addedMass": 45.73
+        },
+        {
+          "bone": "R_WingPanel3_0",
+          "webVertices": 239,
+          "skipped": 46,
+          "addedMass": 23.47
+        },
+        {
+          "bone": "R_WingPanel3_1",
+          "webVertices": 161,
+          "skipped": 19,
+          "addedMass": 30.66
+        }
+      ]
+    },
+    "scapular": {
+      "mesh": "WyvernBody_Rebuild",
+      "target": 110,
+      "sides": [
+        {
+          "side": "L",
+          "candidates": 2191,
+          "vertices": 110,
+          "nearest": 114.4,
+          "farthest": 150.2,
+          "addedMass": 25.37
+        },
+        {
+          "side": "R",
+          "candidates": 2191,
+          "vertices": 110,
+          "nearest": 114.4,
+          "farthest": 150.2,
+          "addedMass": 25.25
+        }
+      ]
+    },
+    "neck": {
+      "mesh": "WyvernBody_Rebuild",
+      "share": 0.5,
+      "ramp": 0.25,
+      "vertices": 5311,
+      "movedMass": 2150.69,
+      "byBone": {
+        "Neck1": 2109.58,
+        "Neck2": 40.68,
+        "Head": 0.43
+      },
+      "totalMassAfter": 14544
+    },
+    "symmetry": {
+      "WyvernBody_Rebuild": {
+        "pairs": 6463,
+        "changed": 3267
+      },
+      "WyvernMembrane_ExportSafe": {
+        "pairs": 1600,
+        "changed": 484
+      }
+    }
+  },
+  "preflight": {
+    "panels": 16,
+    "medianWebShare": 0.0172,
+    "alreadyRebalanced": false
+  },
+  "body": {
+    "Body": {
+      "before": {
+        "vertices": 947,
+        "mass": 270.47
+      },
+      "after": {
+        "vertices": 947,
+        "mass": 270.61
+      }
+    },
+    "Spine1": {
+      "before": {
+        "vertices": 760,
+        "mass": 232.68
+      },
+      "after": {
+        "vertices": 760,
+        "mass": 232.82
+      }
+    },
+    "Spine2": {
+      "before": {
+        "vertices": 607,
+        "mass": 164.93
+      },
+      "after": {
+        "vertices": 599,
+        "mass": 164.75
+      }
+    },
+    "Spine3": {
+      "before": {
+        "vertices": 8203,
+        "mass": 5624.78
+      },
+      "after": {
+        "vertices": 8202,
+        "mass": 3531.4
+      }
+    },
+    "Neck1": {
+      "before": {
+        "vertices": 1282,
+        "mass": 412.85
+      },
+      "after": {
+        "vertices": 5977,
+        "mass": 2539.9
+      }
+    },
+    "Neck2": {
+      "before": {
+        "vertices": 1907,
+        "mass": 1000.49
+      },
+      "after": {
+        "vertices": 1999,
+        "mass": 1040.88
+      }
+    },
+    "Head": {
+      "before": {
+        "vertices": 4562,
+        "mass": 2237.75
+      },
+      "after": {
+        "vertices": 4599,
+        "mass": 2137.13
+      }
+    },
+    "L_WingRoot": {
+      "before": {
+        "vertices": 8,
+        "mass": 0.95
+      },
+      "after": {
+        "vertices": 118,
+        "mass": 26.9
+      }
+    },
+    "R_WingRoot": {
+      "before": {
+        "vertices": 24,
+        "mass": 2.16
+      },
+      "after": {
+        "vertices": 127,
+        "mass": 27.26
+      }
+    }
+  },
+  "membranePanels": {
+    "L_WingPanel0_1": {
+      "before": {
+        "vertices": 47,
+        "mass": 0.45
+      },
+      "after": {
+        "vertices": 211,
+        "mass": 50.7
+      }
+    },
+    "R_WingPanel0_1": {
+      "before": {
+        "vertices": 43,
+        "mass": 0.43
+      },
+      "after": {
+        "vertices": 206,
+        "mass": 50.17
+      }
+    },
+    "L_WingPanel2_0": {
+      "before": {
+        "vertices": 26,
+        "mass": 0.6
+      },
+      "after": {
+        "vertices": 109,
+        "mass": 12.27
+      }
+    },
+    "R_WingPanel2_0": {
+      "before": {
+        "vertices": 27,
+        "mass": 0.58
+      },
+      "after": {
+        "vertices": 108,
+        "mass": 11.87
+      }
+    },
+    "L_WingPanel3_0": {
+      "before": {
+        "vertices": 36,
+        "mass": 0.26
+      },
+      "after": {
+        "vertices": 231,
+        "mass": 22.9
+      }
+    },
+    "R_WingPanel3_0": {
+      "before": {
+        "vertices": 37,
+        "mass": 0.28
+      },
+      "after": {
+        "vertices": 230,
+        "mass": 23.07
+      }
+    }
+  },
+  "output": {
+    "path": "/tmp/c5-backup.glb",
+    "written": false,
+    "bytes": 6851312,
+    "sha256": "f524a3e2c2dd6753c3fd1a525dd82d6c7ac3a4f602b0d5bbcf4278ba4cc97415"
+  }
+}

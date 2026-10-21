@@ -5,7 +5,7 @@
  * so the runtime only has to place a group at Spine3's world pose and offset
  * its child by this vector. Re-run the tool if the wyvern or rider asset changes.
  *
- * Derived from public/models/wyvern-v2-rig.glb (950c4321b00c) and
+ * Derived from public/models/wyvern-v2-rig.glb (bef7a09aa131) and
  * public/models/wyvern-rider.glb (d70a6fd66be3).
  */
 

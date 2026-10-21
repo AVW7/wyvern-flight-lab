@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-21T20:03:21.326Z",
+  "generatedAt": "2026-10-21T22:00:57.928Z",
   "target": "public/models/wyvern-v2-rig.glb",
   "fitMetresPerUnit": 0.0009255055271956991,
   "fitMetresPerUnitLab": 0.0013403873152489437,
@@ -23,8 +23,8 @@
   "structure": {
     "file": {
       "path": "public/models/wyvern-v2-rig.glb",
-      "sha256": "88adf57e5d769b26a382bbc94bced253473a88c87e071c4b3100cd43ce666d6d",
-      "bytes": 5844968
+      "sha256": "bef7a09aa131dd996f4e91e66e0edd95bbd623c1d6644e6eeb1b40ae0deffdee",
+      "bytes": 6368564
     },
     "generator": "glTF-Transform v4.5.0",
     "gltfVersion": "2.0",
@@ -41,7 +41,7 @@
       "joints": 92,
       "animations": 18,
       "materials": 2,
-      "accessors": 4936
+      "accessors": 4950
     },
     "sceneRoots": [
       "WyvernRig",
@@ -237,13 +237,13 @@
         "vertices": 14544,
         "unweighted": 0,
         "maxSumError": 2.220446049250313e-16,
-        "singleInfluence": 3991,
-        "singleInfluenceFraction": 0.2744086908690869,
+        "singleInfluence": 1437,
+        "singleInfluenceFraction": 0.0988036303630363,
         "influenceHistogram": {
-          "1": 3991,
-          "2": 4818,
-          "3": 2172,
-          "4": 3563
+          "1": 1437,
+          "2": 5770,
+          "3": 3455,
+          "4": 3882
         }
       },
       {
@@ -269,8 +269,8 @@
         "influenceHistogram": {
           "1": 608,
           "2": 407,
-          "3": 461,
-          "4": 6773
+          "3": 221,
+          "4": 7013
         }
       }
     ],
@@ -290,227 +290,227 @@
     "topJoints": [
       {
         "joint": "Head",
-        "mass": 12151.172549019384
+        "mass": 12050.56078431351
       },
       {
         "joint": "Spine3",
-        "mass": 5971.301960784073
-      },
-      {
-        "joint": "Neck2",
-        "mass": 1032.3098039215624
-      },
-      {
-        "joint": "R_Toes",
-        "mass": 454.2313725490199
-      },
-      {
-        "joint": "L_Toes",
-        "mass": 450.0666666666667
+        "mass": 3877.823529411676
       },
       {
         "joint": "Neck1",
-        "mass": 414.011764705882
+        "mass": 2541.0823529411414
+      },
+      {
+        "joint": "Neck2",
+        "mass": 1072.701960784294
+      },
+      {
+        "joint": "R_Toes",
+        "mass": 452.56078431372543
+      },
+      {
+        "joint": "L_Toes",
+        "mass": 451.9019607843139
       },
       {
         "joint": "Tail2",
-        "mass": 401.63137254902057
-      },
-      {
-        "joint": "L_WingD3P2",
-        "mass": 363.4
-      },
-      {
-        "joint": "R_WingD3P2",
-        "mass": 361.8235294117647
+        "mass": 401.313725490197
       },
       {
         "joint": "Tail10",
         "mass": 340.73333333333295
       },
       {
-        "joint": "L_WingD2P2",
-        "mass": 296.7254901960787
+        "joint": "L_WingD3P2",
+        "mass": 320.6745098039216
+      },
+      {
+        "joint": "R_WingD3P2",
+        "mass": 319.92549019607816
       },
       {
         "joint": "L_WingD4P0",
-        "mass": 294.2666666666665
+        "mass": 291.89019607843113
+      },
+      {
+        "joint": "R_WingD4P0",
+        "mass": 290.98431372548976
       }
     ]
   },
   "restScale": {
     "noClip": {
-      "median": 2187.956128437048,
-      "p99": 2667.521083252404,
+      "median": 2187.9559564905558,
+      "p99": 2999.4803549489534,
       "edges": 58544
     },
     "idleFrameZero": {
-      "median": 2187.9561295143358,
-      "p99": 2667.521090677305,
+      "median": 2187.9559634634234,
+      "p99": 2999.4803281243485,
       "edges": 58544
     },
     "note": "Ratio of skinned edge length to bind-space length. The node rest pose is not the display pose."
   },
   "translationChannels": {
-    "L_WingPanel0_0": {
-      "bone": "L_WingPanel0_0",
-      "magnitude": 347.2136073705976,
+    "L_WingPanel1_0": {
+      "bone": "L_WingPanel1_0",
+      "magnitude": 876.5807752429848,
       "range": [
-        238.8977565765381,
-        87.85784912109375,
-        236.14857482910156
+        453.8475570678711,
+        557.3040466308594,
+        501.8251190185547
       ],
-      "clip": "bankRight"
-    },
-    "R_WingPanel0_0": {
-      "bone": "R_WingPanel0_0",
-      "magnitude": 347.2131472612389,
-      "range": [
-        238.89717483520508,
-        87.85858154296875,
-        236.14821434020996
-      ],
-      "clip": "bankRight"
+      "clip": "takeoff"
     },
     "R_WingPanel1_0": {
       "bone": "R_WingPanel1_0",
-      "magnitude": 334.48590274665446,
+      "magnitude": 876.5798876361351,
       "range": [
-        286.3859443664551,
-        63.169342041015625,
-        160.85255432128906
+        453.8455352783203,
+        557.3040771484375,
+        501.8253631591797
       ],
-      "clip": "land"
+      "clip": "takeoff"
     },
-    "L_WingPanel1_0": {
-      "bone": "L_WingPanel1_0",
-      "magnitude": 334.4854137028959,
+    "R_WingPanel0_0": {
+      "bone": "R_WingPanel0_0",
+      "magnitude": 853.4220612463554,
       "range": [
-        286.3857936859131,
-        63.16864013671875,
-        160.85208129882812
+        520.7195625305176,
+        567.8301391601562,
+        367.0821228027344
       ],
-      "clip": "land"
+      "clip": "takeoff"
     },
-    "L_WingPanel2_1": {
-      "bone": "L_WingPanel2_1",
-      "magnitude": 273.832731542751,
+    "L_WingPanel0_0": {
+      "bone": "L_WingPanel0_0",
+      "magnitude": 853.4220176548201,
       "range": [
-        127.88680648803711,
-        149.16091918945312,
-        190.73633575439453
+        520.7207832336426,
+        567.8297729492188,
+        367.0808563232422
       ],
-      "clip": "cruise"
-    },
-    "R_WingPanel2_1": {
-      "bone": "R_WingPanel2_1",
-      "magnitude": 273.8320372328086,
-      "range": [
-        127.88616561889648,
-        149.16012573242188,
-        190.73638916015625
-      ],
-      "clip": "bankRight"
+      "clip": "takeoff"
     },
     "R_WingPanel2_0": {
       "bone": "R_WingPanel2_0",
-      "magnitude": 234.29678281904492,
+      "magnitude": 814.1777238352034,
       "range": [
-        217.81646156311035,
-        65.65399169921875,
-        56.04038619995117
+        627.1139221191406,
+        207.93112182617188,
+        475.79212188720703
       ],
-      "clip": "land"
+      "clip": "takeoff"
     },
     "L_WingPanel2_0": {
       "bone": "L_WingPanel2_0",
-      "magnitude": 234.29633351999092,
+      "magnitude": 814.1753777921364,
       "range": [
-        217.81589317321777,
-        65.654541015625,
-        56.04007339477539
+        627.1109924316406,
+        207.93222045898438,
+        475.79148864746094
       ],
-      "clip": "land"
+      "clip": "takeoff"
     },
-    "L_WingPanel0_1": {
-      "bone": "L_WingPanel0_1",
-      "magnitude": 221.10469830464382,
+    "R_WingPanel2_1": {
+      "bone": "R_WingPanel2_1",
+      "magnitude": 636.9896725512525,
       "range": [
-        215.88500213623047,
-        29.8447265625,
-        37.28599953651428
+        251.2377471923828,
+        476.8619689941406,
+        339.4673767089844
       ],
-      "clip": "bankLeft"
+      "clip": "takeoff"
+    },
+    "L_WingPanel2_1": {
+      "bone": "L_WingPanel2_1",
+      "magnitude": 636.9850168919525,
+      "range": [
+        251.23579025268555,
+        476.8567810058594,
+        339.4673767089844
+      ],
+      "clip": "takeoff"
     },
     "R_WingPanel0_1": {
       "bone": "R_WingPanel0_1",
-      "magnitude": 221.10453123892304,
+      "magnitude": 448.31677152895696,
       "range": [
-        215.88494873046875,
-        29.844970703125,
-        37.28512263298035
+        305.91686725616455,
+        241.54522705078125,
+        221.4919891357422
       ],
-      "clip": "bankLeft"
+      "clip": "takeoff"
     },
-    "L_WingPanel1_1": {
-      "bone": "L_WingPanel1_1",
-      "magnitude": 215.43260461805698,
+    "L_WingPanel0_1": {
+      "bone": "L_WingPanel0_1",
+      "magnitude": 448.31481867858037,
       "range": [
-        196.75906372070312,
-        71.27655029296875,
-        51.15399646759033
+        305.9150199890137,
+        241.54327392578125,
+        221.49271774291992
       ],
-      "clip": "bankLeft"
+      "clip": "takeoff"
     },
     "R_WingPanel1_1": {
       "bone": "R_WingPanel1_1",
-      "magnitude": 215.43171574829904,
+      "magnitude": 440.99249010535914,
       "range": [
-        196.75755310058594,
-        71.278076171875,
-        51.153937339782715
+        234.76820182800293,
+        277.3914489746094,
+        249.82444190979004
       ],
-      "clip": "bankLeft"
+      "clip": "takeoff"
     },
-    "R_WingPanel3_1": {
-      "bone": "R_WingPanel3_1",
-      "magnitude": 162.90049145267716,
+    "L_WingPanel1_1": {
+      "bone": "L_WingPanel1_1",
+      "magnitude": 440.991374287186,
       "range": [
-        43.30973243713379,
-        39.88787841796875,
-        151.8874397277832
+        234.76891422271729,
+        277.388671875,
+        249.82488632202148
       ],
-      "clip": "bankRight"
-    },
-    "L_WingPanel3_1": {
-      "bone": "L_WingPanel3_1",
-      "magnitude": 162.89958424797632,
-      "range": [
-        43.30976486206055,
-        39.888336181640625,
-        151.88633728027344
-      ],
-      "clip": "bankLeft"
-    },
-    "R_WingPanel3_0": {
-      "bone": "R_WingPanel3_0",
-      "magnitude": 161.9912839137568,
-      "range": [
-        154.52424240112305,
-        35.9228515625,
-        32.75642395019531
-      ],
-      "clip": "land"
+      "clip": "takeoff"
     },
     "L_WingPanel3_0": {
       "bone": "L_WingPanel3_0",
-      "magnitude": 161.99092352364738,
+      "magnitude": 397.436032512959,
       "range": [
-        154.5239028930664,
-        35.92303466796875,
-        32.75604248046875
+        262.7968273162842,
+        217.77752685546875,
+        203.63245391845703
       ],
-      "clip": "land"
+      "clip": "takeoff"
+    },
+    "R_WingPanel3_0": {
+      "bone": "R_WingPanel3_0",
+      "magnitude": 397.4359223292445,
+      "range": [
+        262.796573638916,
+        217.77804565429688,
+        203.63201141357422
+      ],
+      "clip": "takeoff"
+    },
+    "R_WingPanel3_1": {
+      "bone": "R_WingPanel3_1",
+      "magnitude": 290.6467289799099,
+      "range": [
+        149.47131192684174,
+        236.50473022460938,
+        78.73601818084717
+      ],
+      "clip": "takeoff"
+    },
+    "L_WingPanel3_1": {
+      "bone": "L_WingPanel3_1",
+      "magnitude": 290.6461271289686,
+      "range": [
+        149.47311210632324,
+        236.50216674804688,
+        78.73807907104492
+      ],
+      "clip": "takeoff"
     }
   },
   "tracks": {
@@ -531,8 +531,8 @@
       "maxKeys": 37,
       "maxScaleDeviation": 0.0000012516975402832031,
       "translatedBones": 16,
-      "maxTranslationRigUnits": 29.223255805963667,
-      "maxTranslationBone": "R_WingPanel3_0",
+      "maxTranslationRigUnits": 31.640073842616413,
+      "maxTranslationBone": "L_WingPanel3_0",
       "bodyTranslationRigUnits": 0
     },
     "attack2": {
@@ -552,7 +552,7 @@
       "maxKeys": 81,
       "maxScaleDeviation": 0.0000011920928955078125,
       "translatedBones": 8,
-      "maxTranslationRigUnits": 7.320654988222861,
+      "maxTranslationRigUnits": 7.3745644923780045,
       "maxTranslationBone": "R_WingPanel0_1",
       "bodyTranslationRigUnits": 0
     },
@@ -573,7 +573,7 @@
       "maxKeys": 81,
       "maxScaleDeviation": 0.0000011324882507324219,
       "translatedBones": 16,
-      "maxTranslationRigUnits": 108.09880594855709,
+      "maxTranslationRigUnits": 108.0248761151989,
       "maxTranslationBone": "R_WingPanel0_0",
       "bodyTranslationRigUnits": 0
     },
@@ -594,8 +594,8 @@
       "maxKeys": 145,
       "maxScaleDeviation": 0.000007510185241699219,
       "translatedBones": 16,
-      "maxTranslationRigUnits": 347.2131790685368,
-      "maxTranslationBone": "L_WingPanel0_0",
+      "maxTranslationRigUnits": 347.21239270719315,
+      "maxTranslationBone": "R_WingPanel0_0",
       "bodyTranslationRigUnits": 0
     },
     "bankRight": {
@@ -615,7 +615,7 @@
       "maxKeys": 145,
       "maxScaleDeviation": 0.000007510185241699219,
       "translatedBones": 16,
-      "maxTranslationRigUnits": 347.2136073705976,
+      "maxTranslationRigUnits": 347.2124451959644,
       "maxTranslationBone": "L_WingPanel0_0",
       "bodyTranslationRigUnits": 0
     },
@@ -636,8 +636,8 @@
       "maxKeys": 49,
       "maxScaleDeviation": 0.0000012516975402832031,
       "translatedBones": 16,
-      "maxTranslationRigUnits": 36.818230181958256,
-      "maxTranslationBone": "L_WingPanel3_0",
+      "maxTranslationRigUnits": 160.62654625362052,
+      "maxTranslationBone": "L_WingPanel2_0",
       "bodyTranslationRigUnits": 0
     },
     "cruise": {
@@ -657,7 +657,7 @@
       "maxKeys": 145,
       "maxScaleDeviation": 0.000007033348083496094,
       "translatedBones": 16,
-      "maxTranslationRigUnits": 347.21282357745633,
+      "maxTranslationRigUnits": 347.21211562146584,
       "maxTranslationBone": "R_WingPanel0_0",
       "bodyTranslationRigUnits": 0
     },
@@ -678,8 +678,8 @@
       "maxKeys": 97,
       "maxScaleDeviation": 0.0000012516975402832031,
       "translatedBones": 16,
-      "maxTranslationRigUnits": 65.98406059032403,
-      "maxTranslationBone": "R_WingPanel1_0",
+      "maxTranslationRigUnits": 327.0756156092474,
+      "maxTranslationBone": "L_WingPanel2_0",
       "bodyTranslationRigUnits": 0
     },
     "dive": {
@@ -720,8 +720,8 @@
       "maxKeys": 145,
       "maxScaleDeviation": 0.0000073909759521484375,
       "translatedBones": 16,
-      "maxTranslationRigUnits": 10.475439406658207,
-      "maxTranslationBone": "R_WingPanel0_1",
+      "maxTranslationRigUnits": 10.486163357294059,
+      "maxTranslationBone": "L_WingPanel0_1",
       "bodyTranslationRigUnits": 0
     },
     "hover": {
@@ -741,7 +741,7 @@
       "maxKeys": 145,
       "maxScaleDeviation": 0.00000667572021484375,
       "translatedBones": 16,
-      "maxTranslationRigUnits": 10.981647203976138,
+      "maxTranslationRigUnits": 11.093343503796715,
       "maxTranslationBone": "R_WingPanel0_1",
       "bodyTranslationRigUnits": 0
     },
@@ -783,7 +783,7 @@
       "maxKeys": 73,
       "maxScaleDeviation": 0.0000012516975402832031,
       "translatedBones": 16,
-      "maxTranslationRigUnits": 334.48590274665446,
+      "maxTranslationRigUnits": 334.48597972451006,
       "maxTranslationBone": "R_WingPanel1_0",
       "bodyTranslationRigUnits": 0
     },
@@ -804,7 +804,7 @@
       "maxKeys": 145,
       "maxScaleDeviation": 0.000006556510925292969,
       "translatedBones": 8,
-      "maxTranslationRigUnits": 7.2299233145397315,
+      "maxTranslationRigUnits": 7.229923315449237,
       "maxTranslationBone": "R_WingPanel0_1",
       "bodyTranslationRigUnits": 0
     },
@@ -825,7 +825,7 @@
       "maxKeys": 145,
       "maxScaleDeviation": 0.000006794929504394531,
       "translatedBones": 16,
-      "maxTranslationRigUnits": 9.783798902845813,
+      "maxTranslationRigUnits": 9.783802780516362,
       "maxTranslationBone": "R_WingPanel0_1",
       "bodyTranslationRigUnits": 0
     },
@@ -846,7 +846,7 @@
       "maxKeys": 121,
       "maxScaleDeviation": 0.00000762939453125,
       "translatedBones": 8,
-      "maxTranslationRigUnits": 7.606729461589722,
+      "maxTranslationRigUnits": 7.60672948476132,
       "maxTranslationBone": "L_WingPanel0_1",
       "bodyTranslationRigUnits": 0
     },
@@ -867,8 +867,8 @@
       "maxKeys": 73,
       "maxScaleDeviation": 0.0000017285346984863281,
       "translatedBones": 16,
-      "maxTranslationRigUnits": 298.51284845599014,
-      "maxTranslationBone": "R_WingPanel1_0",
+      "maxTranslationRigUnits": 876.5807752429848,
+      "maxTranslationBone": "L_WingPanel1_0",
       "bodyTranslationRigUnits": 0
     },
     "walk": {
@@ -888,7 +888,7 @@
       "maxKeys": 60,
       "maxScaleDeviation": 0.0000013709068298339844,
       "translatedBones": 16,
-      "maxTranslationRigUnits": 8.174695033325234,
+      "maxTranslationRigUnits": 8.174716550318236,
       "maxTranslationBone": "L_WingPanel0_1",
       "bodyTranslationRigUnits": 0
     }
@@ -901,352 +901,32 @@
       "loops": false,
       "angular": {
         "peak": {
-          "value": 8.831423386799425,
+          "value": 86.06126073291973,
           "joint": "Head",
           "frame": 34,
           "time": 0.5666666666666667
         },
-        "mean": 1.4541712399250881,
-        "localMean": 0.20731242761461666,
+        "mean": 8.968795630932709,
+        "localMean": 0.8217773177416433,
         "localPeak": {
-          "value": 4.095712170596838,
+          "value": 45.28535203125418,
           "joint": "Head",
           "frame": 34
         },
-        "p95": 6.040996866287015,
-        "accelMax": 392.48844188139697,
-        "accelP95": 58.41927404375255,
-        "outlierThreshold": 48.03471846034317,
+        "p95": 37.22699580863857,
+        "accelMax": 3753.1735889646407,
+        "accelP95": 390.14519180069294,
+        "outlierThreshold": 164.14853695018317,
         "outlier": false,
         "accelSpike": false
       },
       "linear": {
         "maxWorldSpeed": {
-          "value": 14586.304931177501,
-          "joint": "R_WingD0P2",
+          "value": 95481.08602905113,
+          "joint": "L_WingD0P2",
           "frame": 37
         },
-        "p95": 5879.254971454193
-      },
-      "translate": {
-        "Root": {
-          "worldRange": [
-            0,
-            0,
-            0
-          ],
-          "localRange": 0,
-          "startEnd": 0
-        },
-        "RootMotion": {
-          "worldRange": [
-            0,
-            0,
-            0
-          ],
-          "localRange": 0,
-          "startEnd": 0
-        },
-        "Body": {
-          "worldRange": [
-            0,
-            0,
-            0
-          ],
-          "localRange": 0,
-          "startEnd": 0
-        }
-      },
-      "seam": {
-        "rotationRad": 2.919981050990416e-7,
-        "joint": "L_WingD0P0",
-        "positionRigUnits": 0.001266749409286773,
-        "velocity": 0.000024411189546528223,
-        "meanVelocity": 1.4541712399250881
-      },
-      "contact": {
-        "L_Toes": {
-          "minY": -36.3633898489754,
-          "verticalRange": 9.367446648124513,
-          "duty": 1,
-          "slipRigUnits": 258.3062969322017,
-          "slipMetres": 0.23906390552020612
-        },
-        "R_Toes": {
-          "minY": -36.36306763933794,
-          "verticalRange": 9.36717963690279,
-          "duty": 1,
-          "slipRigUnits": 258.3121249209942,
-          "slipMetres": 0.23906929935604604
-        },
-        "L_Foot": {
-          "minY": 108.40954460870358,
-          "verticalRange": 22.22236268059885,
-          "duty": 0.17582417582417584,
-          "slipRigUnits": 73.95167806142014,
-          "slipMetres": 0.06844268679124126
-        },
-        "R_Foot": {
-          "minY": 108.40965358897103,
-          "verticalRange": 22.222180644624956,
-          "duty": 0.17582417582417584,
-          "slipRigUnits": 73.95425982627691,
-          "slipMetres": 0.06844507622888613
-        },
-        "L_WingHand": {
-          "minY": 541.4019283579635,
-          "verticalRange": 700.6631047210046,
-          "duty": 0.4725274725274725,
-          "slipRigUnits": 12.300240070495096,
-          "slipMetres": 0.011383940171077227
-        },
-        "R_WingHand": {
-          "minY": 541.4023583753295,
-          "verticalRange": 700.6620266897193,
-          "duty": 0.4725274725274725,
-          "slipRigUnits": 12.304402573527526,
-          "slipMetres": 0.011387792590640709
-        }
-      },
-      "groundMin": -36.3633898489754,
-      "mesh": {
-        "minY": -216.68919929789558,
-        "maxY": 2945.092361584879,
-        "perMesh": [
-          {
-            "mesh": "SKM_DaenerysDragon001",
-            "minY": -183.95240876490448,
-            "maxY": 1287.2497118502406
-          },
-          {
-            "mesh": "SKM_DaenerysDragon001_1",
-            "minY": -16.347370954605143,
-            "maxY": 860.9168828946886
-          },
-          {
-            "mesh": "WyvernMembrane_ExportSafe",
-            "minY": -216.68919929789558,
-            "maxY": 2945.092361584879
-          }
-        ]
-      },
-      "foot": {
-        "min": -184.029575425109,
-        "max": -163.30099873417595,
-        "range": 20.72857669093304,
-        "vertices": 1084
-      },
-      "edge": {
-        "p99Max": 1.4102489501260942,
-        "maxMax": 10.192998871851838,
-        "p01Min": 0.833779162667476,
-        "edges": 58547
-      },
-      "footBelowOrigin": -184.029575425109,
-      "belowFeetRigUnits": 32.6596238727866,
-      "belowOriginRigUnits": 216.68919929789558,
-      "runtimeBelowOriginRigUnits": -176.32364083042035,
-      "contactSummary": {
-        "lowestDuty": 0.17582417582417584,
-        "highestDuty": 1,
-        "totalDuty": 3.2967032967032965,
-        "maxSlipRigUnits": 258.3121249209942
-      },
-      "ms": 375
-    },
-    {
-      "name": "attack2",
-      "duration": 3.3333332538604736,
-      "frames": 201,
-      "loops": false,
-      "angular": {
-        "peak": {
-          "value": 29.577751661339,
-          "joint": "Tail10",
-          "frame": 127,
-          "time": 2.116666616201401
-        },
-        "mean": 2.2128975273778497,
-        "localMean": 0.20868776437914385,
-        "localPeak": {
-          "value": 14.955751751895095,
-          "joint": "R_WingShoulder",
-          "frame": 77
-        },
-        "p95": 7.018722627444462,
-        "accelMax": 1460.646992641239,
-        "accelP95": 192.4124743709928,
-        "outlierThreshold": 48.03471846034317,
-        "outlier": false,
-        "accelSpike": false
-      },
-      "linear": {
-        "maxWorldSpeed": {
-          "value": 33013.52813470012,
-          "joint": "L_WingD0P2",
-          "frame": 140
-        },
-        "p95": 7424.284626330224
-      },
-      "translate": {
-        "Root": {
-          "worldRange": [
-            0,
-            0,
-            0
-          ],
-          "localRange": 0,
-          "startEnd": 0
-        },
-        "RootMotion": {
-          "worldRange": [
-            0,
-            0,
-            0
-          ],
-          "localRange": 0,
-          "startEnd": 0
-        },
-        "Body": {
-          "worldRange": [
-            0,
-            0,
-            0
-          ],
-          "localRange": 0,
-          "startEnd": 0
-        }
-      },
-      "seam": {
-        "rotationRad": 0.37110061200682526,
-        "joint": "Tail10",
-        "positionRigUnits": 20.2335382451764,
-        "velocity": 69.06537282062202,
-        "meanVelocity": 2.2128975273778497
-      },
-      "contact": {
-        "L_Toes": {
-          "minY": -9.61621251136927,
-          "verticalRange": 112.67597490889767,
-          "duty": 0.263681592039801,
-          "slipRigUnits": 189.52278925922266,
-          "slipMetres": 0.17540438898895624
-        },
-        "R_Toes": {
-          "minY": -1.6783427527029744,
-          "verticalRange": 214.25360913116296,
-          "duty": 0.14925373134328357,
-          "slipRigUnits": 59.90815241051776,
-          "slipMetres": 0.055445326180016526
-        },
-        "L_Foot": {
-          "minY": 147.02921431600967,
-          "verticalRange": 112.95896671350206,
-          "duty": 0.19402985074626866,
-          "slipRigUnits": 88.07342819836634,
-          "slipMetres": 0.08151244459666158
-        },
-        "R_Foot": {
-          "minY": 166.9638009045717,
-          "verticalRange": 177.24763928204038,
-          "duty": 0.14925373134328357,
-          "slipRigUnits": 40.55370436937375,
-          "slipMetres": 0.037532677542115776
-        },
-        "L_WingHand": {
-          "minY": 295.0165095001038,
-          "verticalRange": 1192.9575357036624,
-          "duty": 0.024875621890547265,
-          "slipRigUnits": 92.89718382235868,
-          "slipMetres": 0.08597685708850784
-        },
-        "R_WingHand": {
-          "minY": 312.80288519520906,
-          "verticalRange": 1106.7380601607829,
-          "duty": 0.009950248756218905,
-          "slipRigUnits": 35.46885443130482,
-          "slipMetres": 0.032826620819472276
-        }
-      },
-      "groundMin": -9.61621251136927,
-      "mesh": {
-        "minY": -287.35869514000507,
-        "maxY": 2665.090670067473,
-        "perMesh": [
-          {
-            "mesh": "SKM_DaenerysDragon001",
-            "minY": -192.8876576203383,
-            "maxY": 1614.2017494841646
-          },
-          {
-            "mesh": "SKM_DaenerysDragon001_1",
-            "minY": -287.35869514000507,
-            "maxY": 866.094985793229
-          },
-          {
-            "mesh": "WyvernMembrane_ExportSafe",
-            "minY": -209.65381161162009,
-            "maxY": 2665.090670067473
-          }
-        ]
-      },
-      "foot": {
-        "min": -184.16438301587516,
-        "max": -137.24207370660315,
-        "range": 46.92230930927201,
-        "vertices": 1084
-      },
-      "edge": {
-        "p99Max": 1.4147399428979055,
-        "maxMax": 7.073107858726834,
-        "p01Min": 0.641376196963938,
-        "edges": 58547
-      },
-      "footBelowOrigin": -184.16438301587516,
-      "belowFeetRigUnits": 103.19431212412991,
-      "belowOriginRigUnits": 287.35869514000507,
-      "runtimeBelowOriginRigUnits": -246.99313667252983,
-      "contactSummary": {
-        "lowestDuty": 0.009950248756218905,
-        "highestDuty": 0.263681592039801,
-        "totalDuty": 0.7910447761194029,
-        "maxSlipRigUnits": 189.52278925922266
-      },
-      "ms": 375
-    },
-    {
-      "name": "attackAir2",
-      "duration": 3.3333332538604736,
-      "frames": 201,
-      "loops": false,
-      "angular": {
-        "peak": {
-          "value": 20.813124686443352,
-          "joint": "L_WingD0P0",
-          "frame": 99,
-          "time": 1.6499999606609344
-        },
-        "mean": 3.642699697969137,
-        "localMean": 0.47656423995441527,
-        "localPeak": {
-          "value": 19.371782244529804,
-          "joint": "L_WingShoulder",
-          "frame": 100
-        },
-        "p95": 9.835681029348535,
-        "accelMax": 881.6693439952824,
-        "accelP95": 272.9844606804616,
-        "outlierThreshold": 48.03471846034317,
-        "outlier": false,
-        "accelSpike": false
-      },
-      "linear": {
-        "maxWorldSpeed": {
-          "value": 49934.60807244256,
-          "joint": "L_WingD0P2",
-          "frame": 100
-        },
-        "p95": 11677.188791812856
+        "p95": 40073.30930334379
       },
       "translate": {
         "Root": {
@@ -1270,8 +950,328 @@
         "Body": {
           "worldRange": [
             1.3552527156068805e-20,
-            2.2737367544323206e-13,
+            0,
             5.684341886080802e-14
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        }
+      },
+      "seam": {
+        "rotationRad": 2.919981050990416e-7,
+        "joint": "L_WingD0P0",
+        "positionRigUnits": 0.0012599246089141233,
+        "velocity": 0.000024411189528906767,
+        "meanVelocity": 8.968795630932709
+      },
+      "contact": {
+        "L_Toes": {
+          "minY": -36.380851725453425,
+          "verticalRange": 9.367446648124513,
+          "duty": 1,
+          "slipRigUnits": 258.30629693220135,
+          "slipMetres": 0.2390639055202058
+        },
+        "R_Toes": {
+          "minY": -36.380529515815965,
+          "verticalRange": 9.36717963690279,
+          "duty": 1,
+          "slipRigUnits": 258.3121249209942,
+          "slipMetres": 0.23906929935604604
+        },
+        "L_Foot": {
+          "minY": 108.39208273222556,
+          "verticalRange": 22.22236268059885,
+          "duty": 0.17582417582417584,
+          "slipRigUnits": 73.95167806142025,
+          "slipMetres": 0.06844268679124137
+        },
+        "R_Foot": {
+          "minY": 108.392191712493,
+          "verticalRange": 22.222180644624956,
+          "duty": 0.17582417582417584,
+          "slipRigUnits": 73.95425982627668,
+          "slipMetres": 0.0684450762288859
+        },
+        "L_WingHand": {
+          "minY": -6.4873046980781055,
+          "verticalRange": 1911.0439513922292,
+          "duty": 0.01098901098901099,
+          "slipRigUnits": 0,
+          "slipMetres": 0
+        },
+        "R_WingHand": {
+          "minY": -6.490214498741125,
+          "verticalRange": 1911.047060400578,
+          "duty": 0.01098901098901099,
+          "slipRigUnits": 0,
+          "slipMetres": 0
+        }
+      },
+      "groundMin": -36.380851725453425,
+      "mesh": {
+        "minY": -1500.9351841393964,
+        "maxY": 3939.477582761567,
+        "perMesh": [
+          {
+            "mesh": "SKM_DaenerysDragon001",
+            "minY": -1245.512614160648,
+            "maxY": 2870.5747681941593
+          },
+          {
+            "mesh": "SKM_DaenerysDragon001_1",
+            "minY": -105.45655416968884,
+            "maxY": 1537.1005962645454
+          },
+          {
+            "mesh": "WyvernMembrane_ExportSafe",
+            "minY": -1500.9351841393964,
+            "maxY": 3939.477582761567
+          }
+        ]
+      },
+      "foot": {
+        "min": -184.047037301587,
+        "max": -163.31846061065397,
+        "range": 20.72857669093304,
+        "vertices": 1084
+      },
+      "edge": {
+        "p99Max": 3.7347206348906,
+        "maxMax": 46.73616028021622,
+        "p01Min": 0.5350690913140538,
+        "edges": 58547
+      },
+      "footBelowOrigin": -184.047037301587,
+      "belowFeetRigUnits": 1316.8881468378095,
+      "belowOriginRigUnits": 1500.9351841393964,
+      "runtimeBelowOriginRigUnits": -1460.5696256719211,
+      "contactSummary": {
+        "lowestDuty": 0.01098901098901099,
+        "highestDuty": 1,
+        "totalDuty": 2.373626373626373,
+        "maxSlipRigUnits": 258.3121249209942
+      },
+      "ms": 403
+    },
+    {
+      "name": "attack2",
+      "duration": 3.3333332538604736,
+      "frames": 201,
+      "loops": false,
+      "angular": {
+        "peak": {
+          "value": 32.280440401383544,
+          "joint": "Tail10",
+          "frame": 127,
+          "time": 2.116666616201401
+        },
+        "mean": 4.6468014438495775,
+        "localMean": 0.4125551528717881,
+        "localPeak": {
+          "value": 23.003790292891047,
+          "joint": "R_WingShoulder",
+          "frame": 77
+        },
+        "p95": 13.282439983391864,
+        "accelMax": 676.3142137268558,
+        "accelP95": 144.25991651345763,
+        "outlierThreshold": 164.14853695018317,
+        "outlier": false,
+        "accelSpike": false
+      },
+      "linear": {
+        "maxWorldSpeed": {
+          "value": 27495.19910912294,
+          "joint": "R_WingD0P2",
+          "frame": 80
+        },
+        "p95": 9528.374136840914
+      },
+      "translate": {
+        "Root": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "RootMotion": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "Body": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        }
+      },
+      "seam": {
+        "rotationRad": 0.8349755034121721,
+        "joint": "Tail10",
+        "positionRigUnits": 48.12360442936829,
+        "velocity": 155.19065874506782,
+        "meanVelocity": 4.6468014438495775
+      },
+      "contact": {
+        "L_Toes": {
+          "minY": -9.637058004050743,
+          "verticalRange": 112.67597490889767,
+          "duty": 0.263681592039801,
+          "slipRigUnits": 189.52278925922266,
+          "slipMetres": 0.17540438898895624
+        },
+        "R_Toes": {
+          "minY": -1.6991882453844482,
+          "verticalRange": 214.25360913116296,
+          "duty": 0.14925373134328357,
+          "slipRigUnits": 59.90815241051776,
+          "slipMetres": 0.055445326180016526
+        },
+        "L_Foot": {
+          "minY": 147.0083688233282,
+          "verticalRange": 112.95896671350206,
+          "duty": 0.19402985074626866,
+          "slipRigUnits": 88.07342819836634,
+          "slipMetres": 0.08151244459666158
+        },
+        "R_Foot": {
+          "minY": 166.94295541189024,
+          "verticalRange": 177.24763928204038,
+          "duty": 0.14925373134328357,
+          "slipRigUnits": 40.55370436937375,
+          "slipMetres": 0.037532677542115776
+        },
+        "L_WingHand": {
+          "minY": -99.94308479897418,
+          "verticalRange": 1270.02874349733,
+          "duty": 0.014925373134328358,
+          "slipRigUnits": 108.24612042632172,
+          "slipMetres": 0.10018238275205202
+        },
+        "R_WingHand": {
+          "minY": -146.88410900510183,
+          "verticalRange": 1427.4432265803625,
+          "duty": 0.029850746268656716,
+          "slipRigUnits": 119.98837680451224,
+          "slipMetres": 0.1110499059318163
+        }
+      },
+      "groundMin": -146.88410900510183,
+      "mesh": {
+        "minY": -1617.0779763242679,
+        "maxY": 3079.9252924093166,
+        "perMesh": [
+          {
+            "mesh": "SKM_DaenerysDragon001",
+            "minY": -823.0599481395225,
+            "maxY": 1481.3608322202142
+          },
+          {
+            "mesh": "SKM_DaenerysDragon001_1",
+            "minY": -527.9167561695328,
+            "maxY": 742.929929778935
+          },
+          {
+            "mesh": "WyvernMembrane_ExportSafe",
+            "minY": -1617.0779763242679,
+            "maxY": 3079.9252924093166
+          }
+        ]
+      },
+      "foot": {
+        "min": -184.18522850855663,
+        "max": -137.26291919928462,
+        "range": 46.92230930927201,
+        "vertices": 1084
+      },
+      "edge": {
+        "p99Max": 2.035691251285736,
+        "maxMax": 26.680081081796807,
+        "p01Min": 0.5398744377826004,
+        "edges": 58547
+      },
+      "footBelowOrigin": -184.18522850855663,
+      "belowFeetRigUnits": 1432.8927478157111,
+      "belowOriginRigUnits": 1617.0779763242679,
+      "runtimeBelowOriginRigUnits": -1576.7124178567926,
+      "contactSummary": {
+        "lowestDuty": 0.014925373134328358,
+        "highestDuty": 0.263681592039801,
+        "totalDuty": 0.8009950248756219,
+        "maxSlipRigUnits": 189.52278925922266
+      },
+      "ms": 428
+    },
+    {
+      "name": "attackAir2",
+      "duration": 3.3333332538604736,
+      "frames": 201,
+      "loops": false,
+      "angular": {
+        "peak": {
+          "value": 22.026849699911008,
+          "joint": "L_WingD0P0",
+          "frame": 99,
+          "time": 1.6499999606609344
+        },
+        "mean": 3.6531316851836797,
+        "localMean": 0.47615877472633644,
+        "localPeak": {
+          "value": 20.690386147347418,
+          "joint": "L_WingShoulder",
+          "frame": 100
+        },
+        "p95": 9.821119836382428,
+        "accelMax": 933.3316562175684,
+        "accelP95": 272.91221063657207,
+        "outlierThreshold": 164.14853695018317,
+        "outlier": false,
+        "accelSpike": false
+      },
+      "linear": {
+        "maxWorldSpeed": {
+          "value": 53284.9968769614,
+          "joint": "L_WingD0P2",
+          "frame": 100
+        },
+        "p95": 11763.014690379045
+      },
+      "translate": {
+        "Root": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "RootMotion": {
+          "worldRange": [
+            0,
+            0,
+            0
+          ],
+          "localRange": 0,
+          "startEnd": 0
+        },
+        "Body": {
+          "worldRange": [
+            2.710505431213761e-20,
+            2.2737367544323206e-13,
+            1.7053025658242404e-13
           ],
           "localRange": 0,
           "startEnd": 0
@@ -1280,9 +1280,9 @@
       "seam": {
         "rotationRad": 0.0008887461643641598,
         "joint": "L_WingD0P2",
-        "positionRigUnits": 0.159777399757222,
-        "velocity": 0.05331912271365909,
-        "meanVelocity": 3.642699697969137
+        "positionRigUnits": 0.1599499602335645,
+        "velocity": 0.05332846694009566,
+        "meanVelocity": 3.6531316851836797
       },
       "contact": {
         "L_Toes": {
@@ -1322,7 +1322,7 @@
         },
         "R_WingHand": {
           "minY": 44.77111408339596,
-          "verticalRange": 1744.4867819330768,
+          "verticalRange": 1745.8652850237174,
           "duty": 0.004975124378109453,
           "slipRigUnits": 0,
           "slipMetres": 0
@@ -1335,7 +1335,7 @@
         "perMesh": [
           {
             "mesh": "SKM_DaenerysDragon001",
-            "minY": -373.9830086948971,
+            "minY": -376.1876035965735,
             "maxY": 2882.8490249452716
           },
           {
@@ -1345,8 +1345,8 @@
           },
           {
             "mesh": "WyvernMembrane_ExportSafe",
-            "minY": -219.6050957818702,
-            "maxY": 2142.8665140623066
+            "minY": -220.1804109997205,
+            "maxY": 2175.1451573675427
           }
         ]
       },
@@ -1357,9 +1357,9 @@
         "vertices": 1084
       },
       "edge": {
-        "p99Max": 1.5863721227036882,
-        "maxMax": 7.616079776784273,
-        "p01Min": 0.6986048674423534,
+        "p99Max": 1.528349676845105,
+        "maxMax": 12.347351578315935,
+        "p01Min": 0.7204309597734884,
         "edges": 58547
       },
       "footBelowOrigin": -185.62984406225803,
@@ -1372,7 +1372,7 @@
         "totalDuty": 0.5422885572139303,
         "maxSlipRigUnits": 323.57138879669947
       },
-      "ms": 370
+      "ms": 428
     },
     {
       "name": "bankLeft",
@@ -1386,8 +1386,8 @@
           "frame": 66,
           "time": 1.1
         },
-        "mean": 1.7534195143739402,
-        "localMean": 0.4913684463594261,
+        "mean": 1.753420457954326,
+        "localMean": 0.49136943712825987,
         "localPeak": {
           "value": 6.574998245161535,
           "joint": "R_WingShoulder",
@@ -1396,7 +1396,7 @@
         "p95": 6.132681325309383,
         "accelMax": 344.1182903643101,
         "accelP95": 50.191127145363936,
-        "outlierThreshold": 48.03471846034317,
+        "outlierThreshold": 164.14853695018317,
         "outlier": false,
         "accelSpike": false
       },
@@ -1442,7 +1442,7 @@
         "joint": "R_WingD3P0",
         "positionRigUnits": 0.0025892028218688426,
         "velocity": 0.000034164592259282036,
-        "meanVelocity": 1.7534195143739402
+        "meanVelocity": 1.753420457954326
       },
       "contact": {
         "L_Toes": {
@@ -1517,9 +1517,9 @@
         "vertices": 1084
       },
       "edge": {
-        "p99Max": 1.6834473120294287,
+        "p99Max": 1.7562606252904265,
         "maxMax": 46.41499501573054,
-        "p01Min": 0.6308386621445462,
+        "p01Min": 0.610046556122053,
         "edges": 58547
       },
       "footBelowOrigin": -82.5093535232279,
@@ -1532,7 +1532,7 @@
         "totalDuty": 4.0332409972299175,
         "maxSlipRigUnits": 232.92749721196301
       },
-      "ms": 459
+      "ms": 466
     },
     {
       "name": "bankRight",
@@ -1546,8 +1546,8 @@
           "frame": 66,
           "time": 1.1
         },
-        "mean": 1.7534192581207975,
-        "localMean": 0.49136845998411566,
+        "mean": 1.7534199883520574,
+        "localMean": 0.4913693932134794,
         "localPeak": {
           "value": 6.57499087566694,
           "joint": "L_WingShoulder",
@@ -1556,7 +1556,7 @@
         "p95": 6.132680667965338,
         "accelMax": 344.1174928595671,
         "accelP95": 50.19197469987819,
-        "outlierThreshold": 48.03471846034317,
+        "outlierThreshold": 164.14853695018317,
         "outlier": false,
         "accelSpike": false
       },
@@ -1602,7 +1602,7 @@
         "joint": "L_WingD1P0",
         "positionRigUnits": 0.0015577140832207382,
         "velocity": 0.000016781491914658574,
-        "meanVelocity": 1.7534192581207975
+        "meanVelocity": 1.7534199883520574
       },
       "contact": {
         "L_Toes": {
@@ -1656,7 +1656,7 @@
           {
             "mesh": "SKM_DaenerysDragon001",
             "minY": -465.8533772482184,
-            "maxY": 1350.3298371097833
+            "maxY": 1350.1935322960887
           },
           {
             "mesh": "SKM_DaenerysDragon001_1",
@@ -1677,9 +1677,9 @@
         "vertices": 1084
       },
       "edge": {
-        "p99Max": 1.68195073374905,
+        "p99Max": 1.759590528884327,
         "maxMax": 52.37456227775635,
-        "p01Min": 0.6308421750855565,
+        "p01Min": 0.6132470013616811,
         "edges": 58547
       },
       "footBelowOrigin": -82.51066238845635,
@@ -1692,7 +1692,7 @@
         "totalDuty": 4.0332409972299175,
         "maxSlipRigUnits": 232.92663808423148
       },
-      "ms": 357
+      "ms": 458
     },
     {
       "name": "breath",
@@ -1706,17 +1706,17 @@
           "frame": 46,
           "time": 0.7666666666666667
         },
-        "mean": 2.0811346712610868,
-        "localMean": 0.23705156245746606,
+        "mean": 2.0894082999785724,
+        "localMean": 0.24407413417958915,
         "localPeak": {
           "value": 24.67190092748696,
           "joint": "L_WingD4P0",
           "frame": 47
         },
-        "p95": 6.4436840809987785,
+        "p95": 6.448170360502025,
         "accelMax": 1385.401193814415,
-        "accelP95": 99.09259814965047,
-        "outlierThreshold": 48.03471846034317,
+        "accelP95": 99.21311619136112,
+        "outlierThreshold": 164.14853695018317,
         "outlier": false,
         "accelSpike": true
       },
@@ -1726,7 +1726,7 @@
           "joint": "L_WingD0P2",
           "frame": 14
         },
-        "p95": 6404.786578064953
+        "p95": 6411.599247880072
       },
       "translate": {
         "Root": {
@@ -1760,99 +1760,99 @@
       "seam": {
         "rotationRad": 1.787570629605649e-7,
         "joint": "R_WingPanel3_0",
-        "positionRigUnits": 0.0003835151713358103,
+        "positionRigUnits": 0.0003835151713747634,
         "velocity": 0.00001072542375604632,
-        "meanVelocity": 2.0811346712610868
+        "meanVelocity": 2.0894082999785724
       },
       "contact": {
         "L_Toes": {
-          "minY": -45.44549433541479,
+          "minY": -45.4636812725079,
           "verticalRange": 25.718346600951435,
           "duty": 0.5454545454545454,
-          "slipRigUnits": 272.40326588194796,
-          "slipMetres": 0.25211072819990243
+          "slipRigUnits": 272.4032658819481,
+          "slipMetres": 0.25211072819990255
         },
         "R_Toes": {
-          "minY": -45.444783919321765,
+          "minY": -45.46297085641487,
           "verticalRange": 25.71821191982488,
           "duty": 0.5454545454545454,
           "slipRigUnits": 272.40551391647085,
           "slipMetres": 0.2521128087682787
         },
         "L_Foot": {
-          "minY": 98.04894521941327,
+          "minY": 98.03075828232016,
           "verticalRange": 37.44329595079353,
           "duty": 0.19008264462809918,
-          "slipRigUnits": 86.03890248574838,
-          "slipMetres": 0.0796294798044119
+          "slipRigUnits": 86.03890248574827,
+          "slipMetres": 0.07962947980441179
         },
         "R_Foot": {
-          "minY": 98.04980870157772,
+          "minY": 98.03162176448461,
           "verticalRange": 37.4427660094064,
           "duty": 0.19008264462809918,
           "slipRigUnits": 86.03998359203108,
           "slipMetres": 0.07963048037425202
         },
         "L_WingHand": {
-          "minY": 543.2905991825658,
+          "minY": 543.2724122454727,
           "verticalRange": 980.731532872205,
           "duty": 0.06611570247933884,
           "slipRigUnits": 1.8147301632664408,
           "slipMetres": 0.0016795427964718442
         },
         "R_WingHand": {
-          "minY": 543.2904795775132,
+          "minY": 543.2722926404201,
           "verticalRange": 980.7318120513303,
           "duty": 0.06611570247933884,
           "slipRigUnits": 1.8144879707038517,
           "slipMetres": 0.0016793186459165225
         }
       },
-      "groundMin": -45.44549433541479,
+      "groundMin": -45.4636812725079,
       "mesh": {
-        "minY": -222.9895951889626,
-        "maxY": 3451.6624737920924,
+        "minY": -223.0077821260557,
+        "maxY": 3451.6442868549993,
         "perMesh": [
           {
             "mesh": "SKM_DaenerysDragon001",
-            "minY": -183.98165423842426,
-            "maxY": 1571.976471054612
+            "minY": -183.99984117551736,
+            "maxY": 1571.9582841175188
           },
           {
             "mesh": "SKM_DaenerysDragon001_1",
-            "minY": -149.5599691618966,
-            "maxY": 965.3023540395889
+            "minY": -149.57815609898972,
+            "maxY": 965.2841671024958
           },
           {
             "mesh": "WyvernMembrane_ExportSafe",
-            "minY": -222.9895951889626,
-            "maxY": 3451.6624737920924
+            "minY": -223.0077821260557,
+            "maxY": 3451.6442868549993
           }
         ]
       },
       "foot": {
-        "min": -183.98165423842426,
-        "max": -98.66845420602058,
-        "range": 85.31320003240367,
+        "min": -183.99984117551736,
+        "max": -98.38484208600187,
+        "range": 85.61499908951549,
         "vertices": 1084
       },
       "edge": {
-        "p99Max": 2.0258626031858338,
-        "maxMax": 14.16494669290092,
-        "p01Min": 0.7107590727282103,
+        "p99Max": 1.9026706538501195,
+        "maxMax": 15.973032368234698,
+        "p01Min": 0.705829558196332,
         "edges": 58547
       },
-      "footBelowOrigin": -183.98165423842426,
+      "footBelowOrigin": -183.99984117551736,
       "belowFeetRigUnits": 39.00794095053834,
-      "belowOriginRigUnits": 222.9895951889626,
-      "runtimeBelowOriginRigUnits": -182.62403672148736,
+      "belowOriginRigUnits": 223.0077821260557,
+      "runtimeBelowOriginRigUnits": -182.64222365858046,
       "contactSummary": {
         "lowestDuty": 0.06611570247933884,
         "highestDuty": 0.5454545454545454,
         "totalDuty": 1.603305785123967,
         "maxSlipRigUnits": 272.40551391647085
       },
-      "ms": 361
+      "ms": 457
     },
     {
       "name": "cruise",
@@ -1866,17 +1866,17 @@
           "frame": 340,
           "time": 5.666666666666667
         },
-        "mean": 1.6777388252985528,
-        "localMean": 0.538939122559287,
+        "mean": 1.6777392285010637,
+        "localMean": 0.5389402430317752,
         "localPeak": {
           "value": 5.570986413084653,
           "joint": "L_WingHand",
           "frame": 124
         },
-        "p95": 4.476537641851657,
+        "p95": 4.477564848851675,
         "accelMax": 81.71237154479702,
-        "accelP95": 32.268712152719154,
-        "outlierThreshold": 48.03471846034317,
+        "accelP95": 32.26065926279773,
+        "outlierThreshold": 164.14853695018317,
         "outlier": false,
         "accelSpike": false
       },
@@ -1886,7 +1886,7 @@
           "joint": "L_WingD0P2",
           "frame": 340
         },
-        "p95": 4458.441257575277
+        "p95": 4458.443456391039
       },
       "translate": {
         "Root": {
@@ -1918,11 +1918,11 @@
         }
       },
       "seam": {
-        "rotationRad": 4.974756253865709e-16,
-        "joint": "L_WingPanel2_0",
-        "positionRigUnits": 0.00023940501442044971,
+        "rotationRad": 4.002966042486721e-16,
+        "joint": "R_WingD4P0",
+        "positionRigUnits": 0.0002410024754090112,
         "velocity": 5.33037140202782e-14,
-        "meanVelocity": 1.6777388252985528
+        "meanVelocity": 1.6777392285010637
       },
       "contact": {
         "L_Toes": {
@@ -1976,7 +1976,7 @@
           {
             "mesh": "SKM_DaenerysDragon001",
             "minY": 19.163210161664324,
-            "maxY": 1578.5037049517996
+            "maxY": 1578.4253562472206
           },
           {
             "mesh": "SKM_DaenerysDragon001_1",
@@ -1997,9 +1997,9 @@
         "vertices": 1084
       },
       "edge": {
-        "p99Max": 1.778794258039966,
+        "p99Max": 1.8690176909020058,
         "maxMax": 34.72733495494647,
-        "p01Min": 0.6383622185838196,
+        "p01Min": 0.6117623965505171,
         "edges": 58547
       },
       "footBelowOrigin": 27.123833435431038,
@@ -2012,7 +2012,7 @@
         "totalDuty": 4.083102493074792,
         "maxSlipRigUnits": 192.13469885821812
       },
-      "ms": 374
+      "ms": 518
     },
     {
       "name": "death",
@@ -2021,32 +2021,32 @@
       "loops": false,
       "angular": {
         "peak": {
-          "value": 10.829295414244692,
-          "joint": "R_WingPanel0_0",
+          "value": 30.337262490612183,
+          "joint": "L_WingPanel0_0",
           "frame": 146,
           "time": 2.433333333333333
         },
-        "mean": 0.6795445696686079,
-        "localMean": 0.13527408237900848,
+        "mean": 2.3532053529473744,
+        "localMean": 0.4948570489083654,
         "localPeak": {
-          "value": 10.834107106795505,
+          "value": 29.443900836348636,
           "joint": "R_WingD0P0",
           "frame": 147
         },
-        "p95": 1.2440106786723,
-        "accelMax": 366.8193587515274,
-        "accelP95": 6.192353229809301,
-        "outlierThreshold": 48.03471846034317,
+        "p95": 4.817225966006132,
+        "accelMax": 784.003491215456,
+        "accelP95": 27.7678183012732,
+        "outlierThreshold": 164.14853695018317,
         "outlier": false,
         "accelSpike": true
       },
       "linear": {
         "maxWorldSpeed": {
-          "value": 15887.62800787758,
+          "value": 41859.97292727912,
           "joint": "R_WingD0P2",
-          "frame": 147
+          "frame": 146
         },
-        "p95": 983.7853698937677
+        "p95": 4634.432255127675
       },
       "translate": {
         "Root": {
@@ -2069,110 +2069,110 @@
         },
         "Body": {
           "worldRange": [
-            0,
-            0,
-            0
+            2.710505431213761e-20,
+            1.7053025658242404e-13,
+            1.7053025658242404e-13
           ],
           "localRange": 0,
           "startEnd": 0
         }
       },
       "seam": {
-        "rotationRad": 1.4645235127688387,
-        "joint": "R_WingD1P0",
-        "positionRigUnits": 2593.017702629918,
-        "velocity": 158.05158341956073,
-        "meanVelocity": 0.6795445696686079
+        "rotationRad": 2.905264069786849,
+        "joint": "L_WingHand",
+        "positionRigUnits": 3889.404254712165,
+        "velocity": 188.4330933933491,
+        "meanVelocity": 2.3532053529473744
       },
       "contact": {
         "L_Toes": {
-          "minY": -39.394239545761565,
-          "verticalRange": 269.0208605367085,
-          "duty": 0.22821576763485477,
-          "slipRigUnits": 128.1357448035302,
-          "slipMetres": 0.11859034004700478
+          "minY": -36.78081859562485,
+          "verticalRange": 990.3871939844864,
+          "duty": 0.05394190871369295,
+          "slipRigUnits": 192.25772135609517,
+          "slipMetres": 0.17793558376111668
         },
         "R_Toes": {
-          "minY": -39.393461325144955,
-          "verticalRange": 176.75557936169582,
-          "duty": 0.26556016597510373,
-          "slipRigUnits": 159.81078248814714,
-          "slipMetres": 0.1479057624982498
+          "minY": -36.60555873095578,
+          "verticalRange": 511.42337664652746,
+          "duty": 0.05394190871369295,
+          "slipRigUnits": 192.25857767555289,
+          "slipMetres": 0.17793637628950784
         },
         "L_Foot": {
-          "minY": 105.17051581112645,
-          "verticalRange": 295.37511376129925,
-          "duty": 0.14522821576763487,
-          "slipRigUnits": 54.00813664029564,
-          "slipMetres": 0.049984828974134164
+          "minY": 84.28658604591067,
+          "verticalRange": 916.5540954053164,
+          "duty": 0.07883817427385892,
+          "slipRigUnits": 181.23855813951153,
+          "slipMetres": 0.16773728729909698
         },
         "R_Foot": {
-          "minY": 105.17186273610739,
-          "verticalRange": 180.80973358275915,
-          "duty": 0.17012448132780084,
-          "slipRigUnits": 66.24187692395519,
-          "slipMetres": 0.06130722322493776
+          "minY": 84.40819346889438,
+          "verticalRange": 489.07529431331966,
+          "duty": 0.08298755186721991,
+          "slipRigUnits": 184.83904997518735,
+          "slipMetres": 0.17106956239363794
         },
         "L_WingHand": {
-          "minY": 557.1441537794067,
-          "verticalRange": 201.07222959191995,
-          "duty": 0.024896265560165973,
-          "slipRigUnits": 0.16184841417539206,
-          "slipMetres": 0.00014979160188718408
+          "minY": -311.54407960173955,
+          "verticalRange": 1523.9941674288052,
+          "duty": 0.03734439834024896,
+          "slipRigUnits": 178.48882569055147,
+          "slipMetres": 0.16519239471927508
         },
         "R_WingHand": {
-          "minY": 10.58625201565468,
-          "verticalRange": 731.2225995905376,
-          "duty": 0.07053941908713693,
-          "slipRigUnits": 27.26869811357542,
-          "slipMetres": 0.025237330823544984
+          "minY": -488.46675573043603,
+          "verticalRange": 1656.7157181249825,
+          "duty": 0.03734439834024896,
+          "slipRigUnits": 281.8384196350046,
+          "slipMetres": 0.2608430151482976
         }
       },
-      "groundMin": -39.394239545761565,
+      "groundMin": -488.46675573043603,
       "mesh": {
-        "minY": -471.36348149100957,
-        "maxY": 2804.6900029336275,
+        "minY": -2053.2790059946874,
+        "maxY": 2803.4978828701023,
         "perMesh": [
           {
             "mesh": "SKM_DaenerysDragon001",
-            "minY": -312.10690103591895,
-            "maxY": 2804.6900029336275
+            "minY": -855.4349611633163,
+            "maxY": 2803.4978828701023
           },
           {
             "mesh": "SKM_DaenerysDragon001_1",
-            "minY": -378.9497580619566,
-            "maxY": 1513.078472324793
+            "minY": -663.4052254482059,
+            "maxY": 1801.968985876053
           },
           {
             "mesh": "WyvernMembrane_ExportSafe",
-            "minY": -471.36348149100957,
-            "maxY": 2405.6961909411316
+            "minY": -2053.2790059946874,
+            "maxY": 2496.904989576822
           }
         ]
       },
       "foot": {
-        "min": -183.9829576592134,
-        "max": -44.008581724727264,
-        "range": 139.97437593448615,
+        "min": -184.98738326016087,
+        "max": 314.8186708794901,
+        "range": 499.806054139651,
         "vertices": 1084
       },
       "edge": {
-        "p99Max": 2.1452714949835334,
-        "maxMax": 13.419112525886636,
-        "p01Min": 0.6493239182508459,
+        "p99Max": 4.424891928042414,
+        "maxMax": 87.83289882212112,
+        "p01Min": 0.3897868770924738,
         "edges": 58547
       },
-      "footBelowOrigin": -183.9829576592134,
-      "belowFeetRigUnits": 287.38052383179615,
-      "belowOriginRigUnits": 471.36348149100957,
-      "runtimeBelowOriginRigUnits": -430.9979230235343,
+      "footBelowOrigin": -184.98738326016087,
+      "belowFeetRigUnits": 1868.2916227345265,
+      "belowOriginRigUnits": 2053.2790059946874,
+      "runtimeBelowOriginRigUnits": -2012.9134475272122,
       "contactSummary": {
-        "lowestDuty": 0.024896265560165973,
-        "highestDuty": 0.26556016597510373,
-        "totalDuty": 0.9045643153526971,
-        "maxSlipRigUnits": 159.81078248814714
+        "lowestDuty": 0.03734439834024896,
+        "highestDuty": 0.08298755186721991,
+        "totalDuty": 0.3443983402489626,
+        "maxSlipRigUnits": 281.8384196350046
       },
-      "ms": 370
+      "ms": 506
     },
     {
       "name": "dive",
@@ -2186,8 +2186,8 @@
           "frame": 139,
           "time": 2.316666666666667
         },
-        "mean": 0.06370198982583705,
-        "localMean": 0.01577280464243722,
+        "mean": 0.06363636386374873,
+        "localMean": 0.015791147190777295,
         "localPeak": {
           "value": 0.13148497820158342,
           "joint": "Tail10",
@@ -2195,8 +2195,8 @@
         },
         "p95": 0.20644388929608076,
         "accelMax": 5.915163257942408,
-        "accelP95": 0.6175679770862303,
-        "outlierThreshold": 48.03471846034317,
+        "accelP95": 0.6064653371706104,
+        "outlierThreshold": 164.14853695018317,
         "outlier": false,
         "accelSpike": false
       },
@@ -2206,7 +2206,7 @@
           "joint": "Tail10",
           "frame": 192
         },
-        "p95": 119.25150826172688
+        "p95": 119.25150826172747
       },
       "translate": {
         "Root": {
@@ -2230,8 +2230,8 @@
         "Body": {
           "worldRange": [
             5.421010862427522e-20,
-            1.1368683772161603e-13,
-            5.684341886080802e-14
+            2.2737367544323206e-13,
+            1.1368683772161603e-13
           ],
           "localRange": 0,
           "startEnd": 0
@@ -2242,7 +2242,7 @@
         "joint": "Tail2",
         "positionRigUnits": 0.0009559088732751965,
         "velocity": 0.000006155003142206988,
-        "meanVelocity": 0.06370198982583705
+        "meanVelocity": 0.06363636386374873
       },
       "contact": {
         "L_Toes": {
@@ -2270,8 +2270,8 @@
           "minY": 767.8306430546746,
           "verticalRange": 8.796470252716404,
           "duty": 1,
-          "slipRigUnits": 10.828609554351532,
-          "slipMetres": 0.010021937994396499
+          "slipRigUnits": 10.828609554351418,
+          "slipMetres": 0.010021937994396393
         },
         "L_WingHand": {
           "minY": -355.96784913009424,
@@ -2284,8 +2284,8 @@
           "minY": -355.9545732760336,
           "verticalRange": 8.53456842272709,
           "duty": 1,
-          "slipRigUnits": 51.48353843999066,
-          "slipMetres": 0.047648299385803596
+          "slipRigUnits": 51.48353843999045,
+          "slipMetres": 0.047648299385803394
         }
       },
       "groundMin": -355.96784913009424,
@@ -2317,9 +2317,9 @@
         "vertices": 1084
       },
       "edge": {
-        "p99Max": 1.0052566761070214,
-        "maxMax": 1.1655986248071417,
-        "p01Min": 0.9945928125111099,
+        "p99Max": 1.0067099069227632,
+        "maxMax": 1.2431953924741868,
+        "p01Min": 0.9941794183142159,
         "edges": 58547
       },
       "footBelowOrigin": 372.9710041328849,
@@ -2330,9 +2330,9 @@
         "lowestDuty": 0.8421052631578947,
         "highestDuty": 1,
         "totalDuty": 5.684210526315789,
-        "maxSlipRigUnits": 51.48353843999066
+        "maxSlipRigUnits": 51.48353843999045
       },
-      "ms": 361
+      "ms": 439
     },
     {
       "name": "glide",
@@ -2346,17 +2346,17 @@
           "frame": 131,
           "time": 2.183333333333333
         },
-        "mean": 0.05642192266917092,
-        "localMean": 0.013738540127179951,
+        "mean": 0.056430638770310786,
+        "localMean": 0.013749992919088743,
         "localPeak": {
           "value": 0.07773264354438285,
           "joint": "Tail10",
           "frame": 64
         },
-        "p95": 0.1259755725498056,
+        "p95": 0.1263727229776467,
         "accelMax": 1.916732874543806,
-        "accelP95": 0.4097100957265087,
-        "outlierThreshold": 48.03471846034317,
+        "accelP95": 0.42285597043550366,
+        "outlierThreshold": 164.14853695018317,
         "outlier": false,
         "accelSpike": false
       },
@@ -2366,7 +2366,7 @@
           "joint": "Tail10",
           "frame": 117
         },
-        "p95": 151.47345998134648
+        "p95": 151.48365379253775
       },
       "translate": {
         "Root": {
@@ -2391,7 +2391,7 @@
           "worldRange": [
             2.710505431213761e-20,
             2.2737367544323206e-13,
-            1.1368683772161603e-13
+            0
           ],
           "localRange": 0,
           "startEnd": 0
@@ -2402,7 +2402,7 @@
         "joint": "L_WingD0P0",
         "positionRigUnits": 0.0008045669483682662,
         "velocity": 0.00001118143307376715,
-        "meanVelocity": 0.05642192266917092
+        "meanVelocity": 0.056430638770310786
       },
       "contact": {
         "L_Toes": {
@@ -2444,8 +2444,8 @@
           "minY": 744.5207847663595,
           "verticalRange": 60.4359693625355,
           "duty": 0.2077562326869806,
-          "slipRigUnits": 2.86772463164871,
-          "slipMetres": 0.0026540949970661316
+          "slipRigUnits": 2.867724631648712,
+          "slipMetres": 0.002654094997066133
         }
       },
       "groundMin": 382.8048595442262,
@@ -2466,7 +2466,7 @@
           {
             "mesh": "WyvernMembrane_ExportSafe",
             "minY": 93.8120372410782,
-            "maxY": 1477.6945760184947
+            "maxY": 1477.694576018495
           }
         ]
       },
@@ -2477,9 +2477,9 @@
         "vertices": 1084
       },
       "edge": {
-        "p99Max": 1.0473168569167268,
-        "maxMax": 2.0894884974388703,
-        "p01Min": 0.9598846064809168,
+        "p99Max": 1.049768207367173,
+        "maxMax": 2.433476426906469,
+        "p01Min": 0.9561796276785447,
         "edges": 58547
       },
       "footBelowOrigin": 117.95197074917121,
@@ -2492,7 +2492,7 @@
         "totalDuty": 4.415512465373961,
         "maxSlipRigUnits": 10.454113561392573
       },
-      "ms": 384
+      "ms": 470
     },
     {
       "name": "hover",
@@ -2506,17 +2506,17 @@
           "frame": 269,
           "time": 4.483333333333333
         },
-        "mean": 1.5288044875998,
-        "localMean": 0.1192943561844824,
+        "mean": 1.528862312130498,
+        "localMean": 0.11937320470033773,
         "localPeak": {
           "value": 7.914144541042548,
           "joint": "L_WingRoot",
           "frame": 359
         },
-        "p95": 3.957785082952133,
+        "p95": 3.9614637853726276,
         "accelMax": 431.56615605605595,
-        "accelP95": 31.994715325678314,
-        "outlierThreshold": 48.03471846034317,
+        "accelP95": 31.446589541452052,
+        "outlierThreshold": 164.14853695018317,
         "outlier": false,
         "accelSpike": true
       },
@@ -2526,7 +2526,7 @@
           "joint": "L_WingD0P2",
           "frame": 269
         },
-        "p95": 5879.451243067171
+        "p95": 5889.77147074241
       },
       "translate": {
         "Root": {
@@ -2562,22 +2562,22 @@
         "joint": "Tail10",
         "positionRigUnits": 0.0003798846942344971,
         "velocity": 5.958309246248454e-14,
-        "meanVelocity": 1.5288044875998
+        "meanVelocity": 1.528862312130498
       },
       "contact": {
         "L_Toes": {
           "minY": 271.3791387488621,
           "verticalRange": 17.214558708981315,
           "duty": 0.5817174515235457,
-          "slipRigUnits": 81.68052918710993,
-          "slipMetres": 0.07559578122693986
+          "slipRigUnits": 81.68052918710994,
+          "slipMetres": 0.07559578122693987
         },
         "R_Toes": {
           "minY": 271.38766626293557,
           "verticalRange": 17.214401865846867,
           "duty": 0.5817174515235457,
-          "slipRigUnits": 81.67790333355806,
-          "slipMetres": 0.075593350984964
+          "slipRigUnits": 81.67790333355809,
+          "slipMetres": 0.07559335098496403
         },
         "L_Foot": {
           "minY": 439.8503090845882,
@@ -2637,9 +2637,9 @@
         "vertices": 1084
       },
       "edge": {
-        "p99Max": 1.1700028589035727,
-        "maxMax": 2.864250215690889,
-        "p01Min": 0.854439767639881,
+        "p99Max": 1.1582028785743073,
+        "maxMax": 4.241600992702196,
+        "p01Min": 0.8675175249616879,
         "edges": 58547
       },
       "footBelowOrigin": 49.79817322449571,
@@ -2652,7 +2652,7 @@
         "totalDuty": 2.437673130193906,
         "maxSlipRigUnits": 482.95290196151245
       },
-      "ms": 388
+      "ms": 470
     },
     {
       "name": "idle",
@@ -2661,32 +2661,32 @@
       "loops": true,
       "angular": {
         "peak": {
-          "value": 2.7344939048690913,
-          "joint": "L_WingPanel0_1",
-          "frame": 360,
-          "time": 6
+          "value": 4.996123374382016,
+          "joint": "Head",
+          "frame": 137,
+          "time": 2.283333333333333
         },
-        "mean": 0.05394776488364128,
-        "localMean": 0.008691891213872552,
+        "mean": 0.41989327444040353,
+        "localMean": 0.04676420918116293,
         "localPeak": {
-          "value": 2.6448193760538405,
-          "joint": "L_WingRoot",
-          "frame": 359
+          "value": 2.468106699472063,
+          "joint": "R_WingRoot",
+          "frame": 360
         },
-        "p95": 0.1554250407383832,
-        "accelMax": 81.38805999249914,
-        "accelP95": 0.265416396910639,
-        "outlierThreshold": 48.03471846034317,
+        "p95": 0.7039889870245659,
+        "accelMax": 80.96740423653067,
+        "accelP95": 4.525710234470044,
+        "outlierThreshold": 164.14853695018317,
         "outlier": false,
         "accelSpike": true
       },
       "linear": {
         "maxWorldSpeed": {
-          "value": 4952.691283524493,
+          "value": 6003.836079925778,
           "joint": "R_WingD0P2",
           "frame": 359
         },
-        "p95": 102.66842359656081
+        "p95": 1082.3927647308403
       },
       "translate": {
         "Root": {
@@ -2718,11 +2718,11 @@
         }
       },
       "seam": {
-        "rotationRad": 5.20740757162067e-16,
-        "joint": "R_WingShoulder",
-        "positionRigUnits": 0.0001051905101433111,
-        "velocity": 7.57315343829084e-14,
-        "meanVelocity": 0.05394776488364128
+        "rotationRad": 3.153190977073718e-16,
+        "joint": "R_WingPanel2_0",
+        "positionRigUnits": 0.00006877139314237134,
+        "velocity": 5.701187111947344e-14,
+        "meanVelocity": 0.41989327444040353
       },
       "contact": {
         "L_Toes": {
@@ -2754,39 +2754,39 @@
           "slipMetres": 0.000027027408016444135
         },
         "L_WingHand": {
-          "minY": -154.77756120795945,
-          "verticalRange": 53.98416501338167,
+          "minY": -196.59283179143262,
+          "verticalRange": 175.4448123885109,
           "duty": 0.008310249307479225,
-          "slipRigUnits": 13.72565381774827,
-          "slipMetres": 0.012703168472700772
+          "slipRigUnits": 10.59953856796133,
+          "slipMetres": 0.009809931530372197
         },
         "R_WingHand": {
-          "minY": -154.77756862575052,
-          "verticalRange": 53.98387904779264,
+          "minY": -206.91854618036524,
+          "verticalRange": 195.88593865989617,
           "duty": 0.008310249307479225,
-          "slipRigUnits": 13.726302917497156,
-          "slipMetres": 0.012703769218106068
+          "slipRigUnits": 10.262419398584361,
+          "slipMetres": 0.009497925875790188
         }
       },
-      "groundMin": -154.77756862575052,
+      "groundMin": -206.91854618036524,
       "mesh": {
-        "minY": -1718.1422633958482,
-        "maxY": 1200.509328385971,
+        "minY": -1787.6659323679983,
+        "maxY": 1202.1485920408084,
         "perMesh": [
           {
             "mesh": "SKM_DaenerysDragon001",
-            "minY": -455.90254892513184,
-            "maxY": 1200.509328385971
+            "minY": -503.4429099481953,
+            "maxY": 1202.1485920408084
           },
           {
             "mesh": "SKM_DaenerysDragon001_1",
-            "minY": -31.013395858945767,
-            "maxY": 445.6910871187427
+            "minY": -392.11227893252106,
+            "maxY": 631.5174432423745
           },
           {
             "mesh": "WyvernMembrane_ExportSafe",
-            "minY": -1718.1422633958482,
-            "maxY": 551.4420534179078
+            "minY": -1787.6659323679983,
+            "maxY": 584.0323012451001
           }
         ]
       },
@@ -2797,22 +2797,22 @@
         "vertices": 1084
       },
       "edge": {
-        "p99Max": 1.2761932929193875,
-        "maxMax": 4.130359954538589,
-        "p01Min": 0.9465334995203412,
+        "p99Max": 1.4646838026953584,
+        "maxMax": 7.8401667461090145,
+        "p01Min": 0.861935043889118,
         "edges": 58547
       },
       "footBelowOrigin": -184.0001629776085,
-      "belowFeetRigUnits": 1534.1421004182398,
-      "belowOriginRigUnits": 1718.1422633958482,
-      "runtimeBelowOriginRigUnits": -1677.776704928373,
+      "belowFeetRigUnits": 1603.6657693903899,
+      "belowOriginRigUnits": 1787.6659323679983,
+      "runtimeBelowOriginRigUnits": -1747.300373900523,
       "contactSummary": {
         "lowestDuty": 0.008310249307479225,
         "highestDuty": 1,
         "totalDuty": 4.016620498614959,
-        "maxSlipRigUnits": 13.726302917497156
+        "maxSlipRigUnits": 10.59953856796133
       },
-      "ms": 377
+      "ms": 511
     },
     {
       "name": "land",
@@ -2826,27 +2826,27 @@
           "frame": 16,
           "time": 0.26666666666666666
         },
-        "mean": 1.1833730975171635,
-        "localMean": 0.5067520414517702,
+        "mean": 1.1834658597240983,
+        "localMean": 0.5067449352810642,
         "localPeak": {
-          "value": 6.654377787885316,
-          "joint": "R_WingPanel2_0",
-          "frame": 17
+          "value": 6.659099505513832,
+          "joint": "L_WingPanel2_0",
+          "frame": 16
         },
-        "p95": 4.3165947392500446,
+        "p95": 4.314986667216669,
         "accelMax": 630.1312877249254,
         "accelP95": 38.29236150563522,
-        "outlierThreshold": 48.03471846034317,
+        "outlierThreshold": 164.14853695018317,
         "outlier": false,
         "accelSpike": true
       },
       "linear": {
         "maxWorldSpeed": {
-          "value": 8343.732870234951,
+          "value": 8343.732870234942,
           "joint": "R_WingD0P2",
           "frame": 40
         },
-        "p95": 2934.2615442209394
+        "p95": 2934.261544220933
       },
       "translate": {
         "Root": {
@@ -2869,9 +2869,9 @@
         },
         "Body": {
           "worldRange": [
-            0,
-            1.1368683772161603e-13,
-            0
+            2.710505431213761e-20,
+            1.7053025658242404e-13,
+            1.1368683772161603e-13
           ],
           "localRange": 0,
           "startEnd": 0
@@ -2882,97 +2882,97 @@
         "joint": "L_WingD0P0",
         "positionRigUnits": 1752.410654535892,
         "velocity": 106.20046690455227,
-        "meanVelocity": 1.1833730975171635
+        "meanVelocity": 1.1834658597240983
       },
       "contact": {
         "L_Toes": {
-          "minY": 11.801564535104433,
+          "minY": 11.780900307576701,
           "verticalRange": 164.3977104165967,
           "duty": 0.09392265193370165,
           "slipRigUnits": 204.7618088559644,
           "slipMetres": 0.1895081858547843
         },
         "R_Toes": {
-          "minY": 11.802478698477529,
+          "minY": 11.781814470949797,
           "verticalRange": 164.39608925395896,
           "duty": 0.09392265193370165,
-          "slipRigUnits": 204.76392506072222,
-          "slipMetres": 0.18951014441398434
+          "slipRigUnits": 204.76392506072207,
+          "slipMetres": 0.1895101444139842
         },
         "L_Foot": {
-          "minY": 106.09980542492116,
+          "minY": 106.07914119739343,
           "verticalRange": 224.3784735247089,
           "duty": 0.08839779005524862,
-          "slipRigUnits": 59.16724484858777,
-          "slipMetres": 0.054759612136309234
+          "slipRigUnits": 59.16724484858776,
+          "slipMetres": 0.05475961213630922
         },
         "R_Foot": {
-          "minY": 106.10065823846153,
+          "minY": 106.0799940109338,
           "verticalRange": 224.37709036980883,
           "duty": 0.08839779005524862,
-          "slipRigUnits": 59.167998119862496,
-          "slipMetres": 0.05476030929303747
+          "slipRigUnits": 59.167998119862396,
+          "slipMetres": 0.05476030929303738
         },
         "L_WingHand": {
-          "minY": -135.45136023391717,
+          "minY": -135.4720244614449,
           "verticalRange": 814.1429101572927,
           "duty": 0.055248618784530384,
-          "slipRigUnits": 23.212293102764775,
-          "slipMetres": 0.021483105565495403
+          "slipRigUnits": 23.21229310276488,
+          "slipMetres": 0.021483105565495497
         },
         "R_WingHand": {
-          "minY": -135.45062740875693,
+          "minY": -135.47129163628466,
           "verticalRange": 814.1482134079495,
           "duty": 0.055248618784530384,
-          "slipRigUnits": 23.214812727694937,
-          "slipMetres": 0.02148543749229473
+          "slipRigUnits": 23.214812727695048,
+          "slipMetres": 0.02148543749229483
         }
       },
-      "groundMin": -135.45136023391717,
+      "groundMin": -135.4720244614449,
       "mesh": {
-        "minY": -1980.3575141874728,
-        "maxY": 1571.657087801222,
+        "minY": -1980.3781784150005,
+        "maxY": 1571.6364235736942,
         "perMesh": [
           {
             "mesh": "SKM_DaenerysDragon001",
-            "minY": -408.12838455728684,
-            "maxY": 1571.657087801222
+            "minY": -408.1490487848145,
+            "maxY": 1571.6364235736942
           },
           {
             "mesh": "SKM_DaenerysDragon001_1",
-            "minY": 53.6252955866944,
-            "maxY": 1017.0888548596276
+            "minY": 53.60463135916666,
+            "maxY": 1017.0681906320999
           },
           {
             "mesh": "WyvernMembrane_ExportSafe",
-            "minY": -1980.3575141874728,
-            "maxY": 1019.5188242078582
+            "minY": -1980.3781784150005,
+            "maxY": 1019.4981599803305
           }
         ]
       },
       "foot": {
-        "min": -185.43899963770696,
-        "max": 49.82293708471392,
+        "min": -185.4596638652347,
+        "max": 49.80227285718619,
         "range": 235.26193672242087,
         "vertices": 1084
       },
       "edge": {
-        "p99Max": 1.7825378857870506,
-        "maxMax": 11.666169662631827,
-        "p01Min": 0.5028164061750237,
+        "p99Max": 1.72115207345326,
+        "maxMax": 18.30681292876646,
+        "p01Min": 0.47983796217989,
         "edges": 58547
       },
-      "footBelowOrigin": -185.43899963770696,
+      "footBelowOrigin": -185.4596638652347,
       "belowFeetRigUnits": 1794.9185145497659,
-      "belowOriginRigUnits": 1980.3575141874728,
-      "runtimeBelowOriginRigUnits": -1939.9919557199976,
+      "belowOriginRigUnits": 1980.3781784150005,
+      "runtimeBelowOriginRigUnits": -1940.0126199475253,
       "contactSummary": {
         "lowestDuty": 0.055248618784530384,
         "highestDuty": 0.09392265193370165,
         "totalDuty": 0.4751381215469612,
-        "maxSlipRigUnits": 204.76392506072222
+        "maxSlipRigUnits": 204.76392506072207
       },
-      "ms": 357
+      "ms": 427
     },
     {
       "name": "rest",
@@ -2986,17 +2986,17 @@
           "frame": 357,
           "time": 5.95
         },
-        "mean": 0.03147912071043745,
-        "localMean": 0.0018955346289128267,
+        "mean": 0.03148072340793223,
+        "localMean": 0.0018957038548322743,
         "localPeak": {
           "value": 0.024029840011986922,
           "joint": "Spine3",
           "frame": 5
         },
-        "p95": 0.057751784829559775,
+        "p95": 0.05776011168413199,
         "accelMax": 1.5944187931508476,
-        "accelP95": 0.1325562276225842,
-        "outlierThreshold": 48.03471846034317,
+        "accelP95": 0.1327733977890039,
+        "outlierThreshold": 164.14853695018317,
         "outlier": false,
         "accelSpike": true
       },
@@ -3006,7 +3006,7 @@
           "joint": "Tail10",
           "frame": 4
         },
-        "p95": 64.62227739203719
+        "p95": 64.62227739203838
       },
       "translate": {
         "Root": {
@@ -3038,101 +3038,101 @@
         }
       },
       "seam": {
-        "rotationRad": 4.458745546780758e-16,
-        "joint": "L_WingPanel0_1",
-        "positionRigUnits": 0.0005538373136626151,
-        "velocity": 6.423961869778975e-14,
-        "meanVelocity": 0.03147912071043745
+        "rotationRad": 4.450233517398497e-16,
+        "joint": "Tail9",
+        "positionRigUnits": 0.0005538373143478166,
+        "velocity": 7.081099581852424e-14,
+        "meanVelocity": 0.03148072340793223
       },
       "contact": {
         "L_Toes": {
-          "minY": 42.12095544829094,
+          "minY": 42.12285873240535,
           "verticalRange": 4.717756697019325,
           "duty": 1,
-          "slipRigUnits": 34.65021039128815,
-          "slipMetres": 0.03206896123563103
+          "slipRigUnits": 34.65021039128826,
+          "slipMetres": 0.03206896123563113
         },
         "R_Toes": {
-          "minY": 42.12088865652518,
+          "minY": 42.12279194063959,
           "verticalRange": 4.717849635307459,
           "duty": 1,
-          "slipRigUnits": 34.650173882869666,
-          "slipMetres": 0.03206892744688793
+          "slipRigUnits": 34.65017388286961,
+          "slipMetres": 0.03206892744688788
         },
         "L_Foot": {
-          "minY": 212.36052212234557,
+          "minY": 212.36242540645998,
           "verticalRange": 4.7323446819572155,
           "duty": 1,
-          "slipRigUnits": 20.385379465704858,
-          "slipMetres": 0.018866781369491555
+          "slipRigUnits": 20.385379465704972,
+          "slipMetres": 0.01886678136949166
         },
         "R_Foot": {
-          "minY": 212.36043190064692,
+          "minY": 212.36233518476132,
           "verticalRange": 4.732409138012201,
           "duty": 1,
-          "slipRigUnits": 20.38514993446915,
-          "slipMetres": 0.018866568937064242
+          "slipRigUnits": 20.385149934469094,
+          "slipMetres": 0.01886656893706419
         },
         "L_WingHand": {
-          "minY": 57.764603577380626,
+          "minY": 57.76650686149503,
           "verticalRange": 63.467375769653984,
           "duty": 0.2742382271468144,
-          "slipRigUnits": 15.752433574755702,
-          "slipMetres": 0.014578964340219507
+          "slipRigUnits": 15.752433574755765,
+          "slipMetres": 0.014578964340219564
         },
         "R_WingHand": {
-          "minY": 57.76473426650881,
+          "minY": 57.766637550623216,
           "verticalRange": 63.467780629967876,
           "duty": 0.2742382271468144,
-          "slipRigUnits": 15.75306614282585,
-          "slipMetres": 0.014579549785464755
+          "slipRigUnits": 15.753066142825727,
+          "slipMetres": 0.014579549785464642
         }
       },
-      "groundMin": 42.12088865652518,
+      "groundMin": 42.12279194063959,
       "mesh": {
-        "minY": -1550.5450149750525,
-        "maxY": 850.2152862105522,
+        "minY": -1550.543111690938,
+        "maxY": 848.8053961308183,
         "perMesh": [
           {
             "mesh": "SKM_DaenerysDragon001",
-            "minY": -240.98311951441926,
-            "maxY": 850.2152862105522
+            "minY": -240.98121623030485,
+            "maxY": 848.8053961308183
           },
           {
             "mesh": "SKM_DaenerysDragon001_1",
-            "minY": 107.2184773782982,
-            "maxY": 629.0624103657095
+            "minY": 107.2203806624126,
+            "maxY": 629.0643136498239
           },
           {
             "mesh": "WyvernMembrane_ExportSafe",
-            "minY": -1550.5450149750525,
-            "maxY": 748.2136338175378
+            "minY": -1550.543111690938,
+            "maxY": 748.2155371016522
           }
         ]
       },
       "foot": {
-        "min": -184.0024881396115,
-        "max": -182.75225502900844,
+        "min": -184.0005848554971,
+        "max": -182.75035174489403,
         "range": 1.2502331106030624,
         "vertices": 1084
       },
       "edge": {
-        "p99Max": 1.0130144813005617,
-        "maxMax": 1.2067092207763819,
-        "p01Min": 0.9880444852690656,
+        "p99Max": 1.01150891318741,
+        "maxMax": 1.5508671046456668,
+        "p01Min": 0.9886080665965692,
         "edges": 58547
       },
-      "footBelowOrigin": -184.0024881396115,
+      "footBelowOrigin": -184.0005848554971,
       "belowFeetRigUnits": 1366.542526835441,
-      "belowOriginRigUnits": 1550.5450149750525,
-      "runtimeBelowOriginRigUnits": -1510.1794565075772,
+      "belowOriginRigUnits": 1550.543111690938,
+      "runtimeBelowOriginRigUnits": -1510.1775532234628,
       "contactSummary": {
         "lowestDuty": 0.2742382271468144,
         "highestDuty": 1,
         "totalDuty": 4.548476454293629,
-        "maxSlipRigUnits": 34.65021039128815
+        "maxSlipRigUnits": 34.65021039128826
       },
-      "ms": 375
+      "ms": 421
     },
     {
       "name": "scout",
@@ -3146,8 +3146,8 @@
           "frame": 179,
           "time": 2.9833333333333334
         },
-        "mean": 0.29617157245666925,
-        "localMean": 0.02453524688183189,
+        "mean": 0.29618871897614085,
+        "localMean": 0.024545736767127187,
         "localPeak": {
           "value": 7.634775473659529,
           "joint": "L_WingRoot",
@@ -3155,8 +3155,8 @@
         },
         "p95": 0.7052709523317022,
         "accelMax": 434.3955695043202,
-        "accelP95": 2.190420481807434,
-        "outlierThreshold": 48.03471846034317,
+        "accelP95": 2.1632887835189534,
+        "outlierThreshold": 164.14853695018317,
         "outlier": false,
         "accelSpike": true
       },
@@ -3166,7 +3166,7 @@
           "joint": "L_WingD3P2",
           "frame": 180
         },
-        "p95": 350.29318343755216
+        "p95": 350.29318343755045
       },
       "translate": {
         "Root": {
@@ -3200,99 +3200,99 @@
       "seam": {
         "rotationRad": 6.473657049138938e-16,
         "joint": "L_WingD4P0",
-        "positionRigUnits": 0.00019815677740143216,
+        "positionRigUnits": 0.0001981567773774911,
         "velocity": 4.951395542680039e-14,
-        "meanVelocity": 0.29617157245666925
+        "meanVelocity": 0.29618871897614085
       },
       "contact": {
         "L_Toes": {
-          "minY": 65.04191678701491,
+          "minY": 65.02101087261556,
           "verticalRange": 19.363077138189595,
           "duty": 0.5623268698060941,
-          "slipRigUnits": 34.933840651112384,
-          "slipMetres": 0.03233146260877831
+          "slipRigUnits": 34.93384065111244,
+          "slipMetres": 0.03233146260877836
         },
         "R_Toes": {
-          "minY": 65.05127257530282,
+          "minY": 65.03036666090347,
           "verticalRange": 19.363437679245408,
           "duty": 0.5623268698060941,
-          "slipRigUnits": 34.93193164666433,
-          "slipMetres": 0.0323296958146102
+          "slipRigUnits": 34.931931646664246,
+          "slipMetres": 0.032329695814610114
         },
         "L_Foot": {
-          "minY": 228.2391730274332,
+          "minY": 228.21826711303385,
           "verticalRange": 16.09792830786867,
           "duty": 0.6565096952908587,
-          "slipRigUnits": 25.673332456333526,
-          "slipMetres": 0.02376081108986941
+          "slipRigUnits": 25.67333245633351,
+          "slipMetres": 0.0237608110898694
         },
         "R_Foot": {
-          "minY": 228.24740163542893,
+          "minY": 228.22649572102958,
           "verticalRange": 16.098225176205688,
           "duty": 0.6565096952908587,
-          "slipRigUnits": 25.66929084032305,
-          "slipMetres": 0.023757070551912913
+          "slipRigUnits": 25.66929084032293,
+          "slipMetres": 0.023757070551912802
         },
         "L_WingHand": {
-          "minY": 606.7520329771601,
-          "verticalRange": 174.80564935718053,
+          "minY": 606.7311270627607,
+          "verticalRange": 174.8056493571804,
           "duty": 0.11634349030470914,
-          "slipRigUnits": 5.510742838081979,
-          "slipMetres": 0.005100222955598985
+          "slipRigUnits": 5.510742838081977,
+          "slipMetres": 0.0051002229555989825
         },
         "R_WingHand": {
-          "minY": 606.8154767897421,
+          "minY": 606.7945708753427,
           "verticalRange": 174.80485831548015,
           "duty": 0.11634349030470914,
-          "slipRigUnits": 5.510956792152052,
-          "slipMetres": 0.005100420971273403
+          "slipRigUnits": 5.5109567921521405,
+          "slipMetres": 0.005100420971273486
         }
       },
-      "groundMin": 65.04191678701491,
+      "groundMin": 65.02101087261556,
       "mesh": {
-        "minY": -183.77732694082715,
-        "maxY": 1484.7558049339968,
+        "minY": -183.79823285522662,
+        "maxY": 1484.7348990195978,
         "perMesh": [
           {
             "mesh": "SKM_DaenerysDragon001",
-            "minY": -183.77732694082715,
-            "maxY": 892.1934582269404
+            "minY": -183.79823285522662,
+            "maxY": 892.1725523125409
           },
           {
             "mesh": "SKM_DaenerysDragon001_1",
-            "minY": 151.66952588515338,
-            "maxY": 669.36477699646
+            "minY": 151.64861997075394,
+            "maxY": 669.3438710820606
           },
           {
             "mesh": "WyvernMembrane_ExportSafe",
-            "minY": 90.4992861887506,
-            "maxY": 1484.7558049339968
+            "minY": 90.47838027435114,
+            "maxY": 1484.7348990195978
           }
         ]
       },
       "foot": {
-        "min": -183.96995819929998,
-        "max": -176.8235818128377,
+        "min": -183.99086411369933,
+        "max": -176.84448772723704,
         "range": 7.146376386462293,
         "vertices": 1084
       },
       "edge": {
-        "p99Max": 1.4536714272543807,
-        "maxMax": 16.98903373205322,
-        "p01Min": 0.7874919946994888,
+        "p99Max": 1.4180202394546675,
+        "maxMax": 9.75238767055939,
+        "p01Min": 0.7784376977895561,
         "edges": 58547
       },
-      "footBelowOrigin": -183.96995819929998,
-      "belowFeetRigUnits": -0.19263125847282936,
-      "belowOriginRigUnits": 183.77732694082715,
-      "runtimeBelowOriginRigUnits": -143.4117684733519,
+      "footBelowOrigin": -183.99086411369933,
+      "belowFeetRigUnits": -0.19263125847271567,
+      "belowOriginRigUnits": 183.79823285522662,
+      "runtimeBelowOriginRigUnits": -143.43267438775138,
       "contactSummary": {
         "lowestDuty": 0.11634349030470914,
         "highestDuty": 0.6565096952908587,
         "totalDuty": 2.6703601108033244,
-        "maxSlipRigUnits": 34.933840651112384
+        "maxSlipRigUnits": 34.93384065111244
       },
-      "ms": 380
+      "ms": 411
     },
     {
       "name": "speed",
@@ -3301,22 +3301,22 @@
       "loops": true,
       "angular": {
         "peak": {
-          "value": 8.410304495126322,
+          "value": 8.410294558493607,
           "joint": "L_WingPanel0_1",
           "frame": 149,
           "time": 2.4833333333333334
         },
-        "mean": 0.8629900710747576,
-        "localMean": 0.04052315941788271,
+        "mean": 0.8629888007985654,
+        "localMean": 0.040525376339439825,
         "localPeak": {
           "value": 8.022178181161195,
           "joint": "L_WingRoot",
           "frame": 299
         },
-        "p95": 1.9673677264347589,
-        "accelMax": 432.37527885459434,
-        "accelP95": 15.636833178177266,
-        "outlierThreshold": 48.03471846034317,
+        "p95": 1.9673671549095486,
+        "accelMax": 432.2616648912634,
+        "accelP95": 15.623975623708736,
+        "outlierThreshold": 164.14853695018317,
         "outlier": false,
         "accelSpike": true
       },
@@ -3326,7 +3326,7 @@
           "joint": "L_WingD0P2",
           "frame": 149
         },
-        "p95": 2802.2456448911985
+        "p95": 2802.2489572999016
       },
       "translate": {
         "Root": {
@@ -3349,9 +3349,9 @@
         },
         "Body": {
           "worldRange": [
-            1.3552527156068805e-20,
-            1.1368683772161603e-13,
-            5.684341886080802e-14
+            2.710505431213761e-20,
+            2.2737367544323206e-13,
+            1.1368683772161603e-13
           ],
           "localRange": 0,
           "startEnd": 0
@@ -3362,15 +3362,15 @@
         "joint": "Tail8",
         "positionRigUnits": 0.0005650909175969104,
         "velocity": 0.00000830308938725015,
-        "meanVelocity": 0.8629900710747576
+        "meanVelocity": 0.8629888007985654
       },
       "contact": {
         "L_Toes": {
           "minY": 573.5127459078566,
           "verticalRange": 13.583876633847808,
           "duty": 0.717607973421927,
-          "slipRigUnits": 48.17276645552308,
-          "slipMetres": 0.044584161614894174
+          "slipRigUnits": 48.17276645552331,
+          "slipMetres": 0.04458416161489439
         },
         "R_Toes": {
           "minY": 573.5141643334892,
@@ -3383,8 +3383,8 @@
           "minY": 699.3838216540864,
           "verticalRange": 10.556426852220397,
           "duty": 1,
-          "slipRigUnits": 25.71496417621147,
-          "slipMetres": 0.023799341476723114
+          "slipRigUnits": 25.714964176211698,
+          "slipMetres": 0.023799341476723322
         },
         "R_Foot": {
           "minY": 699.3852242810731,
@@ -3437,9 +3437,9 @@
         "vertices": 1084
       },
       "edge": {
-        "p99Max": 1.0562514160545022,
-        "maxMax": 6.774318570521685,
-        "p01Min": 0.9447043281577047,
+        "p99Max": 1.0562154315331629,
+        "maxMax": 3.1323136188291567,
+        "p01Min": 0.9459008927663073,
         "edges": 58547
       },
       "footBelowOrigin": 300.6730992682126,
@@ -3452,7 +3452,7 @@
         "totalDuty": 3.4883720930232562,
         "maxSlipRigUnits": 48.178574664541856
       },
-      "ms": 362
+      "ms": 392
     },
     {
       "name": "takeoff",
@@ -3461,32 +3461,32 @@
       "loops": false,
       "angular": {
         "peak": {
-          "value": 6.611086562170965,
-          "joint": "Tail10",
-          "frame": 92,
-          "time": 1.5333333333333334
+          "value": 141.10845047863396,
+          "joint": "R_WingPanel2_1",
+          "frame": 52,
+          "time": 0.8666666666666667
         },
-        "mean": 2.008801348989847,
-        "localMean": 0.2548161379253872,
+        "mean": 4.623084969862542,
+        "localMean": 1.3800664984500333,
         "localPeak": {
-          "value": 3.423758847416415,
-          "joint": "L_Calf",
-          "frame": 61
+          "value": 70.08028205342485,
+          "joint": "L_WingD0P0",
+          "frame": 55
         },
-        "p95": 5.169643895162488,
-        "accelMax": 385.8933486908219,
-        "accelP95": 41.32383049236506,
-        "outlierThreshold": 48.03471846034317,
+        "p95": 20.994314528558217,
+        "accelMax": 6089.441593966502,
+        "accelP95": 408.74052097493245,
+        "outlierThreshold": 164.14853695018317,
         "outlier": false,
-        "accelSpike": false
+        "accelSpike": true
       },
       "linear": {
         "maxWorldSpeed": {
-          "value": 13250.622371511745,
+          "value": 129071.85666354469,
           "joint": "L_WingD0P2",
-          "frame": 30
+          "frame": 55
         },
-        "p95": 7262.229481098397
+        "p95": 11042.995237557428
       },
       "translate": {
         "Root": {
@@ -3509,110 +3509,110 @@
         },
         "Body": {
           "worldRange": [
-            0,
-            1.1368683772161603e-13,
-            1.1368683772161603e-13
+            0.00002762542713516218,
+            4.4792614062316716e-11,
+            3.163904693792574e-10
           ],
           "localRange": 0,
-          "startEnd": 0
+          "startEnd": 0.000027625427137007246
         }
       },
       "seam": {
-        "rotationRad": 1.13651909212113,
+        "rotationRad": 1.1365073104269305,
         "joint": "L_WingD0P0",
-        "positionRigUnits": 1721.0587293287792,
-        "velocity": 94.93466076640276,
-        "meanVelocity": 2.008801348989847
+        "positionRigUnits": 1721.0470811608711,
+        "velocity": 94.93449991561364,
+        "meanVelocity": 4.623084969862542
       },
       "contact": {
         "L_Toes": {
-          "minY": 4.547299995813404,
-          "verticalRange": 238.41815573476313,
-          "duty": 0.08287292817679558,
-          "slipRigUnits": 178.23439152189925,
-          "slipMetres": 0.16495691448988
+          "minY": 4.434299528363795,
+          "verticalRange": 883.4578063965151,
+          "duty": 0.08839779005524862,
+          "slipRigUnits": 189.0909842300503,
+          "slipMetres": 0.17500475104778632
         },
         "R_Toes": {
-          "minY": 4.548176993370333,
-          "verticalRange": 238.4160914381804,
-          "duty": 0.08287292817679558,
-          "slipRigUnits": 178.23534447879098,
-          "slipMetres": 0.1649577964567505
+          "minY": 4.4349925456850485,
+          "verticalRange": 883.4576188528487,
+          "duty": 0.08839779005524862,
+          "slipRigUnits": 189.09182018629875,
+          "slipMetres": 0.17500552472991476
         },
         "L_Foot": {
-          "minY": 112.85336175808646,
-          "verticalRange": 275.036232753853,
-          "duty": 0.12154696132596685,
-          "slipRigUnits": 63.40088918632824,
-          "slipMetres": 0.05867787337106881
+          "minY": 112.81196378271326,
+          "verticalRange": 704.057451014724,
+          "duty": 0.11602209944751381,
+          "slipRigUnits": 57.230431386824144,
+          "slipMetres": 0.052967080572299964
         },
         "R_Foot": {
-          "minY": 112.85407295382905,
-          "verticalRange": 275.0348029791262,
-          "duty": 0.12154696132596685,
-          "slipRigUnits": 63.401731679421005,
-          "slipMetres": 0.05867865310308279
+          "minY": 112.81259844535887,
+          "verticalRange": 704.0578552326328,
+          "duty": 0.11602209944751381,
+          "slipRigUnits": 57.231318531907945,
+          "slipMetres": 0.05296790162997844
         },
         "L_WingHand": {
-          "minY": -122.4528153567635,
-          "verticalRange": 1302.8469405708406,
+          "minY": -122.61081175199939,
+          "verticalRange": 1814.1668981433336,
           "duty": 0.09392265193370165,
-          "slipRigUnits": 8.631254660422316,
-          "slipMetres": 0.00798827389485449
+          "slipRigUnits": 9.205361440960168,
+          "slipMetres": 0.0085196128934428
         },
         "R_WingHand": {
-          "minY": -122.45301777521547,
-          "verticalRange": 1302.8464367812362,
+          "minY": -122.61107006963664,
+          "verticalRange": 1814.1617098531697,
           "duty": 0.09392265193370165,
-          "slipRigUnits": 8.631231961172226,
-          "slipMetres": 0.007988252886573068
+          "slipRigUnits": 9.204391657165214,
+          "slipMetres": 0.008518715353180386
         }
       },
-      "groundMin": -122.45301777521547,
+      "groundMin": -122.61107006963664,
       "mesh": {
-        "minY": -1407.0598720849719,
-        "maxY": 2708.366400094482,
+        "minY": -1404.5564651679665,
+        "maxY": 2149.900650325666,
         "perMesh": [
           {
             "mesh": "SKM_DaenerysDragon001",
-            "minY": -484.1612589242136,
-            "maxY": 1278.7807382571125
+            "minY": -473.8071470542319,
+            "maxY": 1150.2543138893006
           },
           {
             "mesh": "SKM_DaenerysDragon001_1",
-            "minY": 11.050126631970963,
-            "maxY": 877.6565228332796
+            "minY": 59.66517913408917,
+            "maxY": 958.6993953431936
           },
           {
             "mesh": "WyvernMembrane_ExportSafe",
-            "minY": -1407.0598720849719,
-            "maxY": 2708.366400094482
+            "minY": -1404.5564651679665,
+            "maxY": 2149.900650325666
           }
         ]
       },
       "foot": {
-        "min": -184.21032637752455,
-        "max": 3.5079293314085134,
-        "range": 187.71825570893307,
+        "min": -184.18040742323115,
+        "max": 765.4774063226907,
+        "range": 949.6578137459219,
         "vertices": 1084
       },
       "edge": {
-        "p99Max": 2.794257656803448,
-        "maxMax": 31.589099164109516,
-        "p01Min": 0.6219324280194473,
+        "p99Max": 2.7926082834664703,
+        "maxMax": 25.798102664382334,
+        "p01Min": 0.6211552606036567,
         "edges": 58547
       },
-      "footBelowOrigin": -184.21032637752455,
-      "belowFeetRigUnits": 1222.8495457074473,
-      "belowOriginRigUnits": 1407.0598720849719,
-      "runtimeBelowOriginRigUnits": -1366.6943136174966,
+      "footBelowOrigin": -184.18040742323115,
+      "belowFeetRigUnits": 1220.3760577447354,
+      "belowOriginRigUnits": 1404.5564651679665,
+      "runtimeBelowOriginRigUnits": -1364.1909067004913,
       "contactSummary": {
-        "lowestDuty": 0.08287292817679558,
-        "highestDuty": 0.12154696132596685,
+        "lowestDuty": 0.08839779005524862,
+        "highestDuty": 0.11602209944751381,
         "totalDuty": 0.5966850828729281,
-        "maxSlipRigUnits": 178.23534447879098
+        "maxSlipRigUnits": 189.09182018629875
       },
-      "ms": 352
+      "ms": 377
     },
     {
       "name": "walk",
@@ -3621,32 +3621,32 @@
       "loops": true,
       "angular": {
         "peak": {
-          "value": 9.65495489480592,
-          "joint": "R_Toes",
-          "frame": 129,
-          "time": 2.1573128554285788
+          "value": 19.4505228871821,
+          "joint": "Tail10",
+          "frame": 44,
+          "time": 0.7358276406112982
         },
-        "mean": 0.7188443449672719,
-        "localMean": 0.2783161357131786,
+        "mean": 2.806127066069155,
+        "localMean": 0.45742868127950226,
         "localPeak": {
           "value": 7.751601041406492,
           "joint": "R_Toes",
           "frame": 129
         },
-        "p95": 1.779651008206818,
-        "accelMax": 269.91384874436034,
-        "accelP95": 10.569249611160345,
-        "outlierThreshold": 48.03471846034317,
+        "p95": 5.032236466967743,
+        "accelMax": 434.6265326901244,
+        "accelP95": 62.3468025252694,
+        "outlierThreshold": 164.14853695018317,
         "outlier": false,
-        "accelSpike": true
+        "accelSpike": false
       },
       "linear": {
         "maxWorldSpeed": {
-          "value": 2202.3428904691814,
-          "joint": "L_WingD0P2",
-          "frame": 147
+          "value": 15071.429256832795,
+          "joint": "Tail10",
+          "frame": 44
         },
-        "p95": 1339.4524384770136
+        "p95": 6848.903827431979
       },
       "translate": {
         "Root": {
@@ -3680,99 +3680,99 @@
       "seam": {
         "rotationRad": 0.006327158196923968,
         "joint": "Jaw",
-        "positionRigUnits": 0.00039364417057274334,
-        "velocity": 0.3796294918154339,
-        "meanVelocity": 0.7188443449672719
+        "positionRigUnits": 0.00022999019512423896,
+        "velocity": 0.3796294918154542,
+        "meanVelocity": 2.806127066069155
       },
       "contact": {
         "L_Toes": {
-          "minY": -43.325446047966125,
+          "minY": -43.32517415023551,
           "verticalRange": 187.6691897393215,
           "duty": 0.08783783783783784,
           "slipRigUnits": 132.3459998446171,
           "slipMetres": 0.12248695435843425
         },
         "R_Toes": {
-          "minY": -36.07726600231911,
-          "verticalRange": 196.2267827827034,
+          "minY": -36.07699410458855,
+          "verticalRange": 196.22678278270345,
           "duty": 0.1554054054054054,
-          "slipRigUnits": 250.81955794018165,
-          "slipMetres": 0.23213488720242
+          "slipRigUnits": 250.81955794018162,
+          "slipMetres": 0.23213488720241998
         },
         "L_Foot": {
-          "minY": 102.87550655552678,
+          "minY": 102.8757784532574,
           "verticalRange": 161.43395582786735,
           "duty": 0.08108108108108109,
           "slipRigUnits": 106.24768628105896,
           "slipMetres": 0.09833282090487472
         },
         "R_Foot": {
-          "minY": 102.21633691259694,
+          "minY": 102.21660881032756,
           "verticalRange": 178.04911899674823,
           "duty": 0.07432432432432433,
           "slipRigUnits": 123.34102530212091,
           "slipMetres": 0.11415280064709747
         },
         "L_WingHand": {
-          "minY": -38.21928313999848,
-          "verticalRange": 352.7193213370652,
-          "duty": 0.06756756756756757,
-          "slipRigUnits": 68.36884601177192,
-          "slipMetres": 0.06327574487188654
+          "minY": -160.5610194915867,
+          "verticalRange": 649.9538720721903,
+          "duty": 0.02702702702702703,
+          "slipRigUnits": 57.61219071852942,
+          "slipMetres": 0.05332040094385173
         },
         "R_WingHand": {
-          "minY": -67.57798679270098,
-          "verticalRange": 407.358740472583,
-          "duty": 0.04054054054054054,
-          "slipRigUnits": 34.206593012652334,
-          "slipMetres": 0.03165839089974352
+          "minY": -134.10252501432103,
+          "verticalRange": 673.7043928336924,
+          "duty": 0.02702702702702703,
+          "slipRigUnits": 148.24813357759135,
+          "slipMetres": 0.1372044670225071
         }
       },
-      "groundMin": -67.57798679270098,
+      "groundMin": -160.5610194915867,
       "mesh": {
-        "minY": -1710.7492622479745,
-        "maxY": 1265.228705093044,
+        "minY": -1721.752437532889,
+        "maxY": 2237.494932454393,
         "perMesh": [
           {
             "mesh": "SKM_DaenerysDragon001",
-            "minY": -294.63925761056953,
-            "maxY": 1265.228705093044
+            "minY": -439.8834530211359,
+            "maxY": 2237.494932454393
           },
           {
             "mesh": "SKM_DaenerysDragon001_1",
-            "minY": 228.97233718509762,
-            "maxY": 695.4381258231672
+            "minY": -358.07588196460773,
+            "maxY": 1211.96542158462
           },
           {
             "mesh": "WyvernMembrane_ExportSafe",
-            "minY": -1710.7492622479745,
-            "maxY": 817.884027152002
+            "minY": -1721.752437532889,
+            "maxY": 881.7485866819936
           }
         ]
       },
       "foot": {
-        "min": -183.9407995228994,
-        "max": -98.47746339903068,
+        "min": -183.94052762516878,
+        "max": -98.47719150130007,
         "range": 85.46333612386871,
         "vertices": 1084
       },
       "edge": {
-        "p99Max": 1.4045814918981268,
-        "maxMax": 6.673229958615328,
-        "p01Min": 0.7512060789541142,
+        "p99Max": 1.6688791837213308,
+        "maxMax": 18.63990360694982,
+        "p01Min": 0.7242476683071434,
         "edges": 58547
       },
-      "footBelowOrigin": -183.9407995228994,
-      "belowFeetRigUnits": 1526.808462725075,
-      "belowOriginRigUnits": 1710.7492622479745,
-      "runtimeBelowOriginRigUnits": -1670.3837037804992,
+      "footBelowOrigin": -183.94052762516878,
+      "belowFeetRigUnits": 1537.8119099077203,
+      "belowOriginRigUnits": 1721.752437532889,
+      "runtimeBelowOriginRigUnits": -1681.3868790654137,
       "contactSummary": {
-        "lowestDuty": 0.04054054054054054,
+        "lowestDuty": 0.02702702702702703,
         "highestDuty": 0.1554054054054054,
-        "totalDuty": 0.5067567567567568,
-        "maxSlipRigUnits": 250.81955794018165
+        "totalDuty": 0.45270270270270274,
+        "maxSlipRigUnits": 250.81955794018162
       },
-      "ms": 363
+      "ms": 390
     }
   ],
   "jointPeak": {
@@ -3783,72 +3783,72 @@
       1.1519595703834522,
       1.1519595703834105,
       1.1519595703834096,
-      2.943834582426241,
-      4.735711216602938,
-      8.831423386799425,
-      7.626253633404722,
+      20.964213146448742,
+      40.77590870416782,
+      86.06126073291973,
+      76.63534315391357,
       1.1519595703834054,
-      2.313430907090532,
-      3.236191850114922,
-      3.9323215756804233,
-      3.9323215756804135,
-      3.9323215756804157,
-      3.932321575680409,
-      3.9323215756804117,
-      7.403005974479211,
-      7.403005974479208,
-      7.403005974479218,
-      7.4105965905865725,
-      7.410596583220242,
-      7.410596578885067,
-      7.423309135001495,
-      7.425311739656171,
-      7.410648991175191,
-      7.410648956778213,
-      7.41064896330181,
-      7.42169507534157,
-      7.422676690797755,
-      7.403141398809413,
-      7.403141398809408,
-      7.403141398809407,
-      7.412277726326369,
-      7.412071851008005,
-      7.402949097977135,
-      7.402949097977134,
-      7.402949097977147,
-      7.401912888830286,
-      7.40142060413171,
+      20.30206071377706,
+      32.921864838279184,
+      40.73982925821896,
+      40.739829258218975,
+      40.73982925821896,
+      40.73982925821897,
+      40.73982925821896,
+      44.3709461691759,
+      44.3709461691759,
+      44.370946169175895,
+      44.37701014542499,
+      44.377010141574,
+      44.377010136293435,
+      44.394489370033504,
+      44.39668645945067,
+      44.377070342705956,
+      44.377070270670956,
+      44.377070275493004,
+      44.39228194980491,
+      44.3933256812334,
+      44.37082384376124,
+      44.37082384376124,
+      44.37082384376125,
+      44.38232289756572,
+      44.382086797696594,
+      44.370864101137535,
+      44.37086410113753,
+      44.37086410113754,
+      44.371907351995,
+      44.37146995145275,
       1.1519595703834078,
-      2.313434515360693,
-      3.2361948238749734,
-      3.932330385243153,
-      3.9323303852431444,
-      3.9323303852431404,
-      3.9323303852431426,
-      3.9323303852431435,
-      7.403004780129689,
-      7.403004780129686,
-      7.403004780129686,
-      7.41059400315825,
-      7.410593992005995,
-      7.41059399936868,
-      7.423305918467558,
-      7.425308249579898,
-      7.4106507807585205,
-      7.410650789131207,
-      7.41065084859856,
-      7.421694964006215,
-      7.422676527741005,
-      7.4031534009678355,
-      7.403153400967829,
-      7.4031534009678355,
-      7.4122893905937275,
-      7.412083301981172,
-      7.4029369244651875,
-      7.402936924465184,
-      7.40293692446519,
-      7.401900428627333,
-      7.401407660510672,
+      20.301975408465,
+      32.92211584307506,
+      40.74015558713251,
+      40.740155587132534,
+      40.74015558713252,
+      40.740155587132534,
+      40.740155587132534,
+      44.37123573934913,
+      44.371235739349125,
+      44.37123573934912,
+      44.37730225028015,
+      44.37730224004621,
+      44.377302249706624,
+      44.394776164824655,
+      44.39697194777148,
+      44.37735853238691,
+      44.37735853825199,
+      44.37735858439547,
+      44.392575227919366,
+      44.393618182403934,
+      44.371125775001666,
+      44.37112577500167,
+      44.37112577500168,
+      44.38261709461149,
+      44.38237963304435,
+      44.37114865070039,
+      44.3711486507004,
+      44.37114865070041,
+      44.37219039229817,
+      44.3717523718459,
       1.1519595703834353,
       1.1519595703834336,
       1.1519595703834333,
@@ -3859,90 +3859,90 @@
       1.1519595703834524,
       1.1519595703834509,
       1.151959570383447,
-      0.9425176444456571,
-      1.1440396554382914,
-      1.4930098117199428,
-      1.956880728361658,
-      2.3804244059218753,
-      2.703114721239296,
-      2.703114721239302,
-      2.703114721239324,
-      2.7031147212393143,
-      2.703114721239314
+      3.4833174982383697,
+      7.2784263436723515,
+      11.740356110000892,
+      16.86975680210998,
+      21.55408816489944,
+      25.12362590606583,
+      25.123625906065822,
+      25.123625906065815,
+      25.123625906065815,
+      25.123625906065822
     ],
     "attack2": [
       0,
       0,
       0.9236686187450838,
       2.6579632761985557,
-      2.636468910947282,
-      5.611974184304895,
-      5.683144504607815,
-      5.727131401291117,
-      5.75802198700847,
-      5.758021798703692,
-      11.18779329693386,
-      14.208882091276799,
-      13.53026243759338,
-      14.092691225017377,
-      14.825529814948265,
-      14.82552976154549,
-      14.825529761986827,
-      14.825529790682866,
-      14.825529840320264,
-      14.825529840758751,
-      14.82552986012883,
-      14.82552988728778,
-      14.82552988819812,
-      14.825529904956014,
-      14.826652069123888,
-      14.825447726621501,
-      14.825529831651993,
-      14.825529881998854,
-      14.825529891895536,
-      14.824470922519046,
-      14.823573854164056,
-      14.825529822111193,
-      14.825529833767467,
-      14.825529817484378,
-      14.823925534193009,
-      14.823872783370737,
-      14.825529830696276,
-      14.825529832496079,
-      14.82552984393023,
-      14.825042208891288,
-      14.825451591940773,
-      11.1877957970063,
-      14.509163529734423,
-      14.722916778365892,
-      15.225383906503685,
-      14.634962240978156,
-      14.634962260359886,
-      14.634962260883649,
-      14.634962228182001,
-      14.634962238288093,
-      14.634962244029548,
-      14.63496224176862,
-      14.634962248360825,
-      14.634962265325063,
-      14.634962291331805,
-      14.628341697558788,
-      14.629876905738291,
-      14.63496224908611,
-      14.634962257393006,
-      14.634962280386732,
-      14.62932175342785,
-      14.631031500088719,
-      14.634962243397856,
-      14.634962249934281,
-      14.634962249915134,
-      14.634184653398044,
-      14.636005439291056,
-      14.634962199242175,
-      14.634962163033192,
-      14.63496216842904,
-      14.63839193340459,
-      14.638840540769115,
+      3.2520324756573733,
+      9.767016313033096,
+      9.804811861666742,
+      9.831266498157246,
+      9.882725194495318,
+      9.624034584499174,
+      19.414537083729204,
+      18.504491708822716,
+      26.42600092190942,
+      26.443702479097453,
+      26.059333180384215,
+      26.059333219007666,
+      26.059333220606828,
+      26.05933319786893,
+      26.0593331806068,
+      26.059333164925786,
+      26.059333146285887,
+      26.059333206363753,
+      26.059333196125163,
+      26.059333200732866,
+      26.05296141052228,
+      26.05155623762935,
+      26.059333221631427,
+      26.059333190682434,
+      26.059333191085816,
+      26.050618492090816,
+      26.049798039581027,
+      26.05933318964166,
+      26.05933320307874,
+      26.059333189336122,
+      26.04817951576039,
+      26.047989790095933,
+      26.059333120153983,
+      26.05933311649035,
+      26.059333112255175,
+      26.04839826407981,
+      26.04869979735478,
+      19.41462684604993,
+      17.652761746396386,
+      24.592253357212144,
+      24.4025547044774,
+      23.825295557371017,
+      23.825295558619995,
+      23.825295562785097,
+      23.825295509827487,
+      23.82529558266645,
+      23.82529559074204,
+      23.825295562867115,
+      23.82529552417611,
+      23.82529555062028,
+      23.825295565363486,
+      23.823921178173947,
+      23.825398822601574,
+      23.82529551199858,
+      23.825295498165627,
+      23.825295520876054,
+      23.825730329673675,
+      23.827259231707576,
+      23.82529554231409,
+      23.82529554131123,
+      23.82529555590097,
+      23.830099400228622,
+      23.831481728967706,
+      23.825295552646622,
+      23.82529550047767,
+      23.82529548454231,
+      23.832888103088962,
+      23.833120571045324,
       2.657963270842289,
       2.657963271844823,
       2.6579633215704352,
@@ -3953,16 +3953,16 @@
       2.6579632840299463,
       2.657963298816672,
       2.6579632576642798,
-      1.1271042509935343,
-      1.4712680450127669,
-      1.9223323105873082,
-      2.4779749852331787,
-      3.1292691551044403,
-      4.187301628247995,
-      7.688122065702822,
-      12.852299134459514,
-      20.021154362276427,
-      29.577751661339
+      1.394727405901363,
+      2.1728983198133807,
+      3.1830799219732766,
+      4.431538168458139,
+      5.90556552359631,
+      7.571069303849553,
+      9.433838454377424,
+      14.259985749856568,
+      21.955678579966662,
+      32.280440401383544
     ],
     "attackAir2": [
       0,
@@ -3976,67 +3976,67 @@
       10.808164676921729,
       11.27807834862717,
       9.815670768823107,
-      20.459865740034875,
-      20.40081598367343,
-      20.31028152445569,
-      20.60424540327232,
-      20.60424542660049,
-      20.604245441187576,
-      20.60424541461659,
-      20.19642019188463,
-      20.196366848672348,
-      20.195948190801058,
-      20.813124686443352,
-      20.813124669197197,
-      20.813079109911342,
-      20.770867149759425,
-      20.76920862895784,
-      20.723620303269655,
-      20.723421966127617,
-      20.723816257176125,
-      20.643953792858586,
-      20.63931233918358,
-      20.569158502496464,
-      20.56921934650057,
-      20.568973617459232,
-      20.441009036899647,
-      20.442568005831113,
-      20.322688089714124,
-      20.322767894233337,
-      20.321635873189326,
-      20.25544251797204,
-      20.255691628824223,
+      21.68142046771186,
+      21.61930434083658,
+      21.52588724876924,
+      21.826019876734566,
+      21.82601990012994,
+      21.82601991073337,
+      21.8260198849464,
+      21.426497847817778,
+      21.426447588409,
+      21.426034503568907,
+      22.026849699911008,
+      22.02684968290933,
+      22.02680475270125,
+      21.986980296126436,
+      21.985367735578567,
+      21.945102214613886,
+      21.944906035367527,
+      21.945301338478576,
+      21.868044193647805,
+      21.86333545102729,
+      21.798417336743512,
+      21.79847802955486,
+      21.798240966298945,
+      21.670525535102268,
+      21.672097947126378,
+      21.554707940133337,
+      21.55478932912278,
+      21.55365398868197,
+      21.48547112537907,
+      21.48566778462149,
       9.815656658018163,
-      18.140198961310436,
-      18.14020079312014,
-      18.14020011419165,
-      18.14020011419165,
-      18.140200114191643,
-      18.140200114191632,
-      18.14020011419164,
-      18.520797910466037,
-      18.520797910466037,
-      18.520797910466033,
-      17.83083293006825,
-      17.830832930068247,
-      17.83083293006826,
-      17.9115573005587,
-      17.90898625971687,
-      17.98115731307929,
-      17.98115731307928,
-      17.981157313079265,
-      18.058741855101218,
-      18.059255981483698,
-      18.117355016485877,
-      18.11735501648587,
-      18.117355016485877,
-      18.237836989131793,
-      18.23099636380609,
-      18.353427744805394,
-      18.353427744805398,
-      18.35342774480538,
-      18.431011131997558,
-      18.432574578405983,
+      18.19707609008899,
+      18.19707792134266,
+      18.197077242821774,
+      18.197077242821774,
+      18.19707724282178,
+      18.197077242821774,
+      18.19707724282177,
+      18.577500825984366,
+      18.577500825984366,
+      18.577500825984377,
+      17.887733378896595,
+      17.887733378896566,
+      17.887733378896574,
+      17.967385382994895,
+      17.96483642818689,
+      18.03791578502362,
+      18.03791578502363,
+      18.037915785023635,
+      18.11459757628228,
+      18.11512822737547,
+      18.174011790043323,
+      18.174011790043323,
+      18.174011790043334,
+      18.293636338387767,
+      18.286727748134087,
+      18.41008918609199,
+      18.410089186091994,
+      18.410089186091984,
+      18.48682269702324,
+      18.488427869047058,
       3.601414750206988,
       5.412597807516163,
       7.075141364656472,
@@ -4083,23 +4083,23 @@
       7.396696333851176,
       7.020944504281353,
       7.1247414729153835,
-      7.052967706765053,
-      7.280610835651656,
+      7.055330901193818,
+      7.281710339025922,
       7.2359593082157385,
       7.083668051876032,
       7.432528485647438,
-      7.332675113982327,
-      7.8803684931116695,
+      7.333301700844696,
+      7.880445625147952,
       7.149485610996623,
       7.560535418052964,
       8.278177908136877,
-      7.510644420820501,
-      7.915151184466438,
+      7.510486219424129,
+      7.914923475148479,
       7.2412566256340405,
       7.403171668060389,
       7.38318931787061,
-      6.919365967926302,
-      6.75535270486475,
+      6.919486758973012,
+      6.753903837441729,
       0,
       6.574998245161528,
       8.678949812779326,
@@ -4114,23 +4114,23 @@
       11.332014777103764,
       10.927867353476032,
       10.84803326526293,
-      10.960483041611768,
-      11.019278725618584,
+      10.962874124375649,
+      11.020468029308859,
       11.166882544099561,
       10.990907009556954,
       11.180615032346314,
-      11.244041505499563,
-      11.650957848871528,
+      11.24467264585976,
+      11.651040738554215,
       11.079976995964062,
       11.476786730378784,
       12.072854150425547,
-      11.4267339318397,
-      11.716132206765922,
+      11.426639054599985,
+      11.716071923632418,
       11.167977914586233,
       11.299501358903184,
       11.116458164476969,
-      10.812430618859073,
-      10.379117332093008,
+      10.812733590942207,
+      10.379309603674736,
       0,
       0,
       0,
@@ -4177,23 +4177,23 @@
       11.332009943213713,
       10.927860434598328,
       10.848028373103764,
-      10.960475037431827,
-      11.01925241347164,
+      10.962843794734132,
+      11.020438868721536,
       11.166865588605697,
       10.99089738488346,
       11.18060567526677,
-      11.24403696746155,
-      11.650951987467407,
+      11.244628345375077,
+      11.651071916324293,
       11.079966521184328,
       11.476775807362166,
       12.072848459029254,
-      11.426741844242006,
-      11.716140537509368,
+      11.426582917511883,
+      11.716166827038489,
       11.167958386696869,
       11.299484702941959,
       11.116440081821251,
-      10.812440336849114,
-      10.379125110705866,
+      10.812684141262428,
+      10.379342979979187,
       0,
       3.272826853099509,
       4.640714668115284,
@@ -4208,23 +4208,23 @@
       7.39668002669914,
       7.020933641399748,
       7.124736895052956,
-      7.05295435962038,
-      7.280606863924056,
+      7.055323218310321,
+      7.281707076828579,
       7.235948266014727,
       7.083655361717091,
       7.432520233241032,
-      7.332654558367652,
-      7.880350828456862,
+      7.333284305304245,
+      7.880430566659117,
       7.149449656586317,
       7.560502082076011,
       8.278147645922129,
-      7.510626328715416,
-      7.915145719156262,
+      7.510473630944364,
+      7.914920614294295,
       7.2412527792797174,
       7.403170135647372,
       7.383193264682872,
-      6.919348292091519,
-      6.755359542750356,
+      6.9194806967514815,
+      6.7539099687407855,
       0,
       0,
       0,
@@ -4271,23 +4271,23 @@
       9.473540097947332,
       9.473540097947325,
       9.473540097947339,
-      9.490258550132749,
-      9.488794381949159,
+      9.487490440082608,
+      9.48545569668572,
       9.473564076806497,
       9.47356407680649,
       9.4735640768065,
-      9.488226235299411,
-      9.486293989690818,
+      9.48509351423381,
+      9.48283103732189,
       9.477272892584004,
       9.477272892583999,
       9.477272892584015,
-      9.483845546362478,
-      9.482471862769346,
+      12.955463101092722,
+      12.955186460672955,
       24.915123121519404,
       24.915123121519407,
       24.915123121519407,
-      24.914846878789195,
-      24.914504179482208,
+      24.914843111078067,
+      24.914456375063548,
       4.233641867899059,
       4.179710105828173,
       4.244270766104572,
@@ -4302,23 +4302,23 @@
       9.473531896648495,
       9.473531896648483,
       9.473531896648478,
-      9.490251141703206,
-      9.488786611307974,
+      9.487487234810592,
+      9.48545135806976,
       9.47356252193981,
       9.47356252193981,
       9.473562521939815,
-      9.48822341943148,
-      9.486290967561914,
+      9.485083219917927,
+      9.482818601092228,
       9.477252625009196,
       9.477252625009196,
       9.477252625009198,
-      9.483825400444577,
-      9.482451426424506,
+      9.481283691891898,
+      9.479907132226291,
       9.47887971155324,
       9.478879711553228,
       9.478879711553216,
-      9.479011907601453,
-      9.478868190544093,
+      9.478902047186624,
+      9.478881321735049,
       1.8818150551195252,
       1.8818150551195252,
       1.8818150551195347,
@@ -4365,23 +4365,23 @@
       4.556025273220021,
       5.082708484324202,
       6.071927873862707,
-      5.004483536560475,
-      5.8973412497414825,
+      5.009071984810286,
+      5.901140373701582,
       4.536068686319467,
       4.929652592049857,
       5.742628692614499,
-      4.772083276678022,
-      5.388448992626223,
+      4.774752717948284,
+      5.390427175451399,
       4.538853573883486,
       4.626437969310949,
       5.380100137691285,
-      4.660115232852341,
-      5.446725887742189,
+      4.6603784987917365,
+      5.45260507293875,
       4.53491082649615,
       4.791782394075949,
       5.77558891081256,
-      5.01473517431047,
-      6.025934914141997,
+      5.017795051812038,
+      6.030303068963849,
       1.35268149329555,
       1.5039212228517749,
       5.470548138805143,
@@ -4396,23 +4396,23 @@
       4.556017969147418,
       5.082704388595216,
       6.071919378123205,
-      5.00447664138222,
-      5.897333774358619,
+      5.00907030126949,
+      5.901135388736866,
       4.536075067663356,
       4.929658159200483,
       5.74263102028975,
-      4.772091135534361,
-      5.388451627576723,
+      4.774768031162595,
+      5.390436492152464,
       4.5388463843213716,
       4.626432961782431,
       5.380114485443465,
-      4.660123260962537,
-      5.446716015812106,
+      4.660387254243982,
+      5.452596703807907,
       4.534905072961484,
       4.7917819874845975,
       5.775584327743523,
-      5.0147382179955216,
-      6.025933375651767,
+      5.0177992030763,
+      6.030309721289612,
       0,
       0,
       0,
@@ -4437,96 +4437,96 @@
     "death": [
       0,
       0,
-      0.4956158660970446,
-      0.49561586396553536,
-      0.49561586404153085,
-      0.49561583091445643,
-      2.1546499533245975,
-      2.1540561490047767,
-      1.977933066738766,
-      3.930545983616816,
-      0.4956158359619401,
-      1.2235987073401655,
-      1.191966752468865,
-      1.0884159105155826,
-      1.2551881820577775,
-      1.2551881751949727,
-      1.2551881892626,
-      1.255188232205814,
-      8.778028196434779,
-      8.77802824364134,
-      8.77802823501436,
-      10.82474099456655,
-      10.824740985217367,
-      10.824740986976868,
-      10.829279536033477,
-      10.828290836260182,
-      10.824724497850763,
-      10.824724471635166,
-      10.824724462074293,
-      10.54992935146127,
-      10.549103699145647,
-      9.928629315669967,
-      9.92862932216948,
-      9.928629305437722,
-      9.575365872329547,
-      9.575179112593954,
-      8.778047289995845,
-      8.778047276129469,
-      8.778047281466089,
-      8.77819625803976,
-      8.77809320903237,
-      0.4956157740461427,
-      0.8937904974994628,
-      1.1236724694846236,
-      1.0741518201782978,
-      1.2531640833819269,
-      1.2531640621716844,
-      1.25316407012597,
-      1.2531640653492564,
-      8.778058146139507,
-      8.778058141235029,
-      8.77805814621841,
-      10.82475649272814,
-      10.824756514668923,
-      10.824756520571492,
-      10.829295414244692,
-      10.828306584003695,
-      10.824737269384046,
-      10.824737243257037,
-      10.824737216084712,
-      10.549939586296745,
-      10.549113381419401,
-      9.928661966455424,
-      9.928661978243149,
-      9.928661987978547,
-      9.575398868198032,
-      9.575211762669563,
-      8.778090863283287,
-      8.778090853610864,
-      8.778090855839663,
-      8.77823949214018,
-      8.77813585223567,
-      0.49561584778969786,
-      0.4687904137965425,
-      0.7406292876462919,
-      0.6430981018621545,
-      0.6430980748263844,
-      0.4956158629529609,
-      0.5835005242269891,
-      0.6479182503172154,
-      0.5904374706337501,
-      0.590437460072353,
-      0.4956126042985088,
-      0.495615834142108,
-      0.49562036112024016,
-      0.4956205313327837,
-      0.49561993489420236,
-      0.49561975607338327,
-      0.4956181654768559,
-      0.495618415760536,
-      0.49561757308394855,
-      0.4956178769255731
+      1.9571298288382963,
+      1.957129828838308,
+      1.9568673493254958,
+      1.9565427651637075,
+      6.711333247732191,
+      6.843084618842975,
+      7.813414990000292,
+      15.558687962065388,
+      1.9565427651637064,
+      4.930972678616113,
+      4.664166285420253,
+      3.598286000506758,
+      4.962857960710212,
+      4.962592151173345,
+      4.962592151173337,
+      4.962866173902213,
+      21.18476681079868,
+      21.18476681079869,
+      21.18476681079869,
+      30.335003212032476,
+      30.334981438240256,
+      30.334981438240256,
+      30.337262490612183,
+      30.336619937291903,
+      30.33502377576617,
+      30.335197064689876,
+      30.335198249992807,
+      28.575447204099486,
+      28.575921796080333,
+      26.3398929691809,
+      26.339892969180898,
+      26.3398929691809,
+      23.775621808343914,
+      23.775509891817975,
+      21.184744649388556,
+      21.18467596975105,
+      21.18527220225333,
+      21.184727129799814,
+      21.185011261397307,
+      1.956542765163707,
+      3.4315026669955997,
+      3.986250977077155,
+      3.4969689567554725,
+      4.519828871720301,
+      4.519766256335989,
+      4.519766256335986,
+      4.519851846989559,
+      21.16144492856215,
+      21.161444928562144,
+      21.16144492856215,
+      30.326736615613637,
+      30.32673661561365,
+      30.32673661561363,
+      30.32877458261799,
+      30.328128909023846,
+      30.326726732435027,
+      30.32647405190856,
+      30.326474051908566,
+      28.56399602200895,
+      28.563432253187273,
+      26.321556184398435,
+      26.321556184398418,
+      26.321556184398418,
+      23.75391434898149,
+      23.75502546613736,
+      21.16145345099373,
+      21.161473292058144,
+      21.16160775699584,
+      21.161496727259454,
+      21.161551441850687,
+      1.9571672390813428,
+      1.8593000233703028,
+      3.2968186952485126,
+      2.8741547776239282,
+      2.87415477762393,
+      1.957129828838321,
+      2.705001400580308,
+      1.8595698967015215,
+      1.8595698967015217,
+      1.8591462147266173,
+      1.957118829239414,
+      1.9571279560699186,
+      1.957123634653581,
+      1.9571237950143792,
+      1.9571244863618116,
+      1.9571248080003256,
+      1.957111108697742,
+      1.9571148249153478,
+      1.9571277840301677,
+      1.9571281505219675
     ],
     "dive": [
       0,
@@ -4553,23 +4553,23 @@
       0.06770506260848043,
       0.06572976972444262,
       0.06338252947438258,
-      0.06828959816125998,
-      0.06681626865400662,
+      0.06873827318674189,
+      0.06820800746663784,
       0.06697982364336617,
       0.06891325163127433,
       0.06940282438621571,
-      0.07503859217921266,
-      0.07593691476111789,
+      0.07582745130861163,
+      0.07765586168322366,
       0.06831029953108489,
       0.07490076563820237,
       0.077412627557444,
-      0.08213814050931474,
-      0.08664362260382641,
+      0.08300892539704574,
+      0.088619243013135,
       0.07015647931851046,
       0.08021242518501158,
       0.08916515239752743,
-      0.08761027437618038,
-      0.09915482464612685,
+      0.08865719660768988,
+      0.10180054168781896,
       0.0437439559419574,
       0.036978663328920254,
       0.04450530861992443,
@@ -4584,23 +4584,23 @@
       0.06770867457841509,
       0.06573309926248007,
       0.06338692905055307,
-      0.06829034458266722,
-      0.06681620209507969,
+      0.0687392335779223,
+      0.06820929644912223,
       0.06698244622861649,
       0.06891387600065296,
       0.06940147281371972,
-      0.07503739444916505,
-      0.07593544724885762,
+      0.07582892482085121,
+      0.07765726426509847,
       0.06830922475875378,
       0.07490231601911389,
       0.0774172236198578,
-      0.08214271823976059,
-      0.08664811923141341,
+      0.08300803177598805,
+      0.0886270415336387,
       0.0701535317796923,
       0.08020688591940771,
       0.08917087843014682,
-      0.08760555015949002,
-      0.09914912488769112,
+      0.08865199101132612,
+      0.1017971605320386,
       0.043743955941988176,
       0.04374395594198821,
       0.04374395594199822,
@@ -4647,23 +4647,23 @@
       0.08733048992510714,
       0.10740728628083583,
       0.1279970918771652,
-      0.11131396118704917,
-      0.13045705232889662,
+      0.11222605019077825,
+      0.13219573713918112,
       0.08524246519256046,
       0.10529742931972565,
       0.12471188172289821,
-      0.10914792457050229,
-      0.1255689512265702,
+      0.10988188159248422,
+      0.12705250454023548,
       0.08429015570676,
       0.10275355318452581,
       0.11859006141330135,
-      0.10388859957093236,
-      0.11729661813593117,
+      0.10436881350725338,
+      0.11849130274336438,
       0.08301977851769841,
       0.09696870883302718,
       0.11095099349343195,
-      0.0976190168680902,
-      0.11107961193366263,
+      0.09797711853416674,
+      0.11218236765862143,
       0.007310950866947111,
       0.024274219787983664,
       0.04427418849151286,
@@ -4678,23 +4678,23 @@
       0.08732940364829482,
       0.10740840579669536,
       0.12799885836184866,
-      0.11131590029041968,
-      0.13045609961879379,
+      0.11222735949027068,
+      0.13219217831145805,
       0.08523807689421896,
       0.10529448155623797,
       0.12471036550850094,
-      0.10914059493757924,
-      0.1255618281751462,
+      0.10987369983734044,
+      0.12704397106728757,
       0.08428636062265633,
       0.10275162014301817,
       0.11859087494973243,
-      0.10388274523079188,
-      0.11729135232498267,
+      0.10436340158977737,
+      0.11848623274047404,
       0.08301591370383458,
       0.09696560810794723,
       0.11095252496824516,
-      0.09761510810112287,
-      0.11107611588203462,
+      0.09797348737532398,
+      0.1121788341064148,
       0.007310950866929095,
       0.00731095086693646,
       0.0073109508669378835,
@@ -4741,23 +4741,23 @@
       8.592613291710801,
       8.585955351328387,
       8.58240401416828,
-      8.5938607028047,
-      8.59343849651988,
+      8.592562951745744,
+      8.59308412300978,
       8.589701982562108,
       8.596030430186547,
       8.601931303172563,
-      8.591741623099095,
-      8.593148737474676,
+      8.60019155895132,
+      8.606946365524108,
       8.58913294545956,
       8.604133688468622,
       8.611265837851871,
-      8.594058574047631,
-      8.595737372763129,
+      8.608931795309095,
+      8.615447138797679,
       8.591773316865318,
       8.609961617245625,
       8.614746178975809,
-      8.601602303147297,
-      8.604112968129256,
+      8.628359863798714,
+      8.638902717505173,
       7.866411806080849,
       8.499579889074852,
       8.143500374908763,
@@ -4772,23 +4772,23 @@
       8.592613291737722,
       8.585955351355773,
       8.582404014195987,
-      8.59386074292747,
-      8.593438493586195,
+      8.592560608890661,
+      8.593081664377127,
       8.589701982589004,
       8.596030430213956,
       8.601931303200331,
-      8.591741151967183,
-      8.593148222039586,
+      8.600190247450591,
+      8.606945044521186,
       8.589132945486448,
       8.604133688496045,
       8.61126583787969,
-      8.594058531604873,
-      8.595737111610891,
+      8.60892868221944,
+      8.615443671334367,
       8.591773316892205,
       8.60996161727308,
       8.614746179003657,
-      8.601602304653364,
-      8.604112772861878,
+      8.62835974978263,
+      8.638902344476675,
       0.03793752608859284,
       0.10722723245339635,
       0.07603773394694706,
@@ -4815,74 +4815,74 @@
       0,
       0,
       0,
-      0.06857596959467976,
-      0.17204637916102303,
-      0.14601832203184315,
-      0.14411483423556307,
-      0.3299673810994674,
-      0.3407192403805676,
-      2.7326463290738388,
-      2.7299691537663398,
-      2.729969153766327,
-      2.7299691537663193,
-      2.729969153766325,
-      2.7299691537663233,
-      2.729969153766325,
-      2.7299691537663198,
-      2.729969153766318,
-      2.7299691537663366,
-      2.7299691537663375,
-      2.7299691537663295,
-      2.7299691537663344,
-      2.7299691537663295,
-      2.733900973014518,
-      2.7344939048690913,
-      2.7299691537663158,
-      2.7299691537663375,
-      2.7299691537663167,
-      2.733569301974491,
-      2.733569970941346,
-      2.729969153766311,
-      2.7299691537663224,
-      2.729969153766321,
-      2.733527901444726,
-      2.7329438179978456,
-      2.7299691537663264,
-      2.7299691537663238,
-      2.729969153766309,
-      2.7329321410493703,
-      2.732354495598343,
-      2.732646196987617,
-      2.72996808506332,
-      2.729968085063314,
-      2.729968085063308,
-      2.7299680850633052,
-      2.729968085063306,
-      2.729968085063309,
-      2.7299680850633123,
-      2.7299680850632986,
-      2.729968085063281,
-      2.7299680850632755,
-      2.7299680850633115,
-      2.729968085063313,
-      2.7299680850633123,
-      2.7338999998219453,
-      2.734493293912988,
-      2.7299680850633052,
-      2.7299680850633035,
-      2.729968085063302,
-      2.7335683525871164,
-      2.733569055520558,
-      2.7299680850632932,
-      2.729968085063289,
-      2.7299680850632915,
-      2.7335264140507847,
-      2.7329421219891903,
-      2.7299680850633083,
-      2.7299680850633288,
-      2.7299680850633368,
-      2.732931986012997,
-      2.7323540450554415,
+      0.43499041383834797,
+      0.7261973372696162,
+      2.309443708449723,
+      3.975259846615718,
+      4.996123374382016,
+      4.99548592894899,
+      3.0591384041619896,
+      3.070735168951919,
+      3.0707351689519076,
+      3.07073516895193,
+      3.0707351689519364,
+      3.0707351689519413,
+      3.070735168951941,
+      3.070735168951949,
+      3.070735168951948,
+      3.070735168951948,
+      3.070735168951923,
+      3.070735168951931,
+      3.0707351689519418,
+      3.070735168951934,
+      3.075102046243061,
+      3.0755490991053147,
+      3.070735168951929,
+      3.0707351689519222,
+      3.0707351689519284,
+      3.0745422344948987,
+      3.0744759208651002,
+      3.070735168951938,
+      3.0707351689519373,
+      3.0707351689519093,
+      3.074116656019403,
+      3.073498663459591,
+      3.0707351689519453,
+      3.0707351689519466,
+      3.070735168951928,
+      3.0733645932095244,
+      3.0728041670318285,
+      3.062881337213885,
+      3.0871740128155,
+      3.0871740128154914,
+      3.0871740128154905,
+      3.087174012815493,
+      3.087174012815494,
+      3.087174012815495,
+      3.0871740128154976,
+      3.0871740128154954,
+      3.0871740128155056,
+      3.0871740128154954,
+      3.0871740128154928,
+      3.0871740128154976,
+      3.087174012815496,
+      3.0914241365908355,
+      3.091878165255245,
+      3.0871740128155083,
+      3.0871740128154963,
+      3.0871740128154923,
+      3.090848630476975,
+      3.090788338460398,
+      3.0871740128154994,
+      3.087174012815505,
+      3.0871740128155274,
+      3.090437923534711,
+      3.089824053830776,
+      3.0871740128154936,
+      3.087174012815489,
+      3.0871740128154874,
+      3.08971485404581,
+      3.089163384411172,
       0,
       0,
       0,
@@ -4893,16 +4893,16 @@
       0,
       0,
       0,
-      0.015324546449839627,
-      0.03520343434336859,
-      0.05891687925280844,
-      0.08353011687220656,
-      0.10514704185426121,
-      0.13668069091958882,
-      0.1750418444596893,
-      0.21579415270167832,
-      0.2565919179175237,
-      0.29357679107734175
+      0.1475874341241329,
+      0.2935476998165905,
+      0.39677601414948965,
+      0.44662610489687166,
+      0.4346404797811046,
+      0.38247185745713025,
+      0.3498016768587878,
+      0.4773070654031639,
+      0.5928372998288672,
+      0.7187824178629758
     ],
     "land": [
       0,
@@ -4929,23 +4929,23 @@
       3.975313220769228,
       7.104923767693881,
       13.485236222538145,
-      7.049058628433874,
-      13.41744873758218,
+      7.046136835099255,
+      13.414395595697801,
       4.022718365100815,
       7.095145866677162,
       13.602742941846348,
-      7.208790471322843,
-      13.505705195114583,
+      7.2097181363819365,
+      13.507082074692974,
       4.470085402661008,
       7.616215371687255,
       14.142168850023724,
-      7.474218274383239,
-      13.413308740450246,
+      7.477570777941765,
+      13.417004764436246,
       3.9069636185087613,
       8.585289034934117,
       14.95549598749233,
-      7.267910094149465,
-      13.50380593105086,
+      7.27069096697521,
+      13.505002786325248,
       3.169925533263974,
       3.6298951820574135,
       3.8806668089106076,
@@ -4960,23 +4960,23 @@
       3.9753165478869006,
       7.104947141481502,
       13.485252430544444,
-      7.049074533036295,
-      13.417457698649542,
+      7.04615623722822,
+      13.414405060256229,
       4.022720316403382,
       7.095167389147988,
       13.602754031387178,
-      7.208812953186992,
-      13.50572222798635,
+      7.209738745893466,
+      13.507091174242465,
       4.470100605977005,
       7.616238027680625,
       14.142182817565054,
-      7.474241232124956,
-      13.413358647749435,
+      7.477595769130379,
+      13.417048939807145,
       3.906961756606783,
       8.585340185352257,
       14.955547036233515,
-      7.267964369444746,
-      13.503860295886543,
+      7.270746195675272,
+      13.505056402796376,
       0.8619591599564219,
       1.6237880095128276,
       3.2349689997310316,
@@ -5023,23 +5023,23 @@
       0.06962951461666468,
       0.06962951461666436,
       0.06962951461665765,
-      0.07460483429817677,
-      0.07496708145750806,
+      0.07465190456806377,
+      0.07497073888780312,
       0.06962951461667483,
       0.06962951461667889,
       0.06962951461667712,
-      0.0741571594011291,
-      0.07410225195573619,
+      0.07412047712943658,
+      0.07402501234192198,
       0.06962951461666941,
       0.06962951461666213,
       0.0696295146166505,
-      0.07367765283480242,
-      0.07307379103991521,
+      0.07356696300003653,
+      0.07294067278313367,
       0.06962951461665941,
       0.0696295146166775,
       0.06962951461667508,
-      0.07283639244041828,
-      0.0722521746993846,
+      0.07267186760616105,
+      0.07207569760839956,
       0.0696914791690178,
       0.06962815966251866,
       0.06962815966251817,
@@ -5054,23 +5054,23 @@
       0.06962815966252554,
       0.06962815966252468,
       0.06962815966251967,
-      0.07460340201024021,
-      0.07497452669841045,
+      0.07465062324351876,
+      0.07497794276444827,
       0.06962815966251162,
       0.06962815966250284,
       0.06962815966250671,
-      0.07416469806778106,
-      0.0741097924956978,
+      0.07412830557398062,
+      0.07403266273664923,
       0.06962815966253331,
       0.06962815966253173,
       0.06962815966253515,
-      0.07368504017550238,
-      0.07308116896091303,
+      0.07357462094552354,
+      0.07294833362511625,
       0.06962815966252542,
       0.06962815966253791,
       0.06962815966253064,
-      0.07284381228827431,
-      0.07225960619771712,
+      0.07267928235459474,
+      0.07208311489084511,
       0.028842194338049854,
       0.028842194338048188,
       0.028842194338059266,
@@ -5117,23 +5117,23 @@
       7.669342068180777,
       7.669073519019466,
       7.6690315835077225,
-      7.670900055935369,
-      7.671848204157832,
+      7.670967159543968,
+      7.671975610443382,
       7.6691443061183575,
       7.672628405705167,
       7.675847568314903,
-      7.67100019986613,
-      7.672902467693871,
+      7.671222591876526,
+      7.6732582702753955,
       7.668905770370337,
       7.674306266594982,
       7.6758165865748245,
-      7.6681378705699075,
-      7.668595062610855,
+      7.668555638553614,
+      7.669093383385504,
       7.667764631962194,
       7.672065675979118,
       7.671182733760846,
-      7.668099383990167,
-      7.670993611058018,
+      7.668770532417169,
+      7.671841451827845,
       7.649240357374485,
       7.65232422741843,
       7.6504213491514825,
@@ -5148,23 +5148,23 @@
       7.668452908724937,
       7.668051759220478,
       7.667880521290151,
-      7.669958013247763,
-      7.670800946017554,
+      7.670021951561828,
+      7.670919732724029,
       7.668275357481158,
       7.671650477392425,
       7.674780217671178,
-      7.670096153302718,
-      7.67193205135568,
+      7.670313866695404,
+      7.6722797340386775,
       7.668044967734964,
       7.673367294184694,
       7.674834941351495,
-      7.667257935498758,
-      7.66768170477438,
+      7.667673249392692,
+      7.668176156209469,
       7.666910829889531,
       7.671183064129806,
       7.670280851243165,
-      7.667470927557865,
-      7.670104329790087,
+      7.667900392752,
+      7.670951308774435,
       0.047294400437817324,
       0.04729440043782478,
       0.0472944004378176,
@@ -5211,23 +5211,23 @@
       8.402694410489215,
       8.402694410489227,
       8.40269441048923,
-      8.41007238413389,
-      8.410304495126322,
+      8.410188307213462,
+      8.410294558493607,
       8.402694410489223,
       8.402694410489234,
       8.402694410489225,
-      8.408462334325806,
-      8.408679998342311,
+      8.40835518638916,
+      8.408465334053618,
       8.402694410489232,
       8.402694410489232,
       8.402694410489238,
-      8.404391910809535,
-      8.404411926201863,
+      8.404296869777237,
+      8.404281961499,
       8.402694410489227,
       8.402694410489225,
       8.402694410489223,
-      8.401011256569475,
-      8.401231514177402,
+      8.401174444431701,
+      8.401414700090669,
       8.081097984330714,
       8.40269084205081,
       8.40269084205081,
@@ -5242,23 +5242,23 @@
       8.402690842050797,
       8.402690842050797,
       8.402690842050795,
-      8.410067902837255,
-      8.41030017401487,
+      8.41018045025232,
+      8.410286622940596,
       8.4026908420508,
       8.402690842050813,
       8.402690842050824,
-      8.408457677896873,
-      8.408675490976737,
+      8.408346450041739,
+      8.408456327847748,
       8.402690842050797,
       8.402690842050797,
       8.4026908420508,
-      8.404386892900225,
-      8.404407131654603,
+      8.40428617448934,
+      8.404270696905554,
       8.402690842050788,
       8.40269084205079,
       8.40269084205079,
-      8.401006617144716,
-      8.401227054009397,
+      8.401164760632545,
+      8.401404232572698,
       0.10861225248041888,
       0.10861225248042468,
       0.1086122524804237,
@@ -5281,172 +5281,172 @@
       0.6174442764399997
     ],
     "takeoff": [
-      0,
-      0,
-      0.6257421979481691,
-      0.6257421979481721,
-      0.6257421929843693,
-      0.6257421905023637,
-      0.695268763188958,
-      1.309474289996444,
-      2.4395551300055383,
-      2.4395551349100852,
-      0.7361747332211703,
-      3.004934067680635,
-      3.337839917165132,
-      5.345283502418276,
-      5.792658905021866,
-      5.805048409541271,
-      5.759489403975346,
-      6.028209597182913,
-      5.659107495380036,
-      5.659111669477829,
-      5.659109569913133,
-      5.73146572928623,
-      5.857706971647524,
-      6.406099590549832,
-      5.659108469424486,
-      5.822476091776036,
-      5.65911412259667,
-      5.659115708039129,
-      5.659114898958364,
-      5.659115144626559,
-      5.659114963186623,
-      5.659107016226849,
-      5.659105955738532,
-      5.659105425911464,
-      5.659104683968935,
-      5.659103732719264,
-      5.6591152046148,
-      5.65911246078612,
-      5.659111239780791,
-      5.659110964813812,
-      5.6591096700287284,
-      0.7361759252154666,
-      3.00491855959452,
-      3.3378402597158927,
-      5.345277842085743,
-      5.792658600720675,
-      5.805047121866861,
-      5.759486305559834,
-      6.02820219128178,
-      5.659126239457299,
-      5.659121210787101,
-      5.6591231409126745,
-      5.731475812374017,
-      5.857723229361207,
-      6.406105864824248,
-      5.659130992977692,
-      5.82248532569766,
-      5.659127696652617,
-      5.659128590951664,
-      5.659129438642054,
-      5.659125938757426,
-      5.659124834270944,
-      5.65912401066309,
-      5.6591243031273155,
-      5.659124022467192,
-      5.659125985829737,
-      5.659125450285263,
-      5.659129337994169,
-      5.659129477360379,
-      5.659129879181925,
-      5.659128045428977,
-      5.6591302007513375,
-      0.6257422040878279,
-      1.339768915376857,
-      2.4876069702581742,
-      5.210307657981557,
-      6.520737795536952,
-      0.6257421733531787,
-      1.3397756762927684,
-      2.4875813098382893,
-      5.210293264696847,
-      6.52071925902573,
-      0.6257421979481477,
-      0.6489178345800797,
-      0.8175673677794038,
-      1.1271515476577023,
-      1.4551812491311644,
-      2.067064759367924,
-      3.214251551826382,
-      4.437512349724292,
-      5.61452651748135,
-      6.611086562170965
+      4.0306488813257533e-7,
+      0.0000021656165405296966,
+      10.538282754529865,
+      10.538306574891559,
+      10.538306577373506,
+      10.538306530214891,
+      4.527722882233094,
+      24.677756412841795,
+      46.89996874470537,
+      46.899968754589274,
+      15.916356993485136,
+      61.176966540158794,
+      93.76611739951706,
+      92.12082359834399,
+      73.58134241797325,
+      73.53360330766161,
+      73.78946442476435,
+      74.06192277827353,
+      91.8487102254037,
+      110.80104780070198,
+      123.62243231639052,
+      79.25853808979885,
+      75.97969517378742,
+      73.04835928032439,
+      66.2963067711888,
+      64.33681829237351,
+      66.86356863497348,
+      67.43210576288746,
+      77.13042335568467,
+      75.35967339132266,
+      86.28188354818953,
+      77.98802593705993,
+      91.80556835934657,
+      101.34871182242864,
+      94.52534133847618,
+      141.10754855590406,
+      91.725191229101,
+      109.60828894745775,
+      110.3861947057079,
+      108.58732338371212,
+      114.44676946734263,
+      15.915528701903057,
+      61.17778210844162,
+      93.76677710815761,
+      92.12180899343376,
+      73.5811874945161,
+      73.53344361782369,
+      73.79329738843039,
+      74.06148975437578,
+      91.84981211144967,
+      110.80165728918392,
+      123.62284697026381,
+      79.25848634810605,
+      75.97966188866265,
+      73.04833625953574,
+      66.29626271752164,
+      64.336766582728,
+      66.86349830883226,
+      67.43276223574725,
+      77.13123119553147,
+      75.36026901543418,
+      86.28253432819713,
+      77.9887452732148,
+      91.80612141949491,
+      101.34917852549626,
+      94.52620376543184,
+      141.10845047863396,
+      91.72561982440115,
+      109.60865722371719,
+      110.38637951042088,
+      108.58780979939976,
+      114.44704987511739,
+      10.538306562240237,
+      23.122274015343272,
+      20.0681516124638,
+      28.433013904119395,
+      26.668795008871427,
+      10.538306344354899,
+      23.1223044449179,
+      20.068564540855352,
+      28.433670806918826,
+      26.664323698603354,
+      10.538282754529861,
+      10.22022425983899,
+      9.565727489106223,
+      8.581442033079929,
+      7.271019618166353,
+      5.629803555338126,
+      3.656013296506966,
+      2.3768394912389956,
+      3.9233304594829836,
+      6.053522948973319
     ],
     "walk": [
       0,
       0,
       1.3216313840046643,
       0.7625208727080379,
-      1.4605919707540311,
-      1.015883804348352,
-      2.5683251419489044,
-      1.856999073122543,
-      1.2395798644097913,
-      1.2393712210663945,
-      1.0605269387744163,
-      1.2038394097815297,
-      1.0325775712031022,
-      1.1128701467135889,
-      1.1113754879123474,
-      1.6047887421367448,
-      1.2126723889487365,
-      1.0716504936464903,
-      1.1112451107589987,
-      1.1108285890400271,
-      1.1069945794497922,
-      1.1112884992487928,
-      1.1092130937149072,
-      1.1115583044544803,
-      1.1009902565347303,
-      1.1053304203176113,
-      1.1112135978427657,
-      1.1094105669892385,
-      1.1119966705019773,
-      1.1039536492435433,
-      1.1057127383552954,
-      1.111104093246981,
-      1.110735590215692,
-      1.1099812969485676,
-      1.1098602223857474,
-      1.108623336306312,
-      1.1113456916901507,
-      1.1110230600012276,
-      1.108569615524792,
-      1.112656394780529,
-      1.1094421938418801,
-      1.0604192064609388,
-      1.089681226551036,
-      1.174933640025497,
-      1.135201294188257,
-      1.1180956570296827,
-      1.118095657029695,
-      1.1508048435438518,
-      1.118095657029686,
-      1.1173264861828114,
-      1.1046306448627703,
-      1.091260018705888,
-      1.1173795757363927,
-      1.0965860306949693,
-      1.0799710738710395,
-      1.0942415620606447,
-      1.0815336992969402,
-      1.1177318203808735,
-      1.1002533226491298,
-      1.0881129496567856,
-      1.1008062662696976,
-      1.0903669041049115,
-      1.1177672671829193,
-      1.1049493159446688,
-      1.0947104386428161,
-      1.1048906371380924,
-      1.0930594862067786,
-      1.1175705516014554,
-      1.1048804479029581,
-      1.092161959709047,
-      1.1045753038326391,
-      1.0909574951205856,
+      2.6667170402230864,
+      4.616734664145442,
+      7.490089425822088,
+      8.82464393153186,
+      8.857494939671838,
+      8.846911889310844,
+      3.704548393848476,
+      4.6997576186523435,
+      4.554093590873791,
+      4.633486301007107,
+      4.627332533443856,
+      4.627332533443859,
+      4.627332533443867,
+      4.627332533443863,
+      4.62593314941567,
+      4.627613303857727,
+      4.629483688589139,
+      4.625292388033232,
+      4.626687392110064,
+      4.62391747152249,
+      4.619634399933579,
+      4.616707932703768,
+      4.624987357170587,
+      4.6270304731969905,
+      4.624257572779732,
+      4.622490163081438,
+      4.621040798265002,
+      4.625044341330628,
+      4.626907142379518,
+      4.626141706757292,
+      4.625367107502899,
+      4.62677378817652,
+      4.625429919768231,
+      4.6268335165645915,
+      4.627859332179958,
+      4.627429758949459,
+      4.629553269011892,
+      3.9685366801643145,
+      5.309780022870977,
+      5.172491330674658,
+      5.2056577745453865,
+      5.194091977355461,
+      5.194091977355465,
+      5.194091977355472,
+      5.194091977355475,
+      5.188894229115894,
+      5.192467963365196,
+      5.203203898070949,
+      5.188396784661532,
+      5.199693901695473,
+      5.212078892506131,
+      5.204918581228942,
+      5.219271957573291,
+      5.187793883480605,
+      5.202286294780767,
+      5.217441906793007,
+      5.201337484919854,
+      5.214241658873486,
+      5.188083908404282,
+      5.197920422011223,
+      5.208741468213695,
+      5.195894025224709,
+      5.206012640816108,
+      5.18845504741542,
+      5.195395490870054,
+      5.207046408930085,
+      5.1922523635386755,
+      5.202774877904883,
       0.7625208727080375,
       4.124032016348766,
       5.3125402107528865,
@@ -5458,15 +5458,15 @@
       4.025354973618272,
       9.65495489480592,
       1.3216313840046647,
-      0.752199695065254,
-      0.9445269705531923,
-      1.3021842983043728,
-      1.5992557005505805,
-      2.0813242988183984,
-      2.705671574482197,
-      3.3639702404786282,
-      4.631743032181473,
-      5.98216030602585
+      1.9245299200883814,
+      4.6527047030379975,
+      6.33452370243154,
+      5.958296030367311,
+      5.675069840070836,
+      6.393868480290397,
+      9.300758628056812,
+      14.700811580471003,
+      19.4505228871821
     ]
   },
   "transitions": {
@@ -5474,35 +5474,35 @@
       "attack": {
         "from": "breath",
         "to": "attack",
-        "maxRad": 1.787570629605649e-7,
-        "rmsRad": 2.760903240703712e-8,
-        "worstJoint": "R_WingPanel3_0",
-        "maxPosRigUnits": 6.364310419947425,
-        "median": 1.1813101599571025
+        "maxRad": 0.004569514657667741,
+        "rmsRad": 0.0008006853186235386,
+        "worstJoint": "Tail1",
+        "maxPosRigUnits": 17.365736686975186,
+        "median": 1.1813103454013263
       },
       "attack2": {
         "from": "attackAir2",
         "to": "attack2",
-        "maxRad": 0.8272864508437879,
-        "rmsRad": 0.22962274396641102,
-        "worstJoint": "R_Thigh",
-        "maxPosRigUnits": 1754.9998638864743,
-        "median": 1.4438550035723146
+        "maxRad": 2.205164675325287,
+        "rmsRad": 0.47242066898182317,
+        "worstJoint": "R_WingShoulder",
+        "maxPosRigUnits": 2969.3779946503273,
+        "median": 2.5568320583410826
       },
       "attackAir2": {
-        "from": "attack2",
+        "from": "dive",
         "to": "attackAir2",
-        "maxRad": 0.8272864089640067,
-        "rmsRad": 0.23630045604305508,
-        "worstJoint": "R_Thigh",
-        "maxPosRigUnits": 1754.9820031396623,
-        "median": 1.772521675444495
+        "maxRad": 1.7050384807289574,
+        "rmsRad": 0.5235807832751819,
+        "worstJoint": "L_WingD5P0",
+        "maxPosRigUnits": 4405.278487806456,
+        "median": 2.384889829731361
       },
       "bankLeft": {
         "from": "cruise",
         "to": "bankLeft",
         "maxRad": 0.6967561760036864,
-        "rmsRad": 0.13133985346756344,
+        "rmsRad": 0.13133985346793758,
         "worstJoint": "R_WingElbow",
         "maxPosRigUnits": 2468.269133000997,
         "median": 1.141391329943021
@@ -5511,7 +5511,7 @@
         "from": "cruise",
         "to": "bankRight",
         "maxRad": 0.6967562064773799,
-        "rmsRad": 0.13135122908496022,
+        "rmsRad": 0.13135122908533092,
         "worstJoint": "L_WingElbow",
         "maxPosRigUnits": 2468.2661255822086,
         "median": 1.1413913900423371
@@ -5519,29 +5519,29 @@
       "breath": {
         "from": "attack",
         "to": "breath",
-        "maxRad": 2.919981050990416e-7,
-        "rmsRad": 5.84867883691076e-8,
-        "worstJoint": "L_WingD0P0",
-        "maxPosRigUnits": 6.364338300157113,
-        "median": 1.1813101599571025
+        "maxRad": 0.004569514657667741,
+        "rmsRad": 0.0008006853202836455,
+        "worstJoint": "Tail1",
+        "maxPosRigUnits": 17.366308885324152,
+        "median": 1.1813103454013263
       },
       "cruise": {
         "from": "takeoff",
         "to": "cruise",
-        "maxRad": 0.07694861494863843,
-        "rmsRad": 0.015596115284807163,
-        "worstJoint": "Tail10",
-        "maxPosRigUnits": 1148.0718221036554,
+        "maxRad": 6.409041008167454e-7,
+        "rmsRad": 1.6250997230315947e-7,
+        "worstJoint": "R_WingPanel3_0",
+        "maxPosRigUnits": 1147.618045574866,
         "median": 1.1413915044198604
       },
       "death": {
-        "from": "scout",
+        "from": "hover",
         "to": "death",
-        "maxRad": 0.3898702094755192,
-        "rmsRad": 0.15152975619071232,
-        "worstJoint": "R_Thigh",
-        "maxPosRigUnits": 1284.4943288367301,
-        "median": 1.1813101419753633
+        "maxRad": 1.5258625026255197,
+        "rmsRad": 0.5399583930987923,
+        "worstJoint": "L_WingD0P0",
+        "maxPosRigUnits": 3743.6982554757496,
+        "median": 1.9094408588265683
       },
       "dive": {
         "from": "speed",
@@ -5558,43 +5558,43 @@
         "maxRad": 0.15411704696315873,
         "rmsRad": 0.035444860795985494,
         "worstJoint": "Head",
-        "maxPosRigUnits": 620.3778752983669,
-        "median": 1.1819595603657356
+        "maxPosRigUnits": 620.39785245377,
+        "median": 1.1819596316744903
       },
       "hover": {
         "from": "attack",
         "to": "hover",
-        "maxRad": 0.4508120510916674,
-        "rmsRad": 0.1272895152634052,
+        "maxRad": 0.4508120461083408,
+        "rmsRad": 0.1272904122149012,
         "worstJoint": "L_WingElbow",
-        "maxPosRigUnits": 808.5384397885284,
-        "median": 1.1814069112748478
+        "maxPosRigUnits": 808.5281274505454,
+        "median": 1.181406958346373
       },
       "idle": {
         "from": "land",
         "to": "idle",
-        "maxRad": 0.035199978717303,
-        "rmsRad": 0.007850873112890892,
-        "worstJoint": "Tail7",
-        "maxPosRigUnits": 1155.4196615031715,
+        "maxRad": 0.10042310607078567,
+        "rmsRad": 0.02668396255907192,
+        "worstJoint": "Tail10",
+        "maxPosRigUnits": 1164.5518737336465,
         "median": 1.3116397621529385
       },
       "land": {
         "from": "idle",
         "to": "land",
         "maxRad": 1.252524118898626,
-        "rmsRad": 0.45854735177633227,
+        "rmsRad": 0.45818633029046013,
         "worstJoint": "L_WingD0P0",
-        "maxPosRigUnits": 1788.72270213736,
+        "maxPosRigUnits": 1743.9353352555,
         "median": 2.4120378401557105
       },
       "rest": {
         "from": "idle",
         "to": "rest",
         "maxRad": 0.2962876158588774,
-        "rmsRad": 0.0775132163823445,
+        "rmsRad": 0.07992178831586015,
         "worstJoint": "R_Foot",
-        "maxPosRigUnits": 1449.190544704317,
+        "maxPosRigUnits": 1489.4026661175692,
         "median": 1.3116391926070663
       },
       "scout": {
@@ -5603,8 +5603,8 @@
         "maxRad": 0.15411704696315873,
         "rmsRad": 0.035444860816617275,
         "worstJoint": "Head",
-        "maxPosRigUnits": 620.3781344510259,
-        "median": 1.1819595019819544
+        "maxPosRigUnits": 620.3981116079036,
+        "median": 1.1819595333290915
       },
       "speed": {
         "from": "hover",
@@ -5613,91 +5613,91 @@
         "rmsRad": 0.2042947474301433,
         "worstJoint": "R_WingShoulder",
         "maxPosRigUnits": 1634.349332303888,
-        "median": 1.1413913900423371
+        "median": 1.1413915044198604
       },
       "takeoff": {
-        "from": "idle",
+        "from": "land",
         "to": "takeoff",
         "maxRad": 0.1900627398404155,
-        "rmsRad": 0.04000886697647606,
+        "rmsRad": 0.038375897670003954,
         "worstJoint": "Neck2",
-        "maxPosRigUnits": 337.42028097518136,
-        "median": 1.3116396907495402
+        "maxPosRigUnits": 1112.1663830947796,
+        "median": 1.3116396780420034
       },
       "walk": {
         "from": "rest",
         "to": "walk",
         "maxRad": 0.7712664493310436,
-        "rmsRad": 0.18814850951928452,
+        "rmsRad": 0.1951826808397386,
         "worstJoint": "L_Toes",
-        "maxPosRigUnits": 1420.213751268672,
+        "maxPosRigUnits": 1534.8175841779305,
         "median": 1.3021146792471552
       }
     },
     "worst": [
       {
-        "from": "attack2",
-        "to": "land",
-        "maxRad": 3.0846625045266425,
-        "rmsRad": 0.5810238062676844,
-        "worstJoint": "R_WingD5P0",
-        "maxPosRigUnits": 2080.0568216246024
-      },
-      {
-        "from": "attackAir2",
-        "to": "land",
-        "maxRad": 2.9916951297968835,
-        "rmsRad": 0.535209874920931,
-        "worstJoint": "R_WingD5P0",
-        "maxPosRigUnits": 1985.9357378583866
-      },
-      {
-        "from": "attackAir2",
-        "to": "idle",
-        "maxRad": 2.501650823118344,
-        "rmsRad": 0.3905814247863999,
-        "worstJoint": "R_WingD5P0",
-        "maxPosRigUnits": 3239.623167630624
-      },
-      {
-        "from": "idle",
-        "to": "attackAir2",
-        "maxRad": 2.501650823118344,
-        "rmsRad": 0.39057983596188384,
-        "worstJoint": "R_WingD5P0",
-        "maxPosRigUnits": 3239.6237726339973
-      },
-      {
-        "from": "land",
-        "to": "attackAir2",
-        "maxRad": 2.501650823118344,
-        "rmsRad": 0.3904590917594194,
-        "worstJoint": "R_WingD5P0",
-        "maxPosRigUnits": 2716.784951983593
-      },
-      {
-        "from": "attackAir2",
+        "from": "death",
         "to": "takeoff",
-        "maxRad": 2.5016507985397873,
-        "rmsRad": 0.3926600316062105,
-        "worstJoint": "R_WingD5P0",
-        "maxPosRigUnits": 2952.178766380098
+        "maxRad": 3.136031506468094,
+        "rmsRad": 1.2871715584255068,
+        "worstJoint": "L_Thigh",
+        "maxPosRigUnits": 3059.783233847803
       },
       {
-        "from": "attackAir2",
-        "to": "rest",
-        "maxRad": 2.5016507137007613,
-        "rmsRad": 0.386575112535476,
-        "worstJoint": "R_WingD5P0",
-        "maxPosRigUnits": 2720.7978013647435
+        "from": "death",
+        "to": "idle",
+        "maxRad": 3.1360311172023185,
+        "rmsRad": 1.2767797069660798,
+        "worstJoint": "L_Thigh",
+        "maxPosRigUnits": 3128.054164665842
       },
       {
-        "from": "rest",
+        "from": "death",
         "to": "attackAir2",
-        "maxRad": 2.5016507137007613,
-        "rmsRad": 0.386573462994162,
-        "worstJoint": "R_WingD5P0",
-        "maxPosRigUnits": 2720.7986747612013
+        "maxRad": 3.1164967064005946,
+        "rmsRad": 1.2923219374105364,
+        "worstJoint": "R_WingElbow",
+        "maxPosRigUnits": 4067.4752251407663
+      },
+      {
+        "from": "death",
+        "to": "land",
+        "maxRad": 3.1164965449986637,
+        "rmsRad": 1.3313124618564538,
+        "worstJoint": "R_WingElbow",
+        "maxPosRigUnits": 3973.026967105811
+      },
+      {
+        "from": "death",
+        "to": "cruise",
+        "maxRad": 3.1163814793819196,
+        "rmsRad": 1.3064648063161242,
+        "worstJoint": "R_WingElbow",
+        "maxPosRigUnits": 3931.2067453231753
+      },
+      {
+        "from": "death",
+        "to": "dive",
+        "maxRad": 3.1067655991999015,
+        "rmsRad": 1.3624745507552514,
+        "worstJoint": "R_WingD4P0",
+        "maxPosRigUnits": 4164.253343041962
+      },
+      {
+        "from": "death",
+        "to": "rest",
+        "maxRad": 3.09810861309877,
+        "rmsRad": 1.2759772014201654,
+        "worstJoint": "R_WingElbow",
+        "maxPosRigUnits": 3927.882638374441
+      },
+      {
+        "from": "death",
+        "to": "walk",
+        "maxRad": 3.095559865293752,
+        "rmsRad": 1.2593196295023787,
+        "worstJoint": "R_WingElbow",
+        "maxPosRigUnits": 3196.361255008441
       }
     ]
   },
@@ -5714,20 +5714,20 @@
     },
     {
       "name": "edge-stretch detector bites on a 300-unit translation ramp",
-      "value": 100.4176734834602,
+      "value": 91.5759958853684,
       "pass": true
     },
     {
       "name": "ground detector responds to a downward root translation",
-      "value": -254.77756862575052,
+      "value": -306.91854618036524,
       "pass": true
     }
   ],
   "checks": {
-    "mode": "report",
+    "mode": "check",
     "failures": [],
     "warnings": [],
-    "footSpread": 1.4982001148075597,
+    "footSpread": 1.5191362400659045,
     "bodyTravelMax": 0,
     "edgeCount": 58544
   }

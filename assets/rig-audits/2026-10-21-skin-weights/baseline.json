@@ -1,0 +1,1255 @@
+{
+  "asset": "c5-backup.glb",
+  "meshes": {
+    "WyvernBody_Rebuild": 14544,
+    "WyvernMembrane_ExportSafe": 8249
+  },
+  "symmetryLimit": 0.05,
+  "bones": [
+    {
+      "bone": "Spine3",
+      "vertices": 9464,
+      "mass": 5971.3,
+      "maxWeight": 1
+    },
+    {
+      "bone": "Head",
+      "vertices": 4562,
+      "mass": 2237.75,
+      "maxWeight": 0.969
+    },
+    {
+      "bone": "Neck2",
+      "vertices": 1907,
+      "mass": 1000.49,
+      "maxWeight": 1
+    },
+    {
+      "bone": "R_Toes",
+      "vertices": 531,
+      "mass": 454.23,
+      "maxWeight": 1
+    },
+    {
+      "bone": "L_Toes",
+      "vertices": 529,
+      "mass": 450.07,
+      "maxWeight": 1
+    },
+    {
+      "bone": "Neck1",
+      "vertices": 1320,
+      "mass": 414.01,
+      "maxWeight": 1
+    },
+    {
+      "bone": "Tail2",
+      "vertices": 1252,
+      "mass": 401.63,
+      "maxWeight": 0.682
+    },
+    {
+      "bone": "L_WingD3P2",
+      "vertices": 678,
+      "mass": 363.4,
+      "maxWeight": 1
+    },
+    {
+      "bone": "R_WingD3P2",
+      "vertices": 670,
+      "mass": 361.82,
+      "maxWeight": 1
+    },
+    {
+      "bone": "Tail10",
+      "vertices": 599,
+      "mass": 340.73,
+      "maxWeight": 1
+    },
+    {
+      "bone": "L_WingD2P2",
+      "vertices": 584,
+      "mass": 296.73,
+      "maxWeight": 1
+    },
+    {
+      "bone": "L_WingD4P0",
+      "vertices": 897,
+      "mass": 294.27,
+      "maxWeight": 0.824
+    },
+    {
+      "bone": "R_WingD2P2",
+      "vertices": 580,
+      "mass": 294.15,
+      "maxWeight": 1
+    },
+    {
+      "bone": "R_WingD4P0",
+      "vertices": 902,
+      "mass": 293.24,
+      "maxWeight": 0.831
+    },
+    {
+      "bone": "Tail9",
+      "vertices": 814,
+      "mass": 288.45,
+      "maxWeight": 0.914
+    },
+    {
+      "bone": "Tail3",
+      "vertices": 924,
+      "mass": 280.97,
+      "maxWeight": 0.71
+    },
+    {
+      "bone": "Spine2",
+      "vertices": 1041,
+      "mass": 280.67,
+      "maxWeight": 0.682
+    },
+    {
+      "bone": "L_WingD1P2",
+      "vertices": 631,
+      "mass": 272.23,
+      "maxWeight": 1
+    },
+    {
+      "bone": "Body",
+      "vertices": 988,
+      "mass": 271.14,
+      "maxWeight": 0.78
+    },
+    {
+      "bone": "Spine1",
+      "vertices": 933,
+      "mass": 270.87,
+      "maxWeight": 0.741
+    },
+    {
+      "bone": "R_WingD4P2",
+      "vertices": 637,
+      "mass": 269.95,
+      "maxWeight": 1
+    },
+    {
+      "bone": "R_WingD1P2",
+      "vertices": 626,
+      "mass": 269.69,
+      "maxWeight": 1
+    },
+    {
+      "bone": "L_WingD4P2",
+      "vertices": 639,
+      "mass": 267.96,
+      "maxWeight": 1
+    },
+    {
+      "bone": "L_WingElbow",
+      "vertices": 1363,
+      "mass": 262.18,
+      "maxWeight": 0.639
+    },
+    {
+      "bone": "R_WingElbow",
+      "vertices": 1360,
+      "mass": 258.97,
+      "maxWeight": 0.639
+    },
+    {
+      "bone": "Tail6",
+      "vertices": 1056,
+      "mass": 241.67,
+      "maxWeight": 0.533
+    },
+    {
+      "bone": "L_WingShoulder",
+      "vertices": 1344,
+      "mass": 237.87,
+      "maxWeight": 0.541
+    },
+    {
+      "bone": "R_WingD4P1",
+      "vertices": 824,
+      "mass": 237.71,
+      "maxWeight": 0.698
+    },
+    {
+      "bone": "L_WingD4P1",
+      "vertices": 819,
+      "mass": 235,
+      "maxWeight": 0.698
+    },
+    {
+      "bone": "R_WingShoulder",
+      "vertices": 1351,
+      "mass": 234.11,
+      "maxWeight": 0.537
+    },
+    {
+      "bone": "Tail4",
+      "vertices": 835,
+      "mass": 230.27,
+      "maxWeight": 0.749
+    },
+    {
+      "bone": "Tail7",
+      "vertices": 626,
+      "mass": 206.58,
+      "maxWeight": 0.949
+    },
+    {
+      "bone": "Tail8",
+      "vertices": 769,
+      "mass": 193.96,
+      "maxWeight": 0.565
+    },
+    {
+      "bone": "Jaw",
+      "vertices": 958,
+      "mass": 189.33,
+      "maxWeight": 0.714
+    },
+    {
+      "bone": "L_WingD0P2",
+      "vertices": 384,
+      "mass": 186.47,
+      "maxWeight": 1
+    },
+    {
+      "bone": "R_WingD0P2",
+      "vertices": 378,
+      "mass": 184.72,
+      "maxWeight": 1
+    },
+    {
+      "bone": "R_WingD3P0",
+      "vertices": 715,
+      "mass": 177.39,
+      "maxWeight": 0.788
+    },
+    {
+      "bone": "L_WingD3P0",
+      "vertices": 708,
+      "mass": 175.74,
+      "maxWeight": 0.792
+    },
+    {
+      "bone": "L_WingD3P1",
+      "vertices": 773,
+      "mass": 174.15,
+      "maxWeight": 0.675
+    },
+    {
+      "bone": "R_WingD3P1",
+      "vertices": 771,
+      "mass": 173.53,
+      "maxWeight": 0.675
+    },
+    {
+      "bone": "L_WingD2P1",
+      "vertices": 770,
+      "mass": 167.42,
+      "maxWeight": 0.643
+    },
+    {
+      "bone": "L_WingD2P0",
+      "vertices": 649,
+      "mass": 167.1,
+      "maxWeight": 0.851
+    },
+    {
+      "bone": "R_WingD2P0",
+      "vertices": 651,
+      "mass": 167.02,
+      "maxWeight": 0.851
+    },
+    {
+      "bone": "R_WingD2P1",
+      "vertices": 768,
+      "mass": 166.42,
+      "maxWeight": 0.663
+    },
+    {
+      "bone": "L_WingWrist",
+      "vertices": 1149,
+      "mass": 155.8,
+      "maxWeight": 0.365
+    },
+    {
+      "bone": "Tail5",
+      "vertices": 673,
+      "mass": 154.17,
+      "maxWeight": 0.475
+    },
+    {
+      "bone": "R_WingWrist",
+      "vertices": 1110,
+      "mass": 154.11,
+      "maxWeight": 0.365
+    },
+    {
+      "bone": "L_WingD0P0",
+      "vertices": 574,
+      "mass": 151.79,
+      "maxWeight": 0.706
+    },
+    {
+      "bone": "R_WingD0P0",
+      "vertices": 555,
+      "mass": 147.62,
+      "maxWeight": 0.741
+    },
+    {
+      "bone": "Tail1",
+      "vertices": 815,
+      "mass": 147.53,
+      "maxWeight": 0.29
+    },
+    {
+      "bone": "R_WingD1P0",
+      "vertices": 703,
+      "mass": 135.66,
+      "maxWeight": 0.6
+    },
+    {
+      "bone": "L_WingD1P0",
+      "vertices": 700,
+      "mass": 135.62,
+      "maxWeight": 0.6
+    },
+    {
+      "bone": "R_WingD1P1",
+      "vertices": 518,
+      "mass": 131.52,
+      "maxWeight": 0.651
+    },
+    {
+      "bone": "L_WingD1P1",
+      "vertices": 517,
+      "mass": 130.92,
+      "maxWeight": 0.655
+    },
+    {
+      "bone": "L_WingD0P1",
+      "vertices": 523,
+      "mass": 114.62,
+      "maxWeight": 0.616
+    },
+    {
+      "bone": "R_WingD0P1",
+      "vertices": 516,
+      "mass": 112.73,
+      "maxWeight": 0.616
+    },
+    {
+      "bone": "L_WingHand",
+      "vertices": 354,
+      "mass": 91.01,
+      "maxWeight": 0.502
+    },
+    {
+      "bone": "R_WingHand",
+      "vertices": 351,
+      "mass": 87.27,
+      "maxWeight": 0.502
+    },
+    {
+      "bone": "L_Foot",
+      "vertices": 393,
+      "mass": 84.07,
+      "maxWeight": 0.89
+    },
+    {
+      "bone": "R_Foot",
+      "vertices": 298,
+      "mass": 79.88,
+      "maxWeight": 0.886
+    },
+    {
+      "bone": "L_WingPanel0_0",
+      "vertices": 420,
+      "mass": 69.09,
+      "maxWeight": 0.251
+    },
+    {
+      "bone": "R_Calf",
+      "vertices": 214,
+      "mass": 66.55,
+      "maxWeight": 0.859
+    },
+    {
+      "bone": "L_Calf",
+      "vertices": 212,
+      "mass": 66.51,
+      "maxWeight": 0.859
+    },
+    {
+      "bone": "R_WingPanel0_0",
+      "vertices": 403,
+      "mass": 65.98,
+      "maxWeight": 0.251
+    },
+    {
+      "bone": "R_WingD5P0",
+      "vertices": 256,
+      "mass": 60.75,
+      "maxWeight": 0.765
+    },
+    {
+      "bone": "R_WingPanel1_0",
+      "vertices": 423,
+      "mass": 55.15,
+      "maxWeight": 0.243
+    },
+    {
+      "bone": "L_WingPanel1_0",
+      "vertices": 421,
+      "mass": 54.89,
+      "maxWeight": 0.243
+    },
+    {
+      "bone": "L_WingD5P0",
+      "vertices": 244,
+      "mass": 52.69,
+      "maxWeight": 0.553
+    },
+    {
+      "bone": "L_WingD5P1",
+      "vertices": 105,
+      "mass": 49.6,
+      "maxWeight": 0.91
+    },
+    {
+      "bone": "L_Thigh",
+      "vertices": 241,
+      "mass": 43.02,
+      "maxWeight": 0.435
+    },
+    {
+      "bone": "R_Thigh",
+      "vertices": 239,
+      "mass": 42.86,
+      "maxWeight": 0.435
+    },
+    {
+      "bone": "L_LegRoot",
+      "vertices": 198,
+      "mass": 40.58,
+      "maxWeight": 0.435
+    },
+    {
+      "bone": "R_WingD5P1",
+      "vertices": 103,
+      "mass": 40.55,
+      "maxWeight": 0.91
+    },
+    {
+      "bone": "R_LegRoot",
+      "vertices": 199,
+      "mass": 40.4,
+      "maxWeight": 0.435
+    },
+    {
+      "bone": "R_WingD5P2",
+      "vertices": 79,
+      "mass": 38,
+      "maxWeight": 0.984
+    },
+    {
+      "bone": "L_WingD5P2",
+      "vertices": 79,
+      "mass": 31.99,
+      "maxWeight": 0.969
+    },
+    {
+      "bone": "R_WingPanel3_1",
+      "vertices": 181,
+      "mass": 9.68,
+      "maxWeight": 0.161
+    },
+    {
+      "bone": "L_WingPanel3_1",
+      "vertices": 183,
+      "mass": 9.57,
+      "maxWeight": 0.161
+    },
+    {
+      "bone": "R_WingPanel1_1",
+      "vertices": 159,
+      "mass": 7.98,
+      "maxWeight": 0.165
+    },
+    {
+      "bone": "L_WingPanel1_1",
+      "vertices": 156,
+      "mass": 7.91,
+      "maxWeight": 0.165
+    },
+    {
+      "bone": "L_WingPanel2_1",
+      "vertices": 102,
+      "mass": 3,
+      "maxWeight": 0.098
+    },
+    {
+      "bone": "R_WingPanel2_1",
+      "vertices": 98,
+      "mass": 2.89,
+      "maxWeight": 0.098
+    },
+    {
+      "bone": "R_WingRoot",
+      "vertices": 24,
+      "mass": 2.16,
+      "maxWeight": 0.141
+    },
+    {
+      "bone": "L_WingRoot",
+      "vertices": 8,
+      "mass": 0.95,
+      "maxWeight": 0.141
+    },
+    {
+      "bone": "L_WingPanel2_0",
+      "vertices": 26,
+      "mass": 0.6,
+      "maxWeight": 0.059
+    },
+    {
+      "bone": "R_WingPanel2_0",
+      "vertices": 27,
+      "mass": 0.58,
+      "maxWeight": 0.059
+    },
+    {
+      "bone": "L_WingPanel0_1",
+      "vertices": 47,
+      "mass": 0.45,
+      "maxWeight": 0.031
+    },
+    {
+      "bone": "R_WingPanel0_1",
+      "vertices": 43,
+      "mass": 0.43,
+      "maxWeight": 0.031
+    },
+    {
+      "bone": "R_WingPanel3_0",
+      "vertices": 37,
+      "mass": 0.28,
+      "maxWeight": 0.016
+    },
+    {
+      "bone": "L_WingPanel3_0",
+      "vertices": 36,
+      "mass": 0.26,
+      "maxWeight": 0.016
+    }
+  ],
+  "symmetry": [
+    {
+      "bone": "WingRoot",
+      "left": {
+        "vertices": 8,
+        "mass": 0.95
+      },
+      "right": {
+        "vertices": 24,
+        "mass": 2.16
+      },
+      "massRatio": 0.3897,
+      "countRatio": 0.5,
+      "passes": false
+    },
+    {
+      "bone": "WingD5P1",
+      "left": {
+        "vertices": 105,
+        "mass": 49.6
+      },
+      "right": {
+        "vertices": 103,
+        "mass": 40.55
+      },
+      "massRatio": 0.1004,
+      "countRatio": 0.0096,
+      "passes": false
+    },
+    {
+      "bone": "WingD5P2",
+      "left": {
+        "vertices": 79,
+        "mass": 31.99
+      },
+      "right": {
+        "vertices": 79,
+        "mass": 38
+      },
+      "massRatio": 0.0859,
+      "countRatio": 0,
+      "passes": false
+    },
+    {
+      "bone": "WingD5P0",
+      "left": {
+        "vertices": 244,
+        "mass": 52.69
+      },
+      "right": {
+        "vertices": 256,
+        "mass": 60.75
+      },
+      "massRatio": 0.071,
+      "countRatio": 0.024,
+      "passes": false
+    },
+    {
+      "bone": "WingPanel3_0",
+      "left": {
+        "vertices": 36,
+        "mass": 0.26
+      },
+      "right": {
+        "vertices": 37,
+        "mass": 0.28
+      },
+      "massRatio": 0.029,
+      "countRatio": 0.0137,
+      "passes": true
+    },
+    {
+      "bone": "WingPanel0_1",
+      "left": {
+        "vertices": 47,
+        "mass": 0.45
+      },
+      "right": {
+        "vertices": 43,
+        "mass": 0.43
+      },
+      "massRatio": 0.0268,
+      "countRatio": 0.0444,
+      "passes": true
+    },
+    {
+      "bone": "Foot",
+      "left": {
+        "vertices": 393,
+        "mass": 84.07
+      },
+      "right": {
+        "vertices": 298,
+        "mass": 79.88
+      },
+      "massRatio": 0.0256,
+      "countRatio": 0.1375,
+      "passes": true
+    },
+    {
+      "bone": "WingPanel0_0",
+      "left": {
+        "vertices": 420,
+        "mass": 69.09
+      },
+      "right": {
+        "vertices": 403,
+        "mass": 65.98
+      },
+      "massRatio": 0.023,
+      "countRatio": 0.0207,
+      "passes": true
+    },
+    {
+      "bone": "WingHand",
+      "left": {
+        "vertices": 354,
+        "mass": 91.01
+      },
+      "right": {
+        "vertices": 351,
+        "mass": 87.27
+      },
+      "massRatio": 0.021,
+      "countRatio": 0.0043,
+      "passes": true
+    },
+    {
+      "bone": "WingPanel2_1",
+      "left": {
+        "vertices": 102,
+        "mass": 3
+      },
+      "right": {
+        "vertices": 98,
+        "mass": 2.89
+      },
+      "massRatio": 0.018,
+      "countRatio": 0.02,
+      "passes": true
+    },
+    {
+      "bone": "WingPanel2_0",
+      "left": {
+        "vertices": 26,
+        "mass": 0.6
+      },
+      "right": {
+        "vertices": 27,
+        "mass": 0.58
+      },
+      "massRatio": 0.0165,
+      "countRatio": 0.0189,
+      "passes": true
+    },
+    {
+      "bone": "WingD0P0",
+      "left": {
+        "vertices": 574,
+        "mass": 151.79
+      },
+      "right": {
+        "vertices": 555,
+        "mass": 147.62
+      },
+      "massRatio": 0.0139,
+      "countRatio": 0.0168,
+      "passes": true
+    },
+    {
+      "bone": "WingD0P1",
+      "left": {
+        "vertices": 523,
+        "mass": 114.62
+      },
+      "right": {
+        "vertices": 516,
+        "mass": 112.73
+      },
+      "massRatio": 0.0083,
+      "countRatio": 0.0067,
+      "passes": true
+    },
+    {
+      "bone": "WingShoulder",
+      "left": {
+        "vertices": 1344,
+        "mass": 237.87
+      },
+      "right": {
+        "vertices": 1351,
+        "mass": 234.11
+      },
+      "massRatio": 0.008,
+      "countRatio": 0.0026,
+      "passes": true
+    },
+    {
+      "bone": "WingElbow",
+      "left": {
+        "vertices": 1363,
+        "mass": 262.18
+      },
+      "right": {
+        "vertices": 1360,
+        "mass": 258.97
+      },
+      "massRatio": 0.0062,
+      "countRatio": 0.0011,
+      "passes": true
+    },
+    {
+      "bone": "WingD4P1",
+      "left": {
+        "vertices": 819,
+        "mass": 235
+      },
+      "right": {
+        "vertices": 824,
+        "mass": 237.71
+      },
+      "massRatio": 0.0057,
+      "countRatio": 0.003,
+      "passes": true
+    },
+    {
+      "bone": "WingPanel3_1",
+      "left": {
+        "vertices": 183,
+        "mass": 9.57
+      },
+      "right": {
+        "vertices": 181,
+        "mass": 9.68
+      },
+      "massRatio": 0.0057,
+      "countRatio": 0.0055,
+      "passes": true
+    },
+    {
+      "bone": "WingWrist",
+      "left": {
+        "vertices": 1149,
+        "mass": 155.8
+      },
+      "right": {
+        "vertices": 1110,
+        "mass": 154.11
+      },
+      "massRatio": 0.0055,
+      "countRatio": 0.0173,
+      "passes": true
+    },
+    {
+      "bone": "WingD1P2",
+      "left": {
+        "vertices": 631,
+        "mass": 272.23
+      },
+      "right": {
+        "vertices": 626,
+        "mass": 269.69
+      },
+      "massRatio": 0.0047,
+      "countRatio": 0.004,
+      "passes": true
+    },
+    {
+      "bone": "WingD0P2",
+      "left": {
+        "vertices": 384,
+        "mass": 186.47
+      },
+      "right": {
+        "vertices": 378,
+        "mass": 184.72
+      },
+      "massRatio": 0.0047,
+      "countRatio": 0.0079,
+      "passes": true
+    },
+    {
+      "bone": "WingD3P0",
+      "left": {
+        "vertices": 708,
+        "mass": 175.74
+      },
+      "right": {
+        "vertices": 715,
+        "mass": 177.39
+      },
+      "massRatio": 0.0047,
+      "countRatio": 0.0049,
+      "passes": true
+    },
+    {
+      "bone": "Toes",
+      "left": {
+        "vertices": 529,
+        "mass": 450.07
+      },
+      "right": {
+        "vertices": 531,
+        "mass": 454.23
+      },
+      "massRatio": 0.0046,
+      "countRatio": 0.0019,
+      "passes": true
+    },
+    {
+      "bone": "WingD2P2",
+      "left": {
+        "vertices": 584,
+        "mass": 296.73
+      },
+      "right": {
+        "vertices": 580,
+        "mass": 294.15
+      },
+      "massRatio": 0.0044,
+      "countRatio": 0.0034,
+      "passes": true
+    },
+    {
+      "bone": "WingPanel1_1",
+      "left": {
+        "vertices": 156,
+        "mass": 7.91
+      },
+      "right": {
+        "vertices": 159,
+        "mass": 7.98
+      },
+      "massRatio": 0.0042,
+      "countRatio": 0.0095,
+      "passes": true
+    },
+    {
+      "bone": "WingD4P2",
+      "left": {
+        "vertices": 639,
+        "mass": 267.96
+      },
+      "right": {
+        "vertices": 637,
+        "mass": 269.95
+      },
+      "massRatio": 0.0037,
+      "countRatio": 0.0016,
+      "passes": true
+    },
+    {
+      "bone": "WingD2P1",
+      "left": {
+        "vertices": 770,
+        "mass": 167.42
+      },
+      "right": {
+        "vertices": 768,
+        "mass": 166.42
+      },
+      "massRatio": 0.003,
+      "countRatio": 0.0013,
+      "passes": true
+    },
+    {
+      "bone": "WingD1P1",
+      "left": {
+        "vertices": 517,
+        "mass": 130.92
+      },
+      "right": {
+        "vertices": 518,
+        "mass": 131.52
+      },
+      "massRatio": 0.0023,
+      "countRatio": 0.001,
+      "passes": true
+    },
+    {
+      "bone": "WingPanel1_0",
+      "left": {
+        "vertices": 421,
+        "mass": 54.89
+      },
+      "right": {
+        "vertices": 423,
+        "mass": 55.15
+      },
+      "massRatio": 0.0023,
+      "countRatio": 0.0024,
+      "passes": true
+    },
+    {
+      "bone": "WingD3P2",
+      "left": {
+        "vertices": 678,
+        "mass": 363.4
+      },
+      "right": {
+        "vertices": 670,
+        "mass": 361.82
+      },
+      "massRatio": 0.0022,
+      "countRatio": 0.0059,
+      "passes": true
+    },
+    {
+      "bone": "LegRoot",
+      "left": {
+        "vertices": 198,
+        "mass": 40.58
+      },
+      "right": {
+        "vertices": 199,
+        "mass": 40.4
+      },
+      "massRatio": 0.0021,
+      "countRatio": 0.0025,
+      "passes": true
+    },
+    {
+      "bone": "WingD3P1",
+      "left": {
+        "vertices": 773,
+        "mass": 174.15
+      },
+      "right": {
+        "vertices": 771,
+        "mass": 173.53
+      },
+      "massRatio": 0.0018,
+      "countRatio": 0.0013,
+      "passes": true
+    },
+    {
+      "bone": "Thigh",
+      "left": {
+        "vertices": 241,
+        "mass": 43.02
+      },
+      "right": {
+        "vertices": 239,
+        "mass": 42.86
+      },
+      "massRatio": 0.0018,
+      "countRatio": 0.0042,
+      "passes": true
+    },
+    {
+      "bone": "WingD4P0",
+      "left": {
+        "vertices": 897,
+        "mass": 294.27
+      },
+      "right": {
+        "vertices": 902,
+        "mass": 293.24
+      },
+      "massRatio": 0.0017,
+      "countRatio": 0.0028,
+      "passes": true
+    },
+    {
+      "bone": "Calf",
+      "left": {
+        "vertices": 212,
+        "mass": 66.51
+      },
+      "right": {
+        "vertices": 214,
+        "mass": 66.55
+      },
+      "massRatio": 0.0003,
+      "countRatio": 0.0047,
+      "passes": true
+    },
+    {
+      "bone": "WingD2P0",
+      "left": {
+        "vertices": 649,
+        "mass": 167.1
+      },
+      "right": {
+        "vertices": 651,
+        "mass": 167.02
+      },
+      "massRatio": 0.0002,
+      "countRatio": 0.0015,
+      "passes": true
+    },
+    {
+      "bone": "WingD1P0",
+      "left": {
+        "vertices": 700,
+        "mass": 135.62
+      },
+      "right": {
+        "vertices": 703,
+        "mass": 135.66
+      },
+      "massRatio": 0.0001,
+      "countRatio": 0.0021,
+      "passes": true
+    }
+  ],
+  "web": [
+    {
+      "bone": "L_WingPanel0_0",
+      "digits": [
+        "WingD0P1",
+        "WingD1P1"
+      ],
+      "webVertices": 191,
+      "webMass": 64.84,
+      "panelMass": 1.84,
+      "share": 0.0284
+    },
+    {
+      "bone": "L_WingPanel0_1",
+      "digits": [
+        "WingD0P2",
+        "WingD1P2"
+      ],
+      "webVertices": 263,
+      "webMass": 203.69,
+      "panelMass": 0.38,
+      "share": 0.0018
+    },
+    {
+      "bone": "L_WingPanel1_0",
+      "digits": [
+        "WingD1P1",
+        "WingD2P1"
+      ],
+      "webVertices": 174,
+      "webMass": 83.14,
+      "panelMass": 0.54,
+      "share": 0.0065
+    },
+    {
+      "bone": "L_WingPanel1_1",
+      "digits": [
+        "WingD1P2",
+        "WingD2P2"
+      ],
+      "webVertices": 74,
+      "webMass": 46.24,
+      "panelMass": 5.31,
+      "share": 0.1148
+    },
+    {
+      "bone": "L_WingPanel2_0",
+      "digits": [
+        "WingD2P1",
+        "WingD3P1"
+      ],
+      "webVertices": 136,
+      "webMass": 56.38,
+      "panelMass": 0,
+      "share": 0
+    },
+    {
+      "bone": "L_WingPanel2_1",
+      "digits": [
+        "WingD2P2",
+        "WingD3P2"
+      ],
+      "webVertices": 221,
+      "webMass": 171.04,
+      "panelMass": 2.97,
+      "share": 0.0174
+    },
+    {
+      "bone": "L_WingPanel3_0",
+      "digits": [
+        "WingD3P1",
+        "WingD4P1"
+      ],
+      "webVertices": 240,
+      "webMass": 95.45,
+      "panelMass": 0,
+      "share": 0
+    },
+    {
+      "bone": "L_WingPanel3_1",
+      "digits": [
+        "WingD3P2",
+        "WingD4P2"
+      ],
+      "webVertices": 189,
+      "webMass": 125.75,
+      "panelMass": 8.62,
+      "share": 0.0685
+    },
+    {
+      "bone": "R_WingPanel0_0",
+      "digits": [
+        "WingD0P1",
+        "WingD1P1"
+      ],
+      "webVertices": 192,
+      "webMass": 65.32,
+      "panelMass": 1.84,
+      "share": 0.0281
+    },
+    {
+      "bone": "R_WingPanel0_1",
+      "digits": [
+        "WingD0P2",
+        "WingD1P2"
+      ],
+      "webVertices": 259,
+      "webMass": 201.85,
+      "panelMass": 0.36,
+      "share": 0.0018
+    },
+    {
+      "bone": "R_WingPanel1_0",
+      "digits": [
+        "WingD1P1",
+        "WingD2P1"
+      ],
+      "webVertices": 172,
+      "webMass": 82.33,
+      "panelMass": 0.42,
+      "share": 0.0051
+    },
+    {
+      "bone": "R_WingPanel1_1",
+      "digits": [
+        "WingD1P2",
+        "WingD2P2"
+      ],
+      "webVertices": 72,
+      "webMass": 44.69,
+      "panelMass": 5.36,
+      "share": 0.12
+    },
+    {
+      "bone": "R_WingPanel2_0",
+      "digits": [
+        "WingD2P1",
+        "WingD3P1"
+      ],
+      "webVertices": 134,
+      "webMass": 54.77,
+      "panelMass": 0,
+      "share": 0
+    },
+    {
+      "bone": "R_WingPanel2_1",
+      "digits": [
+        "WingD2P2",
+        "WingD3P2"
+      ],
+      "webVertices": 215,
+      "webMass": 166.72,
+      "panelMass": 2.87,
+      "share": 0.0172
+    },
+    {
+      "bone": "R_WingPanel3_0",
+      "digits": [
+        "WingD3P1",
+        "WingD4P1"
+      ],
+      "webVertices": 239,
+      "webMass": 95.74,
+      "panelMass": 0,
+      "share": 0
+    },
+    {
+      "bone": "R_WingPanel3_1",
+      "digits": [
+        "WingD3P2",
+        "WingD4P2"
+      ],
+      "webVertices": 189,
+      "webMass": 125.44,
+      "panelMass": 8.75,
+      "share": 0.0697
+    }
+  ],
+  "geometry": {
+    "mesh": "WyvernBody_Rebuild",
+    "dominantEqualsNearestPct": 28.8,
+    "neckSlabVertices": 8194,
+    "neckAgreementPct": 20.1,
+    "neckSlabDominant": {
+      "Spine3": 4964,
+      "Head": 1918,
+      "Neck2": 706,
+      "Neck1": 284,
+      "Jaw": 171,
+      "Spine2": 133
+    }
+  },
+  "failingSymmetry": [
+    "WingRoot",
+    "WingD5P1",
+    "WingD5P2",
+    "WingD5P0"
+  ],
+  "passed": false
+}

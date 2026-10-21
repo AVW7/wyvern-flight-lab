@@ -1,0 +1,447 @@
+{
+  "task": "C5 — V2 skin weight rebalance",
+  "note": "`bones` are audit totals over BOTH meshes; `passes` body-only figures come from rebalance-plan.json.",
+  "assetBefore": "950c4321b00c (6368564 B)",
+  "assetAfter": "bef7a09aa131 (6368564 B)",
+  "reproducibility": "running rebalance_v2_skin_weights.mjs on the pre-C5 asset then compactGlb yields bef7a09aa131… byte-for-byte",
+  "gates": {
+    "audit_v2_skin_weights": {
+      "before": {
+        "passed": false,
+        "failingSymmetry": [
+          "WingRoot",
+          "WingD5P1",
+          "WingD5P2",
+          "WingD5P0"
+        ]
+      },
+      "after": {
+        "passed": true,
+        "failingSymmetry": []
+      }
+    },
+    "audit-wyvern-rig --check": "exit 0 both; clip tables identical except attack2 belowFt 1409 -> 1433 (ungated)",
+    "test:fast": "165/165 pass, exit 0",
+    "membrane-extent cruise": {
+      "before": 2780.9,
+      "after": 2780.9,
+      "gate": "> 2500 unchanged"
+    }
+  },
+  "bones": {
+    "Spine1": {
+      "before": {
+        "vertices": 933,
+        "mass": 270.87
+      },
+      "after": {
+        "vertices": 933,
+        "mass": 271.03
+      }
+    },
+    "Spine2": {
+      "before": {
+        "vertices": 1041,
+        "mass": 280.67
+      },
+      "after": {
+        "vertices": 1033,
+        "mass": 280.43
+      }
+    },
+    "Spine3": {
+      "before": {
+        "vertices": 9464,
+        "mass": 5971.3
+      },
+      "after": {
+        "vertices": 9463,
+        "mass": 3877.82
+      }
+    },
+    "Neck1": {
+      "before": {
+        "vertices": 1320,
+        "mass": 414.01
+      },
+      "after": {
+        "vertices": 6015,
+        "mass": 2541.08
+      }
+    },
+    "Neck2": {
+      "before": {
+        "vertices": 1907,
+        "mass": 1000.49
+      },
+      "after": {
+        "vertices": 1999,
+        "mass": 1040.88
+      }
+    },
+    "Head": {
+      "before": {
+        "vertices": 4562,
+        "mass": 2237.75
+      },
+      "after": {
+        "vertices": 4599,
+        "mass": 2137.13
+      }
+    },
+    "L_WingRoot": {
+      "before": {
+        "vertices": 8,
+        "mass": 0.95
+      },
+      "after": {
+        "vertices": 118,
+        "mass": 26.9
+      }
+    },
+    "R_WingRoot": {
+      "before": {
+        "vertices": 24,
+        "mass": 2.16
+      },
+      "after": {
+        "vertices": 127,
+        "mass": 27.26
+      }
+    },
+    "L_WingPanel0_1": {
+      "before": {
+        "vertices": 47,
+        "mass": 0.45
+      },
+      "after": {
+        "vertices": 211,
+        "mass": 50.7
+      }
+    },
+    "R_WingPanel0_1": {
+      "before": {
+        "vertices": 43,
+        "mass": 0.43
+      },
+      "after": {
+        "vertices": 206,
+        "mass": 50.17
+      }
+    },
+    "L_WingPanel2_0": {
+      "before": {
+        "vertices": 26,
+        "mass": 0.6
+      },
+      "after": {
+        "vertices": 109,
+        "mass": 12.27
+      }
+    },
+    "R_WingPanel2_0": {
+      "before": {
+        "vertices": 27,
+        "mass": 0.58
+      },
+      "after": {
+        "vertices": 108,
+        "mass": 11.87
+      }
+    },
+    "L_WingPanel3_0": {
+      "before": {
+        "vertices": 36,
+        "mass": 0.26
+      },
+      "after": {
+        "vertices": 231,
+        "mass": 22.9
+      }
+    },
+    "R_WingPanel3_0": {
+      "before": {
+        "vertices": 37,
+        "mass": 0.28
+      },
+      "after": {
+        "vertices": 230,
+        "mass": 23.07
+      }
+    }
+  },
+  "webSharePct": {
+    "L_WingPanel0_0": {
+      "before": 2.8,
+      "after": 44.2
+    },
+    "L_WingPanel0_1": {
+      "before": 0.2,
+      "after": 42.3
+    },
+    "L_WingPanel1_0": {
+      "before": 0.7,
+      "after": 39.2
+    },
+    "L_WingPanel1_1": {
+      "before": 11.5,
+      "after": 56.6
+    },
+    "L_WingPanel2_0": {
+      "before": 0,
+      "after": 27
+    },
+    "L_WingPanel2_1": {
+      "before": 1.7,
+      "after": 43.5
+    },
+    "L_WingPanel3_0": {
+      "before": 0,
+      "after": 29
+    },
+    "L_WingPanel3_1": {
+      "before": 6.9,
+      "after": 51.5
+    },
+    "R_WingPanel0_0": {
+      "before": 2.8,
+      "after": 44.3
+    },
+    "R_WingPanel0_1": {
+      "before": 0.2,
+      "after": 42.4
+    },
+    "R_WingPanel1_0": {
+      "before": 0.5,
+      "after": 39.3
+    },
+    "R_WingPanel1_1": {
+      "before": 12,
+      "after": 57.2
+    },
+    "R_WingPanel2_0": {
+      "before": 0,
+      "after": 26.8
+    },
+    "R_WingPanel2_1": {
+      "before": 1.7,
+      "after": 43.5
+    },
+    "R_WingPanel3_0": {
+      "before": 0,
+      "after": 29.3
+    },
+    "R_WingPanel3_1": {
+      "before": 7,
+      "after": 51.5
+    }
+  },
+  "symmetryWorstAfter": {
+    "bone": "WingPanel0_0",
+    "left": {
+      "vertices": 544,
+      "mass": 85.75
+    },
+    "right": {
+      "vertices": 528,
+      "mass": 82.97
+    },
+    "massRatio": 0.0165,
+    "countRatio": 0.0149,
+    "passes": true
+  },
+  "wingRootSymmetry": {
+    "bone": "WingRoot",
+    "left": {
+      "vertices": 118,
+      "mass": 26.9
+    },
+    "right": {
+      "vertices": 127,
+      "mass": 27.26
+    },
+    "massRatio": 0.0066,
+    "countRatio": 0.0367,
+    "passes": true
+  },
+  "geometry": {
+    "before": {
+      "dominantEqualsNearestPct": 28.8,
+      "neckAgreementPct": 20.1,
+      "neckSlabDominant": {
+        "Spine3": 4964,
+        "Head": 1918,
+        "Neck2": 706,
+        "Neck1": 284,
+        "Jaw": 171,
+        "Spine2": 133
+      }
+    },
+    "after": {
+      "dominantEqualsNearestPct": 51.7,
+      "neckAgreementPct": 59.9,
+      "neckSlabDominant": {
+        "Neck1": 3533,
+        "Head": 2000,
+        "Spine3": 1615,
+        "Neck2": 733,
+        "Jaw": 162,
+        "Spine2": 133
+      }
+    }
+  },
+  "passes": {
+    "web": {
+      "mesh": "WyvernMembrane_ExportSafe",
+      "webVertices": 2319,
+      "skippedNoSlot": 410,
+      "movedMass": 437.94,
+      "totalMassBefore": 8249,
+      "totalMassAfter": 8249,
+      "panels": [
+        {
+          "bone": "L_WingPanel0_0",
+          "webVertices": 191,
+          "skipped": 45,
+          "addedMass": 18.06
+        },
+        {
+          "bone": "L_WingPanel0_1",
+          "webVertices": 219,
+          "skipped": 12,
+          "addedMass": 51.56
+        },
+        {
+          "bone": "L_WingPanel1_0",
+          "webVertices": 171,
+          "skipped": 20,
+          "addedMass": 25.11
+        },
+        {
+          "bone": "L_WingPanel1_1",
+          "webVertices": 58,
+          "skipped": 1,
+          "addedMass": 11.84
+        },
+        {
+          "bone": "L_WingPanel2_0",
+          "webVertices": 136,
+          "skipped": 53,
+          "addedMass": 12.4
+        },
+        {
+          "bone": "L_WingPanel2_1",
+          "webVertices": 193,
+          "skipped": 12,
+          "addedMass": 46.52
+        },
+        {
+          "bone": "L_WingPanel3_0",
+          "webVertices": 240,
+          "skipped": 45,
+          "addedMass": 23.41
+        },
+        {
+          "bone": "L_WingPanel3_1",
+          "webVertices": 163,
+          "skipped": 17,
+          "addedMass": 31.35
+        },
+        {
+          "bone": "R_WingPanel0_0",
+          "webVertices": 192,
+          "skipped": 45,
+          "addedMass": 18.27
+        },
+        {
+          "bone": "R_WingPanel0_1",
+          "webVertices": 215,
+          "skipped": 11,
+          "addedMass": 51.01
+        },
+        {
+          "bone": "R_WingPanel1_0",
+          "webVertices": 170,
+          "skipped": 19,
+          "addedMass": 25.05
+        },
+        {
+          "bone": "R_WingPanel1_1",
+          "webVertices": 57,
+          "skipped": 1,
+          "addedMass": 11.51
+        },
+        {
+          "bone": "R_WingPanel2_0",
+          "webVertices": 134,
+          "skipped": 53,
+          "addedMass": 11.99
+        },
+        {
+          "bone": "R_WingPanel2_1",
+          "webVertices": 190,
+          "skipped": 11,
+          "addedMass": 45.73
+        },
+        {
+          "bone": "R_WingPanel3_0",
+          "webVertices": 239,
+          "skipped": 46,
+          "addedMass": 23.47
+        },
+        {
+          "bone": "R_WingPanel3_1",
+          "webVertices": 161,
+          "skipped": 19,
+          "addedMass": 30.66
+        }
+      ]
+    },
+    "scapular": {
+      "mesh": "WyvernBody_Rebuild",
+      "target": 110,
+      "sides": [
+        {
+          "side": "L",
+          "candidates": 2191,
+          "vertices": 110,
+          "nearest": 114.4,
+          "farthest": 150.2,
+          "addedMass": 25.37
+        },
+        {
+          "side": "R",
+          "candidates": 2191,
+          "vertices": 110,
+          "nearest": 114.4,
+          "farthest": 150.2,
+          "addedMass": 25.25
+        }
+      ]
+    },
+    "neck": {
+      "mesh": "WyvernBody_Rebuild",
+      "share": 0.5,
+      "ramp": 0.25,
+      "vertices": 5311,
+      "movedMass": 2150.69,
+      "byBone": {
+        "Neck1": 2109.58,
+        "Neck2": 40.68,
+        "Head": 0.43
+      },
+      "totalMassAfter": 14544
+    },
+    "symmetry": {
+      "WyvernBody_Rebuild": {
+        "pairs": 6463,
+        "changed": 3267
+      },
+      "WyvernMembrane_ExportSafe": {
+        "pairs": 1600,
+        "changed": 484
+      }
+    }
+  },
+  "correction": "Task 41 framed this as a chest redistribution (Spine3 -> Spine1/Spine2). Measured, 92% of Spine3 mass sits above Neck1.head and the chest carries ~63 of it; the defect is Spine3 owning the Neck1 span (3,832 verts nearest Neck1). The thoracic pass therefore hands Spine3 mass to the nearest neck bone, not to Spine2/Spine1."
+}
