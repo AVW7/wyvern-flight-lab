@@ -26,3 +26,7 @@ next-env.d.ts
 # Python
 __pycache__/
 *.pyc
+
+# Generated dynamics candidates: 5.7 MB each, reproducible in one command with
+# `npm run assets:amplify-dynamics`. Not committed -- see docs/flight-lab/37.
+assets/rig-audits/**/candidates/*.glb

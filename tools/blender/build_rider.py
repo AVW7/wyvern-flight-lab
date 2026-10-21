@@ -81,13 +81,16 @@ BONES = [
     ("RDR_ArmR_Upper",  "RDR_ShoulderR",(-0.17, 0.00,  0.57), (-0.27,-0.10,  0.42)),
     ("RDR_ArmR_Fore",   "RDR_ArmR_Upper",(-0.27,-0.10, 0.42), (-0.30,-0.30,  0.34)),
     ("RDR_HandR",       "RDR_ArmR_Fore",(-0.30, -0.30, 0.34), (-0.31,-0.38,  0.32)),
-    # Legs: seated, thigh forward, shin down the flank.
-    ("RDR_ThighL",      "RDR_Pelvis",   (0.09,  0.00,  0.12), (0.12, -0.30,  0.06)),
-    ("RDR_CalfL",       "RDR_ThighL",   (0.12, -0.30,  0.06), (0.13, -0.36, -0.34)),
-    ("RDR_FootL",       "RDR_CalfL",    (0.13, -0.36, -0.34), (0.13, -0.46, -0.40)),
-    ("RDR_ThighR",      "RDR_Pelvis",   (-0.09, 0.00,  0.12), (-0.12,-0.30,  0.06)),
-    ("RDR_CalfR",       "RDR_ThighR",   (-0.12,-0.30,  0.06), (-0.13,-0.36, -0.34)),
-    ("RDR_FootR",       "RDR_CalfR",    (-0.13,-0.36, -0.34), (-0.13,-0.46, -0.40)),
+    # Legs: seated, splayed wide. The wyvern's back is 374 units (0.94 m) across
+    # at the saddle and still 250 units wide at the height the shins occupy, so
+    # legs hanging at hip width would sit inside the torso. Knees at 0.30 m and
+    # ankles at 0.47 m clear the flanks.
+    ("RDR_ThighL",      "RDR_Pelvis",   (0.09,  0.00,  0.12), (0.30, -0.30,  0.04)),
+    ("RDR_CalfL",       "RDR_ThighL",   (0.30, -0.30,  0.04), (0.47, -0.36, -0.36)),
+    ("RDR_FootL",       "RDR_CalfL",    (0.47, -0.36, -0.36), (0.49, -0.46, -0.42)),
+    ("RDR_ThighR",      "RDR_Pelvis",   (-0.09, 0.00,  0.12), (-0.30,-0.30,  0.04)),
+    ("RDR_CalfR",       "RDR_ThighR",   (-0.30,-0.30,  0.04), (-0.47,-0.36, -0.36)),
+    ("RDR_FootR",       "RDR_CalfR",    (-0.47,-0.36, -0.36), (-0.49,-0.46, -0.42)),
 ]
 
 # Rigid armour plates: (bone, primitive, centre, size/radius). Each primitive is
@@ -109,23 +112,23 @@ PARTS = [
     ("RDR_Cloak",    "box",   (0.00,  0.14,  0.38), (0.34, 0.05, 0.44)),
     ("RDR_Cloak",    "box",   (0.00,  0.17,  0.10), (0.30, 0.04, 0.20)),
     ("RDR_ShoulderL","ico",   (0.17,  0.00,  0.57), (0.075,)),
-    ("RDR_ArmL_Upper","cyl",  (0.22, -0.05,  0.50), (0.048, 0.19)),
+    ("RDR_ArmL_Upper","limb",  None, ((0.17, 0.00, 0.57), (0.27, -0.10, 0.42), 0.048)),
     ("RDR_ArmL_Fore","ico",   (0.27, -0.10,  0.42), (0.055,)),            # elbow
-    ("RDR_ArmL_Fore","cyl",   (0.29, -0.20,  0.38), (0.042, 0.22)),
+    ("RDR_ArmL_Fore","limb",   None, ((0.27, -0.10, 0.42), (0.30, -0.30, 0.34), 0.042)),
     ("RDR_HandL",    "box",   (0.31, -0.35,  0.33), (0.07, 0.11, 0.06)),
     ("RDR_ShoulderR","ico",   (-0.17, 0.00,  0.57), (0.075,)),
-    ("RDR_ArmR_Upper","cyl",  (-0.22,-0.05,  0.50), (0.048, 0.19)),
+    ("RDR_ArmR_Upper","limb",  None, ((-0.17, 0.00, 0.57), (-0.27, -0.10, 0.42), 0.048)),
     ("RDR_ArmR_Fore","ico",   (-0.27,-0.10,  0.42), (0.055,)),
-    ("RDR_ArmR_Fore","cyl",   (-0.29,-0.20,  0.38), (0.042, 0.22)),
+    ("RDR_ArmR_Fore","limb",   None, ((-0.27, -0.10, 0.42), (-0.30, -0.30, 0.34), 0.042)),
     ("RDR_HandR",    "box",   (-0.31,-0.35,  0.33), (0.07, 0.11, 0.06)),
-    ("RDR_ThighL",   "cyl",   (0.105,-0.15,  0.09), (0.062, 0.34)),
-    ("RDR_CalfL",    "ico",   (0.12, -0.30,  0.06), (0.065,)),            # knee
-    ("RDR_CalfL",    "cyl",   (0.125,-0.33, -0.14), (0.050, 0.42)),
-    ("RDR_FootL",    "box",   (0.13, -0.42, -0.38), (0.08, 0.16, 0.06)),
-    ("RDR_ThighR",   "cyl",   (-0.105,-0.15, 0.09), (0.062, 0.34)),
-    ("RDR_CalfR",    "ico",   (-0.12,-0.30,  0.06), (0.065,)),
-    ("RDR_CalfR",    "cyl",   (-0.125,-0.33,-0.14), (0.050, 0.42)),
-    ("RDR_FootR",    "box",   (-0.13,-0.42, -0.38), (0.08, 0.16, 0.06)),
+    ("RDR_ThighL",   "limb",   None, ((0.09, 0.00, 0.12), (0.30, -0.30, 0.04), 0.062)),
+    ("RDR_CalfL",    "ico",   (0.30, -0.30,  0.04), (0.065,)),            # knee
+    ("RDR_CalfL",    "limb",   None, ((0.30, -0.30, 0.04), (0.47, -0.36, -0.36), 0.050)),
+    ("RDR_FootL",    "box",   (0.48, -0.41, -0.39), (0.09, 0.16, 0.06)),
+    ("RDR_ThighR",   "limb",   None, ((-0.09, 0.00, 0.12), (-0.30, -0.30, 0.04), 0.062)),
+    ("RDR_CalfR",    "ico",   (-0.30,-0.30,  0.04), (0.065,)),
+    ("RDR_CalfR",    "limb",   None, ((-0.30, -0.30, 0.04), (-0.47, -0.36, -0.36), 0.050)),
+    ("RDR_FootR",    "box",   (-0.48,-0.41, -0.39), (0.09, 0.16, 0.06)),
 ]
 
 
@@ -158,9 +161,34 @@ def build_armature():
     return arm
 
 
+def make_materials():
+    """Mid-tone armour.
+
+    The default Blender material exports near-white, which made the rider
+    invisible against the light theme and, at rider scale, easy to lose against
+    the dark wyvern too. Bronze sits between both backgrounds: it reads against
+    a near-black body and against a white floor.
+    """
+    armour = bpy.data.materials.new("RiderArmour")
+    armour.use_nodes = True
+    principled = armour.node_tree.nodes.get("Principled BSDF")
+    principled.inputs["Base Color"].default_value = (0.42, 0.30, 0.16, 1.0)
+    principled.inputs["Metallic"].default_value = 0.75
+    principled.inputs["Roughness"].default_value = 0.42
+
+    cloak = bpy.data.materials.new("RiderCloak")
+    cloak.use_nodes = True
+    cloth = cloak.node_tree.nodes.get("Principled BSDF")
+    cloth.inputs["Base Color"].default_value = (0.30, 0.09, 0.08, 1.0)
+    cloth.inputs["Metallic"].default_value = 0.0
+    cloth.inputs["Roughness"].default_value = 0.85
+    return armour, cloak
+
+
 def add_part(bone_name, kind, centre, dims):
     """One rigid armour primitive, tagged with the bone that drives it."""
-    centre = Vector(centre) * U
+    # `limb` derives its own centre from the two endpoints, so `centre` is None.
+    centre = Vector(centre) * U if centre is not None else None
     if kind == "box":
         bpy.ops.mesh.primitive_cube_add(size=1.0, location=centre)
         obj = bpy.context.object
@@ -177,6 +205,22 @@ def add_part(bone_name, kind, centre, dims):
             subdivisions=3, radius=radius * U, location=centre
         )
         obj = bpy.context.object
+    elif kind == "limb":
+        # A cylinder spanning two joints. `dims` is (start, end, radius) in
+        # metres. A plain `cyl` is built along +Z and would leave every limb
+        # standing vertically instead of following its bone -- which is what the
+        # first version of this script did.
+        start, end, radius = dims
+        a = Vector(start) * U
+        b = Vector(end) * U
+        axis = b - a
+        length = axis.length
+        bpy.ops.mesh.primitive_cylinder_add(
+            vertices=12, radius=radius * U, depth=length, location=(a + b) / 2
+        )
+        obj = bpy.context.object
+        obj.rotation_mode = "QUATERNION"
+        obj.rotation_quaternion = Vector((0.0, 0.0, 1.0)).rotation_difference(axis.normalized())
     else:
         raise ValueError(kind)
 
@@ -187,14 +231,19 @@ def add_part(bone_name, kind, centre, dims):
     return obj
 
 
-def build_mesh():
-    parts = [add_part(bone, kind, centre, dims) for bone, kind, centre, dims in PARTS]
+def build_mesh(armour, cloak):
+    parts = []
+    for bone, kind, centre, dims in PARTS:
+        obj = add_part(bone, kind, centre, dims)
+        obj.data.materials.append(cloak if bone == "RDR_Cloak" else armour)
+        parts.append(obj)
     for obj in parts:
         obj.select_set(True)
     bpy.context.view_layer.objects.active = parts[0]
     bpy.ops.object.join()
     mesh = bpy.context.object
     mesh.name = "RiderBody"
+    mesh.data.name = "RiderBodyMesh"
     return mesh
 
 
@@ -308,7 +357,8 @@ def main():
     scene.render.fps = FPS
 
     arm = build_armature()
-    mesh = build_mesh()
+    armour, cloak = make_materials()
+    mesh = build_mesh(armour, cloak)
     bind(mesh, arm)
     clips = make_actions(arm)
 

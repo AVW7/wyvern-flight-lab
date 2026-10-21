@@ -25,6 +25,10 @@ import { RIDER_MOUNT } from "./mountData";
 export type OffsetLocal = readonly [number, number, number];
 
 const scratchScale = new Vector3();
+const scratchPosition = new Vector3();
+const scratchQuaternion = new Quaternion();
+const scratchUniform = new Vector3();
+const scratchOffset = new Matrix4();
 
 /**
  * Scale factor a `normalizedClone`d object received.
@@ -47,11 +51,18 @@ export function uniformScaleOf(object: { matrixWorld: Matrix4 }): number {
 /**
  * World matrix for the rider's root.
  *
- *   result = Spine3World * Translate(offsetLocal) * Scale(uniformScale)
+ *   result = Compose(spine3World.position, spine3World.quaternion, uniformScale)
+ *          * Translate(offsetLocal)
  *
  * `offsetLocal` is in Spine3's own frame (see `mountData.ts`), so the rider
- * leans and rolls with the spine for free -- no per-frame lookups beyond
- * Spine3's world matrix.
+ * leans and rolls with the spine for free.
+ *
+ * The scale is the subtle part. `spine3.matrixWorld` ALREADY carries the
+ * wyvern's normalisation factor, because Spine3 is a child of the normalised
+ * model. Multiplying by `S(uniformScale)` on top of that applies it twice and
+ * shrinks the rider to 1/670 of its size -- it renders, it animates, and it is
+ * invisible. So the parent's scale is deliberately discarded and replaced with
+ * exactly one factor: the rider's geometry and its offset then each scale once.
  */
 export function riderMatrix(
   spine3World: Matrix4,
@@ -59,9 +70,10 @@ export function riderMatrix(
   uniformScale: number = 1,
   target: Matrix4 = new Matrix4()
 ): Matrix4 {
-  const offset = new Matrix4().makeTranslation(offsetLocal[0], offsetLocal[1], offsetLocal[2]);
-  const scale = new Matrix4().makeScale(uniformScale, uniformScale, uniformScale);
-  return target.copy(spine3World).multiply(offset).multiply(scale);
+  spine3World.decompose(scratchPosition, scratchQuaternion, scratchScale);
+  scratchUniform.set(uniformScale, uniformScale, uniformScale);
+  target.compose(scratchPosition, scratchQuaternion, scratchUniform);
+  return target.multiply(scratchOffset.makeTranslation(offsetLocal[0], offsetLocal[1], offsetLocal[2]));
 }
 
 /** True when the contract's joint actually exists under `root`. */

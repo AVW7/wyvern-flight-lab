@@ -16,6 +16,8 @@
     "assets:audit-clips": "node tools/audit-all-clips.mjs public/models/wyvern-v2-rig.glb",
     "assets:audit-dynamics": "node tools/audit-dynamics.mjs public/models/player-wyvern.glb",
     "assets:audit-dynamics:v2": "node tools/audit-dynamics.mjs public/models/wyvern-v2-rig.glb --baseline assets/rig-audits/2026-10-21-dynamics/v1-dynamics-reference.json",
+    "assets:diagnose-dynamics": "node tools/diagnose-clip-dynamics.mjs public/models/wyvern-v2-rig.glb",
+    "assets:amplify-dynamics": "node tools/build-dynamics-candidate.mjs",
     "assets:build-rider": "blender -b --factory-startup --python tools/blender/build_rider.py",
     "assets:validate-rider": "node tools/blender/rider_runtime_contract.mjs",
     "assets:calibrate-rider-mount": "node tools/calibrate-rider-mount.mjs",

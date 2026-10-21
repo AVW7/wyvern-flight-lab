@@ -70,13 +70,16 @@
 .themeToggle { grid-auto-flow: column; gap: 8px; cursor: pointer; }
 
 .lab {
+  --lab-left-w: clamp(212px, 15vw, 246px);
+  --lab-right-w: clamp(312px, 23vw, 352px);
+  position: relative;
   max-width: 1600px;
   width: 100%;
   flex: 1;
   min-height: 0;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 240px minmax(360px, 1fr) 350px;
+  grid-template-columns: var(--lab-left-w) minmax(0, 1fr) var(--lab-right-w);
   border: 1px solid #333333;
   background: #050505;
   box-shadow: 0 28px 90px rgba(0, 0, 0, 0.8);
@@ -95,6 +98,45 @@
 }
 .specimens { border-right: 1px solid #262626; }
 .controls { border-left: 1px solid #262626; }
+
+/* --- Panel dock: hide/show arrow toggles --- */
+.panelToggle {
+  position: absolute;
+  top: 50%;
+  z-index: 40;
+  width: 22px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid #3f3f3f;
+  background: rgba(18, 18, 18, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #a3a3a3;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: color .15s ease, background .15s ease, border-color .15s ease;
+}
+.panelToggle:hover {
+  color: #ffffff;
+  background: #242424;
+  border-color: #737373;
+}
+.panelToggle:active { background: #2e2e2e; }
+.panelToggle[data-side="left"] {
+  left: var(--lab-left-w);
+  margin-left: -11px;
+  border-radius: 0 7px 7px 0;
+}
+.panelToggle[data-side="right"] {
+  right: var(--lab-right-w);
+  margin-right: -11px;
+  border-radius: 7px 0 0 7px;
+}
+/* Hidden panel: arrow parks flush at the dock edge */
+.lab[data-left="collapsed"] .panelToggle[data-side="left"] { left: 0; margin-left: 0; }
+.lab[data-right="collapsed"] .panelToggle[data-side="right"] { right: 0; margin-right: 0; }
 
 .searchBox {
   position: relative;
@@ -2256,6 +2298,17 @@
   border-color: #000000;
 }
 
+.surface[data-theme="light"] .panelToggle {
+  background: rgba(255, 255, 255, 0.94);
+  border-color: #b3b3b3;
+  color: #404040;
+}
+.surface[data-theme="light"] .panelToggle:hover {
+  background: #0a0a0a;
+  border-color: #0a0a0a;
+  color: #ffffff;
+}
+
 .surface[data-theme="light"] .deckSection {
   border-top-color: rgba(0, 0, 0, 0.08);
 }
@@ -2942,55 +2995,67 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 1050px) {
-  .lab { grid-template-columns: 200px minmax(380px, 1fr); }
-  .controls {
-    grid-column: 1 / -1;
-    border-left: 0;
-    border-top: 1px solid #262626;
-    display: grid;
-    grid-template-columns: 1.3fr 1fr 1fr;
-    gap: 18px;
-  }
-  .controls > .sectionLabel { grid-column: 1 / -1; }
-  .field, .controlRow, .animationTelemetry, .cameraPresets, .logSection { margin-top: 0; }
-  .modeGrid { grid-row: 2 / 5; }
-  .stage { min-height: 560px; }
+/* --- Desktop: a hidden panel leaves the dock entirely, stage takes the room --- */
+@media (min-width: 1051px) {
+  .lab[data-left="collapsed"] { --lab-left-w: 0px; }
+  .lab[data-right="collapsed"] { --lab-right-w: 0px; }
+  .lab[data-left="collapsed"] .specimens,
+  .lab[data-right="collapsed"] .controls { display: none; }
 }
 
+/* --- Tablet & narrow desktop: side panels become overlay drawers --- */
+@media (max-width: 1050px) {
+  .lab {
+    --drawer-w: min(330px, 84vw);
+    display: block;
+  }
+  .specimens, .controls {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: auto;
+    width: var(--drawer-w);
+    z-index: 30;
+    background: rgba(10, 10, 10, 0.97);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6);
+    transition: transform .28s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .specimens {
+    left: 0;
+    transform: translateX(-102%);
+    border-right: 1px solid #262626;
+  }
+  .controls {
+    right: 0;
+    transform: translateX(102%);
+    border-left: 1px solid #262626;
+  }
+  .lab[data-left="open"] .specimens { transform: none; }
+  .lab[data-right="open"] .controls { transform: none; }
+  /* Arrow rides the drawer's inner edge while open */
+  .panelToggle[data-side="left"] { left: var(--drawer-w); }
+  .panelToggle[data-side="right"] { right: var(--drawer-w); }
+}
+
+/* --- Phone: drawers go near-full-width, chrome tightens --- */
 @media (max-width: 720px) {
   .surface {
     padding: 12px max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
   }
+  .lab { --drawer-w: min(340px, 88vw); }
   .header { align-items: flex-start; flex-direction: column; }
   .nav { width: 100%; flex-wrap: wrap; }
   .nav a, .themeToggle { flex: 1; }
-  .lab { display: block; min-height: 0; overflow: visible; }
-  .specimens {
-    max-height: none;
-    border-right: 0;
-    border-bottom: 1px solid #262626;
-    padding: 14px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-  }
-  .specimens > .sectionLabel, .specimenNote { display: none; }
-  .specimenEntry { display: inline-block; vertical-align: top; }
-  .rosterDivider { display: none; }
-  .specimen { width: 168px; display: inline-grid; vertical-align: top; border: 1px solid #262626; }
-  .stage { min-height: 58svh; }
-  .controls { display: block; padding: 16px; border-left: 0; }
-  .modeGrid { grid-template-columns: repeat(3, 1fr); }
-  .field, .controlRow, .animationTelemetry, .cameraPresets, .logSection { margin-top: 18px; }
   .telemetry div { width: 74px; }
   .dragHint { display: none; }
   .cameraDock { top: 48px; right: 12px; }
   .stageToolbar { top: 48px; left: 12px; }
   .stageToolBtn { min-height: 24px; padding: 0 6px; font-size: 8px; }
-  .searchBox { display: none; }
+  .pinBanner { max-width: calc(100% - 36px); flex-wrap: wrap; }
+  .hoverLandmarkCard { max-width: calc(100% - 32px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .progressBar { transition: none; }
+  .specimens, .controls { transition: none; }
 }

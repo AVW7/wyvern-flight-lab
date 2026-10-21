@@ -27,6 +27,7 @@ import {
 import styles from "./FlightLabClient.module.css";
 import { AnimationLogConsole } from "./components/AnimationLogConsole";
 import { FlightControls } from "./components/FlightControls";
+import { PanelToggle } from "./components/PanelToggle";
 import { SpecimenSidebar } from "./components/SpecimenSidebar";
 import { StageViewport } from "./components/StageViewport";
 import { QUICK_LOCOMOTION_ACTIONS } from "../../flight-lab/controlHelpers";
@@ -79,6 +80,10 @@ export default function FlightLabClient() {
   const [error, setError] = useState<string | null>(null);
   const [theme, setTheme] = useState<FlightLabTheme>("dark");
   const [cameraPreset, setCameraPreset] = useState<FlightLabCameraPreset>("chase");
+
+  // Docked side-panel visibility (persisted)
+  const [leftPanelOpen, setLeftPanelOpen] = useState(true);
+  const [rightPanelOpen, setRightPanelOpen] = useState(true);
 
   // Diagnostic states
   const [showSkeleton, setShowSkeleton] = useState(false);
@@ -182,6 +187,30 @@ export default function FlightLabClient() {
       logContainerRef.current.scrollTop = logContainerRef.current.scrollHeight;
     }
   }, [logs]);
+
+  // Restore persisted panel visibility once on mount
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem("flight-lab-panels");
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as { left?: boolean; right?: boolean };
+      if (typeof parsed.left === "boolean") setLeftPanelOpen(parsed.left);
+      if (typeof parsed.right === "boolean") setRightPanelOpen(parsed.right);
+    } catch {
+      // malformed or unavailable storage — keep defaults
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(
+        "flight-lab-panels",
+        JSON.stringify({ left: leftPanelOpen, right: rightPanelOpen })
+      );
+    } catch {
+      // storage unavailable — panel state stays session-only
+    }
+  }, [leftPanelOpen, rightPanelOpen]);
 
   const selectSpecimen = (id: string) => {
     const nextSpecimen = findFlightLabSpecimen(id);
@@ -535,7 +564,11 @@ export default function FlightLabClient() {
         </nav>
       </header>
 
-      <section className={styles.lab}>
+      <section
+        className={styles.lab}
+        data-left={leftPanelOpen ? "open" : "collapsed"}
+        data-right={rightPanelOpen ? "open" : "collapsed"}
+      >
         <SpecimenSidebar
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
@@ -633,6 +666,19 @@ export default function FlightLabClient() {
             logContainerRef={logContainerRef}
           />
         </FlightControls>
+
+        <PanelToggle
+          side="left"
+          open={leftPanelOpen}
+          label="specimen panel"
+          onToggle={() => setLeftPanelOpen((open) => !open)}
+        />
+        <PanelToggle
+          side="right"
+          open={rightPanelOpen}
+          label="controls panel"
+          onToggle={() => setRightPanelOpen((open) => !open)}
+        />
       </section>
     </main>
   );

@@ -52,16 +52,36 @@ test('the rider lands on the seat, not above or inside it', () => {
 });
 
 test('the rider inherits the wyvern scale exactly once', () => {
-  // Doubling the wyvern's normalisation must double the rider's offset from
-  // Spine3 and leave nothing else changed. Applying the scale twice is the
-  // failure mode this catches.
-  const one = new Vector3().setFromMatrixPosition(riderMatrix(spine3Matrix(1), RIDER_MOUNT.offsetLocal, 1));
-  const two = new Vector3().setFromMatrixPosition(riderMatrix(spine3Matrix(2), RIDER_MOUNT.offsetLocal, 2));
-  const fromSpine = (v) => v.clone().sub(new Vector3(0, 783.439, 25.186));
-  assert.ok(
-    fromSpine(two).length() / fromSpine(one).length() - 2 < 1e-9,
-    'offset must scale linearly with the wyvern'
-  );
+  // The bug this catches: `spine3.matrixWorld` already carries the wyvern's
+  // normalisation scale, so multiplying by S(scale) again shrinks the rider by
+  // the square of the factor (~1/670) and it vanishes while still animating.
+  // An earlier version of this test only checked the offset and let that ship.
+  for (const scale of [0.0013413698238881775, 1, 0.5, 2]) {
+    const matrix = riderMatrix(spine3Matrix(scale), RIDER_MOUNT.offsetLocal, scale);
+    const worldScale = new Vector3();
+    new Matrix4().copy(matrix).decompose(new Vector3(), new Quaternion(), worldScale);
+    assert.ok(
+      Math.abs(worldScale.x - scale) < scale * 1e-6,
+      `rider world scale ${worldScale.x} should equal the wyvern's ${scale}`
+    );
+  }
+});
+
+test('doubling the wyvern scale doubles both the rider and its offset', () => {
+  const spine = (s) => spine3Matrix(s);
+  const one = riderMatrix(spine(1), RIDER_MOUNT.offsetLocal, 1);
+  const two = riderMatrix(spine(2), RIDER_MOUNT.offsetLocal, 2);
+  const origin = new Vector3(0, 783.439, 25.186);
+  const fromSpine = (m) => new Vector3().setFromMatrixPosition(m).sub(origin);
+  const ratio = fromSpine(two).length() / fromSpine(one).length();
+  assert.ok(Math.abs(ratio - 2) < 1e-9, `offset ratio ${ratio} should be 2`);
+
+  const scaleOf = (m) => {
+    const s = new Vector3();
+    m.decompose(new Vector3(), new Quaternion(), s);
+    return s.x;
+  };
+  assert.ok(Math.abs(scaleOf(two) / scaleOf(one) - 2) < 1e-9, 'rider scale should track the wyvern');
 });
 
 test('the local and world mount offsets describe the same displacement', () => {

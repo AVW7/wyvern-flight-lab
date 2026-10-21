@@ -4,7 +4,7 @@
   "note": "Generated from geometry. Do not hand-edit; re-run the tool instead.",
   "wyvern": {
     "path": "public/models/wyvern-v2-rig.glb",
-    "sha256": "e8edd574d95b388e85a1b5c1a695f879a78c8ee161b8f934f32f167992c35698",
+    "sha256": "d916b748d987df649d0179d159b2b8d834baadf423f515ed60b62f7f03f1a6d4",
     "joint": "Spine3",
     "spine3World": [
       0,
@@ -49,7 +49,7 @@
   },
   "rider": {
     "path": "public/models/wyvern-rider.glb",
-    "sha256": "fea609c3d565f56693808e4db1111e6feaf11e936c36e443082012cc145b8ad7",
+    "sha256": "d70a6fd66be3d8198562fc258debf1276fad8278ff6c6ce7aad29de0abef30a4",
     "pelvisLocal": [
       0,
       48,

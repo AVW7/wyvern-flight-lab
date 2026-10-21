@@ -5,8 +5,8 @@
  * so the runtime only has to place a group at Spine3's world pose and offset
  * its child by this vector. Re-run the tool if the wyvern or rider asset changes.
  *
- * Derived from public/models/wyvern-v2-rig.glb (e8edd574d95b) and
- * public/models/wyvern-rider.glb (fea609c3d565).
+ * Derived from public/models/wyvern-v2-rig.glb (d916b748d987) and
+ * public/models/wyvern-rider.glb (d70a6fd66be3).
  */
 
 export const RIDER_MOUNT = {

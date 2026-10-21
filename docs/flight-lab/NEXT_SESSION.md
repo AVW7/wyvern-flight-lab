@@ -1,5 +1,29 @@
 # Wyvern model work: next-session handoff
 
+## Current: Stage 3 clip dynamics started, 21 October 2026
+
+Read [37-stage3-clip-defect-taxonomy.md](37-stage3-clip-defect-taxonomy.md) first, then [36-v2-dynamics-gate.md](36-v2-dynamics-gate.md) and [35-rider-asset-and-mount.md](35-rider-asset-and-mount.md).
+
+- **The deficit is three defects, not one.** `npm run assets:diagnose-dynamics` adds a `travel` channel (cumulative |dq|, unbounded — range saturates at 180°). `sustainRatio = p95R/travelR` splits the mapped clips: **UNIFORM** (cruise, both banks, attack — travel and sustain fell together, a gain fixes it), **CONCENTRATED** (idle, walk, attack2 — travels in brief excursions with dead air), **BUZZ** (takeoff, death — fast through a small range).
+- **Gate progress: 27 failing checks → 20.** `npm run assets:amplify-dynamics` derives each gain, refuses anything above a 2% capped-key plateau limit, and writes `assets/rig-audits/2026-10-21-dynamics/candidates/wyvern-v2-dynamics-candidate.glb`. `cruise` now passes all four channels; both banks pass `peak` and `p95` but not `mean`. The shipped rig is **unchanged** — the candidate is not promoted.
+- **`attack` is capped at 3.5× when it needs 12.3×.** Its axes run out because 49 of its 92 rotation channels are constant poses. No gain animates a bone that was never keyed — this is a coverage problem, not an amplitude one.
+- **V2 has no CUBICSPLINE anywhere**; every channel is LINEAR or STEP. STEP is only ever used on ≤2-key channels, so it is harmless. But linear interpolation cannot overshoot, which caps `peak` independently of amplitude. Adding spline tangents to the dominant channels is probably the highest-leverage change left.
+- **Timing is NOT the problem** (unchanged from last session): V1 cruise 1.00 Hz, V2 1.08 Hz, Pennycuick ~0.71 Hz. See `docs/2026-10-21-research-notes.md`.
+- **Rider shipped** (unchanged): `public/models/wyvern-rider.glb`, 24 `RDR_` bones, 2,860 tris, byte-identical rebuilds, mounted at Spine3 via a derived offset.
+- **Suite**: 161 tests pass. New this session: `wyvern-clip-dynamics-tools` (12).
+
+**Next**: `takeoff` and `death` first — they are `BUZZ`, and takeoff's duty cycle went 0.01 → 0.52, i.e. an explosion replaced by a wind-up. Then `CONCENTRATED` (`idle`, `walk`, `attack2`). Do not reach for a gain on any of them. Invert the assertion in `test/wyvern-v2-dynamics.test.js` only when the gate passes.
+
+## Previous: Dynamics Gate + Rider Asset, 21 October 2026
+
+- **New measurement channel**: `npm run assets:audit-dynamics` / `:v2` reports world-space per-frame max angular velocity (peak / p95 / mean / accelMax, plus a `sustained` guard) over deforming bones at 60 Hz. Reference: `assets/rig-audits/2026-10-21-dynamics/v1-dynamics-reference.json`, reproduced exactly on re-run and pinned by SHA-256.
+- **V2 fails the gate on 27 checks** (three per mapped clip, all nine). Peak ratio min 0.079 / median 0.414 / max 1.145. Worst: `attack` 9%, `takeoff` 8% of V1 peak; `idle` p95 at 7.7% (frozen between rare twitches).
+- **Timing is NOT the problem.** Measured wingbeat: V1 cruise 1.00 Hz, V2 cruise 1.08 Hz, against a Pennycuick prediction of ~0.71 Hz. The earlier "fixed 6 s loop caps dynamics" hypothesis is **rejected** — see `docs/2026-10-21-research-notes.md`. Stage 3 must add amplitude and transients, not re-time clips.
+- **Rider shipped**: `public/models/wyvern-rider.glb` — 24 `RDR_` bones, 2,860 tris, 4 clips, byte-identical rebuilds. Mounted at Spine3 via a derived offset (`tools/calibrate-rider-mount.mjs` → `src/flight-lab/rider/mountData.ts`). Separate GLB, world-space follower, own mixer.
+- **Suite**: 149 tests pass. New: `wyvern-dynamics-reference` (5), `wyvern-v2-dynamics` (6), `rider-runtime-contract` (7), `rider-mount` (8).
+
+**Next**: Stage 3 (clip dynamics) — start with `attack` and `takeoff`, which lost their transients, then `idle`'s frozen p95. Invert the assertion in `test/wyvern-v2-dynamics.test.js` when the gate passes.
+
 ## Current: V2 18-Clip Panel Coordination Promotion & Procedural Rig Polish, 14 October 2026
 
 Read [`docs/plans/sanctuary/WYVERN_ANIMATION_IMPROVEMENTS_LOG_AND_HANDOFF.md`](../sanctuary/WYVERN_ANIMATION_IMPROVEMENTS_LOG_AND_HANDOFF.md) (Section 10).

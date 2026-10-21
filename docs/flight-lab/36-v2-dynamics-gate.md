@@ -137,13 +137,39 @@ from `peak`.
 simultaneously 2.55× spikier than reference — wrong *shape*, not insufficient
 motion. Fixing it by adding more amplitude would make it worse.
 
+> **Continued in [37-stage3-clip-defect-taxonomy.md](37-stage3-clip-defect-taxonomy.md).**
+> This section says the deficit is not one thing. Doc 37 names the three things,
+> with a measured discriminator, and records what a gain can fix (one class) and
+> what it cannot (the other two). Read that before attempting Stage 3.
+
 ---
 
-## 6. Probable root cause: fixed-length loops
+## 6. Loop length is not the cause
 
 V2 ships nine clips at exactly **6.0000 s with exactly 145 keys** — `cruise`,
-`bankLeft`, `bankRight`, `dive`, `glide`, `hover`, `idle`, `rest`, `scout`. V1's
-equivalents are not uniform and are much denser where it matters:
+`bankLeft`, `bankRight`, `dive`, `glide`, `hover`, `idle`, `rest`, `scout`. That
+uniformity looks like a generator emitting fixed-length loops, and an earlier
+draft of this document proposed that this caps the dynamics a clip can express.
+
+**That hypothesis is rejected.** Counting wingbeat cycles directly from the
+per-frame angular-velocity series (excursions above 50% of peak, halved):
+
+| Clip | Duration | Half-cycles | Implied frequency |
+|---|---:|---:|---:|
+| V1 `FlightCruise` | 6.00 s | 12 | 1.00 Hz |
+| V2 `cruise` | 6.00 s | 13 | 1.08 Hz |
+
+Pennycuick's wingbeat law for this wyvern (15.7 m span, ~45 m² wing area,
+~800 kg) predicts ≈0.7 Hz, so both sit inside the plausible band. A 6-second loop
+holds the right number of beats. See `docs/2026-10-21-research-notes.md` for the
+derivation.
+
+What differs is amplitude, on the same beat count. Re-timing the clips in Stage 3
+would not fix them; restoring amplitude — especially the transients lost by
+`attack` and `takeoff` — is the lever.
+
+The fixed 6-second length remains a *stylistic* uniformity (nine clips the same
+duration regardless of what they depict) and V1 is not uniform:
 
 | | V1 | V2 |
 |---|---|---|
@@ -153,13 +179,9 @@ equivalents are not uniform and are much denser where it matters:
 | Death | 10.3000 s, 548 keys | 4.0000 s, 97 keys |
 | Idle | 4.0333 s, 136 keys | 6.0000 s, 145 keys |
 
-A generator that emits a fixed 6-second loop with a fixed key count caps the
-dynamics it can express: there is no room for a transient because every clip is
-the same length regardless of what it depicts. V1's attack is 4.3× longer than
-V2's and carries 8.7× the keys.
-
-This is a hypothesis consistent with the numbers, not a proven mechanism. Stage 3
-should test it by re-timing one clip to its V1 duration before touching amplitude.
+V1's attack is 4.3× longer than V2's and carries 8.7× the keys. That is where the
+transients live — but the evidence says the cause is the *content* of those
+seconds, not the loop length itself.
 
 ---
 
@@ -232,3 +254,9 @@ Stage 3 is done when `npm run assets:audit-dynamics:v2` passes, which requires:
 
 `test/wyvern-v2-dynamics.test.js` asserts V2 currently fails. **When Stage 3
 lands, invert that assertion** — the file says so inline.
+
+**Progress, 2026-10-21**: 27 failing checks → 20, via
+`npm run assets:amplify-dynamics`. `cruise` passes all four channels; both banks
+pass `peak` and `p95` but not `mean`. The other five clips are diagnosed as
+classes a gain cannot fix — see doc 37 §6 for what each one actually needs. The
+gate still fails, so the assertion above stays as written.

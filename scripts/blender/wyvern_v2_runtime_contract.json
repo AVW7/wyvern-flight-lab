@@ -3,14 +3,14 @@
   "asset": {
     "id": "wyvern-v2-flight-lab-runtime",
     "path": "public/models/wyvern-v2-rig.glb",
-    "sha256": "e8edd574d95b388e85a1b5c1a695f879a78c8ee161b8f934f32f167992c35698",
-    "bytes": 5740476
+    "sha256": "d916b748d987df649d0179d159b2b8d834baadf423f515ed60b62f7f03f1a6d4",
+    "bytes": 5977592
   },
   "provenance": {
     "sourceAsset": "assets/blender/wyvern-gothic.glb",
     "sourceSha256": "f334e78569c701bbfefe43ef9816147e200c56bdcb3a8a58889a9f13c6d2956e",
-    "baseline": "2026-10-14: 18-clip wing-panel coordination, ground/combat fold easing, and constant-track compaction",
-    "evidence": "docs/plans/flight-lab/14-v2-runtime-contract-cleanup.md",
+    "baseline": "2026-10-21: idle Neck1/Neck2/Head rotation channels re-spliced from a fresh models/source/wyvern-rig.blend export (tools/blender/splice_neck_head_channels.mjs); the retired idle-v2-fold-candidate.glb donor had baked a ~-65deg neck raise into ground-mode idle. walk/land/cruise and all non-neck idle channels untouched. 2026-10-14: 18-clip wing-panel coordination, ground/combat fold easing, and constant-track compaction",
+    "evidence": "docs/plans/flight-lab/14-v2-runtime-contract-cleanup.md; docs/flight-lab/evidence/2026-10-21-idle-before.png; docs/flight-lab/evidence/2026-10-21-idle-after.png",
     "qualification": "Structural baseline; visual idle, contact, Blender round-trip and gameplay approval remain separate"
   },
   "signature": {

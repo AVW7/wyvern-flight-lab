@@ -3,8 +3,8 @@
   "asset": {
     "id": "wyvern-rider-runtime",
     "path": "public/models/wyvern-rider.glb",
-    "sha256": "fea609c3d565f56693808e4db1111e6feaf11e936c36e443082012cc145b8ad7",
-    "bytes": 608728
+    "sha256": "d70a6fd66be3d8198562fc258debf1276fad8278ff6c6ce7aad29de0abef30a4",
+    "bytes": 611268
   },
   "provenance": {
     "builder": "tools/blender/build_rider.py",
@@ -44,7 +44,7 @@
     ],
     "skinCount": 1,
     "meshCount": 1,
-    "primitiveCount": 1,
+    "primitiveCount": 2,
     "triCount": 2860,
     "clipCount": 4,
     "clips": [
@@ -80,8 +80,8 @@
       0
     ],
     "footWorld": [
-      52,
-      -136,
+      188,
+      -144,
       144
     ]
   }

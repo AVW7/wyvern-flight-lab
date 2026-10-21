@@ -7,6 +7,10 @@ import { createWyvernFlightRig, type FlightKinematics, type WyvernFlightRig } fr
 import { createInteractiveFlightController, type FlightInputState } from "./interactiveFlight";
 import { isV2RigSpecimen, type FlightLabSpecimen } from "./catalog";
 import { resolveFlightLabClip, resolveOneShotCapability } from "./clipResolver";
+import { RIDER_MOUNT } from "./rider/mountData";
+import { createRider, type RiderHandle } from "./rider/riderRuntime";
+import { uniformScaleOf } from "./rider/riderMount";
+import { flushMixerBindings } from "./rig/mixerBindings";
 import {
   applyWireframe,
   computeMeshMetrics,
@@ -131,6 +135,11 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
   let flightRig: WyvernFlightRig | null = null;
   let membraneSurface: ReturnType<typeof createMembraneSurfaceRuntime> | null = null;
   let mixer: THREE.AnimationMixer | null = null;
+  // Rider is a sibling of the model in `world`, driven from Spine3's world
+  // matrix. Kept outside the model so it stays out of Box3/fitCamera/scanSeam.
+  let rider: RiderHandle | null = null;
+  let riderSpine3: THREE.Object3D | null = null;
+  let riderScale = 1;
   let actions = new Map<string, THREE.AnimationAction>();
   let activeAction: THREE.AnimationAction | null = null;
   let mode: FlightLabMode = "cruise";
@@ -386,6 +395,10 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
     neckSpring.detach();
     flightRig?.reset();
     flightRig = null;
+    rider?.dispose();
+    rider = null;
+    riderSpine3 = null;
+    riderScale = 1;
     model = null;
     mixer = null;
     actions.clear();
@@ -401,17 +414,10 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
   const updateMixer = (step: number) => {
     if (!mixer) return;
     mixer.update(step);
-    // Guarantee scene graph receives evaluated clip pose on every frame,
-    // preventing procedural compounding on bones with static keyframe tracks.
-    const bindings = (mixer as any)._bindings;
-    if (bindings) {
-      const offset = (mixer as any)._accuIndex;
-      for (let i = 0, n = bindings.length; i < n; i++) {
-        const b = bindings[i];
-        const stride = b.valueSize;
-        b.binding.setValue(b.buffer, offset * stride + stride);
-      }
-    }
+    // Guarantee the scene graph receives the evaluated clip pose on every
+    // frame, preventing procedural compounding on bones with static tracks.
+    // See `rig/mixerBindings.ts` for why this reaches into private fields.
+    flushMixerBindings(mixer);
   };
 
   const evaluateScrubbedPose = (stepDt: number) => {
@@ -470,6 +476,13 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
       if (!flightRig) {
         neckSpring.tick(delta);
       }
+    }
+
+    if (rider && riderSpine3) {
+      // Follow the spine. The rider keeps its own clock, but respects pause so
+      // a frozen inspection pose stays frozen.
+      rider.setClipForWyvernClip(currentClip);
+      rider.update(paused ? 0 : delta, riderSpine3, riderScale);
     }
 
     environment.tick(paused ? 0 : delta, mode, elapsed, paused);
@@ -812,6 +825,34 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
         mixer = new THREE.AnimationMixer(model);
         neckSpring.attach(model);
         flightRig = isV2RigSpecimen(specimen) ? createWyvernFlightRig(model) : null;
+
+        // Rider: a separate GLB, driven as a world-space follower of Spine3.
+        // It is a sibling of `model` in `world`, not a child of it, so it stays
+        // out of Box3/fitCamera, the landmark cache and scanSeam.
+        riderSpine3 = model.getObjectByName(RIDER_MOUNT.joint) ?? null;
+        if (riderSpine3) {
+          model.updateMatrixWorld(true);
+          riderScale = uniformScaleOf(model);
+          try {
+            rider = await createRider({
+              spine3: riderSpine3,
+              uniformScale: riderScale,
+              initialWyvernClip: currentClip,
+            });
+            if (disposed || controller.signal.aborted) {
+              rider.dispose();
+              rider = null;
+              return;
+            }
+            rider.update(0, riderSpine3, riderScale);
+            world.add(rider.root);
+          } catch (error) {
+            // A missing or broken rider must not take the wyvern down with it.
+            console.warn("FlightLab: rider unavailable", error);
+            rider = null;
+          }
+        }
+
         mixer.addEventListener("finished", (e: any) => {
           const finishedAction = e?.action as THREE.AnimationAction | undefined;
           if (finishedAction !== activeAction) return;
