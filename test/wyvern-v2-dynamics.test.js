@@ -117,17 +117,27 @@ test('V2 currently fails the gate, for three distinct measured reasons', async (
   const cruise = row('cruise');
   assert.ok(cruise.got.peak < cruise.want.peak * 0.7, `cruise peak ${cruise.got.peak.toFixed(1)}`);
 
-  // 2. Transients. Attack and takeoff lose their peaks disproportionately:
-  //    crest factor 0.57x and 0.27x of reference. These are the two clips whose
-  //    V1 cousins are the most peaky (crest 4.58 and 7.12), so they are exactly
-  //    where a uniform amplitude reduction is most visible.
-  for (const name of ['attack', 'takeoff']) {
-    const r = row(name);
-    assert.ok(
-      r.got.peak < r.want.peak * 0.15,
-      `${name} peak should collapse to under 15% of reference, got ${(r.got.peak / r.want.peak).toFixed(3)}x`
+  // 2. Transients. Before Task D2, attack and takeoff both lost their peaks
+  //    disproportionately: crest factor 0.57x and 0.27x of reference, in exactly
+  //    the two clips whose V1 cousins are the most peaky (crest 4.58 and 7.12).
+  //    The D2 BUZZ reshape (solved against this module's 60 Hz world-space
+  //    metric, not typed) restored takeoff to 1.68x peak / death to 1.16x, and
+  //    both now pass every channel of the gate. Attack is still the outlier at
+  //    0.09x because 49 of its channels are static and amplification is capped
+  //    at 3.47x — that is Task D4, not a regression.
+  for (const name of ['takeoff', 'death']) {
+    const named = result.failures.filter((f) => f.clip === name);
+    assert.deepEqual(
+      named.map((f) => f.channel),
+      [],
+      `${name} was reshaped in D2 and must now pass the gate`
     );
   }
+  const attack = row('attack');
+  assert.ok(
+    attack.got.peak < attack.want.peak * 0.15,
+    `attack peak should still collapse to under 15% of reference, got ${(attack.got.peak / attack.want.peak).toFixed(3)}x`
+  );
 
   // 3. The opposite failure. V2's idle is not gently reduced, it is frozen
   //    between rare twitches: p95 falls to 7.7% of reference while its crest

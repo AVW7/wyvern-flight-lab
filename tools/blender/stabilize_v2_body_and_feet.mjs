@@ -10,6 +10,7 @@
 // are untouched, only values), then re-pins asset sha/bytes.
 import assert from "node:assert/strict";
 import { readFileSync, writeFileSync, rmSync } from "node:fs";
+import { resolve } from "node:path";
 import { createHash } from "node:crypto";
 import { AnimationMixer, LoopOnce, Quaternion, Vector3 } from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -295,13 +296,16 @@ writeFileSync(tmp, bytes);
 try {
   compactGlb(tmp, tmp); // signature unchanged (targets only); validates against contract
   const finalBytes = readFileSync(tmp);
-  const contractPath = "scripts/blender/wyvern_v2_runtime_contract.json";
-  const contract = JSON.parse(readFileSync(contractPath, "utf8"));
-  contract.asset.sha256 = createHash("sha256").update(finalBytes).digest("hex");
-  contract.asset.bytes = finalBytes.length;
-  writeFileSync(contractPath, JSON.stringify(contract, null, 2) + "\n");
+  const isRuntimePath = resolve(OUTPUT) === resolve("public/models/wyvern-v2-rig.glb");
+  if (isRuntimePath) {
+    const contractPath = "scripts/blender/wyvern_v2_runtime_contract.json";
+    const contract = JSON.parse(readFileSync(contractPath, "utf8"));
+    contract.asset.sha256 = createHash("sha256").update(finalBytes).digest("hex");
+    contract.asset.bytes = finalBytes.length;
+    writeFileSync(contractPath, JSON.stringify(contract, null, 2) + "\n");
+  }
   writeValidatedRuntimeRig(OUTPUT, finalBytes);
-  console.log(`[D1] Wrote ${OUTPUT}: ${JSON.stringify(validateRuntimeRig(readFileSync(OUTPUT)))}`);
+  console.log(`[D1] Wrote ${OUTPUT}: ${JSON.stringify(validateRuntimeRig(readFileSync(OUTPUT), { checkHash: isRuntimePath }))}`);
 } finally {
   rmSync(tmp, { force: true });
 }

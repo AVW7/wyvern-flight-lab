@@ -13,8 +13,8 @@
 // scripts/wyvern-dynamics.mjs, not typed.
 import assert from "node:assert/strict";
 import { readFileSync, writeFileSync, rmSync } from "node:fs";
+import { resolve } from "node:path";
 import { createHash } from "node:crypto";
-import { Quaternion, Vector3 } from "three";
 import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
 import { readGlb, encodeGlb, validateRuntimeRig, writeValidatedRuntimeRig } from "./runtime_rig_contract.mjs";
 import { compactGlb } from "./compact_v2_glb.mjs";
@@ -26,7 +26,7 @@ const INPUT = process.argv[2] ?? "public/models/wyvern-v2-rig.glb";
 const OUTPUT = process.argv[3] ?? INPUT;
 
 const TAKEOFF_TARGETS = {
-  peak: 3376.92, p95: 1086.96, meanMin: 474.53, meanMax: 949.05,
+  peak: 3376.92, p95: 1086.96, meanMin: 474.53, meanMax: 949.05, accelMax: 300838.9,
 };
 const DEATH_TARGETS = {
   peak: 1050.11, p95: 734.19, meanMin: 351.81, meanMax: 703.62, accelMax: 46127.79,
@@ -156,15 +156,6 @@ function rotationChannels(gltf, binary, anim, boneFilter = null) {
   return out;
 }
 
-const measure = (bytes) => {
-  const tmp = `/tmp/reshape-buzz-measure-${process.pid}.glb`;
-  writeFileSync(tmp, bytes);
-  try {
-    return loadRig(tmp).then(rig => measureDynamics(rig));
-  } finally {
-    // loadRig is async; deletion happens in the caller after await
-  }
-};
 async function measureClip(bytes, clipName) {
   const tmp = `/tmp/reshape-buzz-measure-${process.pid}.glb`;
   writeFileSync(tmp, bytes);
@@ -190,12 +181,12 @@ async function reshapeTakeoff(gltf, binary, app, toBytes) {
   }
   const channels = rotationChannels(gltf, binary, anim);
 
-  const build = (gain) => {
+  const build = (gain, smoothing) => {
     const writes = [];
     for (const rc of channels) {
       const pivot = sampleTrack(rc.times, rc.values, WINDOW_START);
       const cruise0 = cruiseStart.get(rc.name);
-      const out = [];
+      let out = [];
       for (let k = 0; k < rc.times.length; k++) {
         const t = rc.times[k];
         let q = rc.values.slice(k * 4, k * 4 + 4);
@@ -213,34 +204,50 @@ async function reshapeTakeoff(gltf, binary, app, toBytes) {
         }
         out.push(...q);
       }
+      for (let pass = 0; pass < smoothing; pass++) {
+        const smoothed = out.slice(0, 4);
+        for (let k = 1; k < rc.times.length - 1; k++) {
+          const prev = out.slice((k - 1) * 4, k * 4);
+          const cur = out.slice(k * 4, k * 4 + 4);
+          const next = out.slice((k + 1) * 4, (k + 2) * 4);
+          const blended = qslerp(qslerp(prev, cur, 0.5), next, 0.5).map((v, i) => v * 0.5 + cur[i] * 0.5);
+          smoothed.push(...qnorm(blended));
+        }
+        smoothed.push(...out.slice(-4));
+        out = smoothed;
+      }
       writes.push({ rc, out });
     }
     return writes;
   };
 
-  // Solve the launch gain against the official metric.
-  let lo = 1.0, hi = 16.0, best = null;
-  for (let iter = 0; iter < 8; iter++) {
-    const gain = (lo + hi) / 2;
-    const bytes = toBytes(build(gain));
-    const m = await measureClip(bytes, "takeoff");
-    const ok = m.peak >= TAKEOFF_TARGETS.peak && m.p95 >= TAKEOFF_TARGETS.p95 &&
-      m.mean >= TAKEOFF_TARGETS.meanMin && m.mean <= TAKEOFF_TARGETS.meanMax;
-    console.log(`[D2] takeoff gain=${gain.toFixed(2)} peak=${m.peak.toFixed(0)} p95=${m.p95.toFixed(0)} mean=${m.mean.toFixed(0)} accel=${m.accelMax.toFixed(0)} sustained=${m.sustained} ${ok ? "OK" : ""}`);
-    if (ok) {
-      best = { gain, writes: build(gain) };
-      hi = gain; // prefer the smallest passing gain
-    } else if (m.peak < TAKEOFF_TARGETS.peak || m.p95 < TAKEOFF_TARGETS.p95 || m.mean < TAKEOFF_TARGETS.meanMin) {
-      lo = gain;
-    } else {
-      hi = gain;
+  // Solve the launch gain against the official metric, escalating smoothing if
+  // the launch window's acceleration overshoots the V1-scaled cap.
+  let best = null;
+  outer: for (const smoothing of [0, 1, 2]) {
+    let lo = 1.0, hi = 16.0;
+    for (let iter = 0; iter < 10; iter++) {
+      const gain = (lo + hi) / 2;
+      const bytes = toBytes(build(gain, smoothing));
+      const m = await measureClip(bytes, "takeoff");
+      const overAccel = m.accelMax > TAKEOFF_TARGETS.accelMax;
+      const enough = m.peak >= TAKEOFF_TARGETS.peak && m.p95 >= TAKEOFF_TARGETS.p95 && m.mean >= TAKEOFF_TARGETS.meanMin;
+      const ok = enough && !overAccel && m.mean <= TAKEOFF_TARGETS.meanMax;
+      console.log(`[D2] takeoff gain=${gain.toFixed(2)} smooth=${smoothing} peak=${m.peak.toFixed(0)} p95=${m.p95.toFixed(0)} mean=${m.mean.toFixed(0)} accel=${m.accelMax.toFixed(0)} sustained=${m.sustained} ${ok ? "OK" : ""}`);
+      if (ok) {
+        best = { gain, smoothing, writes: build(gain, smoothing) };
+        break outer; // first (least-smoothed) passing solution wins
+      }
+      if (overAccel) hi = gain;
+      else if (!enough) lo = gain;
+      else hi = gain;
     }
   }
   assert.ok(best, "takeoff: no gain satisfies the dynamics gate");
   for (const { rc, out } of best.writes) {
     rc.sampler.output = app.appendFloats(out, "VEC4");
   }
-  console.log(`[D2] takeoff reshaped with launch gain ${best.gain.toFixed(2)}`);
+  console.log(`[D2] takeoff reshaped with launch gain ${best.gain.toFixed(2)}, smoothing passes ${best.smoothing}`);
   return best.gain;
 }
 
@@ -269,7 +276,8 @@ async function reshapeDeath(gltf, binary, app, toBytes) {
           const prev = out.slice((k - 1) * 4, k * 4);
           const cur = out.slice(k * 4, k * 4 + 4);
           const next = out.slice((k + 1) * 4, (k + 2) * 4);
-          smoothed.push(...qslerp(qslerp(prev, cur, 0.5), next, 0.5).map((v, i) => v * 0.5 + cur[i] * 0.5));
+          const blended = qslerp(qslerp(prev, cur, 0.5), next, 0.5).map((v, i) => v * 0.5 + cur[i] * 0.5);
+          smoothed.push(...qnorm(blended));
         }
         smoothed.push(...out.slice(-4));
         out = smoothed;
@@ -306,50 +314,14 @@ async function reshapeDeath(gltf, binary, app, toBytes) {
   console.log(`[D2] death reshaped with gain ${best.gain.toFixed(2)}, smoothing passes ${best.smoothing}`);
 }
 
-// === Drive ====================================================================
-{
-  const { gltf, binary } = readGlb(readFileSync(INPUT));
-  const app = makeAppendor(gltf, binary);
-  // toBytes: rebuild a candidate GLB buffer with the given writes applied to a
-  // DEEP COPY of the working JSON so rejected trials do not leak.
-  const pristineSamplers = gltf.animations.map(a => a.samplers.map(s => ({ ...s })));
-  const toBytes = (writes) => {
-    const trialGltf = structuredClone(gltf);
-    trialGltf.animations.forEach((a, i) => a.samplers.forEach((s, j) => Object.assign(s, pristineSamplers[i][j])));
-    const trialApp = makeAppendor(trialGltf, binary);
-    for (const { rc, out } of writes) {
-      const tAnim = trialGltf.animations.find(a => a.name === (rc.ch ? anim0.name : ""));
-      void tAnim;
-    }
-    // Simpler: apply writes against the trial JSON by matching sampler identity
-    // through the pristine arrays. We rebuild writes per trial in build(), so
-    // here we only need to encode the CURRENT gltf state after build() mutated it.
-    return null;
-  };
-  void toBytes;
-  var anim0 = null; // placeholder, replaced below
-}
-
-// The closure approach above proved awkward with structuredClone; use direct
-// save/restore of sampler.output indices instead — writes only replace outputs.
-async function solveAndApply(clipName, builder) {
-  const { gltf, binary } = readGlb(currentBytes);
-  const anim = gltf.animations.find(a => a.name === clipName);
-  const saved = anim.samplers.map(s => s.output);
-  const materialize = (writes, app) => {
-    for (const { rc, out } of writes) rc.sampler.output = app.appendFloats(out, "VEC4");
-  };
-  return { gltf, binary, anim, saved, materialize };
-}
-
+// Trials encode via structuredClone of the working JSON so rejected gains never
+// leak into the shipped buffer; final writes append into the real JSON.
 let currentBytes = readFileSync(INPUT);
 
 // takeoff
 {
   const { gltf, binary } = readGlb(currentBytes);
   const app = makeAppendor(gltf, binary);
-  const anim = gltf.animations.find(a => a.name === "takeoff");
-  const saved = anim.samplers.map(s => s.output);
   const trialBytes = (writes) => {
     const trial = structuredClone(gltf);
     const tAnim = trial.animations.find(a => a.name === "takeoff");
@@ -387,13 +359,16 @@ writeFileSync(tmp, currentBytes);
 try {
   compactGlb(tmp, tmp);
   const finalBytes = readFileSync(tmp);
-  const contractPath = "scripts/blender/wyvern_v2_runtime_contract.json";
-  const contract = JSON.parse(readFileSync(contractPath, "utf8"));
-  contract.asset.sha256 = createHash("sha256").update(finalBytes).digest("hex");
-  contract.asset.bytes = finalBytes.length;
-  writeFileSync(contractPath, JSON.stringify(contract, null, 2) + "\n");
+  const isRuntimePath = resolve(OUTPUT) === resolve("public/models/wyvern-v2-rig.glb");
+  if (isRuntimePath) {
+    const contractPath = "scripts/blender/wyvern_v2_runtime_contract.json";
+    const contract = JSON.parse(readFileSync(contractPath, "utf8"));
+    contract.asset.sha256 = createHash("sha256").update(finalBytes).digest("hex");
+    contract.asset.bytes = finalBytes.length;
+    writeFileSync(contractPath, JSON.stringify(contract, null, 2) + "\n");
+  }
   writeValidatedRuntimeRig(OUTPUT, finalBytes);
-  console.log(`[D2] Wrote ${OUTPUT}: ${JSON.stringify(validateRuntimeRig(readFileSync(OUTPUT)))}`);
+  console.log(`[D2] Wrote ${OUTPUT}: ${JSON.stringify(validateRuntimeRig(readFileSync(OUTPUT), { checkHash: isRuntimePath }))}`);
 } finally {
   rmSync(tmp, { force: true });
 }

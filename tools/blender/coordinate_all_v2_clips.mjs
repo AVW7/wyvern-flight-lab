@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { AnimationMixer, Euler, LoopOnce, Matrix4, Quaternion, Vector3 } from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -52,7 +52,16 @@ export async function buildAllCoordinatedV2Glb(
   ];
 
   const donorHashes = {};
+  const resolvedFromBase = [];
   for (const [clip, donorPath, extraNodes] of donors) {
+    if (!existsSync(donorPath)) {
+      // The 2026-10-07 MCP-study donors are no longer in the repo. The panel
+      // solve below derives panels from the adjacent digits' world deltas, so a
+      // missing donor is not fatal: keep the base clip's channels and re-solve.
+      console.log(`[coordinate] donor missing for '${clip}'; re-solving panels from base`);
+      resolvedFromBase.push(clip);
+      continue;
+    }
     const donorBytes = readFileSync(donorPath);
     donorHashes[clip] = createHash("sha256").update(donorBytes).digest("hex");
     buf = splicePanelChannels(buf, donorBytes, clip, extraNodes);
@@ -178,8 +187,16 @@ export async function buildAllCoordinatedV2Glb(
     });
   }
 
+  // When every donor is missing we are re-solving the current runtime rig,
+  // whose rest/attack2/attackAir2 wrist/hand/digit channels are already the
+  // repaired versions. Re-applying the era-specific partial-unbind slerps
+  // would open rest's flank fold back up (regresses the <1800 hand span).
+  const legacyDonorMode = resolvedFromBase.length === 0;
+
   const remainingClips = [
+    ...resolvedFromBase,
     "attack",
+
     "attack2",
     "attackAir2",
     "breath",
@@ -197,7 +214,9 @@ export async function buildAllCoordinatedV2Glb(
     const gltfAnim = gltf.animations.find((a) => a.name === clipName);
     assert.ok(clip && gltfAnim, `Missing clip ${clipName}`);
 
-    const nFrames = Math.min(24, Math.max(8, Math.round(clip.duration * 4)));
+    // Sample at the source 24 fps rate: sparser grids leave fast flaps (e.g.
+    // land's touchdown slam) with tens of degrees of panel error mid-interval.
+    const nFrames = Math.max(8, Math.round(clip.duration * 24));
     const count = nFrames + 1;
     const times = Array.from({ length: count }, (_, f) => (clip.duration * f) / nFrames);
     const isLoop = LOOPING_CLIPS.has(clipName);
@@ -244,7 +263,7 @@ export async function buildAllCoordinatedV2Glb(
         b.updateMatrix();
       }
 
-      if (clipName === "rest" || clipName === "attack2") {
+      if (legacyDonorMode && (clipName === "rest" || clipName === "attack2")) {
         for (const s of ["L", "R"]) {
           for (const [part, alpha] of [
             ["WingWrist", 0.82],
@@ -265,7 +284,7 @@ export async function buildAllCoordinatedV2Glb(
           bones[bname].quaternion.copy(qBase.slerp(qPose, 0.55));
           bones[bname].updateMatrix();
         }
-      } else if (clipName === "attackAir2") {
+      } else if (legacyDonorMode && clipName === "attackAir2") {
         for (const bname of DIGIT_NAMES) {
           const qBase = bindQuat[bname].clone();
           const qPose = bones[bname].quaternion.clone();
