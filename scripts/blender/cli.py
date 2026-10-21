@@ -140,7 +140,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     # audit-glb
     p_aglb = subparsers.add_parser("audit-glb", help="Verify GLB against rig contract")
-    p_aglb.add_argument("glb", help="Path to glTF / GLB file")
+    p_aglb.add_argument("glb", type=Path, help="Path to glTF / GLB file")
     p_aglb.add_argument("--manifest", type=Path, default=CONTRACT_PATH, help="Path to rig contract JSON")
     p_aglb.add_argument("--json-out", type=Path, help="Write output to JSON file")
     p_aglb.set_defaults(func=cmd_audit_glb)
@@ -171,7 +171,7 @@ def build_parser() -> argparse.ArgumentParser:
     # export
     p_exp = subparsers.add_parser("export", help="Export scene to GLB")
     p_exp.add_argument("--out", required=True, type=Path, help="Output .glb filepath")
-    p_exp.add_argument("--objects", nargs="+", default=["WyvernRig", "WyvernMesh"], help="Objects to include")
+    p_exp.add_argument("--objects", nargs="+", default=None, help="Objects to include (default: auto-detect V2 two-mesh or legacy single-mesh layout)")
     p_exp.set_defaults(func=cmd_export)
 
     # control-rig
@@ -224,8 +224,8 @@ def command_arguments(args: argparse.Namespace) -> list[str]:
     for key, value in vars(args).items():
         if key in ('func', 'port', 'timeout', 'subcommand', 'headless', 'blender', 'blend') or value is None:
             continue
-        if key == 'script':
-            forwarded.append(str(value.resolve()))
+        if key in ('script', 'glb'):
+            forwarded.append(str(value.resolve()) if isinstance(value, Path) else str(value))
             continue
         forwarded.append('--' + key.replace('_', '-'))
         if isinstance(value, list):

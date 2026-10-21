@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { copyFileSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { AnimationMixer, Euler, LoopOnce, Matrix4, Quaternion, Vector3 } from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
@@ -399,10 +399,14 @@ export async function upgradeV2RigGroundAndMembrane(
   idleAct.clampWhenFinished = true;
   idleAct.play();
 
+  // Horizon-leveling counter-pitch: idle's Body sits +12.9° forward, so a
+  // neutral neck reads +13.0° nose-down. -12.5° total lift holds a ~+0.4°
+  // world eyeline (matching walk's +0.8°). Do NOT raise this — the previous
+  // -12°/-12°/-8° (-32°) lift produced the craned -65° idle defect.
   const neckLiftQuats = {
-    Neck1: new Quaternion().setFromEuler(new Euler((-12.0 * Math.PI) / 180, 0, 0, "XYZ")),
-    Neck2: new Quaternion().setFromEuler(new Euler((-12.0 * Math.PI) / 180, 0, 0, "XYZ")),
-    Head: new Quaternion().setFromEuler(new Euler((-8.0 * Math.PI) / 180, 0, 0, "XYZ")),
+    Neck1: new Quaternion().setFromEuler(new Euler((-4.0 * Math.PI) / 180, 0, 0, "XYZ")),
+    Neck2: new Quaternion().setFromEuler(new Euler((-5.0 * Math.PI) / 180, 0, 0, "XYZ")),
+    Head: new Quaternion().setFromEuler(new Euler((-3.5 * Math.PI) / 180, 0, 0, "XYZ")),
   };
 
   for (let f = 0; f <= idleFrames; f++) {
@@ -647,17 +651,19 @@ export async function upgradeV2RigGroundAndMembrane(
     }
 
     const budgetPath = "tools/asset-budget.json";
-    const budget = JSON.parse(readFileSync(budgetPath, "utf8"));
-    for (const key of [
-      "/models/wyvern-v2-rig.glb",
-      "/models/wyvern-v2-membrane-lab-candidate.glb",
-      "/models/wyvern-v2-idle-walk-flight-lab-candidate.glb",
-    ]) {
-      if (budget.exceptions?.[key]) {
-        budget.exceptions[key].bytes = finalBytes.length;
+    if (existsSync(budgetPath)) {
+      const budget = JSON.parse(readFileSync(budgetPath, "utf8"));
+      for (const key of [
+        "/models/wyvern-v2-rig.glb",
+        "/models/wyvern-v2-membrane-lab-candidate.glb",
+        "/models/wyvern-v2-idle-walk-flight-lab-candidate.glb",
+      ]) {
+        if (budget.exceptions?.[key]) {
+          budget.exceptions[key].bytes = finalBytes.length;
+        }
       }
+      writeFileSync(budgetPath, JSON.stringify(budget, null, 2) + "\n");
     }
-    writeFileSync(budgetPath, JSON.stringify(budget, null, 2) + "\n");
 
     const validation = validateRuntimeRig(finalBytes);
     return {

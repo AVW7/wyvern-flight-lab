@@ -1,7 +1,7 @@
 import { Vector3, type Object3D } from 'three'
 import { clamp, damp } from '../../core/math/vec'
 import type { FlightLoopState } from '../kinematics/flightPose'
-import { applyBoneOffset, applyNeckOffset, holdStreamlinedHeadPose } from './boneOffsets'
+import { applyBoneOffset, applyNeckOffset } from './boneOffsets'
 
 export const LOOKAHEAD_SECONDS = 0.15
 
@@ -27,6 +27,7 @@ export interface FlightContext {
   turnRate: number
   flightMode: FlightLoopState
   time: number
+  isGroundedMode?: boolean
 }
 
 export interface HeadNeckState {
@@ -79,19 +80,20 @@ export function intelligentHeadNeckController(
   context: FlightContext,
   dt: number,
 ): void {
-  // If diving at high speed without a specific target, lock streamlined head pose
-  if (context.flightMode === 'dive' && (!gazeTarget || gazeTarget.type === 'horizon')) {
-    holdStreamlinedHeadPose(headBone)
-    for (const neck of neckBones) {
-      applyBoneOffset(neck, 0, 0, 0)
-    }
-    return
-  }
-
   let targetPitch = 0
   let targetYaw = 0
+  let targetRoll = 0
 
-  if (gazeTarget?.position && headBone) {
+  // Grounded without a target, or diving streamlined without a target: damp all
+  // head/neck state smoothly toward zero instead of overwriting the head pose
+  // (the old STREAMLINED_HEAD_ROTATION copy clobbered the authored dive head
+  // track and popped on entry/exit; residual model rotation during landing
+  // settle must not tilt the grounded neck either).
+  const zeroTargets =
+    (context.isGroundedMode && !gazeTarget) ||
+    (context.flightMode === 'dive' && (!gazeTarget || gazeTarget.type === 'horizon'))
+
+  if (!zeroTargets && gazeTarget?.position && headBone) {
     headBone.getWorldPosition(_headWorldPos)
     _targetWorldPos.copy(gazeTarget.position)
     if (gazeTarget.velocity) {
@@ -111,14 +113,16 @@ export function intelligentHeadNeckController(
 
     targetYaw = clamp(deltaYaw, -0.65, 0.65)
     targetPitch = clamp(deltaPitch, -0.45, 0.45)
-  } else {
+  } else if (!zeroTargets) {
     // Lead into turns slightly when free-flying
     targetYaw = clamp(context.turnRate * 0.35, -0.4, 0.4)
     targetPitch = clamp(-bodyPitch * 0.5, -0.3, 0.3)
   }
 
   // Vestibulo-ocular reflex: head rolls to oppose steep body bank
-  const targetRoll = clamp(-bodyBank * 0.4, -0.3, 0.3)
+  if (!zeroTargets) {
+    targetRoll = clamp(-bodyBank * 0.4, -0.3, 0.3)
+  }
 
   // Tracking damping speed scales with target urgency and biological priority
   const priorityWeight = gazeTarget ? (GAZE_PRIORITY_WEIGHTS[gazeTarget.type] ?? 0.5) : 0.5

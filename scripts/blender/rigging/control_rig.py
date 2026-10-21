@@ -38,6 +38,8 @@ WING_FOLD_RATIOS: dict[str, float] = {
     "WingWrist": 0.82,
     "WingHand": 0.68,
     **{f"WingD{d}P{p}": 0.55 for d in range(6) for p in range(3)},
+    # Membrane panels must fold with the digits or they tear away from them.
+    **{f"WingPanel{panel}_{segment}": ratio for panel in range(4) for segment, ratio in enumerate((0.48, 0.58))},
 }
 
 CONTROL_BONE_SPECS: tuple[dict[str, Any], ...] = (

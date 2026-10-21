@@ -3,8 +3,8 @@
   "asset": {
     "id": "wyvern-v2-flight-lab-runtime",
     "path": "public/models/wyvern-v2-rig.glb",
-    "sha256": "d916b748d987df649d0179d159b2b8d834baadf423f515ed60b62f7f03f1a6d4",
-    "bytes": 5977592
+    "sha256": "88adf57e5d769b26a382bbc94bced253473a88c87e071c4b3100cd43ce666d6d",
+    "bytes": 5844968
   },
   "provenance": {
     "sourceAsset": "assets/blender/wyvern-gothic.glb",
@@ -2490,7 +2490,7 @@
                 "componentType": 5121,
                 "normalized": false,
                 "count": 14544,
-                "sha256": "b6b6b66d843d7f6e307f275be449bed37bde3059b9153bb25a9f33ef25c69971"
+                "sha256": "858f784b42ab321eb6a60eaef844e2722c718e1de958d07af780b40c5ea423b1"
               },
               "NORMAL": {
                 "type": "VEC3",
@@ -2518,7 +2518,7 @@
                 "componentType": 5121,
                 "normalized": true,
                 "count": 14544,
-                "sha256": "b03a6f01af6fa38cbbf4b953dcc9ffe1c8ad763ad619b7403d174713482cecb9"
+                "sha256": "22668d527cd5d48c0ff3b62e3f3872f4a959e2e026e2210cdfd9e661328be828"
               }
             }
           },
@@ -2597,7 +2597,7 @@
                 "componentType": 5121,
                 "normalized": false,
                 "count": 8249,
-                "sha256": "9cb76800a1181130e085e98e359d7e7050b6eb7c76a83c1b4cd8510dd53f00a5"
+                "sha256": "a9c162f111c9927e705054b530e30288bda8906a95e3f7e8d100234e689b585b"
               },
               "NORMAL": {
                 "type": "VEC3",
@@ -2625,7 +2625,7 @@
                 "componentType": 5121,
                 "normalized": true,
                 "count": 8249,
-                "sha256": "7a1c29889326b8cadc657da484e185e3b60373c6623ed78d206d492a358f86fd"
+                "sha256": "fa93ab23ffd99d0750e312edc459e89e5680cf0b2888ece4bee66a07065ba2a1"
               }
             }
           }

@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { Object3D } from 'three'
+import { Object3D, Quaternion, Vector3 } from 'three'
 import {
   evaluateFlightLoopState,
   legTuckTarget,
@@ -823,3 +823,109 @@ test('wyvernFlightRig: grounded state suppresses 2.5Hz airborne spine and tail w
   )
 })
 
+
+test('wyvernFlightRig: jaw tracked — sub-degree breathing preserved, static drift sealed, reset restores authored pose', () => {
+  const modelRoot = buildMockRig()
+  const jaw = modelRoot.getObjectByName(JAW_BONE)
+  const rig = createWyvernFlightRig(modelRoot)
+  const closed = jaw.quaternion.clone()
+  const xAxis = new Vector3(1, 0, 0)
+  const angleDeg = (a, b) =>
+    (2 * Math.acos(Math.min(1, Math.abs(a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w))) * 180) / Math.PI
+  const writeJaw = (deg) => {
+    const q = closed.clone()
+    q.multiply(new Quaternion().setFromAxisAngle(xAxis, (deg * Math.PI) / 180))
+    jaw.quaternion.copy(q)
+    return q
+  }
+  const kin = (over = {}) => ({
+    horizontalSpeed: 0,
+    verticalSpeed: 0,
+    yaw: 0,
+    turnRate: 0,
+    pitch: 0,
+    bank: 0,
+    flightMode: 'hover',
+    isMouthActionActive: false,
+    ...over,
+  })
+
+  // Sub-degree respiratory breathing (idle/rest/hover) passes through unsealed
+  const breath = writeJaw(0.3)
+  rig.update(kin(), null, 1 / 60)
+  assert.ok(angleDeg(jaw.quaternion, breath) < 0.05, `breathing pose altered: ${angleDeg(jaw.quaternion, breath)}`)
+
+  // Uncalibrated static open-jaw drift (>2°) is sealed to the closed bind pose
+  writeJaw(8.6)
+  rig.update(kin(), null, 1 / 60)
+  assert.ok(angleDeg(jaw.quaternion, closed) < 0.01, `static jaw drift not sealed: ${angleDeg(jaw.quaternion, closed)}`)
+
+  // Breathing is still preserved after a seal frame (no sticky compounding)
+  const breath2 = writeJaw(-0.3)
+  rig.update(kin(), null, 1 / 60)
+  assert.ok(angleDeg(jaw.quaternion, breath2) < 0.05, `breathing altered after seal: ${angleDeg(jaw.quaternion, breath2)}`)
+
+  // High-speed dive seals even sub-degree breathing
+  writeJaw(0.3)
+  rig.update(kin({ flightMode: 'dive', horizontalSpeed: 25 }), null, 1 / 60)
+  assert.ok(angleDeg(jaw.quaternion, closed) < 0.01, `dive jaw not sealed: ${angleDeg(jaw.quaternion, closed)}`)
+
+  // Mouth-active clips (breath/attack/roar/death) are never clamped
+  const roar = writeJaw(8.6)
+  rig.update(kin({ flightMode: 'dive', horizontalSpeed: 25, isMouthActionActive: true }), null, 1 / 60)
+  assert.ok(angleDeg(jaw.quaternion, roar) < 0.05, `mouth-action jaw clamped: ${angleDeg(jaw.quaternion, roar)}`)
+
+  // reset() restores the authored (mixer-written) pose, not the sealed pose
+  const authored = writeJaw(8.6)
+  rig.update(kin(), null, 1 / 60)
+  assert.ok(angleDeg(jaw.quaternion, closed) < 0.01)
+  rig.reset()
+  assert.ok(angleDeg(jaw.quaternion, authored) < 0.01, `reset did not restore authored jaw: ${angleDeg(jaw.quaternion, authored)}`)
+})
+
+test('wyvernFlightRig: cruise->dive head transition is damped (no streamlined-pose pop), grounded mode gates gaze offsets', () => {
+  const modelRoot = buildMockRig()
+  const head = modelRoot.getObjectByName(HEAD_BONE)
+  const rig = createWyvernFlightRig(modelRoot)
+  const identity = head.quaternion.clone()
+  const angleDeg = (a, b) =>
+    (2 * Math.acos(Math.min(1, Math.abs(a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w))) * 180) / Math.PI
+  const kin = (over = {}) => ({
+    horizontalSpeed: 12,
+    verticalSpeed: -8,
+    yaw: 0,
+    turnRate: 0,
+    pitch: -0.6,
+    bank: 0,
+    flightMode: 'cruise',
+    isMouthActionActive: false,
+    ...over,
+  })
+
+  // Settle into cruise with a pitched body so the head carries a VOR offset
+  for (let i = 0; i < 60; i++) rig.update(kin(), null, 1 / 60)
+  const cruisePose = head.quaternion.clone()
+  assert.ok(angleDeg(cruisePose, identity) > 1.0, 'cruise should carry a visible head offset')
+
+  // Switch to dive: per-frame head rotation must stay damped, never snapping
+  let maxFrameJump = 0
+  let prev = head.quaternion.clone()
+  for (let i = 0; i < 90; i++) {
+    rig.update(kin({ flightMode: 'dive', horizontalSpeed: 25, verticalSpeed: -20 }), null, 1 / 60)
+    maxFrameJump = Math.max(maxFrameJump, angleDeg(prev, head.quaternion))
+    prev = head.quaternion.clone()
+  }
+  assert.ok(maxFrameJump < 2.0, `dive entry popped the head by ${maxFrameJump.toFixed(2)}deg in one frame`)
+  // After settling, dive head pose returns to the authored track (offset damps to ~0)
+  assert.ok(angleDeg(head.quaternion, identity) < 0.5, `dive head pinned off-track: ${angleDeg(head.quaternion, identity).toFixed(2)}deg`)
+
+  // Grounded with residual model pitch: gaze controller must not tilt the neck/head
+  const grounded = buildMockRig()
+  const groundedHead = grounded.getObjectByName(HEAD_BONE)
+  const groundedRig = createWyvernFlightRig(grounded)
+  for (let i = 0; i < 60; i++) {
+    groundedRig.update(kin({ horizontalSpeed: 0, verticalSpeed: 0, pitch: 0.4, groundClearance: 0, flightMode: 'ground' }), null, 1 / 60)
+  }
+  assert.ok(angleDeg(groundedHead.quaternion, identity) < 0.5,
+    `grounded head tilted by residual model pitch: ${angleDeg(groundedHead.quaternion, identity).toFixed(2)}deg`)
+})

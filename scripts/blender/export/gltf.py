@@ -33,11 +33,19 @@ def sanitize_materials(bpy: Any) -> None:
 def export_wyvern_glb(
     bpy: Any,
     output_path: str | Path,
-    export_objects: Sequence[str] = ("WyvernRig", "WyvernMesh"),
+    export_objects: Sequence[str] | None = None,
     bake_control_rig: bool = True,
 ) -> Path:
     """Export the designated rig and mesh to GLB with strict game engine settings."""
     sanitize_materials(bpy)
+
+    if export_objects is None:
+        # The V2 runtime rig is a two-mesh asset; fall back to the legacy
+        # single-mesh layout only when the separated meshes are absent.
+        if bpy.data.objects.get("WyvernBody_Rebuild") and bpy.data.objects.get("WyvernMembrane_ExportSafe"):
+            export_objects = ("WyvernRig", "WyvernBody_Rebuild", "WyvernMembrane_ExportSafe")
+        else:
+            export_objects = ("WyvernRig", "WyvernMesh")
 
     scene = bpy.context.scene
     for obj in scene.objects:
@@ -71,7 +79,10 @@ def export_wyvern_glb(
         export_animations=True,
         export_animation_mode="ACTIONS",
         export_skins=True,
-        export_def_bones=True,
+        # bake_control_rig_to_deform already strips the control bones; requiring
+        # vertex weights would silently drop unweighted deform bones (Root,
+        # RootMotion, WingPanel roots) and inject a neutral_bone joint.
+        export_def_bones=False,
         export_apply=False,
         export_yup=True,
         export_optimize_animation_size=False,

@@ -450,10 +450,12 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
         clipName: currentClip,
         clipTime: activeAction ? activeAction.time : 0,
         wingStrokePhase: currentStrokePhase === "downstroke" ? 1.0 : currentStrokePhase === "upstroke" ? -1.0 : 0.0,
-        isMouthActionActive: clipLower.includes("breath") || clipLower.includes("attack"),
+        isMouthActionActive: clipLower.includes("breath") || clipLower.includes("attack") || clipLower.includes("roar") || clipLower.includes("death"),
       };
       flightRig?.update(scrubKinematics, null, stepDt);
     }
+    model.userData.bankRightHotspotFrame =
+      currentClip === "bankRight" && activeAction ? activeAction.time * 24 : NaN;
     membraneSurface?.update();
     currentLandmarks = resolveAnatomicalLandmarks(model);
     currentSymmetry = measureBilateralSymmetry(currentLandmarks);
@@ -700,13 +702,17 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
           wingStrokePhase: strokePhaseVal,
           isMouthActionActive:
             clipLower.includes("breath") ||
-            clipLower.includes("attack"),
+            clipLower.includes("attack") ||
+            clipLower.includes("roar") ||
+            clipLower.includes("death"),
         };
         if (!paused) {
           flightRig?.update(lastFrameKinematics, null, delta);
         }
       }
 
+      model.userData.bankRightHotspotFrame =
+        currentClip === "bankRight" && activeAction ? activeAction.time * 24 : NaN;
       membraneSurface?.update();
 
       // Update landmarks and metrics

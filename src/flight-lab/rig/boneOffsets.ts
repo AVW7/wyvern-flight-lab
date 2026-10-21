@@ -9,9 +9,6 @@ export const LOCAL_PITCH = new Vector3(1, 0, 0)
 export const LOCAL_YAW = new Vector3(0, 0, 1)
 export const LOCAL_ROLL = new Vector3(0, 1, 0)
 
-// Neutral forward skull pose relative to the final neck bone
-const STREAMLINED_HEAD_ROTATION = new Quaternion(-0.0007635, 0.0000137, 0.0411221, 0.9991539)
-
 // Module-level static scratch objects to eliminate per-frame allocations
 const offset = new Quaternion()
 const scratch = new Quaternion()
@@ -59,9 +56,4 @@ export function applyLegTuck(legBones: readonly Object3D[], tuckAmount: number):
     const angle = tuckAmount * (LEG_TUCK_WEIGHTS[i] ?? 0)
     applyBoneOffset(legBones[i], angle, 0, 0)
   }
-}
-
-export function holdStreamlinedHeadPose(headBone: Object3D | null | undefined): void {
-  if (!headBone) return
-  headBone.quaternion.copy(STREAMLINED_HEAD_ROTATION)
 }

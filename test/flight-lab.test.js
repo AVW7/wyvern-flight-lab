@@ -970,3 +970,23 @@ test("resolveAnatomicalLandmarks reuses cached landmark descriptors and Vector3 
   assert.equal(second[0].localPosition.y, 5);
   assert.ok(Math.abs(second[0].rotationEulerDeg.y - 90) < 1e-3);
 });
+
+test("candidate specimens differ from the promoted baseline or are marked as promoted aliases", async () => {
+  const { createHash } = await import("node:crypto");
+  const { readFileSync } = await import("node:fs");
+  const sha256Of = (file) =>
+    createHash("sha256")
+      .update(readFileSync(new URL(`../public/models/${file}`, import.meta.url)))
+      .digest("hex");
+  const baseline = FLIGHT_LAB_SPECIMENS.find((s) => s.id === "wyvern-v2-rig");
+  const baselineSha = sha256Of(baseline.modelFile);
+  for (const specimen of FLIGHT_LAB_SPECIMENS) {
+    if (specimen.id === "wyvern-v2-rig" || specimen.kind !== "wyvern") continue;
+    if (!specimen.id.startsWith("wyvern-v2-")) continue;
+    const identical = sha256Of(specimen.modelFile) === baselineSha;
+    assert.ok(
+      !identical || specimen.promotedAliasOf === "wyvern-v2-rig",
+      `${specimen.id} is byte-identical to the baseline but not marked as a promoted alias`,
+    );
+  }
+});

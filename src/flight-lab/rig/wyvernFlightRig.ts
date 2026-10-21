@@ -71,6 +71,7 @@ export function createWyvernFlightRig(modelRoot: Object3D): WyvernFlightRig {
   // when tracks are static or when running without per-frame mixer resets.
   const allControlledBones: Object3D[] = [
     ...(head ? [head] : []),
+    ...(jaw ? [jaw] : []),
     ...neckBones,
     ...spineBones,
     ...tailBones,
@@ -234,12 +235,17 @@ export function createWyvernFlightRig(modelRoot: Object3D): WyvernFlightRig {
           turnRate: kinematics.turnRate,
           flightMode: currentFlightMode,
           time: elapsedTime,
+          isGroundedMode,
         },
         dt,
       )
 
       // 8. Flight jaw seal
-      sealFlightJaw(jaw, closedJawPose, kinematics.isMouthActionActive ?? false)
+      sealFlightJaw(jaw, closedJawPose, {
+        isMouthActionActive: kinematics.isMouthActionActive ?? false,
+        flightMode: currentFlightMode,
+        horizontalSpeed: kinematics.horizontalSpeed,
+      })
 
       // Record final pose after all procedural offsets
       for (const tb of trackedBones) {

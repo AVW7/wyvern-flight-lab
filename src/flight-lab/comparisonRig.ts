@@ -217,6 +217,12 @@ export function createComparisonRigManager(
       );
     }
 
+    if (comparisonModel) {
+      comparisonModel.userData.bankRightHotspotFrame =
+        comparisonActiveAction.getClip().name === "bankRight"
+          ? comparisonActiveAction.time * 24
+          : NaN;
+    }
     comparisonMembraneSurface?.update();
   };
 

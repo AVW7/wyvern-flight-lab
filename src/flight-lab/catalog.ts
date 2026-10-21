@@ -7,6 +7,8 @@ export type FlightLabSpecimen = {
   targetSize: number;
   heading: number;
   kind: "wyvern" | "egg";
+  /** Set when this specimen is byte-identical to another (promoted baseline copy). */
+  promotedAliasOf?: string;
 };
 
 export const FLIGHT_LAB_SPECIMENS: readonly FlightLabSpecimen[] = [
@@ -27,10 +29,11 @@ export const FLIGHT_LAB_SPECIMENS: readonly FlightLabSpecimen[] = [
     modelFile: "wyvern-v2-idle-walk-flight-lab-candidate.glb",
     className: "v2 motion candidate",
     description:
-      "Review candidate for revised Idle and Walk loops. The other 16 clips are preserved; not the gameplay player.",
+      "Promoted alias: the idle/walk review candidate was promoted to the V2 baseline on 2026-10-21 (idle neck re-splice, horizon leveling, jaw and land-handoff fixes). Retained for harness compatibility; a fresh candidate replaces it when Stage 3 dynamics land.",
     targetSize: 8.4,
     heading: Math.PI,
     kind: "wyvern",
+    promotedAliasOf: "wyvern-v2-rig",
   },
   {
     id: "wyvern-v2-membrane-candidate",
@@ -38,10 +41,11 @@ export const FLIGHT_LAB_SPECIMENS: readonly FlightLabSpecimen[] = [
     modelFile: "wyvern-v2-membrane-lab-candidate.glb",
     className: "v2 membrane candidate",
     description:
-      "Softer wing membranes across all 18 clips. Flight Lab applies the exported Blender surface repair during playback.",
+      "Promoted alias: the membrane repair candidate was promoted to the V2 baseline on 2026-10-21 (panel/Tail1 weight binding, sampler compaction). Retained for harness compatibility; a fresh candidate replaces it when Stage 3 dynamics land.",
     targetSize: 8.4,
     heading: Math.PI,
     kind: "wyvern",
+    promotedAliasOf: "wyvern-v2-rig",
   },
   {
     id: "wyvern-v1-rig",

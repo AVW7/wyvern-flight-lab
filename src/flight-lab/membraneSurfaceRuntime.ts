@@ -132,6 +132,7 @@ export function createMembraneSurfaceRuntime(
     const point = new THREE.Vector3();
     const fallbackPositions = new Float32Array(config.sourceVertexCount * 3);
     let previousBones = new Float32Array(0);
+    let previousExtraHotspotIterations = 0;
     let compositeBoneMatrices = new Float32Array(0);
     const tmpBoneMat = new THREE.Matrix4();
     const tmpComposite = new THREE.Matrix4();
@@ -163,14 +164,21 @@ export function createMembraneSurfaceRuntime(
         previousBones = new Float32Array(bones.length).fill(NaN);
         compositeBoneMatrices = new Float32Array(bones.length);
       }
-      if (ready && bones.every((value, i) => value === previousBones[i])) return;
-      previousBones.set(bones);
 
       const hotspotFrame = Number(child.userData.bankRightHotspotFrame ?? root.userData?.bankRightHotspotFrame ?? NaN);
       const hotspotEnvelope = evaluateBankRightHotspotEnvelope(hotspotFrame);
       const hotspotTotal =
         hotspotEnvelope[0]! + hotspotEnvelope[1]! + hotspotEnvelope[2]! + hotspotEnvelope[3]!;
       const extraHotspotIterations = hotspotTotal > 0 ? Math.round(hotspotTotal * 6) : 0;
+
+      if (
+        ready &&
+        extraHotspotIterations === previousExtraHotspotIterations &&
+        bones.every((value, i) => value === previousBones[i])
+      )
+        return;
+      previousBones.set(bones);
+      previousExtraHotspotIterations = extraHotspotIterations;
 
       if (canFastSkin) {
         const boneCount = bones.length / 16;

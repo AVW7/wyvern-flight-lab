@@ -116,12 +116,21 @@ test('canonical ground contact plane, wing knuckle surface height, and stance ve
 });
 
 test('the clip gate enforces Body travel and foot height under --strict', () => {
-  const result = spawnSync(
+  // The shipped V2 rig is in-place and floor-aligned since the D1 stabilization
+  // (2026-10-21): it must now PASS --strict. The gate's red path is verified
+  // against the raw vendor donor, which still carries the defect.
+  const shipped = spawnSync(
     process.execPath,
     ['scripts/validate-wyvern-clips.mjs', 'public/models/wyvern-v2-rig.glb', '--strict'],
     { encoding: 'utf8' },
   );
-  assert.equal(result.status, 1, `${result.stdout}${result.stderr}`);
-  assert.match(result.stderr, /Body translates by .* rig units/);
-  assert.match(result.stderr, /foot surface spans .* rig units/);
+  assert.equal(shipped.status, 0, `${shipped.stdout}${shipped.stderr}`);
+
+  const vendor = spawnSync(
+    process.execPath,
+    ['scripts/validate-wyvern-clips.mjs', 'assets/blender/wyvern-gothic.glb', '--strict'],
+    { encoding: 'utf8' },
+  );
+  assert.equal(vendor.status, 1, `${vendor.stdout}${vendor.stderr}`);
+  assert.match(vendor.stderr, /Body translates by .* rig units/);
 });

@@ -145,6 +145,9 @@ export function inspectRuntimeRig(bytes) {
   }));
   assert.deepEqual(g.animations.map(a => a.name).sort(), source.clips, "Canonical clip inventory changed");
   const clips = g.animations.map(a => {
+    const usedSamplers = new Set(a.channels.map(c => c.sampler));
+    assert.equal(a.samplers.length, usedSamplers.size,
+      `Animation '${a.name}' has ${a.samplers.length - usedSamplers.size} orphaned samplers`);
     const targets = new Set();
     for (const c of a.channels) {
       assert.ok(joints.has(c.target.node), "Animation target outside skin");

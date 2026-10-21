@@ -87,28 +87,60 @@ for (const clipName of CLIPS_TO_SPLICE) {
       if (!SPLICED_TARGETS.has(`${donorNode.name}:${channel.target.path}`)) return null;
       const targetNode = nodeByName.get(donorNode.name);
       assert.notEqual(targetNode, undefined, `Unmapped node ${donorNode.name}`);
+      // Rest-pose reconciliation: glTF animates absolute local TRS, so donor and
+      // base rest rotations for the spliced bones must agree within tolerance.
+      const donorRest = donorNode.rotation ?? [0, 0, 0, 1];
+      const baseRest = base.json.nodes[targetNode].rotation ?? [0, 0, 0, 1];
+      for (let i = 0; i < 4; i++) {
+        assert.ok(Math.abs(donorRest[i] - baseRest[i]) <= 1e-4,
+          `Rest rotation mismatch on ${donorNode.name}: donor [${donorRest}] vs base [${baseRest}]`);
+      }
       return { ...channel, target: { ...channel.target, node: targetNode } };
     })
     .filter(Boolean);
   assert.equal(donorChannels.length, SPLICED_TARGETS.size, `Donor '${clipName}' must animate all of ${[...SPLICED_TARGETS].join(", ")}`);
 
-  const samplerOffset = baseAnimation.samplers.length;
-  base.json.animations[targetIndex] = {
-    name: clipName,
-    channels: [
-      ...kept,
-      ...donorChannels.map(channel => ({ ...channel, sampler: channel.sampler + samplerOffset })),
-    ],
-    samplers: [
-      ...baseAnimation.samplers,
-      ...donorAnimation.samplers.map(sampler => ({
+  // Time-grid check: donor clip duration must match the base clip duration.
+  const baseDuration = Math.max(...baseAnimation.samplers.map(s => base.json.accessors[s.input].max?.[0] ?? 0));
+  const donorDuration = Math.max(...donorChannels.map(c => donor.json.accessors[donorAnimation.samplers[c.sampler].input].max?.[0] ?? 0));
+  assert.ok(Math.abs(donorDuration - baseDuration) <= 1e-2,
+    `Donor '${clipName}' duration ${donorDuration}s does not match base duration ${baseDuration}s`);
+
+  // Copy ONLY the samplers referenced by surviving/donor channels — never
+  // bulk-append donorAnimation.samplers, which leaks orphaned samplers,
+  // accessors, bufferViews, and binary bytes for every unrelated donor bone.
+  const baseSamplerMap = new Map();
+  const keptSamplers = [];
+  const remappedKept = kept.map(channel => {
+    if (!baseSamplerMap.has(channel.sampler)) {
+      baseSamplerMap.set(channel.sampler, keptSamplers.length);
+      keptSamplers.push(baseAnimation.samplers[channel.sampler]);
+    }
+    return { ...channel, sampler: baseSamplerMap.get(channel.sampler) };
+  });
+  const donorSamplerMap = new Map();
+  const donorSamplers = [];
+  const remappedDonor = donorChannels.map(channel => {
+    if (!donorSamplerMap.has(channel.sampler)) {
+      const sampler = donorAnimation.samplers[channel.sampler];
+      assert.notEqual(sampler.interpolation, "CUBICSPLINE",
+        `Donor '${clipName}' uses CUBICSPLINE; convert to LINEAR before splicing`);
+      donorSamplerMap.set(channel.sampler, keptSamplers.length + donorSamplers.length);
+      donorSamplers.push({
         ...sampler,
         input: copyAccessor(sampler.input),
         output: copyAccessor(sampler.output),
-      })),
-    ],
+      });
+    }
+    return { ...channel, sampler: donorSamplerMap.get(channel.sampler) };
+  });
+
+  base.json.animations[targetIndex] = {
+    name: clipName,
+    channels: [...remappedKept, ...remappedDonor],
+    samplers: [...keptSamplers, ...donorSamplers],
   };
-  console.log(`[SPLICE-NECK] '${clipName}': removed ${removed} base neck/head channels, spliced ${donorChannels.length} donor channels`);
+  console.log(`[SPLICE-NECK] '${clipName}': removed ${removed} base neck/head channels, spliced ${donorChannels.length} donor channels (${donorSamplers.length} donor samplers copied)`);
 }
 
 assert.equal(base.json.skins.length, 1);

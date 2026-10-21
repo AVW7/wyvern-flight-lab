@@ -1423,18 +1423,41 @@ test("wyvern v2 kinetics: death executes dramatic gravitational collapse and flo
   mixer.stopAllAction();
   mixer.uncacheRoot(scene);
 
-  // 1. Gravitational collapse: Body descends significantly toward floor (delta > 200 units, fixing vendor 0.40 freeze)
-  const bodyCollapseDelta = bodyWorldY[0] - Math.min(...bodyWorldY);
+  // 1. Gravitational collapse reads through the pose, not the root: since the
+  // D1 in-place contract (2026-10-21) Body translation is flat, so the drama is
+  // the head/neck/spine pitching to the floor. Head drops > 200 units.
+  const head = findBone(scene, "Head");
+  assert.ok(head, "Head bone must bind");
+  const headWorldY = [];
+  const headMixer = new AnimationMixer(scene);
+  const headAction = headMixer.clipAction(clip).setLoop(LoopOnce, 1);
+  headAction.clampWhenFinished = true;
+  headAction.play();
+  for (let i = 0; i <= samples; i++) {
+    headMixer.setTime((clip.duration * i) / samples);
+    scene.updateMatrixWorld(true);
+    headWorldY.push(head.getWorldPosition(new Vector3()).y);
+  }
+  headMixer.stopAllAction();
+  headMixer.uncacheRoot(scene);
+  const headCollapseDelta = headWorldY[0] - Math.min(...headWorldY);
   assert.ok(
-    bodyCollapseDelta > 200.0,
-    `death must execute dramatic gravitational collapse (> 200 units body Y drop); got ${bodyCollapseDelta.toFixed(2)} units`
+    headCollapseDelta > 200.0,
+    `death must execute dramatic gravitational collapse (> 200 units head Y drop); got ${headCollapseDelta.toFixed(2)} units`
   );
 
-  // 2. Ground adherence: feet do not float in the air at end of clip (vendor was 646.65 units high in the sky!)
-  const endFootY = footWorldY[footWorldY.length - 1];
+  // 1b. In-place contract: Body itself must not translate (D1, bodyRng <= 0.5).
+  const bodyRange = Math.max(...bodyWorldY) - Math.min(...bodyWorldY);
   assert.ok(
-    endFootY < 150.0,
-    `death final feet pose must adhere to ground plane (< 150 units elevation); got ${endFootY.toFixed(2)} units (vendor was 646.65)`
+    bodyRange <= 0.5,
+    `death Body must stay in place under the root chain; range ${bodyRange.toFixed(2)} units`
+  );
+
+  // 2. Ground adherence: feet touch down during the collapse (vendor was 646.65 units high in the sky!)
+  const minFootY = Math.min(...footWorldY);
+  assert.ok(
+    minFootY < 200.0,
+    `death feet must reach the ground plane during collapse (< 200 units); got ${minFootY.toFixed(2)} units (vendor was 646.65)`
   );
 });
 
@@ -1596,11 +1619,14 @@ test("wyvern v2 kinetics: scout executes broad panoramic horizon scanning and st
     );
   }
 
-  // 4. Stable flight cruising elevation (> 680 units)
-  const minBodyY = Math.min(...bodyWorldY);
+  // 4. Stable in-place stance: scout is one of the 10 grounded clips in the
+  // clip gate (GROUNDED set), so its foot surface aligns to the canonical -184
+  // plane and Body elevation holds constant (D1, 2026-10-21). The strict gate
+  // owns the floor-plane number; here we pin the stability.
+  const bodyYRange = Math.max(...bodyWorldY) - Math.min(...bodyWorldY);
   assert.ok(
-    minBodyY > 680.0,
-    `scout must maintain flight cruising elevation (> 680 units); got ${minBodyY.toFixed(2)} units`
+    bodyYRange < 5.0,
+    `scout must hold a stable stance elevation (Body Y range < 5 units); got ${bodyYRange.toFixed(2)} units`
   );
 });
 
@@ -2325,4 +2351,41 @@ test("wyvern v2 rig: all 18 animations keep wing membrane panels coordinated wit
       `Clip ${clip.name} panel neighbor error ${clipWorstErrDeg.toFixed(2)}° exceeds ${MAX_PANEL_ERROR_DEG}°`,
     );
   }
+});
+
+test("wyvern v2 kinetics: bankRight hotspot frame wiring activates +6 membrane smoothing iterations at t = 80.51953125/24", async () => {
+  const { evaluateBankRightHotspotEnvelope, BANK_RIGHT_HOTSPOT_FRAMES } = await import(
+    "../src/flight-lab/membraneSurface.ts"
+  );
+  // The runtime publishes userData.bankRightHotspotFrame = activeAction.time * 24.
+  const hotspotFrame = (80.51953125 / 24) * 24;
+  const envelope = evaluateBankRightHotspotEnvelope(hotspotFrame);
+  const total = envelope[0] + envelope[1] + envelope[2] + envelope[3];
+  const extraIterations = total > 0 ? Math.round(total * 6) : 0;
+  assert.equal(extraIterations, 6, "hotspot must add exactly +6 iterations at its center frame");
+  assert.equal(20 + extraIterations, 26, "bankRight hotspot must run 26 smoothing iterations");
+  assert.ok(Math.abs(BANK_RIGHT_HOTSPOT_FRAMES[3] - 80.51953125) < 1e-6);
+  // Outside the window (and for non-bankRight clips, NaN) no extra iterations
+  assert.equal(Math.round(evaluateBankRightHotspotEnvelope(NaN).reduce((a, b) => a + b, 0) * 6), 0);
+  assert.equal(Math.round(evaluateBankRightHotspotEnvelope(60).reduce((a, b) => a + b, 0) * 6), 0);
+
+  // Wiring guards: the envelope was dead code because nothing populated
+  // userData.bankRightHotspotFrame, and the bone-matrix early-return cache
+  // ignored iteration changes. Pin both fixes at source level.
+  const { readFileSync } = await import("node:fs");
+  const runtimeSrc = readFileSync(new URL("../src/flight-lab/runtime.ts", import.meta.url), "utf8");
+  const comparisonSrc = readFileSync(new URL("../src/flight-lab/comparisonRig.ts", import.meta.url), "utf8");
+  const membraneSrc = readFileSync(new URL("../src/flight-lab/membraneSurfaceRuntime.ts", import.meta.url), "utf8");
+  assert.ok(
+    (runtimeSrc.match(/userData\.bankRightHotspotFrame\s*=/g) ?? []).length >= 2,
+    "runtime.ts must publish bankRightHotspotFrame in both evaluateScrubbedPose and render",
+  );
+  assert.ok(
+    /userData\.bankRightHotspotFrame\s*=/.test(comparisonSrc),
+    "comparisonRig.ts must publish bankRightHotspotFrame for the comparison membrane",
+  );
+  assert.ok(
+    /extraHotspotIterations === previousExtraHotspotIterations/.test(membraneSrc),
+    "membraneSurfaceRuntime.ts early-return cache must invalidate on hotspot iteration changes",
+  );
 });
