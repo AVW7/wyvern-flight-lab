@@ -99,69 +99,49 @@ test('stretching a clip in time halves its measured angular velocity', async () 
   assert.ok(stretched.duration > original.duration * 1.99);
 });
 
-test('V2 fails the gate on the D4 clips only, and the reshaped clips keep passing', async () => {
+test('V2 passes the dynamics gate on six of nine clips; the flight group is left', async () => {
   const rig = await loadRig(resolve(ROOT, 'public/models/wyvern-v2-rig.glb'));
   const measured = measureDynamics(rig);
   const result = compareToReference(measured, reference);
 
-  assert.equal(result.passed, false, 'if this passes, Stage 3 has landed: invert the assertion');
-
-  const row = (name) => {
-    const found = result.rows.find((r) => r.clip === name);
-    assert.ok(found, `${name} must be comparable`);
-    return found;
-  };
-
-  // 1. Amplitude. The median mapped clip carries ~41% of the reference peak.
-  //    Cruise is representative: peak 0.48x, p95 0.56x, mean 0.52x.
-  const cruise = row('cruise');
-  assert.ok(cruise.got.peak < cruise.want.peak * 0.7, `cruise peak ${cruise.got.peak.toFixed(1)}`);
-
-  // 2. Transients. Before Task D2, attack and takeoff both lost their peaks
-  //    disproportionately: crest factor 0.57x and 0.27x of reference, in exactly
-  //    the two clips whose V1 cousins are the most peaky (crest 4.58 and 7.12).
-  //    The D2 BUZZ reshape (solved against this module's 60 Hz world-space
-  //    metric, not typed) restored takeoff to 1.68x peak / death to 1.16x, and
-  //    both now pass every channel of the gate. Attack is still the outlier at
-  //    0.09x because 49 of its channels are static and amplification is capped
-  //    at 3.47x — that is Task D4, not a regression.
-  for (const name of ['takeoff', 'death']) {
+  // Stage 3 landed in three of four slices, each solved against this module's
+  // 60 Hz world-space metric rather than typed in:
+  //   D2  takeoff + death      (BUZZ: transient gains + smoothing)
+  //   D3  idle, walk, attack2  (travelling secondary-motion ripple)
+  //   D4  attack               (gain + a strike accent on its existing peak)
+  const shipped = ['idle', 'walk', 'attack2', 'takeoff', 'death', 'attack'];
+  for (const name of shipped) {
     const named = result.failures.filter((f) => f.clip === name);
     assert.deepEqual(
-      named.map((f) => f.channel),
+      named.map((f) => `${f.channel}=${f.value.toFixed(1)} expected ${f.expected}`),
       [],
-      `${name} was reshaped in D2 and must now pass the gate`
+      `${name} was reshaped and must pass the gate`
     );
   }
-  const attack = row('attack');
-  assert.ok(
-    attack.got.peak < attack.want.peak * 0.15,
-    `attack peak should still collapse to under 15% of reference, got ${(attack.got.peak / attack.want.peak).toFixed(3)}x`
+
+  // The flight group is deliberately NOT amplified. Both remaining clips are
+  // blocked by product invariants, measured in tools/blender/reshape_d4_clips.mjs:
+  //   cruise  a 1.68x gain folds the membrane to 2256 units against the 2500
+  //           floor the span test requires at t = 1.0 s (authored: 2780.9).
+  //   banks   a 6.7x gain plus smoothing moves their wingbeat from 0.500 Hz to
+  //           1.500 Hz, breaking the 8% cadence tolerance the flight phase
+  //           group needs for steering crossfades.
+  // Closing them needs authored motion, not a scale factor. Until then the gate
+  // must keep reporting them as failures rather than be quietly loosened.
+  assert.equal(result.passed, false);
+  assert.deepEqual(
+    [...new Set(result.failures.map((f) => f.clip))].sort(),
+    ['bankLeft', 'bankRight', 'cruise']
   );
 
-  // 3. The opposite failure, now fixed. V2's idle was not gently reduced, it
-  //    was frozen between rare twitches: p95 fell to 7.7% of reference while
-  //    its crest factor rose to 2.33x — a single peak-amplitude threshold
-  //    would have scored it as merely quiet and missed that it was dead for
-  //    most of its duration. Task D3 gave it a travelling secondary-motion
-  //    ripple (phase-offset per bone, so some bone is always moving) plus one
-  //    settle accent. Idle, walk and attack2 must now clear every channel.
-  for (const name of ['idle', 'walk', 'attack2']) {
-    const named = result.failures.filter((f) => f.clip === name);
-    assert.deepEqual(
-      named.map((f) => `${f.channel}=${f.value.toFixed(1)}`),
-      [],
-      `${name} was reshaped in D3 and must now pass the gate`
-    );
-  }
-
-  // What is left is the D4 slice: the two banks and cruise are uniformly weak
-  // (0.24x-0.48x peak), and attack still has 49 static channels.
-  for (const name of ['cruise', 'bankLeft', 'bankRight']) {
-    const r = row(name);
+  // A clip that silently vanished would otherwise shrink the gate to nothing.
+  assert.equal(result.rows.length, 9);
+  for (const { clip, got, want } of result.rows) {
+    assert.ok(got.peak > 0, `${clip} must carry motion`);
+    assert.ok(got.sustained, `${clip} peak needs a shoulder, not a single-frame pop`);
     assert.ok(
-      r.got.peak < r.want.peak * 0.7,
-      `${name} peak ${r.got.peak.toFixed(1)} should still be under 70% of ${r.want.peak.toFixed(1)}`
+      got.mean <= want.mean * 1.4,
+      `${clip} mean ${got.mean.toFixed(1)} must stay under 1.4x reference ${want.mean.toFixed(1)}`
     );
   }
 });
