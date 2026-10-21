@@ -10,6 +10,42 @@
   flex-direction: column;
   overflow: hidden;
   box-sizing: border-box;
+  /* --- Panel design tokens (doc 38 §4.1-4.3) ---
+     Color ratios are measured WCAG values against the composited panel
+     background; light theme overrides below. Do not introduce greys
+     between muted and faint for text at reading sizes. */
+  --panel-text: #f5f5f5;        /* 17.9:1 */
+  --panel-text-strong: #ffffff; /* 19.6:1 */
+  --panel-text-body: #a3a3a3;   /*  7.8:1 */
+  --panel-text-muted: #8c8c8c;  /*  5.8:1 */
+  --panel-text-faint: #737373;  /*  4.1:1 — icons / large text only */
+  --panel-accent: #ffffff;
+  --panel-line: #2e2e2e;
+  --panel-line-strong: #404040;
+  --panel-surface: rgba(12, 12, 12, 0.96);
+  /* Type scale — minimum 10px, no exceptions */
+  --t-micro: 10px;
+  --t-label: 11px;
+  --t-body: 12px;
+  --t-name: 13px;
+  --t-card-title: 15px;
+  /* Spacing scale */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+}
+.surface[data-theme="light"] {
+  --panel-text: #0a0a0a;        /* 19.0:1 */
+  --panel-text-strong: #000000; /* 20.1:1 */
+  --panel-text-body: #404040;   /*  9.9:1 */
+  --panel-text-muted: #595959;  /*  6.7:1 */
+  --panel-text-faint: #737373;  /*  4.5:1 */
+  --panel-accent: #000000;
+  --panel-line: #d9d9d9;
+  --panel-line-strong: #b3b3b3;
+  --panel-surface: rgba(250, 250, 250, 0.97);
 }
 .surface * { box-sizing: border-box; }
 .surface button, .surface select, .surface input { font: inherit; }
@@ -18,16 +54,25 @@
   outline-offset: 3px;
 }
 
+/* --- App header: fluid brand lockup + responsive navigation --- */
 .header {
+  position: relative;
   max-width: 1600px;
   width: 100%;
-  margin: 0 auto 10px;
+  margin: 0 auto clamp(8px, 1vw, 14px);
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
-  align-items: flex-end;
-  gap: 20px;
+  gap: clamp(10px, 1.6vw, 20px) clamp(14px, 2.4vw, 32px);
+  padding-bottom: clamp(10px, 1.3vw, 14px);
+  border-bottom: 1px solid #262626;
   flex-shrink: 0;
 }
+/* Basis 0, not auto: an auto basis makes the brand demand its max-content
+   width (the intro's 92ch measure), which pushes the menu toggle onto its
+   own wrapped line at phone widths before any shrinking can happen. */
+.brand { flex: 1 1 0; min-width: 0; }
 .eyebrow, .sectionLabel {
   margin: 0 0 4px;
   color: #a3a3a3;
@@ -39,35 +84,126 @@
 .header h1 {
   margin: 0;
   color: #ffffff;
-  font: 600 clamp(22px, 3.2vw, 38px)/1.0 Georgia, serif;
+  font: 600 clamp(22px, 3.2vw, 38px)/1.04 Georgia, serif;
   letter-spacing: -.035em;
+  overflow-wrap: break-word;
 }
 .intro {
-  max-width: 670px;
-  margin: 4px 0 0;
+  max-width: 92ch;
+  margin: 6px 0 0;
   color: #8c8c8c;
-  font-size: 12px;
+  font-size: clamp(11px, 0.85vw, 12px);
+  line-height: 1.55;
 }
 
-.nav { display: flex; gap: 8px; }
-.nav a, .themeToggle {
-  min-height: 38px;
-  display: grid;
+.nav { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.nav a, .themeToggle, .menuToggle {
+  min-height: 40px;
+  display: inline-grid;
   place-items: center;
-  padding: 0 14px;
+  padding: 0 clamp(12px, 1.1vw, 16px);
   font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .02em;
   color: #f0f0f0;
   text-decoration: none;
+  white-space: nowrap;
   border: 1px solid #333333;
   background: rgba(18, 18, 18, 0.85);
-  transition: background .15s, border-color .15s, color .15s;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: background .15s ease, border-color .15s ease, color .15s ease, transform .12s ease;
 }
-.nav a:hover, .themeToggle:hover {
+.nav a:hover, .themeToggle:hover, .menuToggle:hover {
   border-color: #737373;
   background: rgba(35, 35, 35, 0.9);
   color: #ffffff;
 }
+.nav a:active, .themeToggle:active, .menuToggle:active { transform: scale(.97); }
 .themeToggle { grid-auto-flow: column; gap: 8px; cursor: pointer; }
+
+/* Mobile menu trigger — hidden at widths where the inline nav fits.
+   `flex: none` keeps it on the brand's row: at 320-400px the brand plus a
+   shrinking toggle would otherwise wrap the button onto its own line. */
+.menuToggle { display: none; flex: none; grid-auto-flow: column; gap: 9px; cursor: pointer; }
+.menuIcon {
+  position: relative;
+  width: 14px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: background .15s ease;
+}
+.menuIcon::before, .menuIcon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 14px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: top .15s ease, transform .15s ease;
+}
+.menuIcon::before { top: -5px; }
+.menuIcon::after { top: 5px; }
+.menuToggle[aria-expanded="true"] .menuIcon { background: transparent; }
+.menuToggle[aria-expanded="true"] .menuIcon::before { top: 0; transform: rotate(45deg); }
+.menuToggle[aria-expanded="true"] .menuIcon::after { top: 0; transform: rotate(-45deg); }
+
+/* Coarse pointers get the full 44px touch-target floor */
+@media (pointer: coarse) {
+  .nav a, .themeToggle, .menuToggle { min-height: 44px; }
+  .searchInput, .clipSearchInput { height: 44px; }
+  .searchClear { width: 44px; height: 44px; right: 0; }
+  .clipSearchClear { padding: 12px; }
+  .panelToggle { width: 44px; }
+}
+
+/* Tablet portrait and below: nav collapses behind the menu button */
+@media (max-width: 768px) {
+  .header { align-items: flex-start; }
+  .menuToggle { display: inline-grid; }
+  .nav {
+    position: absolute;
+    top: calc(100% - 6px);
+    right: 0;
+    z-index: 30;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    min-width: min(240px, calc(100vw - 32px));
+    padding: 8px;
+    background: rgba(16, 16, 16, 0.97);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid #3f3f3f;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65);
+  }
+  .nav[data-open="true"] {
+    display: flex;
+    animation: navReveal .16s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .nav a, .nav .themeToggle { width: 100%; min-height: 44px; }
+}
+
+/* Small phones: fluid title only — no content is dropped */
+@media (max-width: 400px) {
+  .header h1 { font-size: clamp(20px, 7.2vw, 26px); }
+  .menuToggle { padding: 0 12px; }
+  .menuToggle .menuLabel { display: none; }
+}
+
+@keyframes navReveal {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav[data-open="true"] { animation: none; }
+  .nav a, .themeToggle, .menuToggle, .menuIcon, .menuIcon::before, .menuIcon::after {
+    transition: none;
+  }
+}
 
 .lab {
   --lab-left-w: clamp(212px, 15vw, 246px);
@@ -86,15 +222,24 @@
   overflow: hidden;
 }
 
+/* Pin each panel to its dock column so a hidden panel never shifts the stage */
+.specimens { grid-column: 1; grid-row: 1; }
+.stage { grid-column: 2; grid-row: 1; }
+.controls { grid-column: 3; grid-row: 1; }
+
 .specimens, .controls {
   min-width: 0;
-  padding: 16px;
+  padding: var(--s-4);
   background: rgba(12, 12, 12, 0.94);
   height: 100%;
   max-height: 100%;
   overflow-y: auto;
+  overscroll-behavior: contain;
   scrollbar-width: thin;
   scrollbar-color: #525252 transparent;
+  /* visibility transitions with the same duration so a closing drawer
+     stays animatable while leaving the tab order the moment it is off-screen */
+  transition: transform .28s cubic-bezier(0.16, 1, 0.3, 1), visibility .28s;
 }
 .specimens { border-right: 1px solid #262626; }
 .controls { border-left: 1px solid #262626; }
@@ -137,27 +282,66 @@
 /* Hidden panel: arrow parks flush at the dock edge */
 .lab[data-left="collapsed"] .panelToggle[data-side="left"] { left: 0; margin-left: 0; }
 .lab[data-right="collapsed"] .panelToggle[data-side="right"] { right: 0; margin-right: 0; }
+/* A closed drawer must leave the tab order — transform alone hides it
+   visually but keeps it focusable (doc 38 §3.1). visibility flips at the
+   end of the .28s transition, so the slide-out still animates. */
+.lab[data-left="collapsed"] .specimens,
+.lab[data-right="collapsed"] .controls { visibility: hidden; }
+.lab[data-left="open"] .specimens,
+.lab[data-right="open"] .controls { visibility: visible; }
+/* Scrim behind open drawers (tablet/phone only — display:none above 1050px) */
+.drawerScrim { display: none; }
 
+/* Sticky header zone: section label + search stay reachable while the
+   roster scrolls (mirrors the right panel's deckTabsBar pattern). */
+.sidebarHead {
+  position: sticky;
+  top: -16px;
+  z-index: 5;
+  margin: -16px -16px var(--s-3) -16px;
+  padding: var(--s-4) var(--s-4) 10px;
+  background: var(--panel-surface);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.sidebarHeadRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-2);
+  margin-bottom: var(--s-2);
+}
+.resultCount {
+  color: var(--panel-text-muted);
+  font-size: var(--t-micro);
+  letter-spacing: .08em;
+  white-space: nowrap;
+}
 .searchBox {
   position: relative;
-  margin-bottom: 12px;
 }
 .searchInput {
   width: 100%;
-  height: 34px;
+  height: 36px;
   padding: 0 28px 0 10px;
   border: 1px solid #2e2e2e;
   background: #121212;
-  color: #f5f5f5;
-  font-size: 11px;
+  color: var(--panel-text);
+  font-size: var(--t-label);
   transition: border-color .15s ease;
 }
+/* The custom clear button below is the single clear affordance */
+.searchInput::-webkit-search-cancel-button,
+.searchInput::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
 .searchInput::placeholder {
-  color: #595959;
+  color: var(--panel-text-muted);
 }
 .searchInput:focus {
   border-color: #737373;
-  outline: none;
 }
 .searchClear {
   position: absolute;
@@ -170,18 +354,18 @@
   place-items: center;
   border: 0;
   background: transparent;
-  color: #737373;
+  color: var(--panel-text-faint);
   cursor: pointer;
-  font-size: 10px;
+  font-size: var(--t-micro);
   transition: color .15s ease;
 }
 .searchClear:hover {
-  color: #ffffff;
+  color: var(--panel-text-strong);
 }
 .emptySearch {
-  padding: 24px 8px;
-  color: #737373;
-  font-size: 11px;
+  padding: var(--s-5) var(--s-2);
+  color: var(--panel-text-muted);
+  font-size: var(--t-label);
   font-style: italic;
   text-align: center;
 }
@@ -189,13 +373,13 @@
 .specimenEntry { display: block; }
 .specimen {
   width: 100%;
-  min-height: 64px;
+  min-height: 60px;
   display: grid;
-  grid-template-columns: 31px 1fr;
+  grid-template-columns: 28px 1fr;
   align-items: center;
-  gap: 8px;
-  padding: 10px 8px;
-  color: #a3a3a3;
+  gap: var(--s-2);
+  padding: var(--s-2) 10px;
+  color: var(--panel-text-body);
   text-align: left;
   white-space: normal;
   border: 0;
@@ -205,116 +389,137 @@
   transition: background .15s, color .15s;
 }
 .specimen:hover {
-  color: #ffffff;
+  color: var(--panel-text-strong);
   background: rgba(255, 255, 255, 0.04);
 }
+/* Active must be unmistakable: background lift well above hover, the inset
+   accent bar, and full-strength name. Hover alone never implies selection. */
 .specimen[data-active="true"] {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: inset 2px 0 #ffffff;
+  color: var(--panel-text-strong);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 2px 0 var(--panel-accent);
 }
-.specimenIndex { color: #525252; font-size: 10px; }
+.specimen[data-active="true"] strong { color: var(--panel-text-strong); }
+.specimenIndex { color: var(--panel-text-muted); font-size: var(--t-micro); }
 .specimen strong, .specimen small { display: block; }
-.specimen strong { font-size: 13px; color: inherit; }
+.specimen strong { font-size: var(--t-name); color: inherit; font-weight: 500; }
 .specimen small {
-  margin-top: 4px;
-  color: #737373;
-  font-size: 9px;
+  margin-top: 3px;
+  color: var(--panel-text-muted);
+  font-size: var(--t-micro);
   text-transform: uppercase;
   letter-spacing: .08em;
 }
 
-.rosterDivider {
-  padding: 22px 8px 8px;
-  color: #8c8c8c;
-  border-bottom: 1px solid #2e2e2e;
-  font-size: 10px;
+/* Group headers are data-driven (one per kind present in the roster) */
+.rosterGroupLabel {
+  padding: var(--s-4) var(--s-2) 6px;
+  color: var(--panel-text-body);
+  border-bottom: 1px solid var(--panel-line);
+  font-size: var(--t-micro);
   letter-spacing: .16em;
   text-transform: uppercase;
   font-weight: 600;
 }
 
 .specimenNote {
-  margin-top: 25px;
-  padding-top: 17px;
-  border-top: 1px solid #2e2e2e;
+  margin-top: var(--s-3);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--panel-line);
 }
 .specimenNoteHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 7px;
+  margin-bottom: var(--s-2);
+  gap: var(--s-2);
 }
 .specimenNoteHeader span {
-  color: #737373;
-  font-size: 9px;
+  color: var(--panel-text-muted);
+  font-size: var(--t-micro);
   text-transform: uppercase;
   letter-spacing: .12em;
 }
 .specimenBadge {
-  padding: 2px 6px;
-  border: 1px solid #404040;
+  padding: 3px 7px;
+  border: 1px solid var(--panel-line-strong);
   background: rgba(255, 255, 255, 0.06);
-  color: #d4d4d8;
-  font-size: 8px;
+  color: var(--panel-text);
+  font-size: var(--t-micro);
   letter-spacing: .08em;
   font-weight: 600;
+  white-space: nowrap;
+}
+.specimenBadge[data-loading="true"] {
+  color: var(--panel-text-muted);
+  border-style: dashed;
 }
 .specimenNote strong {
   display: block;
-  margin: 7px 0;
-  color: #ffffff;
-  font: 500 17px Georgia, serif;
+  margin: var(--s-2) 0;
+  color: var(--panel-text-strong);
+  font: 500 var(--t-card-title) Georgia, serif;
 }
 .specimenNote p {
-  color: #8c8c8c;
-  font: 11px/1.6 system-ui, sans-serif;
-  margin: 0 0 12px;
+  color: var(--panel-text-body);
+  font: var(--t-body)/1.6 "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  margin: 0 0 var(--s-3);
 }
 .specimenMetaGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-top: 8px;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
+  transition: opacity .15s ease;
 }
+/* Previous specimen's metrics stay mounted while the next one loads —
+   dimmed rather than unmounted, so the card never collapses. */
+.specimenMetaGrid[data-stale="true"] { opacity: .55; }
 .specimenMetaGrid div {
-  padding: 6px 8px;
+  padding: 6px var(--s-2);
   border: 1px solid #262626;
   background: rgba(20, 20, 20, 0.6);
+  min-width: 0;
 }
 .specimenMetaGrid span {
   display: block;
-  color: #737373;
-  font-size: 8px;
+  color: var(--panel-text-muted);
+  font-size: var(--t-micro);
   text-transform: uppercase;
+  letter-spacing: .08em;
 }
 .specimenMetaGrid strong {
   display: block;
   margin-top: 3px;
-  font-size: 10px;
+  font-size: var(--t-label);
   font-family: inherit;
-  color: #d4d4d8;
-  overflow-wrap: anywhere;
+  color: var(--panel-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .specimenMetaFull {
   grid-column: 1 / -1;
-  padding: 6px 8px;
+  padding: 6px var(--s-2);
   border: 1px solid #262626;
   background: rgba(20, 20, 20, 0.6);
 }
 .specimenMetaFull span {
   display: block;
-  color: #737373;
-  font-size: 8px;
+  color: var(--panel-text-muted);
+  font-size: var(--t-micro);
   text-transform: uppercase;
+  letter-spacing: .08em;
 }
 .specimenMetaFull strong {
   display: block;
   margin-top: 3px;
-  font-size: 10px;
+  font-size: var(--t-label);
   font-family: inherit;
-  color: #d4d4d8;
-  overflow-wrap: anywhere;
+  color: var(--panel-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .stage {
@@ -685,9 +890,9 @@
   white-space: nowrap;
 }
 .sectionMeta {
-  font-size: 8px;
+  font-size: var(--t-micro);
   letter-spacing: .08em;
-  color: #737373;
+  color: var(--panel-text-muted);
   font-weight: 600;
 }
 
@@ -991,7 +1196,7 @@
 }
 .cameraPresetIcon {
   font-size: 11px;
-  color: #737373;
+  color: var(--panel-text-muted);
 }
 .cameraPresetBtn[data-active="true"] .cameraPresetIcon {
   color: #ffffff;
@@ -1042,8 +1247,8 @@
   gap: 1px;
 }
 .zoomDistanceReadout small {
-  color: #737373;
-  font-size: 8px;
+  color: var(--panel-text-muted);
+  font-size: var(--t-micro);
 }
 .cameraActionBtn {
   flex: 1;
@@ -1080,11 +1285,11 @@
   margin-bottom: 8px;
 }
 .clipCategoryPill {
-  font-size: 9px;
+  font-size: var(--t-micro);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: .06em;
-  padding: 4px 8px;
+  padding: 4px var(--s-2);
   border-radius: 12px;
   border: 1px solid #2e2e2e;
   background: #141414;
@@ -1103,20 +1308,31 @@
   background: #ffffff;
   font-weight: 700;
 }
+/* Sticky below the deck tabs bar so the clip filter stays reachable while
+   the (long) clip list scrolls — same pattern as the left panel's search */
 .clipSearchRow {
-  position: relative;
+  position: sticky;
+  top: 52px;
+  z-index: 5;
   margin: 6px 0 10px;
+  padding: 6px 0;
+  background: var(--panel-surface);
 }
 .clipSearchInput {
   width: 100%;
-  height: 32px;
+  height: 36px;
   border-radius: 4px;
   border: 1px solid #333333;
   background: #111113;
   color: #ffffff;
-  font-size: 11px;
+  font-size: var(--t-label);
   padding: 0 28px 0 10px;
   transition: border-color .15s ease;
+}
+.clipSearchInput::-webkit-search-cancel-button,
+.clipSearchInput::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
 }
 .clipSearchInput:focus {
   border-color: #888888;
@@ -1282,8 +1498,8 @@
 }
 .staticNotice {
   padding: 12px 8px;
-  color: #737373;
-  font-size: 9px;
+  color: var(--panel-text-muted);
+  font-size: var(--t-micro);
   border: 1px dashed #333333;
   text-align: center;
   font-style: italic;
@@ -1627,8 +1843,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 6px;
-  font-size: 9px;
-  color: #737373;
+  font-size: var(--t-micro);
+  color: var(--panel-text-muted);
   letter-spacing: .08em;
   text-transform: uppercase;
 }
@@ -1644,8 +1860,8 @@
   border-radius: 2px;
   border: 1px solid #2e2e2e;
   background: #0f0f0f;
-  color: #737373;
-  font-size: 9px;
+  color: var(--panel-text-muted);
+  font-size: var(--t-micro);
   font-weight: 600;
   cursor: pointer;
   transition: all .12s ease;
@@ -1664,8 +1880,8 @@
 }
 .fpsButtons button:disabled { opacity: .3; cursor: not-allowed; }
 .fpsLabel {
-  color: #595959;
-  font-size: 9px;
+  color: var(--panel-text-muted);
+  font-size: var(--t-micro);
   margin-left: 2px;
 }
 
@@ -1674,8 +1890,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  font-size: 9px;
-  color: #737373;
+  font-size: var(--t-micro);
+  color: var(--panel-text-muted);
   letter-spacing: .08em;
   text-transform: uppercase;
 }
@@ -1846,9 +2062,9 @@
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  font-size: 8px;
+  font-size: var(--t-micro);
   letter-spacing: .1em;
-  color: #737373;
+  color: var(--panel-text-muted);
   font-weight: 700;
 }
 .ringsLabel strong {
@@ -1885,10 +2101,10 @@
   pointer-events: auto;
 }
 .keyDeckTitle {
-  font-size: 8px;
+  font-size: var(--t-micro);
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: #737373;
+  color: var(--panel-text-muted);
   font-weight: 700;
   text-align: center;
   margin-bottom: 8px;
@@ -2022,15 +2238,15 @@
   margin-bottom: 8px;
 }
 .logHeader span {
-  color: #8c8c8c;
-  font-size: 9px;
+  color: var(--panel-text-muted);
+  font-size: var(--t-micro);
   text-transform: uppercase;
   letter-spacing: .12em;
   font-weight: 600;
 }
 .logHeader small {
-  color: #595959;
-  font-size: 9px;
+  color: var(--panel-text-muted);
+  font-size: var(--t-micro);
 }
 .logActions {
   display: flex;
@@ -2068,7 +2284,7 @@
   gap: 4px;
 }
 .logEmpty {
-  color: #525252;
+  color: var(--panel-text-muted);
   font-style: italic;
   padding: 6px;
 }
@@ -2080,14 +2296,14 @@
   color: #d4d4d8;
 }
 .logTime {
-  color: #525252;
-  font-size: 8px;
+  color: var(--panel-text-muted);
+  font-size: var(--t-micro);
   font-variant-numeric: tabular-nums;
 }
 .logTag {
   color: #8c8c8c;
   font-weight: 600;
-  font-size: 8px;
+  font-size: var(--t-micro);
 }
 .logTag[data-type="load"] { color: #ffffff; }
 .logTag[data-type="clip"] { color: #e5e5e5; }
@@ -2102,12 +2318,19 @@
 .surface[data-theme="light"] :is(button, a, select, input):focus-visible {
   outline: 2px solid #000000;
 }
+.surface[data-theme="light"] .header { border-bottom-color: #d9d9d9; }
 .surface[data-theme="light"] .header h1 { color: #000000; }
+.surface[data-theme="light"] .eyebrow { color: #595959; }
 .surface[data-theme="light"] .intro { color: #595959; }
-.surface[data-theme="light"] :is(.nav a, .themeToggle, .specimens, .controls) {
+.surface[data-theme="light"] :is(.nav a, .themeToggle, .menuToggle, .specimens, .controls) {
   color: #0a0a0a;
   border-color: #bfbfbf;
   background: rgba(250, 250, 250, 0.95);
+}
+.surface[data-theme="light"] .nav {
+  background: rgba(255, 255, 255, 0.97);
+  border-color: #bfbfbf;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
 }
 .surface[data-theme="light"] .lab {
   border-color: #b3b3b3;
@@ -2128,14 +2351,19 @@
 }
 .surface[data-theme="light"] .specimen[data-active="true"] {
   color: #000000;
-  background: rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.12);
   box-shadow: inset 2px 0 #000000;
 }
-.surface[data-theme="light"] .specimenIndex { color: #8c8c8c; }
-.surface[data-theme="light"] .rosterDivider { color: #595959; border-color: #d9d9d9; }
+.surface[data-theme="light"] .specimen[data-active="true"] strong { color: #000000; }
+.surface[data-theme="light"] .specimenIndex { color: #595959; }
+.surface[data-theme="light"] .sidebarHead {
+  background: var(--panel-surface);
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+.surface[data-theme="light"] .rosterGroupLabel { color: #404040; border-color: #d9d9d9; }
 .surface[data-theme="light"] .specimenNote { border-color: #d9d9d9; }
 .surface[data-theme="light"] .specimenNote strong { color: #000000; }
-.surface[data-theme="light"] .specimenNote p { color: #595959; }
+.surface[data-theme="light"] .specimenNote p { color: #404040; }
 .surface[data-theme="light"] .specimenBadge {
   border-color: #b3b3b3;
   background: rgba(0, 0, 0, 0.06);
@@ -2244,19 +2472,19 @@
   color: #000000;
 }
 .surface[data-theme="light"] .searchInput::placeholder {
-  color: #8c8c8c;
+  color: var(--panel-text-muted);
 }
 .surface[data-theme="light"] .searchInput:focus {
   border-color: #000000;
 }
 .surface[data-theme="light"] .searchClear {
-  color: #8c8c8c;
+  color: var(--panel-text-muted);
 }
 .surface[data-theme="light"] .searchClear:hover {
   color: #000000;
 }
 .surface[data-theme="light"] .emptySearch {
-  color: #8c8c8c;
+  color: var(--panel-text-muted);
 }
 
 .surface[data-theme="light"] .specimenMetaFull {
@@ -3032,20 +3260,28 @@
   }
   .lab[data-left="open"] .specimens { transform: none; }
   .lab[data-right="open"] .controls { transform: none; }
+  /* Scrim: clicking the stage outside an open drawer closes it */
+  .drawerScrim {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 25;
+    background: rgba(0, 0, 0, 0.45);
+  }
+  .surface[data-theme="light"] .drawerScrim { background: rgba(0, 0, 0, 0.22); }
   /* Arrow rides the drawer's inner edge while open */
   .panelToggle[data-side="left"] { left: var(--drawer-w); }
   .panelToggle[data-side="right"] { right: var(--drawer-w); }
 }
 
 /* --- Phone: drawers go near-full-width, chrome tightens --- */
+/* The header's phone layout (collapsible nav behind the menu button) is
+   owned by the max-width: 768px block near the top of this file. */
 @media (max-width: 720px) {
   .surface {
     padding: 12px max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
   }
   .lab { --drawer-w: min(340px, 88vw); }
-  .header { align-items: flex-start; flex-direction: column; }
-  .nav { width: 100%; flex-wrap: wrap; }
-  .nav a, .themeToggle { flex: 1; }
   .telemetry div { width: 74px; }
   .dragHint { display: none; }
   .cameraDock { top: 48px; right: 12px; }

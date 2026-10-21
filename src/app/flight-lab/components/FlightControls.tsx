@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type Ref } from "react";
 import {
   CLIP_CATEGORIES,
   filterClips,
@@ -41,6 +41,7 @@ const ORTHO_PRESETS: { id: FlightLabCameraPreset; label: string; icon: string }[
 interface FlightControlsProps {
   children?: React.ReactNode;
   specimenKind: "wyvern" | "egg";
+  panelRef?: Ref<HTMLElement>;
   mode: FlightLabMode;
   onSelectMode: (mode: FlightLabMode) => void;
   onTriggerOneShot: (actionName: string) => void;
@@ -73,6 +74,7 @@ interface FlightControlsProps {
 export function FlightControls({
   children,
   specimenKind,
+  panelRef,
   mode,
   onSelectMode,
   onTriggerOneShot,
@@ -109,6 +111,11 @@ export function FlightControls({
   const [cameraSubTab, setCameraSubTab] = useState<"persp" | "ortho">(
     isOrthoPreset ? "ortho" : "persp"
   );
+  // The sub-tab follows the active preset's family — showing "Perspective"
+  // while the camera is orthographic is a false control label (doc 38 §3.7).
+  useEffect(() => {
+    setCameraSubTab(isOrthoPreset ? "ortho" : "persp");
+  }, [isOrthoPreset]);
 
   // Clip drawer filter and search states
   const [clipCategory, setClipCategory] = useState<ClipCategory>("all");
@@ -119,23 +126,42 @@ export function FlightControls({
   }, [clipDetails, clipCategory, clipSearch]);
 
   const [activeOneShotName, setActiveOneShotName] = useState<string | null>(null);
+  const oneShotTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Never leave a flash timer pending past unmount
+  useEffect(() => {
+    return () => {
+      if (oneShotTimerRef.current !== null) clearTimeout(oneShotTimerRef.current);
+    };
+  }, []);
 
   const handleActionClick = (actionName: string) => {
     setActiveOneShotName(actionName);
     onTriggerOneShot(actionName);
-    setTimeout(() => {
+    if (oneShotTimerRef.current !== null) clearTimeout(oneShotTimerRef.current);
+    oneShotTimerRef.current = setTimeout(() => {
       setActiveOneShotName(null);
+      oneShotTimerRef.current = null;
     }, 1800);
   };
 
   return (
-    <aside className={styles.controls} aria-label="Flight controls cockpit">
-      {/* 0. Deck Switcher Tabs for Focused Inspection */}
-      <div className={styles.deckTabsBar} role="tablist" aria-label="Flight cockpit deck tabs">
+    <aside
+      id="controls-panel"
+      ref={panelRef}
+      className={styles.controls}
+      aria-label="Flight controls cockpit"
+      tabIndex={-1}
+    >
+      {/* 0. Deck Switcher Tabs for Focused Inspection.
+          Filter buttons, not tabs: they show/hide sections rather than swap
+          panels, so aria-pressed is the honest pattern (doc 38 §4.5). */}
+      <div className={styles.deckTabsBar} role="group" aria-label="Flight cockpit deck tabs">
         <button
           type="button"
           className={styles.deckTabBtn}
           data-active={deckView === "all"}
+          aria-pressed={deckView === "all"}
           onClick={() => setDeckView("all")}
         >
           All
@@ -144,25 +170,28 @@ export function FlightControls({
           type="button"
           className={styles.deckTabBtn}
           data-active={deckView === "actions"}
+          aria-pressed={deckView === "actions"}
           onClick={() => setDeckView("actions")}
         >
-          ⚡ Actions
+          Actions
         </button>
         <button
           type="button"
           className={styles.deckTabBtn}
           data-active={deckView === "clips"}
+          aria-pressed={deckView === "clips"}
           onClick={() => setDeckView("clips")}
         >
-          🎞 Clips ({clipDetails.length})
+          Clips ({clipDetails.length})
         </button>
         <button
           type="button"
           className={styles.deckTabBtn}
           data-active={deckView === "camera"}
+          aria-pressed={deckView === "camera"}
           onClick={() => setDeckView("camera")}
         >
-          🎥 Camera
+          Camera
         </button>
       </div>
 
@@ -447,15 +476,14 @@ export function FlightControls({
           </div>
 
           {/* Clip Category Filter Pills */}
-          <div className={styles.clipFilterTabs} role="tablist" aria-label="Clip category filters">
+          <div className={styles.clipFilterTabs} role="group" aria-label="Clip category filters">
             {CLIP_CATEGORIES.map((cat) => (
               <button
                 key={cat.id}
                 type="button"
                 className={styles.clipCategoryPill}
                 data-active={clipCategory === cat.id}
-                role="tab"
-                aria-selected={clipCategory === cat.id}
+                aria-pressed={clipCategory === cat.id}
                 onClick={() => setClipCategory(cat.id)}
               >
                 {cat.label}

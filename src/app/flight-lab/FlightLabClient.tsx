@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { FLIGHT_LAB_SPECIMENS, findFlightLabSpecimen } from "../../flight-lab/catalog";
 import {
   canSpecimenExecuteMode,
@@ -58,10 +58,15 @@ const INITIAL_TELEMETRY: FlightLabTelemetry = {
   isOrtho: false,
 };
 
+/** Below this width the docked panels become overlay drawers. */
+const isDrawerWidth = () =>
+  typeof window !== "undefined" && window.matchMedia("(max-width: 1050px)").matches;
+
 export default function FlightLabClient() {
   const viewportRef = useRef<HTMLDivElement>(null);
   const runtimeRef = useRef<FlightLabRuntime | null>(null);
   const logContainerRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
 
   const [specimenId, setSpecimenId] = useState("wyvern-v2-rig");
   const [searchQuery, setSearchQuery] = useState("");
@@ -84,6 +89,13 @@ export default function FlightLabClient() {
   // Docked side-panel visibility (persisted)
   const [leftPanelOpen, setLeftPanelOpen] = useState(true);
   const [rightPanelOpen, setRightPanelOpen] = useState(true);
+  const leftPanelRef = useRef<HTMLElement>(null);
+  const rightPanelRef = useRef<HTMLElement>(null);
+  const leftToggleRef = useRef<HTMLButtonElement>(null);
+  const rightToggleRef = useRef<HTMLButtonElement>(null);
+
+  // Mobile nav disclosure (CSS-hidden above 768px, so it only matters there)
+  const [navOpen, setNavOpen] = useState(false);
 
   // Diagnostic states
   const [showSkeleton, setShowSkeleton] = useState(false);
@@ -188,16 +200,24 @@ export default function FlightLabClient() {
     }
   }, [logs]);
 
-  // Restore persisted panel visibility once on mount
-  useEffect(() => {
+  // Restore persisted panel visibility once on mount. With no persisted
+  // preference, start collapsed at drawer widths — "open" below 1050px means
+  // a curtain over the stage (doc 38 §3.2). Layout effect: no first-paint flash.
+  useLayoutEffect(() => {
     try {
       const raw = window.localStorage.getItem("flight-lab-panels");
-      if (!raw) return;
-      const parsed = JSON.parse(raw) as { left?: boolean; right?: boolean };
-      if (typeof parsed.left === "boolean") setLeftPanelOpen(parsed.left);
-      if (typeof parsed.right === "boolean") setRightPanelOpen(parsed.right);
+      if (raw) {
+        const parsed = JSON.parse(raw) as { left?: boolean; right?: boolean };
+        if (typeof parsed.left === "boolean") setLeftPanelOpen(parsed.left);
+        if (typeof parsed.right === "boolean") setRightPanelOpen(parsed.right);
+        return;
+      }
     } catch {
-      // malformed or unavailable storage — keep defaults
+      // malformed or unavailable storage — fall through to width-aware defaults
+    }
+    if (isDrawerWidth()) {
+      setLeftPanelOpen(false);
+      setRightPanelOpen(false);
     }
   }, []);
 
@@ -212,12 +232,69 @@ export default function FlightLabClient() {
     }
   }, [leftPanelOpen, rightPanelOpen]);
 
+  // Close the mobile nav on Escape or an outside tap while it is open.
+  useEffect(() => {
+    if (!navOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setNavOpen(false);
+    };
+    const onPointerDown = (event: PointerEvent) => {
+      const header = headerRef.current;
+      if (header && !header.contains(event.target as Node)) setNavOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("pointerdown", onPointerDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("pointerdown", onPointerDown);
+    };
+  }, [navOpen]);
+
+  // Drawer interactions (≤1050px): focus moves to the panel on open and back
+  // to its toggle on close; Escape or a scrim click closes (doc 38 §4.6).
+  const closeDrawers = useCallback(() => {
+    setLeftPanelOpen(false);
+    setRightPanelOpen(false);
+  }, []);
+
+  const toggleLeftPanel = useCallback(() => {
+    const next = !leftPanelOpen;
+    setLeftPanelOpen(next);
+    if (isDrawerWidth()) {
+      if (next) leftPanelRef.current?.focus();
+      else leftToggleRef.current?.focus();
+    }
+  }, [leftPanelOpen]);
+
+  const toggleRightPanel = useCallback(() => {
+    const next = !rightPanelOpen;
+    setRightPanelOpen(next);
+    if (isDrawerWidth()) {
+      if (next) rightPanelRef.current?.focus();
+      else rightToggleRef.current?.focus();
+    }
+  }, [rightPanelOpen]);
+
+  useEffect(() => {
+    if (!leftPanelOpen && !rightPanelOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || interactiveFlightActive) return;
+      if (!isDrawerWidth()) return;
+      if (leftPanelOpen) leftToggleRef.current?.focus();
+      else rightToggleRef.current?.focus();
+      closeDrawers();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [leftPanelOpen, rightPanelOpen, interactiveFlightActive, closeDrawers]);
+
   const selectSpecimen = (id: string) => {
     const nextSpecimen = findFlightLabSpecimen(id);
     setSpecimenId(id);
     setError(null);
     setLoading(true);
-    setMetrics(null);
+    // metrics intentionally kept: the sidebar shows the previous specimen's
+    // measurements dimmed until the new ones arrive, instead of collapsing.
     setClips([]);
     setClipDetails([]);
     setActiveClip(nextSpecimen.kind === "egg" ? "Incubation" : "");
@@ -231,6 +308,8 @@ export default function FlightLabClient() {
       runtimeRef.current?.setCameraPreset("profile");
     }
     void runtimeRef.current?.loadSpecimen(nextSpecimen);
+    // Master→detail: at drawer widths, picking a specimen hands back the stage.
+    if (isDrawerWidth()) setLeftPanelOpen(false);
   };
 
   const retryLoad = () => {
@@ -541,15 +620,42 @@ export default function FlightLabClient() {
 
   return (
     <main className={styles.surface} data-theme={theme}>
-      <header className={styles.header}>
-        <div>
+      <header className={styles.header} ref={headerRef}>
+        <div className={styles.brand}>
           <p className={styles.eyebrow}>HEARTHVALE · AERODYNAMICS RANGE 01</p>
           <h1>Wyvern Flight Lab</h1>
           <p className={styles.intro}>
             Debug the v2 rig. Inspect seams, landmarks, joint probes, and compare with V1 reference.
           </p>
         </div>
-        <nav className={styles.nav} aria-label="Flight Lab navigation">
+        <button
+          type="button"
+          className={styles.menuToggle}
+          aria-expanded={navOpen}
+          aria-controls="flight-lab-nav"
+          aria-label={navOpen ? "Close navigation menu" : "Open navigation menu"}
+          onClick={() => setNavOpen((open) => !open)}
+        >
+          <span className={styles.menuIcon} aria-hidden="true" />
+          <span className={styles.menuLabel}>Menu</span>
+        </button>
+        <nav
+          id="flight-lab-nav"
+          className={styles.nav}
+          data-open={navOpen ? "true" : "false"}
+          aria-label="Flight Lab navigation"
+        >
+          <Link href="/" aria-current="page" onClick={() => setNavOpen(false)}>
+            Flight Lab
+          </Link>
+          <a
+            href="https://github.com"
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => setNavOpen(false)}
+          >
+            Wyvern Rig Studio
+          </a>
           <button
             type="button"
             className={styles.themeToggle}
@@ -559,8 +665,6 @@ export default function FlightLabClient() {
             <span aria-hidden="true">{theme === "dark" ? "☀" : "◐"}</span>
             {theme === "dark" ? "Light" : "Dark"}
           </button>
-          <Link href="/">Flight Lab</Link>
-          <a href="https://github.com" target="_blank" rel="noreferrer">Wyvern Rig Studio</a>
         </nav>
       </header>
 
@@ -578,6 +682,8 @@ export default function FlightLabClient() {
           specimen={specimen}
           clipDetailsCount={clipDetails.length}
           metrics={metrics}
+          loading={loading}
+          panelRef={leftPanelRef}
         />
 
         <StageViewport
@@ -616,6 +722,7 @@ export default function FlightLabClient() {
 
         <FlightControls
           specimenKind={specimen.kind}
+          panelRef={rightPanelRef}
           mode={mode}
           onSelectMode={selectMode}
           onTriggerOneShot={triggerOneShot}
@@ -667,17 +774,25 @@ export default function FlightLabClient() {
           />
         </FlightControls>
 
+        {(leftPanelOpen || rightPanelOpen) && (
+          <div className={styles.drawerScrim} aria-hidden="true" onClick={closeDrawers} />
+        )}
+
         <PanelToggle
           side="left"
           open={leftPanelOpen}
           label="specimen panel"
-          onToggle={() => setLeftPanelOpen((open) => !open)}
+          controls="specimen-panel"
+          toggleRef={leftToggleRef}
+          onToggle={toggleLeftPanel}
         />
         <PanelToggle
           side="right"
           open={rightPanelOpen}
           label="controls panel"
-          onToggle={() => setRightPanelOpen((open) => !open)}
+          controls="controls-panel"
+          toggleRef={rightToggleRef}
+          onToggle={toggleRightPanel}
         />
       </section>
     </main>

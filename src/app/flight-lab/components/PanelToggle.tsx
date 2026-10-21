@@ -1,5 +1,6 @@
 "use client";
 
+import type { Ref } from "react";
 import styles from "../FlightLabClient.module.css";
 
 export interface PanelToggleProps {
@@ -7,21 +8,26 @@ export interface PanelToggleProps {
   open: boolean;
   label: string;
   onToggle: () => void;
+  /** id of the panel this button expands/collapses */
+  controls: string;
+  toggleRef?: Ref<HTMLButtonElement>;
 }
 
 /**
  * Hide/show arrow for a docked side panel. Sits on the panel's inner edge and
  * parks at the dock edge while the panel is hidden, at every breakpoint.
  */
-export function PanelToggle({ side, open, label, onToggle }: PanelToggleProps) {
+export function PanelToggle({ side, open, label, onToggle, controls, toggleRef }: PanelToggleProps) {
   const direction = open ? side : side === "left" ? "right" : "left";
   const action = open ? "Hide" : "Show";
   return (
     <button
       type="button"
+      ref={toggleRef}
       className={styles.panelToggle}
       data-side={side}
       aria-expanded={open}
+      aria-controls={controls}
       aria-label={`${action} ${label}`}
       title={`${action} ${label}`}
       onClick={onToggle}
