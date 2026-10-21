@@ -12,11 +12,11 @@ export type FlightLabSpecimen = {
 export const FLIGHT_LAB_SPECIMENS: readonly FlightLabSpecimen[] = [
   {
     id: "wyvern-v2-rig",
-    name: "V2 Rig (Gothic Rebuild)",
+    name: "V2 Rig (Gothic Rebuild / Rig 2)",
     modelFile: "wyvern-v2-rig.glb",
-    className: "v2 rebuild",
+    className: "v2 rebuild (Rig 2)",
     description:
-      "92 bones, 18 clips. Current Blender focus rig with six three-segment wing digits per side and membrane panel chains.",
+      "Rig 2 focus rig: 92 bones, 18 clips. Current Blender focus rig with six three-segment wing digits per side and membrane panel chains.",
     targetSize: 8.4,
     heading: Math.PI,
     kind: "wyvern",
@@ -45,11 +45,11 @@ export const FLIGHT_LAB_SPECIMENS: readonly FlightLabSpecimen[] = [
   },
   {
     id: "wyvern-v1-rig",
-    name: "V1 Rig (Drogon Player)",
+    name: "V1 Rig (Drogon Player / Rig 1)",
     modelFile: "player-wyvern.glb",
-    className: "v1 reference",
+    className: "v1 reference (Rig 1)",
     description:
-      "Original gameplay juvenile wyvern rig with 13 clips. Retained as baseline for motion, wing shape, and proportion comparison.",
+      "Rig 1 baseline: Original gameplay juvenile wyvern rig with 13 clips (V1 Drogon). Retained as baseline for motion, wing shape, and proportion comparison.",
     targetSize: 8.4,
     heading: Math.PI,
     kind: "wyvern",

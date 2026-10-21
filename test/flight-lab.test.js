@@ -79,6 +79,14 @@ test("specimen catalog search matches name, class, description, and kind", () =>
   assert.ok(v1Results.length >= 1);
   assert.ok(v1Results.some((item) => item.id === "wyvern-v1-rig"));
 
+  const rig1Results = filter("rig 1");
+  assert.ok(rig1Results.length >= 1);
+  assert.ok(rig1Results.some((item) => item.id === "wyvern-v1-rig"));
+
+  const rig2Results = filter("rig 2");
+  assert.ok(rig2Results.length >= 1);
+  assert.ok(rig2Results.some((item) => item.id === "wyvern-v2-rig"));
+
   const unknownResults = filter("nonexistent-xyz-999");
   assert.equal(unknownResults.length, 0);
 });

@@ -110,7 +110,24 @@ export default function FlightLabClient() {
   const filteredSpecimens = FLIGHT_LAB_SPECIMENS.filter((item) => {
     if (!searchQuery.trim()) return true;
     const q = searchQuery.toLowerCase().trim();
+    const compactQ = q.replace(/[\s\-_]+/g, "");
+    const compactId = item.id.toLowerCase().replace(/[\s\-_]+/g, "");
+    const compactName = item.name.toLowerCase().replace(/[\s\-_]+/g, "");
+
+    const isRig1Query = compactQ === "rig1" || compactQ === "v1" || compactQ === "v1rig";
+    if (isRig1Query && (item.id === "wyvern-v1-rig" || item.className.includes("v1"))) {
+      return true;
+    }
+
+    const isRig2Query = compactQ === "rig2" || compactQ === "v2" || compactQ === "v2rig";
+    if (isRig2Query && (item.id === "wyvern-v2-rig" || item.className.includes("v2"))) {
+      return true;
+    }
+
     return (
+      compactId.includes(compactQ) ||
+      compactName.includes(compactQ) ||
+      item.id.toLowerCase().includes(q) ||
       item.name.toLowerCase().includes(q) ||
       item.className.toLowerCase().includes(q) ||
       item.description.toLowerCase().includes(q) ||

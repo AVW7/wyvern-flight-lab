@@ -22,3 +22,7 @@ next-env.d.ts
 # Blender auto-backups
 *.blend1
 *.blend2
+
+# Python
+__pycache__/
+*.pyc

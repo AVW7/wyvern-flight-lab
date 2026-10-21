@@ -10,12 +10,14 @@ Located in `public/models/` and `models/source/`:
 
 | Asset File | Version | Role / Description |
 |---|---|---|
-| `public/models/player-wyvern.glb` | **V1** | Canonical Drogon juvenile wyvern rig with 13 clips (baseline for motion, wing shape, and proportion comparison). |
-| `public/models/wyvern-v2-rig.glb` | **V2** | Canonical Gothic rebuild focus rig: 92 bones, single-skin invariant, 18 canonical flight/locomotion/combat clips, and coordinated membrane panel chains. |
+| `public/models/wyvern-v1-rig.glb` (alias to `player-wyvern.glb`) | **V1 / Rig 1** | Canonical Drogon juvenile wyvern rig with 13 clips (baseline for motion, wing shape, and proportion comparison). |
+| `public/models/player-wyvern.glb` | **V1 / Rig 1** | Canonical Drogon juvenile wyvern rig with 13 clips. |
+| `public/models/wyvern-v2-rig.glb` | **V2 / Rig 2** | Canonical Gothic rebuild focus rig: 92 bones, single-skin invariant, 18 canonical flight/locomotion/combat clips, and coordinated membrane panel chains. |
 | `public/models/wyvern-v2-idle-walk-flight-lab-candidate.glb` | **V2 Candidate** | Review candidate for revised Idle and Walk loops. |
 | `public/models/wyvern-v2-membrane-lab-candidate.glb` | **V2 Candidate** | Membrane repair candidate with relaxed wing curvature and surface normal handling. |
 | `assets/blender/wyvern-gothic.glb` | **Source GLB** | Unquantized reference export before runtime mesh optimization. |
 | `models/source/wyvern-rig.blend` | **Blender V2** | Authoritative 92-bone V2 Blender rig source file with full rest pose and FCurve data. |
+| `models/source/drogon-v1-rig.blend` | **Blender V1** | 292-bone Drogon V1 Blender rig source file with action library. |
 | `models/source/wyvern-rig-v1wing.blend` | **Blender V1 Wing** | Rigging study with historical V1 wing geometry and bone constraints. |
 | `models/source/wyvern_animated.blend` | **Blender Anim** | Action library with animated takeoff, glide, fly, and walk cycles. |
 
