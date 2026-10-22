@@ -1,0 +1,49 @@
+
+/tmp/pre-d4f.glb  bef7a09aa131  6368564 B
+92 bones · 18 clips · sampled at 60 Hz
+
+clip         peak    joint             p95     mean    accents  accelMax  sustained
+attack       4930.95 Head              4390.88 1664.32 19       144869    yes
+attack2      1849.53 Tail10            1369.22 696.73  27       37710     yes
+attackAir2   1262.04 L_WingD0P0        1052.04 529.28  59       41926     yes
+bankLeft     691.73  R_WingD2P2        475.57  221.37  53       17695     yes
+bankRight    691.73  L_WingD2P2        475.57  221.35  53       17695     yes
+breath       1427.53 L_WingD3P1        1152.18 293.61  6        76782     yes
+cruise       367.85  R_WingD4P2        326.14  197.94  168      4609      yes
+death        1738.20 L_WingPanel0_0    887.70  353.86  14       44919     yes
+dive         43.30   Tail10            43.16   28.67   240      307       yes
+glide        22.03   Tail10            21.71   15.98   327      85        yes
+hover        498.97  R_WingD5P2        253.87  135.97  23       16443     yes
+idle         286.26  Head              196.86  71.34   30       4463      yes
+land         856.90  R_WingD3P2        663.65  216.05  22       34265     yes
+rest         6.33    Jaw               5.60    5.22    360      45        yes
+scout        440.14  L_WingD5P2        42.08   34.90   6        24695     yes
+speed        481.88  L_WingPanel0_1    118.20  73.12   12       24619     yes
+takeoff      8084.92 R_WingPanel2_1    3593.47 555.11  4        251400    yes
+walk         1111.42 Tail10            928.83  450.06  20       27748     yes
+wrote assets/rig-audits/2026-10-22-d4-flight-group/gate-before.json
+
+reference assets/rig-audits/2026-10-21-dynamics/v1-dynamics-reference.json (0e37110bca94)
+candidate/reference, deg/s.  * accents is reported, not gated.
+
+clip         peak            p95             mean            accelMax          accents*
+cruise       367.8/766.7     326.1/582.4     197.9/382.2     4608.7/8406.5     168/164
+bankLeft     691.7/2823.7    475.6/1818.0    221.4/969.8     17695.4/73748.4   53/56
+bankRight    691.7/2554.1    475.6/1782.8    221.4/965.6     17694.5/76080.8   53/87
+idle         286.3/370.2     196.9/238.9     71.3/79.5       4463.3/13199.0    30/24
+walk         1111.4/1268.6   928.8/1126.9    450.1/533.8     27748.3/37630.7   20/39
+takeoff      8084.9/4824.2   3593.5/1358.7   555.1/677.9     251400.2/240671.1 4/2
+death        1738.2/1500.2   887.7/917.7     353.9/502.6     44918.9/43855.5   14/67
+attack       4930.9/5471.4   4390.9/4749.7   1664.3/1194.8   144869.1/296705.4 19/66
+attack2      1849.5/1480.5   1369.2/1372.0   696.7/638.9     37709.8/36902.2   27/43
+
+dynamics: FAIL
+  cruise.peak = 367.85 (reference 766.75, expected >= 536.72)
+  cruise.p95 = 326.14 (reference 582.42, expected >= 465.94)
+  cruise.mean = 197.94 (reference 382.16, expected 267.51..535.03)
+  bankLeft.peak = 691.73 (reference 2823.67, expected >= 1976.57)
+  bankLeft.p95 = 475.57 (reference 1818.04, expected >= 1454.43)
+  bankLeft.mean = 221.37 (reference 969.84, expected 678.88..1357.77)
+  bankRight.peak = 691.73 (reference 2554.10, expected >= 1787.87)
+  bankRight.p95 = 475.57 (reference 1782.84, expected >= 1426.27)
+  bankRight.mean = 221.35 (reference 965.63, expected 675.94..1351.88)

@@ -29,7 +29,7 @@ export const FLIGHT_LAB_SPECIMENS: readonly FlightLabSpecimen[] = [
     modelFile: "wyvern-v2-idle-walk-flight-lab-candidate.glb",
     className: "v2 motion candidate",
     description:
-      "Promoted alias: the idle/walk review candidate was promoted to the V2 baseline on 2026-10-21 (idle neck re-splice, horizon leveling, jaw and land-handoff fixes). Retained for harness compatibility; a fresh candidate replaces it when Stage 3 dynamics land.",
+      "Promoted alias: the idle/walk review candidate was promoted to the V2 baseline on 2026-10-21 (idle neck re-splice, horizon leveling, jaw and land-handoff fixes) and refreshed to the Stage 3 dynamics baseline on 2026-10-22 (flight group retimed to 1.000 Hz). Retained for harness compatibility; byte-identical to wyvern-v2-rig.glb.",
     targetSize: 8.4,
     heading: Math.PI,
     kind: "wyvern",
@@ -41,7 +41,7 @@ export const FLIGHT_LAB_SPECIMENS: readonly FlightLabSpecimen[] = [
     modelFile: "wyvern-v2-membrane-lab-candidate.glb",
     className: "v2 membrane candidate",
     description:
-      "Promoted alias: the membrane repair candidate was promoted to the V2 baseline on 2026-10-21 (panel/Tail1 weight binding, sampler compaction). Retained for harness compatibility; a fresh candidate replaces it when Stage 3 dynamics land.",
+      "Promoted alias: the membrane repair candidate was promoted to the V2 baseline on 2026-10-21 (panel/Tail1 weight binding, sampler compaction) and refreshed to the Stage 3 dynamics baseline on 2026-10-22 (flight group retimed to 1.000 Hz). Retained for harness compatibility; byte-identical to wyvern-v2-rig.glb.",
     targetSize: 8.4,
     heading: Math.PI,
     kind: "wyvern",

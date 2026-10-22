@@ -2,17 +2,18 @@
 
 ## Start here
 
-- **Doc-41 state:** A1–A3, B1–B3, C1–C5, D1, D2, D3, D5 done. **D4 partial** (attack shipped;
-  cruise + banks blocked by product invariants). **E1 done** (`poseEnvelope.ts` + `poseAnomalyOverlay.ts`
-  + `Scan` wiring + `assets:audit-pose-envelope` + browser probe; validator wiring and floor
-  penetration deliberately untaken). **Open: C6, C7, D4 remainder, E2–E4.** Gates:
-  `npm run test:fast` **171/171**, 21/21 Blender unit tests, tsc clean, contract 92 joints.
-- **Runtime GLB + contract pinned at** sha256 `bef7a09a…`, 6,368,564 B.
+- **Doc-41 state:** A1–A3, B1–B3, C1–C5, D1–D5 all done (**Stage 3 closed** — all 9 mapped clips
+  pass the dynamics gate). **E1 done** (`poseEnvelope.ts` + `poseAnomalyOverlay.ts` + `Scan` wiring +
+  `assets:audit-pose-envelope` + browser probe; validator wiring and floor penetration deliberately
+  untaken). **Open: C6, C7, E2–E4.** Gates: `npm run test:fast` **171/171**, 21/21 Blender unit
+  tests, tsc clean, contract 92 joints.
+- **Runtime GLB + contract pinned at** sha256 `b5f1c1ef…`, 6,732,156 B (18 clips; flight group
+  retimed to 3.000 s — `cruise`/`bankLeft`/`bankRight` are no longer 6 s clips).
 - **GLB rebuild order** — every stage is NOT idempotent; start each from the *previous* stage's
   committed asset (`git show <commit>:public/models/wyvern-v2-rig.glb`), never its own output:
   `reshape_buzz_clips` → `stabilize_v2_body_and_feet` → `coordinate_all_v2_clips` →
-  `reshape_d3_clips` → `reshape_d4_clips` → `rebalance_v2_skin_weights --write` (weights only) →
-  pin contract → sync candidates → `npm test`.
+  `reshape_d3_clips` → `reshape_d4_clips` → `reshape_d4_flight_clips` →
+  `rebalance_v2_skin_weights --write` (weights only) → pin contract → sync candidates → `npm test`.
 - C5 refuses when median panel web share is already >15% (pre 1.7%, post 43.5%); `--force`
   overrides. Verified: pre-C5 asset + tool + `compactGlb` = `bef7a09aa131…` exactly.
 - **Any weight change invalidates `src/flight-lab/rider/mountData.ts`** → re-run
@@ -34,8 +35,10 @@
   `Neck1` span (3,832 verts nearest `Neck1`); C5 hands 50% to the nearest neck bone.
 - Full four-influence vertices have no free slot → evict the smallest **non-protected** influence,
   not the global smallest (that rule skipped 825 web verts; `L_WingPanel2_0` stuck at 8.4%).
-- `cruise` `maxMembraneX` is **2780.9 with and without C5** — extent comes from digit-tip vertices
-  the web pass never touches. Weight work cannot move D4's cruise gate.
+- `cruise` `maxMembraneX` was **2780.9 with and without C5** — extent comes from digit-tip vertices
+  the web pass never touches, so weight work could not move D4's cruise gate. It reads **2952.7**
+  after the D4 retime only because `t = 1.0 s` now lands on the extension, not because the skinning
+  changed: the membrane-to-tip **ratio is pose-invariant at 1.168** (broken pre-C5 asset: 0.61).
 - `dominant bone == nearest bone segment` is reported, never gated (28.8% → 51.7%; healthy rigs
   score low because surface vertices are often marginally nearer an unrelated bone).
 
@@ -54,14 +57,28 @@
 - Probe: `npm run assets:audit-pose-envelope` → 18/18 clips clean, exit 0; re-injecting the three
   historical defects yields 4 / 1 / 1 anomalies.
 
-## D4 remainder — why cruise/banks are not shipped
+## D4 flight group — the deficit was rate, not amplitude (closed 2026-10-22)
 
-Both clear the dynamics gate under amplification and break a product invariant when they do:
-**cruise** needs 1.68× but the gate samples one frame (t = 1.0 s) requiring `maxMembraneX > 2500`
-(authored 2780.9 → 2256.4 at gain); tip compounding means no gain satisfies both, though the
-pose-independent invariant `maxMembraneX >= wingTipPos.x` still holds there. **banks** need 6.7× +
-smoothing to reach their mean floor, which moves cadence 0.500 → 1.500 Hz and breaks the 8%
-flight-group lock. The fix for both is **authored motion**, not a scale factor.
+- **The flight group beat at 0.500 Hz against V1's 1.000 Hz.** Velocity is amplitude × frequency, so
+  half the cadence *is* half the dynamics — that is the entire cruise deficit (`0.480×` peak,
+  `0.518×` mean) and it closes by retiming `0.5×` on every channel's key times with the pose sequence
+  untouched: `0.958×` peak, `1.034×` mean, gate clear, `maxMembraneX` at `t=1.0 s` *rising* to 2952.7.
+- **Banks needed both** — retime and a `1.95×` gain for genuine stroke depth (`2547 / 1794 / 700`).
+  At 0.5 Hz the same gain sent the wingtip to `x = -1007.7` (through the midline); at 1.0 Hz the
+  cycle minimum is `+117`. All three retimed by the same factor keeps the 8% group lock (spread 0.0%).
+- **Do NOT trust the "half-cycles above 50% of peak" cadence estimator** (doc 36 §6, and the
+  `cadenceHz` that used to live in the probe). It counts a secondary bump as a beat and moves under a
+  gain that never touched timing — that is how "a 1.68× gain breaks cadence" was concluded. The
+  authority is `scripts/validate-wyvern-clips.mjs` (dominant DFT bin of wingtip elevation in Body
+  frame).
+- **`travel` in `diagnose-clip-dynamics.mjs` is cumulative over the loop**, so `classify()` cannot
+  compare clips of different durations: a 3 s clip at the reference rate reports 42–58% of the travel
+  of a 6 s clip at half that rate and scores BUZZ. Normalising by duration is not a drop-in — it moves
+  `walk` (genuinely CONCENTRATED) into UNIFORM. The class table in `wyvern-clip-dynamics-tools` now
+  stops at the clips whose duration still matches their reference.
+- Probe + evidence: `tools/blender/probe_d4_flight_group.mjs`,
+  `assets/rig-audits/2026-10-22-d4-flight-group/` (`gate-before` still fails on exactly the three
+  clips; `gate-after` passes; `sweep-before.jsonl` is the parameter sweep).
 ## Blender control rig (C4, measured)
 
 - **`CANONICAL_CONTACT_PLANE_Z = -2.6549`** = measured world-Z sole (1,084 foot verts). Not

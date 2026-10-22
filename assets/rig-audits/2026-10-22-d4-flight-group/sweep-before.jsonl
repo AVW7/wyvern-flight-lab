@@ -1,0 +1,7 @@
+{"label":"cruise authored (6.0s, 0.5Hz)","peak":367.8,"p95":326.1,"mean":197.9,"accel":4609,"sustained":true,"peakJoint":"R_WingD4P2","span1s":2780.9,"tipX":2380.6,"spanCyclePeak":2952.7,"tipMin":2037.9}
+{"label":"cruise gain1.8 (0.5Hz)","peak":582.9,"p95":548,"mean":303.4,"accel":8403,"sustained":true,"peakJoint":"R_WingD4P2","span1s":2154.9,"tipX":1845.4,"spanCyclePeak":2211.7,"tipMin":569.1}
+{"label":"cruise retime0.5","peak":734.7,"p95":663.8,"mean":395.1,"accel":8927,"sustained":true,"peakJoint":"R_WingD4P2","span1s":2952.7,"tipX":2580.4,"spanCyclePeak":2952.7,"tipMin":2037.9}
+{"label":"bank authored (6.0s, 0.5Hz)","peak":691.7,"p95":475.6,"mean":221.4,"accel":17695,"sustained":true,"peakJoint":"R_WingD2P2","span1s":2086.7,"tipX":1933.2,"spanCyclePeak":2727.5,"tipMin":1933.2}
+{"label":"bank gain2.6 (0.5Hz, old blocker)","peak":1655,"p95":1063.9,"mean":430.2,"accel":46502,"sustained":true,"peakJoint":"R_WingD2P2","span1s":1007,"tipX":-1007.7,"spanCyclePeak":1550.1,"tipMin":-1007.7}
+{"label":"bank retime0.5","peak":1363.1,"p95":1004.7,"mean":441.3,"accel":28584,"sustained":true,"peakJoint":"R_WingD2P2","span1s":2681.1,"tipX":2240.4,"spanCyclePeak":2727.5,"tipMin":1933.2}
+{"label":"bank retime0.5+gain1.95","peak":2547,"p95":1793.6,"mean":700.2,"accel":57458,"sustained":true,"peakJoint":"R_WingD2P2","span1s":1813.9,"tipX":1465.3,"spanCyclePeak":1955.7,"tipMin":117}

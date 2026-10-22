@@ -168,6 +168,21 @@ What differs is amplitude, on the same beat count. Re-timing the clips in Stage 
 would not fix them; restoring amplitude — especially the transients lost by
 `attack` and `takeoff` — is the lever.
 
+> **Correction, 2026-10-22.** The table above is wrong for `cruise`, and the
+> method is why. "Half-cycles above 50% of peak" counts a *secondary* bump as a
+> beat, and it is not stable under a change of peak: a gain raises the peak, the
+> bump stops crossing the threshold, and the count moves on a clip whose timing
+> never changed. Measured with the estimator `scripts/validate-wyvern-clips.mjs`
+> actually uses — the dominant DFT bin of the wingtip elevation in the Body frame,
+> which is indifferent to secondary bumps — V2's whole flight group beats at
+> **0.500 Hz** against V1's **1.000 Hz**. That is the half of the deficit this
+> section attributes to amplitude, and retiming `cruise` by `0.5` closes it with no
+> pose change at all: `0.958×` peak, `1.034×` mean, `maxMembraneX` at `t = 1.0 s`
+> rising to `2952.7` because the sampled frame now lands on the extension. The
+> banks needed both — the retime and a `1.95×` gain for the remaining stroke
+> depth. See doc 41, Task D4, and `assets/rig-audits/2026-10-22-d4-flight-group/`.
+
+
 The fixed 6-second length remains a *stylistic* uniformity (nine clips the same
 duration regardless of what they depict) and V1 is not uniform:
 
@@ -258,5 +273,17 @@ lands, invert that assertion** — the file says so inline.
 **Progress, 2026-10-21**: 27 failing checks → 20, via
 `npm run assets:amplify-dynamics`. `cruise` passes all four channels; both banks
 pass `peak` and `p95` but not `mean`. The other five clips are diagnosed as
-classes a gain cannot fix — see doc 37 §6 for what each one actually needs. The
-gate still fails, so the assertion above stays as written.
+classes a gain cannot fix — see doc 37 §6 for what each one actually needs.
+
+**Closed, 2026-10-22.** All nine mapped clips pass; the assertion above is now
+inverted. Stage 3 shipped in four slices (`reshape_buzz_clips`,
+`reshape_d3_clips`, `reshape_d4_clips`, `reshape_d4_flight_clips`), and the last
+one did not use a gain on `cruise` at all — see the correction at the end of §6.
+Asset `b5f1c1ef…`, `6,732,156 B`.
+
+| clip | peak | p95 | mean | accelMax | gate |
+|---|---:|---:|---:|---:|---|
+| cruise | 734.6 | 663.8 | 395.1 | 8,927 | pass |
+| bankLeft | 2547.0 | 1793.6 | 700.2 | 57,458 | pass |
+| bankRight | 2547.0 | 1793.6 | 700.2 | 57,459 | pass |
+

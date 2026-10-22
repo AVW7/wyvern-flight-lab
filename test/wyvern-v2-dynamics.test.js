@@ -7,11 +7,12 @@
  * a remembered impression.
  *
  * An earlier draft of this file claimed V2's problem was "flatness rather than
- * amplitude". The measurements do not support that. Across the nine mapped
- * clips V2 carries a median 41% of V1's peak angular velocity, and the crest
- * factor (peak / mean) moves in both directions: takeoff drops to 0.27x while
- * idle rises to 2.33x. So it is neither a uniform scaling nor a uniform
- * flattening. What the numbers actually say is in the last test.
+ * amplitude". The measurements do not support that. At the time, across the nine
+ * mapped clips V2 carried a median 41% of V1's peak angular velocity, and the
+ * crest factor (peak / mean) moved in both directions: takeoff dropped to 0.27x
+ * while idle rose to 2.33x. So it was neither a uniform scaling nor a uniform
+ * flattening. Stage 3 closed all nine; the last test records the result rather
+ * than the deficit.
  */
 
 import test from 'node:test';
@@ -99,40 +100,28 @@ test('stretching a clip in time halves its measured angular velocity', async () 
   assert.ok(stretched.duration > original.duration * 1.99);
 });
 
-test('V2 passes the dynamics gate on six of nine clips; the flight group is left', async () => {
+test('V2 passes the dynamics gate on all nine mapped clips', async () => {
   const rig = await loadRig(resolve(ROOT, 'public/models/wyvern-v2-rig.glb'));
   const measured = measureDynamics(rig);
   const result = compareToReference(measured, reference);
 
-  // Stage 3 landed in three of four slices, each solved against this module's
-  // 60 Hz world-space metric rather than typed in:
+  // Stage 3 landed in four slices, each solved against this module's 60 Hz
+  // world-space metric rather than typed in:
   //   D2  takeoff + death      (BUZZ: transient gains + smoothing)
   //   D3  idle, walk, attack2  (travelling secondary-motion ripple)
   //   D4  attack               (gain + a strike accent on its existing peak)
-  const shipped = ['idle', 'walk', 'attack2', 'takeoff', 'death', 'attack'];
-  for (const name of shipped) {
-    const named = result.failures.filter((f) => f.clip === name);
-    assert.deepEqual(
-      named.map((f) => `${f.channel}=${f.value.toFixed(1)} expected ${f.expected}`),
-      [],
-      `${name} was reshaped and must pass the gate`
-    );
-  }
-
-  // The flight group is deliberately NOT amplified. Both remaining clips are
-  // blocked by product invariants, measured in tools/blender/reshape_d4_clips.mjs:
-  //   cruise  a 1.68x gain folds the membrane to 2256 units against the 2500
-  //           floor the span test requires at t = 1.0 s (authored: 2780.9).
-  //   banks   a 6.7x gain plus smoothing moves their wingbeat from 0.500 Hz to
-  //           1.500 Hz, breaking the 8% cadence tolerance the flight phase
-  //           group needs for steering crossfades.
-  // Closing them needs authored motion, not a scale factor. Until then the gate
-  // must keep reporting them as failures rather than be quietly loosened.
-  assert.equal(result.passed, false);
-  assert.deepEqual(
-    [...new Set(result.failures.map((f) => f.clip))].sort(),
-    ['bankLeft', 'bankRight', 'cruise']
-  );
+  //   D4  cruise, both banks   (retime to the reference's wingbeat rate)
+  //
+  // The flight group was blocked by two product invariants as long as it was
+  // treated as an amplitude problem, because both invariants are *pose* limits
+  // and every gain that cleared the gate also folded the wing. The missing term
+  // was rate: V2's flight group beat at 0.500 Hz against the reference's 1.000,
+  // and velocity is amplitude times frequency. Doubling the rate of all three
+  // clips closes cruise with no pose change at all; the banks keep a genuine
+  // half-depth stroke and take a 1.95x gain on top, which is only safe at the
+  // correct rate (see tools/blender/reshape_d4_flight_clips.mjs).
+  assert.deepEqual(result.failures, []);
+  assert.ok(result.passed);
 
   // A clip that silently vanished would otherwise shrink the gate to nothing.
   assert.equal(result.rows.length, 9);

@@ -3,8 +3,8 @@
   "asset": {
     "id": "wyvern-v2-flight-lab-runtime",
     "path": "public/models/wyvern-v2-rig.glb",
-    "sha256": "bef7a09aa131dd996f4e91e66e0edd95bbd623c1d6644e6eeb1b40ae0deffdee",
-    "bytes": 6368564
+    "sha256": "b5f1c1ef67ad9324212f8ab2075e707abd3ff02280ff77db47ffe96a96f3d08b",
+    "bytes": 6732156
   },
   "provenance": {
     "sourceAsset": "assets/blender/wyvern-gothic.glb",
