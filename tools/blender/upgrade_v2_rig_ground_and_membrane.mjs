@@ -385,8 +385,9 @@ export async function upgradeV2RigGroundAndMembrane(
   };
   mixer.stopAllAction();
 
-  // 1. Upgrade `idle` (144 frames): Lift low-slung head/neck carriage (`Neck1 -12°`, `Neck2 -12°`, `Head -8°`)
-  //    and align WingRoot with the ground-supported shoulder carriage.
+  // 1. Upgrade `idle` (144 frames): level the head to the horizon (`Neck1 -4.0°`, `Neck2 -5.0°`,
+  //    `Head -3.5°` — see the warning at the lift constants below) and align WingRoot with the
+  //    ground-supported shoulder carriage.
   const idleFrames = 144;
   const idleCount = idleFrames + 1;
   const idleTimes = Array.from({ length: idleCount }, (_, f) => (idleClip.duration * f) / idleFrames);

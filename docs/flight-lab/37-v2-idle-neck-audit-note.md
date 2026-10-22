@@ -122,3 +122,104 @@ npm run assets:validate-wyvern
 # 4. tests
 npm run test:fast
 ```
+
+---
+
+## 10. Review response (2026-10-22)
+
+Gemini 4's six-row audit was performed against **`3db1b15`**, one commit before `5fb3ab1`
+("repair V2 pipeline leaks, jaw seal, and Blender export bugs"), which fixed four of the six
+rows and re-pinned the asset `d916b748…` → `88adf57e…`. Everything below is re-measured on
+the current tree (`bef7a09a…`, 6,368,564 B, 18 clips) and on the historical assets pulled
+from git, not restated from the commit message.
+
+| Row | Reviewer verdict | Re-measured | State today |
+|---|---|---|---|
+| §2 / §8.1 numbers | Verified ±0.1° | **Confirmed exactly** | Arithmetically right, evidentially incomplete — see 10.1 |
+| §4 splice tool | Bug, +237 KB | **Confirmed exactly** | Closed in `5fb3ab1`; contract now gates it |
+| §3 provenance | Over-claim / hazard | **Half right, wrong mechanism** | Hazard closed; provenance corrected — 10.2 |
+| §6 walk | Sound | **Confirmed** | Unchanged, healthy |
+| §6 idle droop | +13° nose-down | **Confirmed exactly** | Closed in `5fb3ab1` |
+| §6 land → idle snap | 15.89 / 13.00 / 16.98° | **Confirmed exactly** | Closed in `5fb3ab1` |
+
+### 10.1 The §2 table measured the wrong frame
+
+The note's before/after table is `inv(bind) · q` per bone, i.e. *local* pitch. On `d916b748`
+that reads ≈0.0° on all three bones — the reviewer's numbers reproduce to 0.1° — while the
+**composed postural chain** (`Body·Spine1..3·Neck1·Neck2·Head`, same measure the
+`horizon_pitch` detector uses) sits at **+13.0° mean / +13.5° median**. Zeroing three local
+channels does not level a head whose `Body` holds +12.95°. The reviewer's own §6 row is the
+correct read, and the note should have carried that column.
+
+### 10.2 §3: the hazard was real, the provenance story was not
+
+**Right, and worth the alarm.** At `3db1b15`, `upgrade_v2_rig_ground_and_membrane.mjs`
+premultiplied `Neck1 −12°`, `Neck2 −12°`, `Head −8°` onto `idle` (lines 403–405; the review
+cites 257–281, which is the accessor writer — line refs drifted). The arithmetic is exact:
+shipped `−21.1 / −24.2 / −19.3` minus that `−32.0` leaves `−9.1 / −12.2 / −11.3`, so the
+committed upgrader supplied **exactly 32.0° of the 64.6°**. Re-running it would have
+re-injected that half. Fixed in `5fb3ab1` → `−4.0 / −5.0 / −3.5` with a do-not-raise comment.
+
+**Wrong, on two counts.**
+
+1. **The −65° predates this repo.** The initial commit's `public/models/wyvern-v2-rig.glb`
+   (`8673e12`) is **byte-identical** to the pre-fix backup — both `e8edd574…`, 5,740,476 B.
+   No committed script here created it; the other ~33° arrived with the asset.
+2. **`author_v2_ground_wing_fold.py` as committed authors a *level* idle.** `Body` +12.95°
+   (line 197), `Neck1` −4.1°, `Neck2` −6.2° (lines 231–232), `Head` −5.3° (line 248) — the
+   corrected posture, not the defect. It cannot produce −21/−24/−19.
+3. The "**+28.6° downward bind-pose offset**" is the *sum* of the three bind pitches
+   (`Neck1 −1.32`, `Neck2 −22.27`, `Head −4.96` = −28.55), not an offset on any one bone.
+   Dropping it would shift the chain **+28.55°** — opposite sign, wrong magnitude for the
+   −17 / −18 / −14 the defect actually needs.
+
+Net: the note's "came only from a deleted external donor" is incomplete — a committed script
+supplied half the lift — but the reviewer's mechanism is not the one that produced it.
+
+### 10.3 §4: confirmed, and already gated
+
+`d916b748` carries **390 samplers in `idle`, 114 of them orphaned**, and 5,977,592 B against
+5,740,476 B pre-splice = **+237,116 B**, exactly as reported. `splice_neck_head_channels.mjs`
+now copies only referenced samplers, and `runtime_rig_contract.mjs:148` asserts
+`samplers.length === usedSamplers.size` per clip, so the regression cannot ship again. The
+rest-delta, duration and CUBICSPLINE guards the review calls missing exist at lines 90–107.
+Current asset: **276 samplers in all 18 clips, zero orphans.** Residual, cosmetic: the splice
+never compacts, so the three replaced channels' accessors stay in the JSON as dead entries;
+`compactGlb` drops them on the next stage that runs.
+
+### 10.4 §6: idle droop and land handoff, confirmed and closed
+
+- `d916b748` idle chain **+13.0° mean / +13.5° median** (range +5.0…+19.8). `apply_idle_horizon_leveling.mjs`
+  (−4.0/−5.0/−3.5) → `88adf57e` **+0.5 / +1.0**. After D3's motion floor the shipped asset sits at
+  **+5.5 mean / +5.0 median**.
+- `d916b748` land → idle: **Neck2 15.89°, Head 13.00°, R/L_Foot 16.98°** — every figure reproduced.
+  `88adf57e`: worst bone **2.02°**. Current: worst **5.75°** (Tail10), Neck2 4.63° — inside the 8° gate.
+- walk, as the review says, is sound: `Neck1 −8.5`, `Neck2 −6.5`, `Head +2.4`, chain **+2.5 mean /
+  +3.0 median**. The review's −12.0° local sum → +0.8° world was read before D3; the floor moved it
+  to +2.5° and the posture is still level.
+
+### 10.5 Not in the review: D4 whips `attack`'s head 108° per key
+
+The strongest finding of this pass came from looking at the clip the review did not name. D4
+(`541b3e8`) solved a gain for `attack` and applied it to **every animated bone**, the neck
+chain included:
+
+| `attack` | pre-D4 (`562131d`) | shipped (`bef7a09a`) |
+|---|---|---|
+| Neck1 / Neck2 pitch vs bind | ±8.0° | **±88.45°** |
+| Head pitch vs bind | ±18.0° | **±88.45°** |
+| Head key-to-key rotation, max / median | 9.8° / 2.3° | **108.1° / 25.1°** |
+| Head-bone direction vs bind, max | 40.0° | **175.0°** (head travels 463 rig units, bind offset 177) |
+
+Both gates are blind to it by construction: `POSTURE_EXEMPT_CLIPS` exempts `attack` from every
+postural detector, and the dynamics gate measures *how much a clip moves* — which is precisely
+what the gain added. `npm run assets:audit-pose-envelope` reports 18/18 clips clean, exit 0, on
+an asset whose attack head swings a quarter turn per key. Same failure mode as E1: an
+instrument that has only ever been green.
+
+Not fixed here. Capping the postural chain changes the gain `build-dynamics-candidate.mjs`
+solves for `attack`, and D4 is already partial and blocked by product invariants. The fix is to
+exclude `Body/Spine*/Neck*/Head` from the gain (or cap per-bone rotation at ~35°/key) and let the
+gain re-solve; if `attack` cannot reach its dynamics floor without the neck, that is evidence the
+gate is the wrong target — the same conclusion `cruise` and the banks already forced.
+
