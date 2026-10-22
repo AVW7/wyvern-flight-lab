@@ -7,6 +7,7 @@ Usage:
 
 Subcommands:
   audit-glb       Verify an exported GLB against the machine-readable rig contract.
+  check-provenance Verify each authoring .blend still matches its stamped pipeline stage.
   audit-scene     Verify the open Blender file hierarchy, bones, and actions.
   organize        Organize objects into standard role collections (00 Rig, 10 Geometry, etc.).
   probe           Run live mesh-evaluated axis displacement probe on specific bones.
@@ -27,6 +28,7 @@ if str(BLENDER_PKG_DIR) not in sys.path:
     sys.path.insert(0, str(BLENDER_PKG_DIR))
 
 from contract import CONTRACT_PATH, load_contract, resolve_contract_for_glb
+from provenance import PROVENANCE_PATH
 
 
 def _ensure_bpy():
@@ -50,6 +52,16 @@ def cmd_audit_glb(args: argparse.Namespace) -> int:
     else:
         print(out_json)
     return 0 if report.get("passed", False) else 1
+
+
+def cmd_check_provenance(args: argparse.Namespace) -> int:
+    from provenance import check_provenance, format_report
+    report = check_provenance(args.manifest)
+    if args.json_out:
+        Path(args.json_out).write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
+    if not args.quiet:
+        print(format_report(report))
+    return 0 if report["passed"] else 1
 
 
 def cmd_audit_scene(args: argparse.Namespace) -> int:
@@ -114,7 +126,16 @@ def cmd_probe(args: argparse.Namespace) -> int:
 def cmd_export(args: argparse.Namespace) -> int:
     bpy = _ensure_bpy()
     from export.gltf import export_wyvern_glb
+    from provenance import export_refusal
     out_path = Path(args.out).resolve()
+    # The shipped GLB carries GLB-level stages (D2-D4, C5) that no committed .blend
+    # can reproduce, so exporting the wrong blend over it is a silent revert. The
+    # guard is checked before the export and only for that one destination.
+    source = Path(bpy.data.filepath) if getattr(bpy.data, "filepath", "") else args.blend
+    refusal = export_refusal(source, out_path, force=getattr(args, "force", False))
+    if refusal:
+        print(f"Refusing to export: {refusal}", file=sys.stderr)
+        return 1
     export_wyvern_glb(bpy, out_path, export_objects=args.objects)
     print(f"Successfully exported GLB to: {out_path}")
     return 0
@@ -145,6 +166,13 @@ def build_parser() -> argparse.ArgumentParser:
     p_aglb.add_argument("--json-out", type=Path, help="Write output to JSON file")
     p_aglb.set_defaults(func=cmd_audit_glb)
 
+    # check-provenance
+    p_prov = subparsers.add_parser("check-provenance", help="Verify each .blend matches its stamped pipeline stage")
+    p_prov.add_argument("--manifest", type=Path, default=PROVENANCE_PATH, help="Path to the blend provenance manifest")
+    p_prov.add_argument("--json-out", type=Path, help="Write output to JSON file")
+    p_prov.add_argument("--quiet", action="store_true", help="Suppress the human-readable table")
+    p_prov.set_defaults(func=cmd_check_provenance)
+
     # audit-scene
     p_ascene = subparsers.add_parser("audit-scene", help="Verify open scene against rig contract")
     p_ascene.add_argument("--manifest", type=Path, default=CONTRACT_PATH, help="Path to rig contract JSON")
@@ -172,6 +200,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_exp = subparsers.add_parser("export", help="Export scene to GLB")
     p_exp.add_argument("--out", required=True, type=Path, help="Output .glb filepath")
     p_exp.add_argument("--objects", nargs="+", default=None, help="Objects to include (default: auto-detect V2 two-mesh or legacy single-mesh layout)")
+    p_exp.add_argument("--force", action="store_true", help="Export even when the source blend is behind the shipped asset (accepts the revert)")
     p_exp.set_defaults(func=cmd_export)
 
     # control-rig
@@ -291,7 +320,7 @@ def main() -> int:
     try:
         if args.headless:
             return run_headless(args)
-        if args.subcommand != 'audit-glb':
+        if args.subcommand not in ('audit-glb', 'check-provenance'):
             try:
                 import bpy
             except ImportError:

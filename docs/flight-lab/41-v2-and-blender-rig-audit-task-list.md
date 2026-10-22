@@ -165,6 +165,7 @@ Each task below is self-contained, file-scoped, and paired with an explicit veri
 ### Workstream C — Blender Rig Anatomy, Control-Rig & Skinning Unification (`models/source/` & `scripts/blender/`) (P1)
 
 - [x] **Task C1: Reconstruct and commit the canonical 92-bone, 2-mesh master `.blend` (`models/source/wyvern-v2-master.blend`)** *(Completed in `5fb3ab1` via `tools/blender/build_v2_master_blend.py`)*
+  - **Provenance gate landed 2026-10-22 — the blend is not a source for the shipped clips.** `models/source/wyvern-v2-master.blend` is stamped **C1** in `models/source/blend-provenance.json` (`sha256 99396d85…`, 15,257,893 B) with `missingStages: [C5, D2, D3, D4]`, because all four of those stages were applied at GLB level. Exporting it over `public/models/wyvern-v2-rig.glb` **succeeds** and silently reverts them, so `cli.py export` now refuses that one destination (`--force` accepts the revert; exports to any candidate path are never gated). `npm run assets:check-provenance` is stdlib-only (no `bpy`) and verifies every stamp against the file on disk, so editing the blend without re-stamping fails the check instead of quietly mislabelling it. Pinned by `test/asset-provenance.test.js`, which also asserts the two candidate GLBs are **byte-identical** to the pinned asset — the exact desync that left them at `950c4321…` (pre-C5) while the runtime asset was at `bef7a09a…`.
 - [x] **Task C2: Weight the 5 unweighted deforming bones (`L/R_WingPanel0_0`, `L/R_WingPanel1_0`, `Tail1`) in Blender / GLB** *(Completed in `5fb3ab1` via `tools/blender/bind_missing_panel_and_tail1_weights.mjs`; `nonDeformingJoints` is now `["Root", "RootMotion"]`)*
 - [x] **Task C3: Fix `scripts/blender/cli.py`, `scripts/blender/export/gltf.py`, and `WING_FOLD_RATIOS` in `scripts/blender/rigging/control_rig.py`** *(Completed in `5fb3ab1`)*
 
@@ -196,7 +197,7 @@ Each task below is self-contained, file-scoped, and paired with an explicit veri
   - **Action**:
     1. In `models/source/wyvern-v2-master.blend` (and GLB inverse-bind / node rest transform if promoted to runtime), recenter `Jaw.head` from `[3.6, -583.7, 867.8]` (`3.6` units off-center and `74.5` units *above* `Head` `[0.0, -547.3, 793.3]`) to the anatomical midline mandible hinge (`[0.0, -565.0, 785.0]`, `roll = 0.0°`), compensating `Jaw` rest rotation and `Jaw:rotation` keyframe tracks across all 18 clips so pitching `Jaw` opens the mouth straight down the sagittal midline without lateral yaw.
     2. In `models/source/wyvern-v2-master.blend`, extend `Body.tail` in Edit Mode from a degenerate `0.05`-unit stub (`[0.0, 432.1, 711.7]`) to `Spine1.head` (`[0.0, 268.5, 724.2]`, `length = 164.1`), and place `RootMotion.tail` flat on the floor plane (`[0.0, -200.0, 0.0]`) instead of stretching diagonally to `[0.0, 117.7, 824.2]` (`length = 832.57`), keeping bone heads and rolls unchanged so glTF TRS exports remain 100% contract-compatible.
-  - **Verify**: `python3 scripts/blender/cli.py --headless --blend models/source/wyvern-v2-master.blend audit-scene` passes with `Jaw.head.x == 0.0` and `Body.length > 150.0`.
+  - **Verify**: `python3 scripts/blender/cli.py --headless --blend models/source/wyvern-v2-master.blend audit-scene` passes with `Jaw.head.x == 0.0` and `Body.length > 150.0`. **Re-stamp `models/source/blend-provenance.json` afterwards** (new `sha256`/`bytes`, stage `C6`, and `missingStages` only for stages the blend still cannot reproduce) — `npm run assets:check-provenance` fails until the stamp matches the edited file.
 
 - [ ] **Task C7: Symmetrize `models/source/wyvern-rig-v1wing.blend` Edit-Bone Rolls & Lengths and Purge Orphaned Datablocks**
   - **Files**: `models/source/wyvern-rig-v1wing.blend`, `models/source/wyvern-rig.blend`
@@ -248,7 +249,22 @@ Each task below is self-contained, file-scoped, and paired with an explicit veri
     1. **The static detectors use the median, not the peak.** A wingbeat swings 60° for a few frames and is not a posture; the defects that motivated the detector are held for the whole clip. A peak envelope flags every healthy flight clip.
     2. **The postural envelope is scoped to `Body, Spine1..3, Neck1..2, Head`**, not all 92 joints — distal wing/digit bones legitimately hold > 18° in every flight clip, and every defect in Part 4.1 is postural.
     3. **`CANONICAL_TRANSITIONS` is only `takeoff → cruise` and `land → idle`.** The measured reason: on the healthy asset `cruise → bankLeft/bankRight` differ by 8 bones (worst elbow 39.9°) and `idle ↔ walk` by 22 bones (worst `L_Toes` 44.2°). Those pairs are loop-to-loop and `runtime.ts` phase-aligns and crossfades them, so the boundary delta is a stance/phase difference, never a snap — including them would make the detector permanently red and therefore unread.
-  - **A latent bug in the existing `Scan` was found while testing this.** Writing a bone rotation and then calling `mixer.update(0)` on a paused action leaves that action unable to write the pose again: the second seek reads the untouched bone. `scanSeam` borrows the playback mixer, so a second `Scan` press in one session measures a stale pose. `sampleClipPoses` therefore runs a private `AnimationMixer` and reports bind values for bones the clip does not animate; a regression test asserts a repeated scan reproduces the first result. `scanSeam` itself was left alone (out of this task's scope) and still has the defect.
+  - **The "latent bug in `Scan`" claim in this section was wrong. Corrected 2026-10-22 by measurement.**
+    The original text said that writing a bone rotation and then calling `mixer.update(0)` on a paused action
+    leaves that action unable to write the pose again, so a second `Scan` press measures a stale pose, and that
+    `scanSeam` "still has the defect". Measured on three `0.185.1`: `AnimationAction._update` still accumulates
+    while `paused` is true, so a paused `update(0)` **does** write a static 2-key track (`-21.1°` written, read
+    back `-21.1°`), and `scanSeam` returns the same **2 jumps / worst `40.0°`** on a third run and again after
+    `mixer.update(0.37)` of real playback. A second `Scan` press is not blind.
+    What *is* real is the narrower trap in `PropertyMixer.apply` (`three/src/animation/PropertyMixer.js:231-242`):
+    it only calls `binding.setValue` when the accumulated value differs from the previous apply, so a value
+    written to a bound property **from outside the mixer** survives every later `update(0)` while the clip's own
+    value is constant — until `flushMixerBindings` forces `setValue` (`0°` → `−21.1°`, 1 binding flushed). That is
+    why `runtime.ts` flushes every frame; it has nothing to do with `Scan`. `sampleClipPoses` keeps its private
+    mixer for a different, still-valid reason: it must not leave the playback action paused or the scene in a
+    scanned pose. Pinned by two tests in `test/flight-lab.test.js` — `a paused action writes static tracks; only
+    an outside write survives update(0)` (flipping that expectation back to the old claim turns it red) and
+    `scanSeam measures the same defect on a repeated press`. `mixerBindings.ts` now has a test.
 
   - **The pulsing red viewport ring (E1.2) landed 2026-10-22** — see the block below.
 

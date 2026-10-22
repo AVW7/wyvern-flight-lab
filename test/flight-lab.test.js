@@ -12,6 +12,7 @@ import {
   scanClipAnomalies,
 } from "../src/flight-lab/poseEnvelope.ts";
 import { createPoseAnomalyOverlay, POSE_ANOMALY_RING_COLOR } from "../src/flight-lab/poseAnomalyOverlay.ts";
+import { flushMixerBindings, mixerBindingsAreSupported } from "../src/flight-lab/rig/mixerBindings.ts";
 import {
   calculateClipTelemetry,
   calculateEffectiveRate,
@@ -1167,6 +1168,90 @@ test("clip scan restores the pose it borrowed and repeats its measurement", () =
     first.anomalies.map((a) => [a.kind, a.boneName, a.value]),
     "a repeated scan must reproduce the first result",
   );
+});
+
+// ---------------------------------------------------------------------------
+// Three.js mixer mechanics that doc 41 §E1 states incorrectly.
+//
+// `AnimationAction._update` still accumulates while `paused` is true, and
+// `PropertyMixer.apply` only calls `binding.setValue` when the accumulated value
+// differs from the previous apply (three 0.185.1, PropertyMixer.js:231-242).
+// Two consequences, measured rather than reasoned:
+//
+//   1. `action.paused = true` + `mixer.update(0)` DOES write a static 2-key
+//      track. Doc 41 said it skips them; it does not.
+//   2. A value written to a bound property from *outside* the mixer survives
+//      every later `update(0)` while the clip's own value is constant, until
+//      `flushMixerBindings` forces `setValue`.
+//
+// (1) is why a second Scan press re-measures the same jump; (2) is why
+// `runtime.ts` calls `flushMixerBindings` every frame.
+// ---------------------------------------------------------------------------
+test("a paused action writes static tracks; only an outside write survives update(0)", () => {
+  const root = new THREE.Object3D();
+  const bone = new THREE.Bone();
+  bone.name = "Neck1";
+  root.add(bone);
+
+  const held = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(-21.1));
+  const clip = new THREE.AnimationClip("idle", 2.0, [
+    new THREE.QuaternionKeyframeTrack("Neck1.quaternion", [0, 2.0], [
+      held.x, held.y, held.z, held.w, held.x, held.y, held.z, held.w,
+    ]),
+  ]);
+  const pitch = () =>
+    Number(THREE.MathUtils.radToDeg(new THREE.Euler().setFromQuaternion(bone.quaternion, "YXZ").x).toFixed(3));
+
+  const mixer = new THREE.AnimationMixer(root);
+  assert.equal(mixerBindingsAreSupported(mixer), true, "the flush depends on three's private binding fields");
+  const action = mixer.clipAction(clip);
+  action.play();
+  mixer.update(0);
+
+  // (1) a paused seek writes the static track.
+  action.paused = true;
+  action.time = 1.0;
+  mixer.update(0);
+  assert.equal(pitch(), -21.1, "a paused action must still write a static 2-key track");
+
+  // (2) the trap: an outside write is not overwritten while the clip is constant.
+  bone.quaternion.identity();
+  mixer.update(0);
+  assert.equal(pitch(), 0, "update(0) must not overwrite an outside write when the clip value is unchanged");
+
+  // ...and the flush is what recovers it — runtime.ts's per-frame call.
+  assert.equal(flushMixerBindings(mixer), 1);
+  assert.equal(pitch(), -21.1, "flushMixerBindings must re-apply the accumulated clip value");
+});
+
+test("scanSeam measures the same defect on a repeated press", () => {
+  const root = new THREE.Object3D();
+  const bone = new THREE.Bone();
+  bone.name = "L_WingD0P2";
+  root.add(bone);
+
+  const identity = new THREE.Quaternion();
+  const turned = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), THREE.MathUtils.degToRad(40));
+  const flat = (q) => [q.x, q.y, q.z, q.w];
+  const clip = new THREE.AnimationClip("cruise", 2.0, [
+    new THREE.QuaternionKeyframeTrack("L_WingD0P2.quaternion", [0, 1.0, 1.01, 2.0], [
+      ...flat(identity), ...flat(identity), ...flat(turned), ...flat(turned),
+    ]),
+  ]);
+
+  const mixer = new THREE.AnimationMixer(root);
+  const action = mixer.clipAction(clip);
+  action.play();
+  const summarise = (jumps) => jumps.map((j) => [j.boneName, j.jumpType, j.angleDeg]);
+
+  const first = scanSeam(mixer, action, root);
+  assert.ok(first.length > 0, "the injected 40° jump must be found");
+  assert.deepEqual(summarise(scanSeam(mixer, action, root)), summarise(first), "second press must not go blind");
+
+  // ...and not after real playback has advanced the borrowed action either.
+  action.paused = false;
+  mixer.update(0.37);
+  assert.deepEqual(summarise(scanSeam(mixer, action, root)), summarise(first), "press after playback must match");
 });
 
 /** A `PoseAnomaly` with only the fields the overlay reads. */
