@@ -106,12 +106,16 @@ export function createComparisonRigManager(
       comparisonModel.rotation.y = compSpec.heading;
       cloneMaterials(comparisonModel);
       comparisonMembraneSurface = createMembraneSurfaceRuntime(comparisonModel);
-      comparisonFlightRig = isV2RigSpecimen(compSpec) ? createWyvernFlightRig(comparisonModel) : null;
+      // "raw" is the only mode whose point is the *absence* of the procedural
+      // rig: the ghost is the authored clip, the primary is clip + rig, so the
+      // gap between them is exactly what `flightRig` / `neckSpring` add.
+      comparisonFlightRig =
+        modeType !== "raw" && isV2RigSpecimen(compSpec) ? createWyvernFlightRig(comparisonModel) : null;
 
       const compBase = comparisonModel.position.clone();
       comparisonModel.userData.basePosition = compBase;
 
-      if (modeType === "ghost") {
+      if (modeType === "ghost" || modeType === "raw") {
         applyGhostMaterial(comparisonModel, true);
         comparisonModel.position.copy(compBase);
       } else {
@@ -163,9 +167,11 @@ export function createComparisonRigManager(
         timestamp: new Date().toLocaleTimeString(),
         type: "compare",
         message:
-          modeType === "ghost"
-            ? `Ghost overlay engaged: Synchronized ${compSpec.name} (${compSpec.id})`
-            : `Formation flight engaged: ${primarySpecimen?.name ?? "Primary"} + ${compSpec.name} side-by-side`,
+          modeType === "raw"
+            ? `Raw vs Procedural engaged: ${compSpec.name} ghosted with its procedural rig bypassed`
+            : modeType === "ghost"
+              ? `Ghost overlay engaged: Synchronized ${compSpec.name} (${compSpec.id})`
+              : `Formation flight engaged: ${primarySpecimen?.name ?? "Primary"} + ${compSpec.name} side-by-side`,
         details: `Target: ${compSpec.modelFile} · Mode: ${modeType}`,
       });
     } catch (err) {
@@ -200,7 +206,7 @@ export function createComparisonRigManager(
       if (comparisonMode === "formation") {
         comparisonModel.position.set(compBase.x + relX + 6.8, compBase.y + relY, compBase.z + relZ);
         comparisonModel.rotation.copy(primaryModel.rotation);
-      } else if (comparisonMode === "ghost") {
+      } else if (comparisonMode === "ghost" || comparisonMode === "raw") {
         comparisonModel.position.set(compBase.x + relX, compBase.y + relY, compBase.z + relZ);
         comparisonModel.rotation.copy(primaryModel.rotation);
       }

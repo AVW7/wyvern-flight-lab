@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { flushMixerBindings } from "./rig/mixerBindings";
 
 /**
  * Pose-envelope detectors for authored clip defects that a frame-to-frame seam
@@ -183,6 +184,14 @@ export function captureBindRotations(model: THREE.Object3D): PoseBindings {
  *     would otherwise report whatever `wyvernFlightRig` last wrote as if it were
  *     authored motion. Substituting the bind rotation in the sample (rather than
  *     resetting the scene) keeps the scene untouched.
+ *   - **A binding flush after every `update(0)`.** `PropertyMixer.apply` only
+ *     calls `setValue` when the accumulated value moved, so a static track writes
+ *     once and then relies on the bone never being touched again. The private
+ *     mixer already writes on its first apply — measured, so this is not fixing
+ *     an observed miss — but it makes "a static 2-key track always reports its
+ *     authored value" true by construction instead of by three.js internals.
+ *     It is not free: 577 steps x 276 bindings costs ~4.8 ms on a ~21 ms `idle`
+ *     scan (+23%), paid once per Scan press.
  */
 export function sampleClipPoses(
   model: THREE.Object3D,
@@ -220,6 +229,9 @@ export function sampleClipPoses(
       const time = Math.min(s / stepsPerFrame / fps, duration);
       action.time = time;
       mixer.update(0);
+      // `update(0)` leaves a static track's binding unset once its accumulated
+      // value stops changing; force it so the sample is the authored pose.
+      flushMixerBindings(mixer);
 
       const rotations = new Map<string, THREE.Quaternion>();
       for (const bone of bones) {

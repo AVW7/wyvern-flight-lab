@@ -30,3 +30,7 @@ __pycache__/
 # Generated dynamics candidates: 5.7 MB each, reproducible in one command with
 # `npm run assets:amplify-dynamics`. Not committed -- see docs/flight-lab/37.
 assets/rig-audits/**/candidates/*.glb
+
+# Flight Lab dev inbox: written by the Export / Save for AI buttons through
+# POST /api/flight-lab/report. Regenerated on every press, never committed.
+docs/flight-lab/inbox/latest-*

@@ -6,7 +6,13 @@ import { createFlightLabCamera } from "./camera";
 import { createWyvernFlightRig, type FlightKinematics, type WyvernFlightRig } from "./rig/wyvernFlightRig";
 import { createInteractiveFlightController, type FlightInputState } from "./interactiveFlight";
 import { isV2RigSpecimen, type FlightLabSpecimen } from "./catalog";
-import { resolveFlightLabClip, resolveOneShotCapability } from "./clipResolver";
+import {
+  resolveAllModeCapabilities,
+  resolveClipAlias,
+  resolveFlightLabClip,
+  resolveOneShotCapability,
+  type ClipResolutionResult,
+} from "./clipResolver";
 import { RIDER_MOUNT } from "./rider/mountData";
 import { createRider, type RiderHandle } from "./rider/riderRuntime";
 import { uniformScaleOf } from "./rider/riderMount";
@@ -50,12 +56,23 @@ import {
   captureBindRotations,
   detectTransitionAnomalies,
   scanClipAnomalies,
+  type PoseAnomaly,
   type PoseBindings,
 } from "./poseEnvelope";
 import { createComparisonRigManager } from "./comparisonRig";
-import { createPoseAnomalyOverlay } from "./poseAnomalyOverlay";
+import { validateLoadedContract } from "./contractGuard";
+import { POSE_ANOMALY_RING_COLOR, createPoseAnomalyOverlay } from "./poseAnomalyOverlay";
+import { formatPinForAI } from "./inspectionPins";
 import { createFlightLabInteractionManager } from "./interactionManager";
-import { exportEvidenceCapture, formatDiagnosticsReport } from "./evidenceExport";
+import {
+  CAPTURE_PATH,
+  ISSUE_PATH,
+  buildEvidenceMarkdown,
+  buildEvidenceTelemetry,
+  exportEvidenceCapture,
+  formatDiagnosticsReport,
+  submitEvidenceReport,
+} from "./evidenceExport";
 import { createNeckSpring } from "./neckSpring";
 import { createMembraneSurfaceRuntime } from "./membraneSurfaceRuntime";
 import type {
@@ -65,6 +82,7 @@ import type {
   FlightLabCameraState,
   FlightLabComparisonMetrics,
   FlightLabComparisonMode,
+  EvidenceWriteResult,
   FlightLabEvents,
   FlightLabHoverLandmark,
   FlightLabMeshMetrics,
@@ -155,6 +173,21 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
   // Bind rotations, captured before the first mixer update. Every pose-envelope
   // detector measures against this, not against the clip's own first frame.
   let bindRotations: PoseBindings | null = null;
+  // Local bone quaternions as the mixer left them this frame, before
+  // `flightRig.update` / `neckSpring.tick` add anything. This is the boundary
+  // that lets a pin attribute a pose to the baked clip or to runtime code
+  // instead of guessing. Reused per frame: no allocation in the loop.
+  const mixerPose = new Map<string, THREE.Quaternion>();
+  // What each flight mode resolved to on the asset that is actually loaded. The
+  // mode buttons read this, so a V1 asset cannot pretend to have a `cruise` clip.
+  let modeCapabilities: Record<FlightLabMode, ClipResolutionResult> | null = null;
+  /** Last load's contract findings — kept for the dev bridge and the log. */
+  let lastContractIssues: string[] = [];
+  // Raw-clip mode (Task E3). When false, `flightRig.update` and `neckSpring.tick`
+  // are skipped so the mixer's authored tracks are the whole pose — the A/B
+  // against the procedural layer. The mixer still writes (and flushes) every
+  // frame, so the raw pose replaces whatever the rig last left on a bone.
+  let proceduralRigEnabled = true;
   let mode: FlightLabMode = "cruise";
   let paused = false;
   let speedScale = 1;
@@ -242,6 +275,7 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
       activePin: interactionManager.getActivePin(),
       comparisonMode: comparisonRig.getComparisonMode(),
       pinCount: interactionManager.getPins().length,
+      modeCapabilities: modeCapabilities ?? undefined,
       interactiveFlight: interactiveFlight.getTelemetry(),
     });
   };
@@ -281,36 +315,12 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
       }
     }
 
-    const aliases: Record<string, string[]> = {
-      walk: ["groundwalk", "walk", "trot", "run"],
-      groundwalk: ["walk", "groundwalk"],
-      idle: ["idle", "groundidle", "stand"],
-      rest: ["rest", "idle", "groundwalk"],
-      cruise: ["flightcruise", "cruise", "glide", "fly"],
-      flightcruise: ["cruise", "flightcruise"],
-      hover: ["hover", "flightcruise", "cruise"],
-      scout: ["scout", "glide", "flightcruise", "cruise"],
-      glide: ["glide", "flightcruise", "cruise"],
-      dive: ["dive", "speed", "flightcruise", "cruise"],
-      speed: ["speed", "flightcruise", "cruise"],
-      takeoff: ["takeoff", "flightcruise", "cruise"],
-      land: ["land", "idle", "groundwalk"],
-      attack: ["attackbite", "attack", "bite"],
-      attack2: ["attackclaw", "attack2", "claw"],
-      breath: ["roar", "breath", "firebreath"],
-      death: ["death", "fall"],
-    };
-
-    const candidates = aliases[lower];
-    if (candidates) {
-      for (const candidate of candidates) {
-        for (const [key, act] of actions.entries()) {
-          const kLower = key.toLowerCase();
-          if (kLower === candidate || kLower.includes(candidate)) {
-            return { actionName: key, action: act };
-          }
-        }
-      }
+    // Name aliases live in `clipResolver.ts` (one table, shared with the mode
+    // capability resolver). This used to be a 17-entry copy right here.
+    const aliased = resolveClipAlias(lower, [...actions.keys()]);
+    if (aliased) {
+      const action = actions.get(aliased);
+      if (action) return { actionName: aliased, action };
     }
 
     const modeClip = resolveFlightLabClip(lower as FlightLabMode, [...actions.keys()]);
@@ -393,6 +403,8 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
   const clearModel = () => {
     loadController?.abort();
     loadController = null;
+    modeCapabilities = null;
+    lastContractIssues = [];
     poseAnomalyOverlay.clear();
     mixer?.stopAllAction();
     skeletonDiagnostics.dispose();
@@ -419,6 +431,7 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
     model = null;
     mixer = null;
     bindRotations = null;
+    mixerPose.clear();
     actions.clear();
     activeAction = null;
     isOneShot = false;
@@ -436,6 +449,63 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
     // frame, preventing procedural compounding on bones with static tracks.
     // See `rig/mixerBindings.ts` for why this reaches into private fields.
     flushMixerBindings(mixer);
+    captureMixerPose();
+  };
+
+  /**
+   * Snapshot the clip's own pose. Runs immediately after the mixer writes, so
+   * the difference against `bone.quaternion` later in the frame is exactly what
+   * the procedural rig added. `mixerPose` is cleared on load so a pin can never
+   * read a previous specimen's pose.
+   */
+  const captureMixerPose = () => {
+    if (!model) return;
+    model.traverse((child) => {
+      const bone = child as THREE.Bone;
+      if (!bone.isBone) return;
+      let quaternion = mixerPose.get(bone.name);
+      if (!quaternion) {
+        quaternion = new THREE.Quaternion();
+        mixerPose.set(bone.name, quaternion);
+      }
+      quaternion.copy(bone.quaternion);
+    });
+  };
+
+  /** The layer split the landmark resolver needs, or `undefined` before load. */
+  const poseLayers = () =>
+    bindRotations ? { bind: bindRotations.rotations, mixer: mixerPose } : undefined;
+
+  /**
+   * Pose-envelope findings for one clip, plus its canonical handoff partner.
+   *
+   * One implementation for both `Scan` and `Export`: a second copy would drift
+   * from the thresholds the docs quote, and the export would then disagree with
+   * the rings the user is looking at. `sampleClipPoses` runs on its own throwaway
+   * mixer and restores the pose it borrowed, so calling this mid-frame is safe.
+   */
+  const collectPoseAnomalies = (clip: THREE.AnimationClip): PoseAnomaly[] => {
+    if (!model || !bindRotations) return [];
+    const scan = scanClipAnomalies(model, clip, bindRotations, { fps: inspectionFps });
+    const anomalies = [...scan.anomalies];
+
+    // Boundary deltas are only meaningful where the state machine cuts: a
+    // one-shot finishing into a loop. Loops are crossfaded, so their boundary
+    // difference is a phase, not a snap (see CANONICAL_TRANSITIONS).
+    const lower = clip.name.toLowerCase();
+    for (const [from, to] of CANONICAL_TRANSITIONS) {
+      const partnerName = lower === from ? to : lower === to ? from : null;
+      if (!partnerName) continue;
+      const partner = [...actions.entries()].find(([name]) => name.toLowerCase() === partnerName)?.[1];
+      if (!partner) continue;
+      const partnerScan = scanClipAnomalies(model, partner.getClip(), bindRotations, { fps: inspectionFps });
+      const handoff =
+        lower === from
+          ? detectTransitionAnomalies({ from: scan, to: partnerScan })
+          : detectTransitionAnomalies({ from: partnerScan, to: scan });
+      anomalies.push(...handoff);
+    }
+    return anomalies;
   };
 
   const evaluateScrubbedPose = (stepDt: number) => {
@@ -470,12 +540,12 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
         wingStrokePhase: currentStrokePhase === "downstroke" ? 1.0 : currentStrokePhase === "upstroke" ? -1.0 : 0.0,
         isMouthActionActive: clipLower.includes("breath") || clipLower.includes("attack") || clipLower.includes("roar") || clipLower.includes("death"),
       };
-      flightRig?.update(scrubKinematics, null, stepDt);
+      if (proceduralRigEnabled) flightRig?.update(scrubKinematics, null, stepDt);
     }
     model.userData.bankRightHotspotFrame =
       currentClip === "bankRight" && activeAction ? activeAction.time * 24 : NaN;
     membraneSurface?.update();
-    currentLandmarks = resolveAnatomicalLandmarks(model);
+    currentLandmarks = resolveAnatomicalLandmarks(model, poseLayers());
     currentSymmetry = measureBilateralSymmetry(currentLandmarks);
     interactionManager.updateLandmarks(currentLandmarks);
     if (showProbes) {
@@ -493,7 +563,8 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
     if (!paused) {
       elapsed += delta;
       updateMixer(delta);
-      if (!flightRig) {
+      // Raw-clip mode skips the neck spring too: it is procedural as well.
+      if (proceduralRigEnabled && !flightRig) {
         neckSpring.tick(delta);
       }
     }
@@ -724,7 +795,7 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
             clipLower.includes("roar") ||
             clipLower.includes("death"),
         };
-        if (!paused) {
+        if (!paused && proceduralRigEnabled) {
           flightRig?.update(lastFrameKinematics, null, delta);
         }
       }
@@ -734,7 +805,7 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
       membraneSurface?.update();
 
       // Update landmarks and metrics
-      currentLandmarks = resolveAnatomicalLandmarks(model);
+      currentLandmarks = resolveAnatomicalLandmarks(model, poseLayers());
       currentSymmetry = measureBilateralSymmetry(currentLandmarks);
       const strokeResult = detectStrokePhase(currentLandmarks, prevTipY, delta, mode !== "ground");
       currentStrokePhase = strokeResult.phase;
@@ -810,6 +881,87 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
     return report;
   };
 
+  /**
+   * 1-click repo evidence (Task E4).
+   *
+   * The PNG is taken **first**: `collectPoseAnomalies` borrows the skeleton for a
+   * few hundred `mixer.update(0)` steps, and the picture has to be the frame the
+   * user was looking at, not whatever the scan left behind.
+   *
+   * The route is dev-only, so a failure is not an error — it falls back to the
+   * old browser download and says so in the log. `Save for AI` and `Export` write
+   * the same three files; the only difference is that `Save for AI` puts the
+   * active pin first and frames the document around it.
+   */
+  const writeEvidence = async (source: "export" | "pin"): Promise<EvidenceWriteResult> => {
+    const fail = (message: string): EvidenceWriteResult => ({
+      ok: false,
+      message,
+      issuePath: ISSUE_PATH,
+      capturePath: CAPTURE_PATH,
+    });
+
+    if (!model) {
+      events.animationLog?.({
+        id: `${Date.now()}-export-fail`,
+        timestamp: new Date().toLocaleTimeString(),
+        type: "export",
+        message: "Evidence export failed: no model loaded",
+      });
+      return fail("no model loaded");
+    }
+
+    const png = renderer.domElement.toDataURL("image/png");
+    const captureId = `capture-${activeSpecimen?.id ?? "wyvern"}-${Date.now()}`;
+    const clip = activeAction?.getClip();
+    const anomalies = clip ? collectPoseAnomalies(clip) : [];
+    const pins = interactionManager.getPins();
+    const activePin = interactionManager.getActivePin();
+    const ordered =
+      source === "pin" && activePin ? [activePin, ...pins.filter((pin) => pin.id !== activePin.id)] : pins;
+
+    const params = {
+      specimen: activeSpecimen,
+      currentClip,
+      snapshot: getPlaybackSnapshot(),
+      mode,
+      comparisonMode: comparisonRig.getComparisonMode(),
+      cameraState: cameraController.getCameraState(),
+      strokePhase: currentStrokePhase,
+      symmetry: currentSymmetry,
+      landmarks: currentLandmarks,
+      pins: ordered,
+      anomalies,
+      proceduralRigEnabled,
+      captureId,
+    };
+
+    const markdown = buildEvidenceMarkdown({ ...params, pinOnly: source === "pin" });
+    const telemetry = buildEvidenceTelemetry(params);
+    const result = await submitEvidenceReport({ captureId, png, markdown, telemetry });
+
+    if (result.ok) {
+      events.animationLog?.({
+        id: `${Date.now()}-export`,
+        timestamp: new Date().toLocaleTimeString(),
+        type: "export",
+        message: `Evidence written to ${ISSUE_PATH}`,
+        details: `${CAPTURE_PATH} + latest-capture.json · ${ordered.length} pin(s) · ${anomalies.length} anomaly(ies) · ${captureId}`,
+      });
+      return { ok: true, message: result.message, issuePath: ISSUE_PATH, capturePath: CAPTURE_PATH };
+    }
+
+    exportEvidenceCapture({ renderer, ...params });
+    events.animationLog?.({
+      id: `${Date.now()}-export-fallback`,
+      timestamp: new Date().toLocaleTimeString(),
+      type: "export",
+      message: `Inbox route unavailable — downloaded ${captureId}.png + .json instead`,
+      details: `${result.message}. The inbox only exists under \`next dev\`.`,
+    });
+    return fail(result.message);
+  };
+
   const runtimeInstance: FlightLabRuntime = {
     async loadSpecimen(specimen) {
       clearModel();
@@ -821,6 +973,9 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
       events.clipDetails?.([]);
       events.metrics?.(null);
       events.error?.(null);
+      events.contractWarning?.(null);
+      modeCapabilities = null;
+      lastContractIssues = [];
       currentClip = "Loading...";
       publishTelemetry();
       try {
@@ -951,6 +1106,52 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
         }));
         events.clips?.(names);
         events.clipDetails?.(details);
+
+        // What each mode actually resolved to on *this* asset, so the mode
+        // buttons can admit a substitution instead of playing it silently.
+        modeCapabilities = resolveAllModeCapabilities(names);
+        const substituted = Object.entries(modeCapabilities) as Array<[FlightLabMode, ClipResolutionResult]>;
+        const inexact = substituted.filter(([, result]) => result.status !== "exact");
+        if (inexact.length > 0) {
+          events.animationLog?.({
+            id: `${Date.now()}-capability-${specimen.id}`,
+            timestamp: new Date().toLocaleTimeString(),
+            type: "load",
+            message: `${inexact.length} of ${substituted.length} modes have no authored clip on ${specimen.name}`,
+            details: inexact
+              .map(([name, result]) => `${name} → ${result.status}${result.clipName ? ` "${result.clipName}"` : ""}`)
+              .join(", "),
+          });
+        }
+
+        // Milestone M4: the node gates validate the pinned file on disk; nothing
+        // validated the file the browser fetched. Non-fatal by design — the model
+        // is on screen and playable, but the numbers are not trustworthy.
+        const contractIssues = validateLoadedContract({
+          specimen,
+          model,
+          clipNames: names,
+          mixer,
+        });
+        lastContractIssues = contractIssues;
+        events.contractWarning?.(
+          contractIssues.length > 0
+            ? {
+                message: `${specimen.name} no longer matches the pinned runtime contract`,
+                issues: contractIssues,
+                command: "npm run assets:validate-wyvern",
+              }
+            : null,
+        );
+        if (contractIssues.length > 0) {
+          events.animationLog?.({
+            id: `${Date.now()}-contract-${specimen.id}`,
+            timestamp: new Date().toLocaleTimeString(),
+            type: "load",
+            message: `Contract drift on ${specimen.name} (${contractIssues.length} issue${contractIssues.length === 1 ? "" : "s"})`,
+            details: contractIssues.join(" · "),
+          });
+        }
 
         if (details.length > 0) {
           const totalTracks = details.reduce((sum, item) => sum + item.tracksCount, 0);
@@ -1257,9 +1458,13 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
           message: "Comparison overlay disabled",
         });
       } else {
+        // "raw" overlays the *same* specimen with its procedural rig disabled, so
+        // the ghost is the authored clip and the primary is clip + rig. Every
+        // other mode compares against the other specimen.
         const otherId = activeSpecimen?.id === "wyvern-v1-rig" ? "wyvern-v2-rig" : "wyvern-v1-rig";
+        const targetId = nextMode === "raw" ? activeSpecimen?.id ?? otherId : otherId;
         await comparisonRig.loadComparisonRig(
-          otherId,
+          targetId,
           nextMode,
           activeSpecimen,
           model,
@@ -1284,6 +1489,43 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
     },
     getPins() {
       return interactionManager.getPins();
+    },
+    setProceduralRigEnabled(enabled: boolean) {
+      if (proceduralRigEnabled === enabled) return;
+      proceduralRigEnabled = enabled;
+      // The rig *multiplies* its offsets onto the pose the mixer just wrote
+      // (`rig/boneOffsets.applyBoneOffset`), so re-evaluating the clip is what
+      // strips them. Deliberately not `flightRig.reset()`: that also zeroes the
+      // leg-tuck / tail / stroke-phase smoothers, so flipping the rig back on
+      // would have to re-settle them and could not land on the frame you were
+      // inspecting. `evaluateScrubbedPose(0)` then re-applies the rig (when
+      // enabling) or just re-resolves landmarks against the raw pose, so both
+      // directions land on this exact frame — including while paused, where the
+      // render loop is not going to call either one for us.
+      updateMixer(0);
+      evaluateScrubbedPose(0);
+      events.animationLog?.({
+        id: `${Date.now()}-proc-${enabled}`,
+        timestamp: new Date().toLocaleTimeString(),
+        type: "rig",
+        message: enabled
+          ? "Procedural rig ON — clip + flightRig/neckSpring"
+          : "Procedural rig OFF — raw .glb tracks only",
+        details: enabled ? undefined : "Mixer output is the whole pose; rig and neck spring are bypassed",
+      });
+      publishTelemetry();
+    },
+    isProceduralRigEnabled() {
+      return proceduralRigEnabled;
+    },
+    updateActivePinNote(note: string) {
+      const pin = interactionManager.getActivePin();
+      if (!pin) return;
+      pin.note = note;
+      // Regenerate rather than patch: the ticket is the copyable artefact, and a
+      // stale snippet is worse than none.
+      pin.aiSnippet = formatPinForAI(pin);
+      publishTelemetry();
     },
     dumpDiagnostics,
     scanSeam() {
@@ -1320,25 +1562,7 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
       // is why the -65° idle neck raise and walk's +8.6° jaw both scanned clean.
       if (!bindRotations) return;
       const clip = activeAction.getClip();
-      const scan = scanClipAnomalies(model, clip, bindRotations, { fps: inspectionFps });
-      const anomalies = [...scan.anomalies];
-
-      // Boundary deltas are only meaningful where the state machine cuts: a
-      // one-shot finishing into a loop. Loops are crossfaded, so their boundary
-      // difference is a phase, not a snap (see CANONICAL_TRANSITIONS).
-      const lower = clip.name.toLowerCase();
-      for (const [from, to] of CANONICAL_TRANSITIONS) {
-        const partnerName = lower === from ? to : lower === to ? from : null;
-        if (!partnerName) continue;
-        const partner = [...actions.entries()].find(([name]) => name.toLowerCase() === partnerName)?.[1];
-        if (!partner) continue;
-        const partnerScan = scanClipAnomalies(model, partner.getClip(), bindRotations, { fps: inspectionFps });
-        const handoff =
-          lower === from
-            ? detectTransitionAnomalies({ from: scan, to: partnerScan })
-            : detectTransitionAnomalies({ from: partnerScan, to: scan });
-        anomalies.push(...handoff);
-      }
+      const anomalies = collectPoseAnomalies(clip);
 
       if (anomalies.length === 0) {
         poseAnomalyOverlay.clear();
@@ -1352,6 +1576,17 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
       } else {
         // A log line says how wrong the rig is; the ring says where.
         poseAnomalyOverlay.setAnomalies(anomalies, model);
+        // ...and a one-shot red ripple at the joint on the click itself. The ring
+        // follows the bone for the whole clip; the ping is what catches the eye
+        // at the moment of pressing Scan.
+        const pinged = new Set<string>();
+        for (const anomaly of anomalies) {
+          if (pinged.has(anomaly.boneName)) continue;
+          const bone = model.getObjectByName(anomaly.boneName);
+          if (!bone) continue;
+          pinged.add(anomaly.boneName);
+          interactionManager.triggerPing(bone.getWorldPosition(new THREE.Vector3()), POSE_ANOMALY_RING_COLOR);
+        }
         events.animationLog?.({
           id: `${Date.now()}-envelope`,
           timestamp: new Date().toLocaleTimeString(),
@@ -1363,26 +1598,10 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
       publishTelemetry();
     },
     exportEvidence() {
-      if (!model) return;
-      const { captureId } = exportEvidenceCapture({
-        renderer,
-        specimen: activeSpecimen,
-        currentClip,
-        snapshot: getPlaybackSnapshot(),
-        mode,
-        comparisonMode: comparisonRig.getComparisonMode(),
-        cameraState: cameraController.getCameraState(),
-        strokePhase: currentStrokePhase,
-        symmetry: currentSymmetry,
-        landmarks: currentLandmarks,
-        pins: interactionManager.getPins(),
-      });
-      events.animationLog?.({
-        id: `${Date.now()}-export`,
-        timestamp: new Date().toLocaleTimeString(),
-        type: "export",
-        message: `Evidence exported: ${captureId} (PNG + JSON)`,
-      });
+      return writeEvidence("export");
+    },
+    saveActivePinEvidence() {
+      return writeEvidence("pin");
     },
     zoomBy(amount) { cameraController.zoomBy(amount); },
     focusTarget(tx, ty, dist) { cameraController.focusTarget(tx, ty, dist); },
@@ -1453,7 +1672,12 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
       getLandmarks: () => currentLandmarks,
       getSymmetry: () => currentSymmetry,
       getStrokePhase: () => currentStrokePhase,
+      getSpecimen: () => activeSpecimen,
       getComparisonSpecimen: () => comparisonRig.getComparisonSpecimen(),
+      getComparisonModel: () => comparisonRig.getComparisonModel(),
+      isProceduralRigEnabled: () => proceduralRigEnabled,
+      getModeCapabilities: () => modeCapabilities,
+      getContractIssues: () => lastContractIssues,
       getPoseAnomalyRings: () => poseAnomalyOverlay.getRingedBones(),
       dumpDiagnostics,
       triggerPing: (x: number, y: number, z: number, colorHex?: string) =>

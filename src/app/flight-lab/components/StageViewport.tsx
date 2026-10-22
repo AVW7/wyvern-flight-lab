@@ -2,6 +2,7 @@
 
 import type { RefObject } from "react";
 import type { FlightLabComparisonMode, FlightLabTelemetry } from "../../../flight-lab/runtime";
+import type { FlightLabContractWarning } from "../../../flight-lab/types";
 import styles from "../FlightLabClient.module.css";
 import { ActivePinBanner } from "./ActivePinBanner";
 import { CameraZoomDock } from "./CameraZoomDock";
@@ -13,13 +14,18 @@ function resolveStageStatus(
   loading: boolean,
   error: string | null,
   comparisonMode: FlightLabComparisonMode,
-  interactiveFlight: boolean
+  interactiveFlight: boolean,
+  proceduralRig: boolean
 ): string {
   if (loading) return "CALIBRATING RIG";
   if (error) return "LOAD FAULT";
   if (interactiveFlight) return "MANUAL FLIGHT AVIONICS";
+  if (comparisonMode === "raw") return "RAW vs PROCEDURAL";
   if (comparisonMode === "ghost") return "GHOST COMPARISON";
   if (comparisonMode === "formation") return "FORMATION FLIGHT";
+  // The badge is the confirmation that the bypass took: the viewport alone is
+  // ambiguous when the rig happens to add nothing at this frame.
+  if (!proceduralRig) return "RAW CLIP · RIG BYPASSED";
   return "RIG ONLINE";
 }
 
@@ -37,6 +43,8 @@ interface StageViewportProps {
   specimenName: string;
   loading: boolean;
   error: string | null;
+  /** Non-fatal contract drift, rendered as an amber banner rather than LOAD FAULT. */
+  contractWarning?: FlightLabContractWarning | null;
   onRetry?: () => void;
   showSkeleton: boolean;
   onToggleSkeleton: () => void;
@@ -54,10 +62,15 @@ interface StageViewportProps {
   onToggleProbes: () => void;
   comparisonMode: FlightLabComparisonMode;
   onToggleComparison: (mode: FlightLabComparisonMode) => void;
+  proceduralRig: boolean;
+  onToggleProceduralRig: () => void;
   telemetry: FlightLabTelemetry;
   onCopyActivePin: () => void;
   copiedPin: boolean;
+  savedPin?: boolean;
+  onSaveActivePin?: () => void;
   onClearPins: () => void;
+  onUpdatePinNote?: (note: string) => void;
   onZoomBy: (amount: number) => void;
   onScanSeam: () => void;
   onExportEvidence: () => void;
@@ -71,6 +84,7 @@ export function StageViewport({
   specimenName,
   loading,
   error,
+  contractWarning = null,
   onRetry,
   showSkeleton,
   onToggleSkeleton,
@@ -88,10 +102,15 @@ export function StageViewport({
   onToggleProbes,
   comparisonMode,
   onToggleComparison,
+  proceduralRig,
+  onToggleProceduralRig,
   telemetry,
   onCopyActivePin,
   copiedPin,
+  savedPin = false,
+  onSaveActivePin,
   onClearPins,
+  onUpdatePinNote,
   onZoomBy,
   onScanSeam,
   onExportEvidence,
@@ -159,12 +178,28 @@ export function StageViewport({
     },
     // Comparison Overlays
     {
+      id: "proc",
+      label: "Proc",
+      title: "Toggle the procedural rig — flight rig + neck spring (G). OFF leaves the raw .glb tracks",
+      active: proceduralRig,
+      group: "compare",
+      onClick: onToggleProceduralRig,
+    },
+    {
       id: "ghost",
       label: "Ghost",
       title: "Toggle V1 vs V2 Translucent Ghost Overlay",
       active: comparisonMode === "ghost",
       group: "compare",
       onClick: () => onToggleComparison(comparisonMode === "ghost" ? "off" : "ghost"),
+    },
+    {
+      id: "raw",
+      label: "Raw",
+      title: "Raw vs Procedural: ghost the same specimen with its procedural rig bypassed",
+      active: comparisonMode === "raw",
+      group: "compare",
+      onClick: () => onToggleComparison(comparisonMode === "raw" ? "off" : "raw"),
     },
     {
       id: "formation",
@@ -210,7 +245,7 @@ export function StageViewport({
           <i /> LIVE SIMULATION
         </span>
         <span className={styles.stageStatusBadge}>
-          {resolveStageStatus(loading, error, comparisonMode, interactiveFlightActive)}
+          {resolveStageStatus(loading, error, comparisonMode, interactiveFlightActive, proceduralRig)}
         </span>
       </div>
 
@@ -283,6 +318,22 @@ export function StageViewport({
         </div>
       )}
 
+      {/* Non-fatal contract drift: the model plays, but it is not the pinned asset */}
+      {contractWarning && (
+        <div className={styles.contractWarning} role="status" aria-live="polite">
+          <strong>{contractWarning.message}</strong>
+          <ul>
+            {contractWarning.issues.map((issue) => (
+              <li key={issue}>{issue}</li>
+            ))}
+          </ul>
+          <div>
+            Re-validate, re-pin if the asset is intended, then reload:{" "}
+            <code>{contractWarning.command}</code>
+          </div>
+        </div>
+      )}
+
       {/* 3D Landmark Hover Card */}
       {telemetry.hoverLandmark && (
         <HoverLandmarkTooltip landmark={telemetry.hoverLandmark} />
@@ -294,8 +345,11 @@ export function StageViewport({
           pin={telemetry.activePin}
           pinCount={telemetry.pinCount ?? 1}
           copiedPin={copiedPin}
+          savedPin={savedPin}
           onCopyActivePin={onCopyActivePin}
+          onSaveActivePin={onSaveActivePin}
           onClearPins={onClearPins}
+          onUpdatePinNote={onUpdatePinNote}
         />
       )}
 

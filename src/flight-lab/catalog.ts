@@ -60,6 +60,22 @@ export const FLIGHT_LAB_SPECIMENS: readonly FlightLabSpecimen[] = [
   },
 ] as const;
 
+/**
+ * Joints in the pinned V2 runtime skin. Duplicated from
+ * `scripts/blender/wyvern_v2_runtime_contract.json` because that file is 215 KB
+ * of node signature and the browser only needs the count; `test/flight-lab.test.js`
+ * asserts this number and `V2_RIG_CLIPS` against the contract, so the copy cannot
+ * drift silently.
+ */
+export const V2_RIG_JOINT_COUNT = 92;
+
+/**
+ * The only file the contract pins. The V2 *candidates* (`…-candidate.glb`) are
+ * deliberately partial — a few clips, sometimes fewer bones — so holding them to
+ * the full contract would raise a banner on every switch to them.
+ */
+export const PINNED_RUNTIME_MODEL = "wyvern-v2-rig.glb";
+
 export const V2_RIG_CLIPS = [
   "idle",
   "walk",

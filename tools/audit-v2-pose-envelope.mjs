@@ -16,6 +16,15 @@
  *   npx tsx tools/audit-v2-pose-envelope.mjs public/models/wyvern-v2-rig.glb
  *
  * Exit code is 1 when any anomaly is found, so it can gate a candidate.
+ *
+ * `--self-test` answers the other half of the question: a probe that only ever
+ * says green is decoration. It re-injects the three defects that actually
+ * shipped (in memory — the file on disk is never touched) and requires each
+ * detector family to fire. Run it against any rebuilt asset before trusting the
+ * clean result above; exit code is 1 if the rig has drifted so far that the
+ * injection no longer reproduces the defect, or if a detector has gone blind.
+ *
+ *   npx tsx tools/audit-v2-pose-envelope.mjs public/models/wyvern-v2-rig.glb --self-test
  */
 import fs from "node:fs";
 import * as THREE from "three";
@@ -32,6 +41,7 @@ import {
 const ARGS = process.argv.slice(2);
 const jsonFlag = ARGS.indexOf("--json-out");
 const outPath = jsonFlag === -1 ? null : ARGS[jsonFlag + 1];
+const selfTest = ARGS.includes("--self-test");
 const inputPath = ARGS.find((a, i) => !a.startsWith("--") && (jsonFlag === -1 || i !== jsonFlag + 1))
   ?? "public/models/wyvern-v2-rig.glb";
 
@@ -97,19 +107,27 @@ const bind = captureBindRotations(scene);
 
 const perClip = new Map();
 const all = [];
-for (const clip of clips) {
-  const scan = scanClipAnomalies(scene, clip, bind, { fps: 24, step: 0.25 });
-  perClip.set(clip.name, scan);
-  all.push(...scan.anomalies);
+
+function scanEverything() {
+  perClip.clear();
+  all.length = 0;
+  for (const clip of clips) {
+    const scan = scanClipAnomalies(scene, clip, bind, { fps: 24, step: 0.25 });
+    perClip.set(clip.name, scan);
+    all.push(...scan.anomalies);
+  }
+
+  const byName = new Map([...perClip].map(([name, scan]) => [name.toLowerCase(), scan]));
+  for (const [fromName, toName] of CANONICAL_TRANSITIONS) {
+    const from = byName.get(fromName.toLowerCase());
+    const to = byName.get(toName.toLowerCase());
+    if (!from || !to) continue;
+    all.push(...detectTransitionAnomalies({ from, to }));
+  }
+  return all;
 }
 
-const byName = new Map([...perClip].map(([name, scan]) => [name.toLowerCase(), scan]));
-for (const [fromName, toName] of CANONICAL_TRANSITIONS) {
-  const from = byName.get(fromName.toLowerCase());
-  const to = byName.get(toName.toLowerCase());
-  if (!from || !to) continue;
-  all.push(...detectTransitionAnomalies({ from, to }));
-}
+scanEverything();
 
 // ---------------------------------------------------------------- report
 
@@ -134,6 +152,79 @@ if (handoffs.length) {
 }
 
 console.log(`\ntotal anomalies: ${all.length}`);
+const baselineTotal = all.length;
+
+// ------------------------------------------------------------- self-test
+//
+// Injects the three defects that shipped in V2 and requires each detector
+// family to fire. Mutates the loaded clips in memory only.
+
+let selfTestFailed = false;
+if (selfTest) {
+  const clipByName = new Map(gltf.animations.map((c) => [c.name.toLowerCase(), c]));
+
+  /** Post-multiply a local X rotation onto `bone`'s track (all keys, or the last). */
+  const inject = (clipName, boneName, pitch, { lastOnly = false } = {}) => {
+    const clip = clipByName.get(clipName.toLowerCase());
+    if (!clip) throw new Error(`self-test: no clip "${clipName}"`);
+    const track = clip.tracks.find((t) => t.name === `${boneName}.quaternion`);
+    if (!track) throw new Error(`self-test: no ${boneName}.quaternion in ${clipName}`);
+    const bindQ = bind.rotations.get(boneName);
+    if (!bindQ) throw new Error(`self-test: no bind rotation for ${boneName}`);
+    const delta = new THREE.Quaternion().setFromAxisAngle(
+      new THREE.Vector3(1, 0, 0),
+      THREE.MathUtils.degToRad(pitch),
+    );
+    const start = lastOnly ? track.times.length - 1 : 0;
+    for (let i = start; i < track.times.length; i += 1) {
+      const q = new THREE.Quaternion().fromArray(track.values, i * 4);
+      q.copy(bindQ).multiply(delta);
+      q.toArray(track.values, i * 4);
+    }
+  };
+
+  // idle held a -65 deg neck raise: Neck1 -21.1, Neck2 -24.2, Head -19.3.
+  inject("idle", "Neck1", -21.1);
+  inject("idle", "Neck2", -24.2);
+  inject("idle", "Head", -19.3);
+  // walk held a +8.6 deg open jaw on a 2-key step track.
+  inject("walk", "Jaw", 8.6);
+  // land ended 15.9 deg from where idle started.
+  inject("land", "Neck2", 15.9, { lastOnly: true });
+
+  const fired = scanEverything();
+
+  const expected = [
+    ["bind_delta", "idle", "Neck1"],
+    ["bind_delta", "idle", "Neck2"],
+    ["bind_delta", "idle", "Head"],
+    ["horizon_pitch", "idle", "Head"],
+    ["open_jaw", "walk", "Jaw"],
+    ["transition_handoff", "land -> idle", "Neck2"],
+  ];
+
+  console.log("\nself-test — three shipped defects re-injected in memory");
+  const missing = [];
+  for (const [kind, clipName, boneName] of expected) {
+    const hit = fired.find(
+      (a) => a.kind === kind && a.clip === clipName && a.boneName === boneName,
+    );
+    if (!hit) missing.push(`${kind} ${clipName} ${boneName}`);
+    console.log(
+      `  ${hit ? "fired  " : "MISSING"} ${pad(kind, 19)}${pad(clipName, 14)}${pad(boneName, 8)}` +
+        `${hit ? `${hit.value}${hit.unit === "deg" ? "°" : " rig"} (limit ${hit.threshold})` : ""}`,
+    );
+  }
+
+  if (missing.length) {
+    selfTestFailed = true;
+    console.log(`\nself-test FAILED: ${missing.length} detector(s) went blind — ${missing.join(", ")}`);
+    console.log("Either the injection no longer reproduces the defect on this asset, or the detector is broken.");
+  } else {
+    console.log(`\nself-test PASSED: ${expected.length}/${expected.length} expected findings fired (${fired.length} anomalies total)`);
+  }
+}
+
 if (outPath) {
   fs.writeFileSync(
     outPath,
@@ -152,4 +243,6 @@ if (outPath) {
   console.log(`wrote ${outPath}`);
 }
 
-process.exit(all.length === 0 ? 0 : 1);
+// Self-test mode judges only the injection (the baseline is reported above and
+// is `all` at that point); normal mode judges the asset.
+process.exit(selfTest ? (selfTestFailed ? 1 : 0) : baselineTotal !== 0 ? 1 : 0);

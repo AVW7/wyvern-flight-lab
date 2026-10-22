@@ -231,12 +231,11 @@ export function createFlightLabInteractionManager(
       pingManager.triggerPing(hitPos, matchedLandmark.color);
 
       const snapshot = getPlaybackSnapshot();
-      const activeSpecimen = getActiveSpecimen();
+      const specimen = getActiveSpecimen() ?? { id: "unknown", name: "Wyvern", modelFile: "unknown" };
       const pin = createPinRecord(
         pins.length + 1,
         matchedLandmark,
-        activeSpecimen?.id ?? "unknown",
-        activeSpecimen?.name ?? "Wyvern",
+        specimen,
         getCurrentClip(),
         snapshot.clipTime,
         snapshot.clipProgress,
@@ -288,12 +287,11 @@ export function createFlightLabInteractionManager(
 
       pingManager.triggerPing(hit.point, landmark.color);
       const snapshot = getPlaybackSnapshot();
-      const activeSpecimen = getActiveSpecimen();
+      const specimen = getActiveSpecimen() ?? { id: "unknown", name: "Wyvern", modelFile: "unknown" };
       const pin = createPinRecord(
         pins.length + 1,
         landmark,
-        activeSpecimen?.id ?? "unknown",
-        activeSpecimen?.name ?? "Wyvern",
+        specimen,
         getCurrentClip(),
         snapshot.clipTime,
         snapshot.clipProgress,
@@ -312,12 +310,11 @@ export function createFlightLabInteractionManager(
 
       pingManager.triggerPing(landmark.worldPosition, landmark.color);
       const snapshot = getPlaybackSnapshot();
-      const activeSpecimen = getActiveSpecimen();
+      const specimen = getActiveSpecimen() ?? { id: "unknown", name: "Wyvern", modelFile: "unknown" };
       const pin = createPinRecord(
         pins.length + 1,
         landmark,
-        activeSpecimen?.id ?? "unknown",
-        activeSpecimen?.name ?? "Wyvern",
+        specimen,
         getCurrentClip(),
         snapshot.clipTime,
         snapshot.clipProgress,

@@ -1,9 +1,17 @@
 import assert from "node:assert/strict";
 import { access } from "node:fs/promises";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import * as THREE from "three";
-import { FLIGHT_LAB_SPECIMENS, findFlightLabSpecimen, V2_RIG_CLIPS, V1_RIG_CLIPS } from "../src/flight-lab/catalog.ts";
-import { MODE_CLIPS, resolveFlightLabClip } from "../src/flight-lab/clipResolver.ts";
+import { FLIGHT_LAB_SPECIMENS, findFlightLabSpecimen, PINNED_RUNTIME_MODEL, V2_RIG_CLIPS, V1_RIG_CLIPS, V2_RIG_JOINT_COUNT } from "../src/flight-lab/catalog.ts";
+import {
+  CLIP_ALIASES,
+  MODE_CLIPS,
+  resolveAllModeCapabilities,
+  resolveClipAlias,
+  resolveFlightLabClip,
+} from "../src/flight-lab/clipResolver.ts";
+import { countSkinJoints, validateLoadedContract } from "../src/flight-lab/contractGuard.ts";
 import { computeMeshMetrics } from "../src/flight-lab/diagnostics.ts";
 import { scanSeam } from "../src/flight-lab/motionProbe.ts";
 import {
@@ -12,7 +20,17 @@ import {
   scanClipAnomalies,
 } from "../src/flight-lab/poseEnvelope.ts";
 import { createPoseAnomalyOverlay, POSE_ANOMALY_RING_COLOR } from "../src/flight-lab/poseAnomalyOverlay.ts";
+import { createPingVisualManager } from "../src/flight-lab/inspectionPins.ts";
 import { flushMixerBindings, mixerBindingsAreSupported } from "../src/flight-lab/rig/mixerBindings.ts";
+import { QUICK_LOCOMOTION_ACTIONS } from "../src/flight-lab/controlHelpers.ts";
+import {
+  CAPTURE_PATH,
+  ISSUE_PATH,
+  TELEMETRY_PATH,
+  isPngSignature,
+  parseReportRequest,
+} from "../src/flight-lab/evidenceInbox.ts";
+import { buildEvidenceMarkdown } from "../src/flight-lab/evidenceExport.ts";
 import {
   calculateClipTelemetry,
   calculateEffectiveRate,
@@ -587,13 +605,20 @@ test("createPinRecord and formatPinForAI produce structured human-to-AI prompt s
     rotationEulerDeg: new THREE.Vector3(12.4, -45.2, 8.1),
     parentBoneName: "L_WingElbow",
     color: "#0284c7",
+    bindQuaternion: new THREE.Quaternion(),
+    mixerQuaternion: new THREE.Quaternion(),
+    layers: {
+      clipDeltaEulerDeg: new THREE.Vector3(12.4, -45.2, 8.1),
+      proceduralDeltaEulerDeg: new THREE.Vector3(0, 0, 0),
+      worldHorizonEulerDeg: new THREE.Vector3(-8.2, 3.1, 1.4),
+      clipShare: 1,
+    },
   };
 
   const pin = createPinRecord(
     1,
     landmark,
-    "wyvern-v2-rig",
-    "Wyvern v2 Rig",
+    { id: "wyvern-v2-rig", name: "Wyvern v2 Rig", modelFile: "public/models/wyvern-v2-rig.glb" },
     "FlightCruise",
     0.45,
     0.38,
@@ -608,6 +633,90 @@ test("createPinRecord and formatPinForAI produce structured human-to-AI prompt s
   assert.ok(pin.aiSnippet.includes("- Specimen: Wyvern v2 Rig (`wyvern-v2-rig`)"));
   assert.ok(pin.aiSnippet.includes("FlightCruise"));
   assert.ok(pin.aiSnippet.includes("L_WingElbow"));
+  // No splice suggestion for a wing bone — that script only rewrites the neck.
+  assert.ok(!pin.aiSnippet.includes("splice_neck_head_channels"), "must not name a tool that cannot act on this bone");
+});
+
+// Task E2: a screenshot shows the symptom, not the layer. The pin has to say
+// whether the baked clip or the procedural rig owns the pose, or the next
+// session opens the wrong file.
+test("a pin splits the pose between the baked clip and the procedural rig", async () => {
+  const { resolveAnatomicalLandmarks } = await import("../src/flight-lab/anatomicalMap.ts");
+  const { createPinRecord, formatPinForAI } = await import("../src/flight-lab/inspectionPins.ts");
+
+  const root = new THREE.Object3D();
+  const head = new THREE.Bone();
+  head.name = "Head";
+  root.add(head);
+
+  const bindQ = new THREE.Quaternion();
+  const mixerQ = new THREE.Quaternion().setFromAxisAngle(
+    new THREE.Vector3(1, 0, 0),
+    THREE.MathUtils.degToRad(-21.1),
+  );
+  // q_final = q_mixer * q_procedural, so the split is exact and checkable.
+  const proceduralQ = new THREE.Quaternion().setFromAxisAngle(
+    new THREE.Vector3(0, 0, 1),
+    THREE.MathUtils.degToRad(9),
+  );
+  head.quaternion.copy(mixerQ).multiply(proceduralQ);
+
+  const landmarks = resolveAnatomicalLandmarks(root, {
+    bind: new Map([["Head", bindQ]]),
+    mixer: new Map([["Head", mixerQ]]),
+  });
+  const landmark = landmarks.find((lm) => lm.id === "head");
+  assert.ok(landmark, "the head landmark must resolve");
+
+  assert.ok(
+    Math.abs(landmark.layers.clipDeltaEulerDeg.x - -21.1) < 0.1,
+    `clip delta pitch ${landmark.layers.clipDeltaEulerDeg.x}, expected -21.1`,
+  );
+  assert.ok(
+    Math.abs(landmark.layers.proceduralDeltaEulerDeg.z - 9) < 0.1,
+    `procedural delta roll ${landmark.layers.proceduralDeltaEulerDeg.z}, expected 9`,
+  );
+  assert.ok(
+    Math.abs(landmark.layers.clipShare - 21.1 / 30.1) < 0.01,
+    `clip share ${landmark.layers.clipShare}, expected ${21.1 / 30.1}`,
+  );
+  assert.ok(
+    Math.abs(landmark.layers.worldHorizonEulerDeg.x - -21.1) < 0.5,
+    `horizon pitch ${landmark.layers.worldHorizonEulerDeg.x}, expected about -21.1`,
+  );
+
+  const pin = createPinRecord(
+    2,
+    landmark,
+    { id: "wyvern-v2-rig", name: "Wyvern v2", modelFile: "public/models/wyvern-v2-rig.glb" },
+    "idle",
+    1.25,
+    0.25,
+    "idle",
+    "neck craned too high",
+  );
+
+  assert.equal(pin.frame, 30, "frame is clipTime * 24, rounded");
+  const ticket = pin.aiSnippet;
+  for (const label of [
+    "Frame #30",
+    "Bind Delta",
+    "Procedural Delta",
+    "World Horizon Pitch",
+    "Culpability",
+    "User Feedback: neck craned too high",
+  ]) {
+    assert.ok(ticket.includes(label), `ticket is missing "${label}":\n${ticket}`);
+  }
+  assert.ok(ticket.includes("70% from baked GLB track `idle` `Head.quaternion`"), ticket);
+  assert.ok(ticket.includes("30% from `wyvernFlightRig`"), ticket);
+  assert.ok(ticket.includes("splice_neck_head_channels.mjs"), "a neck bone must suggest the neck splice tool");
+
+  // The note is the only part that changes after creation; the ticket must follow.
+  pin.note = "still wrong after the splice";
+  const regenerated = formatPinForAI(pin);
+  assert.ok(regenerated.includes("User Feedback: still wrong after the splice"), regenerated);
+  assert.ok(!regenerated.includes("neck craned too high"), "a stale note must not survive in the ticket");
 });
 
 test("formatDiagnosticsReport generates comprehensive report with symmetry, landmarks, and pins", async () => {
@@ -649,13 +758,20 @@ test("formatDiagnosticsReport generates comprehensive report with symmetry, land
     localPosition: new THREE.Vector3(0, 0, 0),
     rotationEulerDeg: new THREE.Vector3(0, 0, 0),
     color: "#e11d48",
+    bindQuaternion: new THREE.Quaternion(),
+    mixerQuaternion: new THREE.Quaternion(),
+    layers: {
+      clipDeltaEulerDeg: new THREE.Vector3(0, 0, 0),
+      proceduralDeltaEulerDeg: new THREE.Vector3(0, 0, 0),
+      worldHorizonEulerDeg: new THREE.Vector3(0, 0, 0),
+      clipShare: 0,
+    },
   };
 
   const pin = createPinRecord(
     1,
     landmark,
-    specimen.id,
-    specimen.name,
+    { id: specimen.id, name: specimen.name, modelFile: specimen.modelFile },
     "cruise",
     1.25,
     0.357,
@@ -1158,16 +1274,42 @@ test("clip scan restores the pose it borrowed and repeats its measurement", () =
   assert.ok(bones.get("Neck1").quaternion.equals(posed), "the scan must not leave the rig in the clip pose");
   assert.deepEqual(bones.get("Body").position.toArray(), [3, 4, 5]);
 
-  // Second scan on the same model must measure the same thing. It does not when
-  // the scan borrows the playback mixer: writing a bone and then updating a
-  // paused action leaves that action unable to write the pose again, so the
-  // repeat reads an untouched bone and reports a clean clip.
+  // Second scan on the same model must measure the same thing. Doc 41
+  // mis-attributed this to `action.paused`; what actually keeps it honest is
+  // that `sampleClipPoses` builds a private mixer and restores the borrowed
+  // pose, so the repeat starts from the same state.
   const second = scanClipAnomalies(root, clip, bind);
   assert.deepEqual(
     second.anomalies.map((a) => [a.kind, a.boneName, a.value]),
     first.anomalies.map((a) => [a.kind, a.boneName, a.value]),
     "a repeated scan must reproduce the first result",
   );
+});
+
+test("a scan reads the authored static pose even when the bone was left elsewhere", () => {
+  const { root, bones, bind } = buildPoseFixture();
+  // What a prior `scanSeam` / playback evaluation leaves behind: a pose the clip
+  // does not author. A static 2-key track must still report its own value.
+  const elsewhere = new THREE.Quaternion().setFromAxisAngle(
+    new THREE.Vector3(1, 0, 0),
+    THREE.MathUtils.degToRad(37.5),
+  );
+  bones.get("Neck1").quaternion.copy(elsewhere);
+
+  const { samples } = scanClipAnomalies(root, heldPitchClip("idle", { Neck1: -21.1 }), bind);
+  const pitches = [
+    ...new Set(
+      samples.map((s) =>
+        Number(
+          THREE.MathUtils.radToDeg(
+            new THREE.Euler().setFromQuaternion(s.rotations.get("Neck1"), "YXZ").x,
+          ).toFixed(3),
+        ),
+      ),
+    ),
+  ];
+  assert.deepEqual(pitches, [-21.1], "every sample must be the authored value, not the leftover pose");
+  assert.ok(bones.get("Neck1").quaternion.equals(elsewhere), "the scan must restore the pose it borrowed");
 });
 
 // ---------------------------------------------------------------------------
@@ -1320,3 +1462,371 @@ test("pose anomaly overlay rings each failing bone once, follows it, and pulses"
   overlay.dispose();
 });
 
+// `Scan` fires a one-shot `triggerPing` at each offending joint alongside the
+// persistent ring, so the click itself points at the bone. The runtime call site
+// needs a browser; this pins the part that can silently rot — that `triggerPing`
+// honours the colour it is handed and lands on the position it is handed.
+test("triggerPing spawns a ripple on the joint in the colour it is given", () => {
+  const manager = createPingVisualManager();
+  const joint = new THREE.Vector3(1, 2, 3);
+  manager.triggerPing(joint, POSE_ANOMALY_RING_COLOR);
+
+  assert.equal(manager.group.children.length, 2, "one ping is two staggered ripples");
+  for (const ripple of manager.group.children) {
+    assert.ok(ripple.position.equals(joint), `ripple at ${ripple.position.toArray()}, expected the joint`);
+    assert.equal(`#${ripple.material.color.getHexString()}`, POSE_ANOMALY_RING_COLOR);
+  }
+  manager.dispose();
+});
+
+
+// `G` is the procedural-rig bypass (Task E3). It used to be Glide, so the
+// collision was real and silent: whichever handler ran first won, and the other
+// shortcut just stopped existing. This pins the table, which is the half a node
+// test can reach — the handler order lives in `FlightLabClient.tsx`.
+test("the procedural-rig toggle keeps G free and every locomotion key unique", () => {
+  const keys = QUICK_LOCOMOTION_ACTIONS.map((action) => action.key.toUpperCase());
+  assert.equal(new Set(keys).size, keys.length, `duplicate locomotion keys: ${keys.join(", ")}`);
+  assert.ok(!keys.includes("G"), "G belongs to the rig toggle, not to a clip");
+  assert.equal(
+    QUICK_LOCOMOTION_ACTIONS.find((action) => action.name === "glide")?.key,
+    "L",
+    "Glide moved to L when G became the bypass; it must stay reachable",
+  );
+});
+
+// --- Task E4: the dev evidence inbox -----------------------------------------
+// The route itself is a thin fs wrapper; the parts that can silently rot are the
+// validation (what gets written) and the ticket format (what an agent reads).
+
+const validPngDataUrl = () =>
+  `data:image/png;base64,${Buffer.concat([
+    Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
+    Buffer.from("fake-but-correctly-prefixed-png-body"),
+  ]).toString("base64")}`;
+
+const evidenceRequest = (overrides = {}) => ({
+  captureId: "capture-wyvern-v2-rig-1",
+  png: validPngDataUrl(),
+  markdown: "# issue\n",
+  telemetry: { version: "3.0" },
+  ...overrides,
+});
+
+test("the inbox route refuses anything that is not a PNG data URL", () => {
+  const ok = parseReportRequest(evidenceRequest());
+  assert.equal(ok.ok, true, `a valid request was rejected: ${ok.ok ? "" : ok.error}`);
+  assert.equal(isPngSignature(ok.value.pngBytes), true);
+
+  const cases = [
+    [{ png: "data:image/jpeg;base64,AAAA" }, /data:image\/png/],
+    [{ png: "https://example.com/x.png" }, /data:image\/png/],
+    [{ png: `data:image/png;base64,${Buffer.from("not a png at all").toString("base64")}` }, /signature/],
+    [{ png: "data:image/png;base64," }, /empty/],
+    [{ png: 42 }, /string/],
+  ];
+  for (const [override, expected] of cases) {
+    const result = parseReportRequest(evidenceRequest(override));
+    assert.equal(result.ok, false, `accepted a bad png: ${JSON.stringify(override).slice(0, 60)}`);
+    assert.match(result.error, expected);
+  }
+});
+
+test("the inbox route rejects an empty ticket and unserialisable telemetry", () => {
+  assert.equal(parseReportRequest(evidenceRequest({ markdown: "   " })).ok, false);
+  assert.equal(parseReportRequest(evidenceRequest({ markdown: undefined })).ok, false);
+
+  const cyclic = { a: 1 };
+  cyclic.self = cyclic;
+  const result = parseReportRequest(evidenceRequest({ telemetry: cyclic }));
+  assert.equal(result.ok, false);
+  assert.match(result.error, /telemetry/);
+
+  // `telemetry` is optional; a missing one must not become an error.
+  assert.equal(parseReportRequest(evidenceRequest({ telemetry: undefined })).ok, true);
+});
+
+test("the inbox writes to fixed paths inside the repo", () => {
+  // The route never takes a path from the caller; these constants are the only
+  // destination it knows. If they move, the README and the UI copy must move too.
+  assert.equal(ISSUE_PATH, "docs/flight-lab/inbox/latest-issue.md");
+  assert.equal(CAPTURE_PATH, "docs/flight-lab/inbox/latest-capture.png");
+  assert.equal(TELEMETRY_PATH, "docs/flight-lab/inbox/latest-capture.json");
+});
+
+test("the exported issue document is a self-contained ticket", () => {
+  const pin = {
+    id: "pin-1",
+    index: 1,
+    label: "Right Calf",
+    boneName: "R_Calf",
+    frame: 7,
+    note: "knee folds backwards on the upstroke",
+    aiSnippet: "[Wyvern Rig Pin #1: Right Calf | Bone: `R_Calf`]\n- Bind Delta: 15.0°",
+  };
+  const markdown = buildEvidenceMarkdown({
+    specimen: { id: "wyvern-v2-rig", name: "V2 Rig", modelFile: "public/models/wyvern-v2-rig.glb" },
+    currentClip: "cruise",
+    snapshot: {
+      status: "playing",
+      activeClip: "cruise",
+      isLooping: true,
+      isOneShot: false,
+      isDeath: false,
+      clipTime: 1.35,
+      clipDuration: 3.5,
+      clipProgress: 0.386,
+      speedScale: 1,
+      effectiveRate: 1,
+      inspectionFps: 12,
+    },
+    mode: "cruise",
+    comparisonMode: "raw",
+    cameraState: { preset: "chase", distance: 12.5 },
+    strokePhase: "glide",
+    symmetry: { symmetryScorePercent: 98, deltaHeightMm: 2, deltaSpanMm: 4 },
+    landmarks: [],
+    pins: [pin],
+    anomalies: [
+      {
+        kind: "bind_delta",
+        clip: "cruise",
+        boneName: "Neck1",
+        value: -21.1,
+        unit: "deg",
+        threshold: 18,
+        frame: 32,
+        time: 1.35,
+        message: "held -21.1°",
+      },
+    ],
+    proceduralRigEnabled: true,
+    captureId: "capture-wyvern-v2-rig-1",
+    generatedAt: "2026-10-22T08:00:00.000Z",
+  });
+
+  // The frame number is the join between the ticket and Blender's timeline.
+  assert.match(markdown, /Frame \| #32 @ 24 fps/);
+  assert.match(markdown, /frame #32/);
+  // The note has to survive: it is the only part a human authored.
+  assert.match(markdown, /knee folds backwards on the upstroke/);
+  // The pin ticket is embedded verbatim, not re-derived.
+  assert.match(markdown, /Bind Delta: 15\.0°/);
+  // Culpability context, the scan, and the pointer to the pixels.
+  assert.match(markdown, /Procedural Delta/);
+  assert.match(markdown, /Pose envelope scan — `cruise`/);
+  assert.match(markdown, /\| bind_delta \| cruise \| `Neck1` \| -21\.1° \| 18\.0° \| #32 \| 1\.35s \|/);
+  assert.match(markdown, /docs\/flight-lab\/inbox\/latest-capture\.png/);
+  assert.match(markdown, /docs\/flight-lab\/inbox\/latest-capture\.json/);
+  assert.match(markdown, /Procedural rig \| ON/);
+  // The catalogue stores a bare filename; the ticket has to give an openable path.
+  assert.match(markdown, /`public\/models\/wyvern-v2-rig\.glb`/);
+  // Pin frame 7 vs canvas frame 32 must read as two facts, not a contradiction.
+  assert.match(markdown, /The canvas is at frame #32; each pin below names the frame it was taken at\./);
+});
+
+test("a ticket with no pin still names the joints furthest from bind", () => {
+  const layer = (x, y, z) => ({ clipDeltaEulerDeg: { x, y, z }, proceduralDeltaEulerDeg: { x: 0, y: 0, z: 0 }, worldHorizonEulerDeg: { x: 3, y: 0, z: 0 }, clipShare: 1 });
+  const landmark = (boneName, clip) => ({
+    id: boneName.toLowerCase(),
+    label: boneName,
+    boneName,
+    category: "spine",
+    worldPosition: { x: 0, y: 0, z: 0 },
+    rotationEulerDeg: { x: 0, y: 0, z: 0 },
+    layers: layer(clip, 0, 0),
+  });
+  const markdown = buildEvidenceMarkdown({
+    specimen: { id: "wyvern-v2-rig", name: "V2 Rig", modelFile: "public/models/wyvern-v2-rig.glb" },
+    currentClip: "idle",
+    snapshot: {
+      status: "paused", activeClip: "idle", isLooping: true, isOneShot: false, isDeath: false,
+      clipTime: 0.5, clipDuration: 2, clipProgress: 0.25, speedScale: 1, effectiveRate: 1, inspectionFps: 12,
+    },
+    mode: "ground",
+    comparisonMode: "off",
+    cameraState: { preset: "chase", distance: 10 },
+    strokePhase: "idle",
+    symmetry: null,
+    landmarks: [landmark("Neck1", -21.1), landmark("Head", -19.3), landmark("Tail2", 2)],
+    pins: [],
+    anomalies: [],
+    proceduralRigEnabled: false,
+    captureId: "capture-1",
+    generatedAt: "2026-10-22T08:00:00.000Z",
+  });
+
+  assert.match(markdown, /No inspection pins/);
+  assert.match(markdown, /No findings/);
+  assert.match(markdown, /Procedural rig \| OFF/);
+  // Sorted by deviation: Neck1 (21.1) before Head (19.3) before Tail2 (2).
+  const order = ["`Neck1`", "`Head`", "`Tail2`"].map((needle) => markdown.indexOf(needle));
+  assert.ok(order[0] < order[1] && order[1] < order[2], `joint table is not sorted: ${order}`);
+});
+
+// --- Task FL-5: contract at load, mixer bindings, unified clip resolution ----
+
+// `flushMixerBindings` exists because `PropertyMixer.apply` only calls
+// `setValue` when the accumulated value *changed*: after an outside write, a
+// paused `update(0)` leaves the bone holding the outside value forever. The test
+// reproduces exactly that, because a version of this function that silently does
+// nothing would still pass a "returns a number" assertion.
+test("flushMixerBindings re-applies a static track that update(0) skipped", () => {
+  const root = new THREE.Group();
+  const bone = new THREE.Object3D();
+  bone.name = "Bone";
+  root.add(bone);
+
+  const authored = new THREE.Quaternion(0, 0, 0, 1);
+  const clip = new THREE.AnimationClip("static", 1, [
+    new THREE.QuaternionKeyframeTrack("Bone.quaternion", [0, 1], [...authored.toArray(), ...authored.toArray()]),
+  ]);
+  const mixer = new THREE.AnimationMixer(root);
+  mixer.clipAction(clip).play();
+  mixer.update(0);
+
+  assert.equal(mixerBindingsAreSupported(mixer), true, "this three.js version exposes the fields we reach into");
+  assert.ok(Math.abs(bone.quaternion.w - 1) < 1e-6, "the clip wrote the authored pose");
+
+  // An outside write (the procedural rig multiplying an offset in, a pin drag…).
+  bone.quaternion.set(0.5, 0, 0, 0.5).normalize();
+  mixer.update(0);
+  assert.ok(bone.quaternion.x > 0.4, "update(0) does NOT overwrite the outside write — the bug this guards");
+
+  const flushed = flushMixerBindings(mixer);
+  assert.ok(flushed > 0, `flush reported no bindings (${flushed})`);
+  assert.ok(Math.abs(bone.quaternion.x) < 1e-6 && Math.abs(bone.quaternion.w - 1) < 1e-6,
+    `flush did not restore the authored pose (${bone.quaternion.toArray()})`);
+
+  mixer.stopAllAction();
+  mixer.uncacheRoot(root);
+});
+
+test("mixerBindingsAreSupported reports a moved private API instead of throwing", () => {
+  // A future three.js that renames `_bindings` must read as "unsupported", not
+  // as a crash — the load path surfaces it as contract drift.
+  const impostor = { update() {}, _accuIndex: 0 };
+  assert.equal(mixerBindingsAreSupported(impostor), false);
+  assert.equal(flushMixerBindings(impostor), 0, "an unsupported mixer flushes nothing rather than throwing");
+});
+
+test("the alias table lives in one place and still resolves V1 spellings", () => {
+  // It used to be a 17-entry copy inside runtime.ts. The count is pinned so a
+  // later "cleanup" cannot quietly delete entries the V1 asset depends on.
+  assert.equal(Object.keys(CLIP_ALIASES).length, 17);
+
+  assert.equal(resolveClipAlias("walk", V1_RIG_CLIPS), "GroundWalk");
+  assert.equal(resolveClipAlias("cruise", V1_RIG_CLIPS), "FlightCruise");
+  assert.equal(resolveClipAlias("attack", V1_RIG_CLIPS), "AttackBite");
+  assert.equal(resolveClipAlias("attack2", V1_RIG_CLIPS), "AttackClaw");
+  assert.equal(resolveClipAlias("idle", V1_RIG_CLIPS), "Idle");
+  assert.equal(resolveClipAlias("cruise", V2_RIG_CLIPS), "cruise");
+  assert.equal(resolveClipAlias("walk", V2_RIG_CLIPS), "walk");
+  assert.equal(resolveClipAlias("nothing-like-this", V2_RIG_CLIPS), null);
+});
+
+test("every V2 mode resolves exactly; the V1 asset has to admit substitutions", () => {
+  const v2 = resolveAllModeCapabilities(V2_RIG_CLIPS);
+  for (const mode of Object.keys(MODE_CLIPS)) {
+    assert.equal(v2[mode].status, "exact", `V2 mode "${mode}" should be exact, got ${v2[mode].status} (${v2[mode].clipName})`);
+  }
+
+  // V1 is the asset the badge exists for. Measured matrix: cruise and boost fall
+  // back to FlightCruise, and `land` — the one that matters — plays `Idle`,
+  // because V1 never had a landing clip. That used to happen with no UI at all.
+  const v1 = resolveAllModeCapabilities(V1_RIG_CLIPS);
+  const inexact = Object.entries(v1)
+    .filter(([, result]) => result.status !== "exact")
+    .map(([mode, result]) => `${mode}:${result.status}→${result.clipName}`)
+    .sort();
+  assert.deepEqual(inexact, ["boost:alias→FlightCruise", "cruise:alias→FlightCruise", "land:alias→Idle"]);
+  assert.equal(v1.land.reason.includes("Idle"), true, "the badge tooltip must name the substitute clip");
+
+  // And when nothing in the alias chain exists, the status has to say `fallback`
+  // rather than pretending the last resort was a match.
+  const bare = resolveAllModeCapabilities(["Takeoff"]);
+  assert.equal(bare.land.status, "fallback");
+  assert.equal(bare.land.clipName, "Takeoff");
+  assert.equal(resolveAllModeCapabilities([]).land.status, "unavailable");
+});
+
+test("the contract guard names what drifted, and stays quiet on a clean V2 load", () => {
+  const makeModel = (jointCount) => {
+    const bones = Array.from({ length: jointCount }, (_, index) => {
+      const bone = new THREE.Bone();
+      bone.name = `Bone${index}`;
+      return bone;
+    });
+    const mesh = new THREE.SkinnedMesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial());
+    mesh.name = "Body";
+    mesh.bind(new THREE.Skeleton(bones));
+    const root = new THREE.Group();
+    root.add(mesh);
+    return root;
+  };
+
+  const v2Specimen = findFlightLabSpecimen("wyvern-v2-rig");
+  const mixer = new THREE.AnimationMixer(new THREE.Group());
+
+  assert.equal(countSkinJoints(makeModel(V2_RIG_JOINT_COUNT)), V2_RIG_JOINT_COUNT);
+  assert.deepEqual(
+    validateLoadedContract({ specimen: v2Specimen, model: makeModel(V2_RIG_JOINT_COUNT), clipNames: V2_RIG_CLIPS, mixer }),
+    [],
+    "a clean V2 load must not raise a banner",
+  );
+
+  const drifted = validateLoadedContract({
+    specimen: v2Specimen,
+    model: makeModel(88),
+    clipNames: V2_RIG_CLIPS.filter((name) => name !== "land").concat("legacyHover"),
+    mixer,
+  });
+  assert.equal(drifted.length, 3, `expected 3 issues, got ${drifted.length}: ${drifted.join(" | ")}`);
+  assert.match(drifted[0], /88 joints; the contract pins 92/);
+  assert.match(drifted[1], /Missing 1 of 18 contract clips: land/);
+  assert.match(drifted[2], /does not list: legacyHover/);
+
+  // A moved private API is drift too, and it is reported for any specimen.
+  const impostor = { update() {}, _accuIndex: 0 };
+  const apiDrift = validateLoadedContract({ specimen: v2Specimen, model: makeModel(92), clipNames: V2_RIG_CLIPS, mixer: impostor });
+  assert.equal(apiDrift.length, 1);
+  assert.match(apiDrift[0], /flushMixerBindings/);
+
+  // V1 is not held to the V2 clip set — only the mixer check applies to it.
+  assert.deepEqual(
+    validateLoadedContract({
+      specimen: findFlightLabSpecimen("wyvern-v1-rig"),
+      model: makeModel(88),
+      clipNames: V1_RIG_CLIPS,
+      mixer,
+    }),
+    [],
+  );
+
+  // Nor are the V2 *candidates*: they are deliberately partial (a couple of
+  // clips, sometimes fewer bones), so a banner on every switch would be noise
+  // that trains the user to ignore the real one.
+  const candidate = findFlightLabSpecimen("wyvern-v2-locomotion-candidate");
+  assert.ok(candidate.modelFile.includes("candidate"), "the candidate is not the pinned file");
+  assert.deepEqual(
+    validateLoadedContract({ specimen: candidate, model: makeModel(88), clipNames: ["idle", "walk"], mixer }),
+    [],
+    "a partial candidate must not be reported as contract drift",
+  );
+});
+
+test("the V2 joint count and clip list are pinned to the contract file", () => {
+  // `V2_RIG_JOINT_COUNT` is a duplicate of the contract JSON, because that file
+  // is 215 KB of node signature and the browser only needs the number. This is
+  // the test that makes the duplicate safe: it cannot drift from the contract.
+  const contract = JSON.parse(
+    readFileSync(new URL("../scripts/blender/wyvern_v2_runtime_contract.json", import.meta.url), "utf8"),
+  );
+  assert.equal(contract.signature.bones.length, V2_RIG_JOINT_COUNT, "V2_RIG_JOINT_COUNT drifted from the contract");
+  assert.equal(contract.asset.path, `public/models/${PINNED_RUNTIME_MODEL}`, "PINNED_RUNTIME_MODEL drifted from the contract");
+  assert.deepEqual(
+    contract.signature.clips.map((clip) => clip.name).sort(),
+    [...V2_RIG_CLIPS].sort(),
+    "V2_RIG_CLIPS drifted from the contract",
+  );
+});

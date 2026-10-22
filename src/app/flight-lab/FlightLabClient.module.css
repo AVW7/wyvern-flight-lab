@@ -687,6 +687,49 @@
   font-size: 11px;
 }
 
+/* Non-fatal: the asset loaded and plays, but it is not the asset the contract
+   pins. Amber, not red — a red LOAD FAULT would be a lie, and the user needs to
+   read the issues rather than dismiss a failure. */
+.contractWarning {
+  position: absolute;
+  z-index: 5;
+  /* Toolbar is at 48px, the pin banner at 96px — this slot clears both. */
+  top: 136px;
+  left: 50%;
+  translate: -50%;
+  width: min(520px, 86%);
+  padding: 10px 14px;
+  color: #fef3c7;
+  background: rgba(41, 30, 6, 0.96);
+  border: 1px solid rgba(245, 158, 11, 0.55);
+  border-left: 3px solid #f59e0b;
+  border-radius: 3px;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.contractWarning strong {
+  display: block;
+  color: #fbbf24;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+}
+.contractWarning ul {
+  margin: 0 0 6px;
+  padding-left: 16px;
+}
+.contractWarning li {
+  margin-bottom: 2px;
+}
+.contractWarning code {
+  display: inline-block;
+  padding: 1px 5px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.35);
+  color: #fde68a;
+  font-size: 10px;
+}
+
 .reticle {
   position: absolute;
   z-index: 2;
@@ -984,6 +1027,26 @@
   background: rgba(234, 179, 8, 0.2);
   border: 1px solid rgba(234, 179, 8, 0.5);
   color: #fbbf24;
+}
+/* Says "this mode has no authored clip on this asset" rather than hiding it.
+   Amber for a substitution, red for "cannot play at all". */
+.modeCapabilityBadge {
+  margin-left: auto;
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 1px 4px;
+  border-radius: 2px;
+  background: rgba(245, 158, 11, 0.16);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  color: #fbbf24;
+  white-space: nowrap;
+}
+.modeCapabilityBadge[data-status="unavailable"] {
+  background: rgba(239, 68, 68, 0.16);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #f87171;
 }
 @keyframes pulseSuggested {
   0%, 100% { opacity: 0.6; }
@@ -2623,6 +2686,14 @@
 .surface[data-theme="light"] .pinMetaTime {
   color: #64748b;
 }
+.surface[data-theme="light"] .pinNoteInput {
+  background: #ffffff;
+  border-color: rgba(2, 132, 199, 0.4);
+  color: #0f172a;
+}
+.surface[data-theme="light"] .pinNoteInput::placeholder {
+  color: #94a3b8;
+}
 
 .surface[data-theme="light"] .quickActionBtn {
   background: #ffffff;
@@ -3024,6 +3095,25 @@
   font-size: 10px;
   color: #94a3b8;
 }
+.pinNoteInput {
+  width: 260px;
+  min-width: 140px;
+  padding: 4px 8px;
+  background: rgba(2, 6, 23, 0.75);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 2px;
+  color: #e2e8f0;
+  font-family: inherit;
+  font-size: 10px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.pinNoteInput::placeholder {
+  color: #64748b;
+}
+.pinNoteInput:focus {
+  border-color: #38bdf8;
+}
 .pinActions {
   display: flex;
   align-items: center;
@@ -3042,6 +3132,29 @@
 }
 .pinCopyBtn:hover {
   background: #0369a1;
+}
+/* Writes into the repo rather than the clipboard, so it reads as the "commit"
+   action next to the "copy" action. */
+.pinSaveBtn {
+  padding: 4px 10px;
+  background: #047857;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 600;
+  border: 0;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.pinSaveBtn:hover:not(:disabled) {
+  background: #065f46;
+}
+.pinSaveBtn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.pinSaveBtn[data-saved] {
+  background: #065f46;
 }
 .pinClearBtn {
   padding: 4px 8px;

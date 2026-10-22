@@ -277,12 +277,49 @@ Each task below is self-contained, file-scoped, and paired with an explicit veri
     - Pinned asset, same probe, no `--expect`: **0 rings**, 2 red pixels, PASS. The probe is not permanently red.
   - Unit test: `pose anomaly overlay rings each failing bone once, follows it, and pulses` — asserts dedupe by bone, missing bones skipped, `#ef4444`, pulse expansion between ticks, and that the ring follows a moved bone. Mutating the bone-follow out of `tick` turns it red (`ring did not follow the bone (y=3)`), so the test can fail.
 
+  **FL-1 re-verification (2026-10-22, against the asset that actually ships)**
+
+  The external FL-1 task text asks for two things. Both are in the tree: the wiring already was, and the
+  two pieces it also names — a per-step binding flush inside `sampleClipPoses` and a
+  `PingVisualManager.triggerPing()` at each offending joint — **landed on request**, after being measured
+  first. The re-run matters because every number above was taken on `bef7a09a…`, and the shipped asset
+  has since become `b5f1c1ef…` (D4 retimed `cruise`/`bankLeft`/`bankRight` by 0.5× and gave the banks a
+  1.95× gain; C5 rebalanced the skin weights). D4 is exactly the kind of change that can push a postural
+  bone past 18°, and nobody had re-run the envelope after it.
+
+  - **Envelope on `b5f1c1ef…`: 18/18 clips clean, 0 anomalies** (`npm run assets:audit-pose-envelope`).
+    The banks took the 1.95× gain without tripping `bind_delta`, which is the useful negative result.
+  - **`--self-test` added** (`npm run assets:selftest-pose-envelope`): re-injects the three shipped defects
+    *in memory* and requires each detector family to fire — `bind_delta` ×3, `horizon_pitch`, `open_jaw`,
+    `transition_handoff`. Result: **6/6 expected findings fired, 8 anomalies total, exit 0**. Proved it can
+    fail: `openJawDeg 2 → 90` turns it into `MISSING open_jaw walk Jaw` and **exit 1** (reverted; the tool
+    defaults to exit 0 on the same asset). The default path still exits 1 on any real finding, so it stays
+    a gate.
+  - **`flushMixerBindings(mixer)` inside `sampleClipPoses` — added; it is defence, not a fix.** The scan
+    builds a *private* `AnimationMixer`, so its `PropertyMixer`s never share accumulation with `scanSeam`'s,
+    and the flush was measured to change **no** sample: a bone left at `+37.5°` by a prior mixer evaluation,
+    scanned against a static 2-key `-21.1°` track, already read `-21.1°` on every sample and was restored to
+    `37.5°` afterwards. It is kept because it makes "a static 2-key track always reports its authored value"
+    true by construction rather than by three.js accumulator semantics. The price is stated, not hidden:
+    **4.8 ms on a 20.9 ms `idle` scan (+23%)** — 577 steps × 276 bindings — paid once per Scan press.
+    Pinned by `a scan reads the authored static pose even when the bone was left elsewhere`; deleting the
+    `mixer.update(0)` priming turns it red (`every sample must be the authored value, not the leftover pose`).
+    `runtime.ts`'s once-per-frame flush is still the one that matters for values written *outside* a mixer.
+  - **`PingVisualManager.triggerPing()` — added alongside the ring, not instead of it.** Each offending bone
+    now gets a one-shot `#ef4444` ripple at the click, on top of the persistent ring: the ping catches the
+    eye at the moment of pressing Scan, the ring keeps it on the joint while the clip plays. They are not
+    interchangeable — `triggerPing` lays its ripple flat (`rotation.x = -π/2`) at a fixed world position and
+    expires after 1200 ms, so on its own it is near edge-on from the chase camera and stays where the bone
+    *was*. The call site (`runtime.ts`, deduped by bone) is typechecked only; a browser pass would be needed
+    to see it, and the pinned asset is 18/18 clean so nothing should fire. `triggerPing` honouring its colour
+    and position argument is pinned by `triggerPing spawns a ripple on the joint in the colour it is given`.
+
   **What did not land**
   - **`scripts/validate-wyvern-clips.mjs` was not extended.** The detector is TypeScript; that script is spawned with `process.execPath` (plain `node`) by `test/wyvern-ground-metrics.test.js:124,131`, `test/wyvern-bank-direction.test.js:17,50` and `tools/audit-all-clips.mjs`, so importing the detector would break four call sites. Duplicating the logic there would create the second implementation this repo keeps paying for, so the probe runs the one implementation instead.
   - **Floor penetration is not in the runtime detector.** It needs skinned vertex positions; `audit-wyvern-rig.mjs` already measures it (`belowFt`) and is gated. `root_drift` is the part that was cheap and provable.
   - **No ring for a `transition_handoff` bone that the *other* clip owns.** The ring anchors on the bone in the current pose, so a handoff finding is shown where that joint is now, not where it would be after the cut. The log carries the `from → to` numbers; a second ghosted ring was not worth the ambiguity.
 
-- [ ] **Task E2: Upgrade Inspection Pins (`inspectionPins.ts` & `ActivePinBanner.tsx`) with Bind-Delta, Layer Attribution & Editable User Notes**
+- [x] **Task E2: Upgrade Inspection Pins (`inspectionPins.ts` & `ActivePinBanner.tsx`) with Bind-Delta, Layer Attribution & Editable User Notes** *(Landed 2026-10-22 — layer split, note input, clipboard Dump Rig, browser probe)*
   - **Files**: `src/flight-lab/anatomicalMap.ts`, `src/flight-lab/inspectionPins.ts`, `src/flight-lab/runtime.ts`, `src/app/flight-lab/components/ActivePinBanner.tsx`
   - **Action**:
     1. In `anatomicalMap.ts`, cache each bone's rest/bind quaternion (`bindQuaternion`) on model load, and record three distinct rotations on every `ResolvedLandmark` and `FlightLabPin`:
@@ -297,7 +334,22 @@ Each task below is self-contained, file-scoped, and paired with an explicit veri
     3. Make **"Dump Rig"** in `AnimationLogConsole.tsx` copy the full diagnostic report directly to the clipboard (with a `"✓ Copied Rig Report"` toast) in addition to logging to console.
   - **Verify**: Click any joint in Flight Lab, type a note, click `Copy for AI`, and verify the clipboard markdown includes `Bind Delta`, `Procedural Delta`, `World Horizon Pitch`, `Frame #`, and `User Feedback`.
 
-- [ ] **Task E3: Add a Stage Toolbar Toggle for `"Raw Clip vs Procedural Rig"` (`flightRig` Bypass)**
+  **What landed (2026-10-22)**
+  - `runtime.ts` keeps a per-frame `mixerPose` map, filled by `captureMixerPose()` immediately after `mixer.update` + `flushMixerBindings` and **before** `flightRig.update` / `neckSpring.tick`. That boundary is the whole feature: `q_mixer` is the baked clip, `bone.quaternion` later in the frame is clip + procedural. The map is reused (no allocation in the loop) and cleared on `clearModel`, so a pin can never read a previous specimen's pose.
+  - `anatomicalMap.ts` computes the three deltas in `computePoseLayers` and carries them on `ResolvedLandmark`; `inspectionPins.ts` copies them onto `FlightLabPin` with `frame = Math.round(clipTime * 24)` and `clipShare = |clip| / (|clip| + |procedural|)`.
+  - `formatPinForAI` is now a self-contained repair ticket: specimen id + **file**, clip, `Frame #`, phase, parent chain, `Bind Delta`, `Procedural Delta`, `World Horizon Pitch`, `Culpability: N% from baked GLB track … N% from wyvernFlightRig`, timestamp, and `User Feedback`.
+  - The note input sits in the banner and commits on every keystroke through `runtime.updateActivePinNote`, which **regenerates** the snippet rather than patching it — a stale ticket is worse than none. `Dump Rig` writes the same string to the console and to the clipboard, and the button reads `✓ Copied Rig Report` (the log console has no toast system; the existing Copy → Copied pattern is the house style).
+
+  **One measurement changed the design.** The first implementation reported the bone frame's world orientation. On the shipped rig that reads **+70.7° pitch, 180° roll** for `Head` *at bind* — because a Blender bone's axis is not the animal's horizon. Every healthy pin would have looked broken, which is the opposite of the point. `World Horizon Pitch` is therefore `(bind chain)⁻¹ · (chain now)` in model-aligned axes: exactly **0 at bind**, ≈ the pose deviation otherwise, and it cancels the specimen heading and the airframe's own pitch/bank (a banked airframe is not a rig defect). Cumulative down the chain, so a neck raise shows on `Head` as the sum of `Neck1 + Neck2 + Head`.
+
+  **Evidence — `scripts/probe-pin-layer-ticket.mjs` (Chromium, real clipboard).** The unit test can prove the maths and the format; only a browser can prove the wiring. The probe creates pins through the dev bridge, types into the real input, clicks the real buttons and reads `navigator.clipboard`:
+  - `Head` at cruise: clip `+1.8°`, procedural `+0.0°`, horizon `+9.4°`, `100% from baked GLB track \`cruise\``. Correct — the flight rig does not drive the head.
+  - `R_Calf` at cruise: clip `15.00°`, procedural `14.80°`, **share `0.504`**, ticket reads `Culpability: 50% … 50% …`. This is the case that proves the split is real and not always 100/0.
+  - Clipboard after `Copy for AI` contains the note (`User Feedback: neck craned too high on the hold`); `Dump Rig` puts the full report (with pins) on the clipboard and the button confirms.
+  - **Proved it can fail:** commenting out `captureMixerPose()` turns the probe red — `bind delta is non-zero (0.00°)`, horizon `0°, 0°, 0°` — so the probe is wired to the snapshot, not to the format.
+  - One probe bug worth recording: the first run pinned during `"Loading..."` and measured all zeros. Landmarks resolve before the clip does, so the wait condition has to be `activeClip !== "Loading..." && clipTime > 0.2`, not `getLandmarks().length > 0`.
+
+- [x] **Task E3: Add a Stage Toolbar Toggle for `"Raw Clip vs Procedural Rig"` (`flightRig` Bypass)** *(Landed 2026-10-22 — Proc toggle + `G`, raw ghost, reversible bypass, browser probe)*
   - **Files**: `src/flight-lab/runtime.ts`, `src/flight-lab/types.ts`, `src/app/flight-lab/components/StageViewport.tsx`, `src/app/flight-lab/FlightLabClient.tsx`
   - **Action**:
     1. Add a **`Proc` (Procedural Rig ON/OFF)** toggle button to the `StageViewport.tsx` top toolbar (and keyboard shortcut `G`).
@@ -305,10 +357,84 @@ Each task below is self-contained, file-scoped, and paired with an explicit veri
     3. Also add a `"Raw vs Procedural"` option to `Ghost` comparison mode (`comparisonRig.ts`) so the user can see the raw Blender clip (ghost cyan mesh) superimposed directly over the procedurally enhanced runtime rig on the exact same model!
   - **Verify**: Toggle `Proc` off/on in Flight Lab and verify instant A/B isolation between baked Blender keyframe defects and `src/flight-lab/rig/` procedural offsets.
 
-- [ ] **Task E4: Add a Local Dev API Endpoint (`/api/flight-lab/report`) for 1-Click Repo Evidence Export & Live Blender Hot-Reload**
+  **What landed (2026-10-22)**
+  - Three gates, all named so a reader can find them: `evaluateScrubbedPose` (`if (proceduralRigEnabled) flightRig?.update(...)` — the scrub/paused path), the render loop (`if (proceduralRigEnabled && !flightRig) neckSpring.tick(delta)` — the V1 spring), and the per-frame kinematics block (`if (!paused && proceduralRigEnabled) flightRig?.update(...)` — the playing path). Missing any one of them leaves the rig alive in exactly one state, which is how a bypass silently half-works.
+  - `comparisonRig.ts` builds `comparisonFlightRig` only when `modeType !== "raw"`, so the `Raw` ghost is the *same specimen* with no rig; the ghost material and the position-sync branch were widened to accept `"raw"`. `FlightLabComparisonMode` gained `"raw"`; the badge reads `RAW CLIP · RIG BYPASSED` / `RAW vs PROCEDURAL`.
+  - `G` was already Glide in `QUICK_LOCOMOTION_ACTIONS`. Glide moved to `L` (level flight) with a comment, and `G` is checked before the locomotion shortcuts in `FlightLabClient.tsx`. Pinned by `the procedural-rig toggle keeps G free and every locomotion key unique`; flipping `L` back to `G` turns it red.
+
+  **Two design changes, both forced by measurement.**
+  - **`flightRig.reset()` on disable made the toggle a one-way door.** The rig applies offsets multiplicatively (`applyBoneOffset` → `bone.quaternion.multiply(offset)`), so re-evaluating the mixer is what strips them; `reset()` additionally zeroes the leg-tuck, tail and stroke-phase smoothers. Turning the rig back on then had to re-settle them, and while paused it never did — `setProceduralRigEnabled` only re-applied the rig on the disable side, so `G` while paused left the pose raw with the badge claiming otherwise. The fix is `updateMixer(0)` (strip) + `evaluateScrubbedPose(0)` (re-apply or re-resolve landmarks) on **both** directions, and no `reset()`. The toggle is now lossless and lands on the frame you were inspecting.
+  - **The first probe was a tautology.** It asserted `ghost.specimenId === "wyvern-v2-rig" || ghost.specimenId !== null` — true for any loaded specimen — and its only real claim was "ghost and primary differ", which two *different* specimens would also satisfy. Rewritten as a paired measurement: freeze the clip, rig **off**, and require ghost ≡ primary (both raw); then rig **on** and require the same pair to disagree. One of those two numbers has to be ≈0, and only a raw ghost can produce it. That rewrite is what exposed the paused re-enable defect above.
+
+  **Evidence — `scripts/probe-proc-toggle.mjs` (Chromium, real toolbar, real keys), 16/16.**
+  - `R_Calf` at cruise: procedural delta **15.20°** with `Proc` ON, **0.000°** with `Proc` OFF, culpability collapsing to `share = 1` (100% clip).
+  - The bone itself moves **15.60°** between the two states — the toggle changes the pose, not just a flag.
+  - Ghost vs primary, same specimen (`wyvern-v2-rig` vs `wyvern-v2-rig`): **0.000°** with the rig off, **16.75°** with it on.
+  - `G` toggles both ways, including while paused.
+  - **Proved it can fail, one gate at a time:** dropping `proceduralRigEnabled` from the scrub gate → `rig off, ghost matches primary` reads **16.752°**; dropping it from the playing gate → `procedural delta OFF` reads **16.800°** and culpability stops collapsing; dropping `modeType !== "raw"` from the ghost → the pair inverts (**15.815° / 0.11°**), so the probe distinguishes "raw ghost" from "procedural ghost" rather than merely "different".
+
+  **Gates after E3**: `tsc --noEmit` clean, `npm run test:fast` **179/179**, flight-lab **48/48**, `assets:selftest-pose-envelope` **6/6**, `assets:audit-pose-envelope` **0 anomalies** on the pinned `b5f1c1ef…` asset.
+
+  **Screenshots** (same paused frame, `cruise`, frame 31, `R_Calf` procedural delta `16.80°` → `0.000°`):
+  [`proc-on`](evidence/2026-10-22-proc-on.png) · [`proc-off`](evidence/2026-10-22-proc-off.png) — badge `RIG ONLINE` → `RAW CLIP · RIG BYPASSED`, wing sweep visibly changes · [`raw-vs-procedural`](evidence/2026-10-22-raw-vs-procedural.png) — cyan ghost is the same specimen with no rig.
+
+
+- [x] **Task E4: Add a Local Dev API Endpoint (`/api/flight-lab/report`) for 1-Click Repo Evidence Export & Live Blender Hot-Reload** *(Parts 1–2 landed 2026-10-22 — dev inbox route, `Export` + `Save for AI`; **part 3 `watch-and-splice` deliberately deferred**, see below)*
   - **Files**: New `src/app/api/flight-lab/report/route.ts`, `src/flight-lab/evidenceExport.ts`, `scripts/blender/cli.py`
   - **Action**:
     1. Create a Next.js dev-only route `POST /api/flight-lab/report` that writes exported PNG screenshots, JSON telemetry sidecars, and pinned AI bug tickets directly into `docs/flight-lab/inbox/latest-issue.md` and `docs/flight-lab/inbox/latest-capture.png` inside the repo (instead of triggering browser downloads to `~/Downloads`).
     2. When you click **`Export`** or **`Save Issue for AI`** in Flight Lab, the browser saves the screenshot + pin telemetry + anomaly scan straight to `docs/flight-lab/inbox/latest-issue.md`, so you can simply tell any coding agent: *"Fix the issue in `docs/flight-lab/inbox/latest-issue.md`"*.
     3. Add a `watch-and-splice` command to `scripts/blender/cli.py` (or `npm run blender:sync-clip -- --clip <name>`) that exports the active action from `models/source/wyvern-v2-master.blend`, splices it into `public/models/wyvern-v2-idle-walk-flight-lab-candidate.glb`, runs `validateRuntimeRig` + `scanClipAnomalies`, and triggers a hot reload in Flight Lab (`Ghost` mode auto-comparing `wyvern-v2-rig.glb` vs `wyvern-v2-idle-walk-flight-lab-candidate.glb`).
   - **Verify**: Click `Export` in Flight Lab and verify `docs/flight-lab/inbox/latest-issue.md` and `latest-capture.png` are written directly inside the repo workspace.
+
+  **What landed (2026-10-22)**
+  - `POST /api/flight-lab/report` writes three files into `docs/flight-lab/inbox/`: `latest-issue.md` (the ticket), `latest-capture.png` (the canvas), `latest-capture.json` (the sidecar). `GET` lists what is there, with sizes and mtimes, so the UI and the probe can confirm without guessing.
+  - The route holds three properties on purpose. **Dev only** — it 404s unless `NODE_ENV !== "production"`, because it writes to disk on a page's behalf. **Fixed paths** — the caller supplies content, never a destination, which is the whole traversal defence. **Atomic** — temp file + `rename`, so an agent reading during a second export gets one complete document, never half of two.
+  - `evidenceInbox.ts` is the node-only half (parse, validate, PNG signature) with no `next/server` and no `fs`, so the unit tests exercise it directly. It rejects a non-`data:image/png` URL, an oversized body (checked before base64 decoding), and — the case a naive check misses — a base64 blob that decodes cleanly but is **not** a PNG.
+  - `Export` and `Save for AI` both call one `writeEvidence(source)` in `runtime.ts`; `Save for AI` only reorders the active pin first and labels the document. The PNG is captured **before** `collectPoseAnomalies` runs, because the scan borrows the skeleton for a few hundred `mixer.update(0)` steps and the picture must be the frame the user was looking at.
+  - The anomaly scan is the same code `Scan` uses: the duplicated block inside `scanSeam` was extracted into `collectPoseAnomalies(clip)`, so the ticket can never quote thresholds the rings do not use.
+  - When the route is absent (production build, static export) the runtime falls back to the old browser download and says so in the log — the button never silently does nothing.
+
+  **Two fixes the generated file forced.** Reading `latest-issue.md` as an agent would, rather than as its author, exposed both:
+  - The header said `frame #34` while the pin said `Frame #7`, because a pin keeps the frame it was *taken* at. Correct, but it reads as a contradiction. The ticket now states once: "The canvas is at frame #N; each pin below names the frame it was taken at."
+  - `catalog.ts` stores the bare filename, so the ticket printed `wyvern-v2-rig.glb`. An agent cannot open that. It now prints `public/models/wyvern-v2-rig.glb`, and passes an already-qualified path through unchanged.
+
+  **Evidence — `scripts/probe-evidence-inbox.mjs` (Chromium, real clicks, files read off disk), 25/25.**
+  - Deletes the three files first, so nothing stale can make it pass; then pins `R_Calf`, types a note, clicks `Export`, and reads `latest-issue.md` from the filesystem — not from the DOM.
+  - Ticket: 2,414 B, contains the note verbatim, `Frame | #34 @ 24 fps`, the `R_Calf` pin with its `Bind Delta` / `Procedural Delta`, the pose-envelope section, `## How to reproduce`, and both inbox paths.
+  - Screenshot: **127,042 B** and starts with the PNG signature. Sidecar parses, carries the pin and the note, and its `clip.frame` equals `Math.round(clip.time × 24)`.
+  - `Save for AI` rewrites the same file (`mtime` moves), the document says `**Save for AI**`, and the button confirms with `✓ Saved to repo`.
+  - A hand-rolled `POST` with `png: "not-a-data-url"` returns **400** with a readable error and leaves the ticket byte-identical.
+  - **Proved it can fail:** pointing the client at `/api/flight-lab/report-typo` → **18 checks red**, nothing written; making the route write the PNG bytes into `latest-issue.md` → **10 checks red** (`the ticket has a 'what looks wrong' section`, the note, the frame, the pin, the scan, the repro). The first mutation also exposed an unguarded `stat()` in the probe that crashed instead of failing — fixed, so a missing ticket now reports one clear failure.
+
+  **What did not land — `watch-and-splice` (part 3), and why.** It needs four things that do not exist yet, and the E4 verify clause covers none of them: a bpy path that exports **one** action rather than the whole scene (`export_wyvern_glb` has no action filter, and `cli.py export` is gated on the provenance stamp for good reason); a **general** animation splicer (`tools/blender/splice_neck_head_channels.mjs` only rewrites `Neck1/Neck2/Head:rotation`, so it cannot carry an arbitrary active action); a `validateRuntimeRig` + pose-envelope gate on the spliced candidate; and UI state to auto-enter `Ghost` against the candidate. Writing that as a thin shell around the existing one-off scripts is how this repo acquired its current pile of `author_v2_*` scripts, and it cannot be verified without a live Blender round-trip. It should be its own task with its own probe. Blender *is* installed (`~/.local/bin/blender`), so the work is feasible — it is a scope decision, not a blocker.
+
+  **Gates after E4**: `tsc --noEmit` clean, `npm run test:fast` **184/184** (+5), flight-lab **53/53**, `assets:selftest-pose-envelope` **6/6**, probe PASS.
+
+
+### Workstream F — Runtime Contract Enforcement & Clip-Capability Badges (Milestones M1 & M4) *(Completed 2026-10-22)*
+
+- [x] **Task FL-5: Enforce Runtime Contract at Specimen Load & Surface ClipResolutionStatus Badges (M1 & M4)**
+  - **Files**: `src/flight-lab/runtime.ts`, `src/flight-lab/clipResolver.ts`, `src/flight-lab/contractGuard.ts` (new), `src/flight-lab/rig/mixerBindings.ts`, `src/flight-lab/catalog.ts`, `src/flight-lab/types.ts`, `src/app/flight-lab/components/FlightControls.tsx`, `src/app/flight-lab/components/StageViewport.tsx`, `src/app/flight-lab/FlightLabClient.tsx`
+  - **Action**: merge the duplicate 17-entry alias table into `clipResolver.ts`; thread `resolveModeCapability()`'s status into the mode buttons; call `mixerBindingsAreSupported(mixer)` at load with a unit test; validate V2 signatures at load with an actionable re-pin banner.
+  - **Verify**: `npm run test:fast` passes with unit tests for `mixerBindings.ts` and unified clip resolution.
+
+  **What landed (2026-10-22)**
+  - **One alias table.** The 17 entries in `runtime.ts:resolveAction` are now `CLIP_ALIASES` in `clipResolver.ts`, resolved by `resolveClipAlias(name, available)`, which preserves the lookup the runtime already depended on: candidate order, exact-**or**-substring, case-blind. Two tables in two files that had to be kept in step by hand became one; the count is pinned at 17 so a later cleanup cannot quietly drop entries the V1 asset needs.
+  - **The badge is the point of M1.** `resolveAllModeCapabilities(available)` returns a `ClipResolutionResult` per mode; `runtime.ts` computes it once per load and publishes it on telemetry; `FlightControls` renders `ALIAS` / `FALLBACK` / `N/A` on the mode button (amber for a substitution, red for unavailable, which also disables the button), with the resolved clip name in the tooltip.
+  - **M4 is a browser-side guard, because the existing gates only ever looked at the file on disk.** `contractGuard.ts` checks what the page actually fetched: 92 joints, the 18 contract clips, no extras, and `mixerBindingsAreSupported`. Findings go to a separate `contractWarning` channel and an amber banner with the repair command — *not* `events.error`, because a red `LOAD FAULT` on a model that loaded and plays would be a lie, and would hide the issues behind a Retry button.
+
+  **Four measurements changed the design.**
+  - **The V1 matrix is not what the task assumed.** Measured: `cruise → FlightCruise` (alias), `boost → FlightCruise` (alias), `land → **Idle**` (alias). There is no `fallback` case on V1 at all — the interesting failure is `land`, which plays a standing idle because V1 never had a landing clip. That is exactly the silent substitution the milestone exists to expose, and it is now a chip on the button.
+  - **The guard had to be scoped to the pinned file.** `isV2RigSpecimen()` is true for the two `…-candidate.glb` specimens too, and those are deliberately partial (a couple of clips, sometimes fewer bones). An unscoped guard would have raised a banner on every switch to a candidate — noise that trains the user to ignore the real one. It now keys on `PINNED_RUNTIME_MODEL`, and a test pins that constant to `contract.asset.path` in the JSON.
+  - **`V2_RIG_JOINT_COUNT` is a deliberate duplicate, made safe by a test.** The contract JSON is 215 KB of node signature; the browser needs one number. `test/flight-lab.test.js` reads the JSON and asserts both the count and `V2_RIG_CLIPS` against it, so the copy cannot drift.
+  - The banner's first placement (`top: 48px`, copying `.error`) covered the stage toolbar — the screenshot showed the headline clipped behind the chips. It now sits at `136px`, clear of the toolbar (48) and the pin banner (96).
+
+  **Evidence — `scripts/probe-contract-badges.mjs` (Chromium, real specimen switches), 18/18.**
+  - V2: `getContractIssues()` is `[]`, no banner, and **no badge on any of the seven modes** — the shipped asset really does expose 92 joints through three.js, which is the only reason the guard is worth having.
+  - V2 locomotion candidate: no banner, no issues — the partial asset is not slandered.
+  - V1: `Cruise`, `Boost`, `Land` each show `ALIAS`; `Ground`, `Takeoff`, `Bank L`, `Bank R` show nothing; clicking `Cruise` really plays `FlightCruise`, so the chip matches the behaviour rather than the label.
+  - **Proved it can fail:** forcing `resolveAllModeCapabilities` to report `exact` for everything turns **4 checks red** (`the Cruise button is badged ALIAS` and friends). Inducing real drift (`V2_RIG_JOINT_COUNT = 91`) produced the banner with `role="status"`, the joint-count sentence and `npm run assets:validate-wyvern` — captured in [`contract-warning`](evidence/2026-10-22-contract-warning.png), then reverted.
+  - **Unit tests that reproduce the bug, not the shape.** `flushMixerBindings re-applies a static track that update(0) skipped` performs the outside write, proves `update(0)` leaves it alone, then proves the flush restores the authored pose — a no-op implementation fails it (verified: neutralising `setValue` turns both this and the pre-existing test 44 red). The alias test fails if any entry is dropped (verified by deleting `walk`), and the contract-pin test fails on a drifted joint count (verified).
+
+  **Gates after FL-5**: `tsc --noEmit` clean, `npm run test:fast` **190/190** (+6), flight-lab **59/59**, `assets:selftest-pose-envelope` **6/6**, probe **18/18**.

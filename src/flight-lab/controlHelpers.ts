@@ -29,7 +29,9 @@ export const QUICK_LOCOMOTION_ACTIONS: readonly QuickLocomotionAction[] = [
   { key: "R", name: "rest", clipName: "rest", label: "Rest", category: "ground", icon: "🛌", description: "Low quadrupedal ground rest posture" },
   { key: "H", name: "hover", clipName: "hover", label: "Hover", category: "flight", icon: "✦", description: "Vertical stationary flight elevation" },
   { key: "S", name: "scout", clipName: "scout", label: "Scout", category: "flight", icon: "🔭", description: "Panoramic horizon scanning patrol" },
-  { key: "G", name: "glide", clipName: "glide", label: "Glide", category: "flight", icon: "〰", description: "Aerodynamic soaring dihedral" },
+  // Glide moved off `G` when `G` became the procedural-rig bypass (Task E3);
+  // `L` is the free mnemonic ("level flight").
+  { key: "L", name: "glide", clipName: "glide", label: "Glide", category: "flight", icon: "〰", description: "Aerodynamic soaring dihedral" },
   { key: "D", name: "dive", clipName: "dive", label: "Dive", category: "flight", icon: "⇣", description: "Streamlined nose-down stoop plunge" },
 ];
 

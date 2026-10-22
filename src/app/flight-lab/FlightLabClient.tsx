@@ -24,6 +24,7 @@ import {
   type FlightLabTelemetry,
   type FlightLabTheme,
 } from "../../flight-lab/runtime";
+import type { FlightLabContractWarning } from "../../flight-lab/types";
 import styles from "./FlightLabClient.module.css";
 import { AnimationLogConsole } from "./components/AnimationLogConsole";
 import { FlightControls } from "./components/FlightControls";
@@ -76,6 +77,8 @@ export default function FlightLabClient() {
   const [logs, setLogs] = useState<FlightLabAnimationEvent[]>([]);
   const [copiedLog, setCopiedLog] = useState(false);
   const [copiedPin, setCopiedPin] = useState(false);
+  const [savedPin, setSavedPin] = useState(false);
+  const [copiedRig, setCopiedRig] = useState(false);
   const [activeClip, setActiveClip] = useState("");
   const [loading, setLoading] = useState(true);
   const [paused, setPaused] = useState(false);
@@ -83,6 +86,7 @@ export default function FlightLabClient() {
   const [telemetry, setTelemetry] = useState(INITIAL_TELEMETRY);
   const [metrics, setMetrics] = useState<FlightLabMeshMetrics | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [contractWarning, setContractWarning] = useState<FlightLabContractWarning | null>(null);
   const [theme, setTheme] = useState<FlightLabTheme>("dark");
   const [cameraPreset, setCameraPreset] = useState<FlightLabCameraPreset>("chase");
 
@@ -104,6 +108,7 @@ export default function FlightLabClient() {
   const [showStreamlines, setShowStreamlines] = useState(false);
   const [showProbes, setShowProbes] = useState(false);
   const [comparisonMode, setComparisonMode] = useState<FlightLabComparisonMode>("off");
+  const [proceduralRig, setProceduralRig] = useState(true);
   const [autoOrbit, setAutoOrbit] = useState(false);
   const [floorVisible, setFloorVisible] = useState(false);
   const [interactiveFlightActive, setInteractiveFlightActive] = useState(false);
@@ -182,6 +187,7 @@ export default function FlightLabClient() {
         setMode(next);
       },
       error: (next) => setError(next ? next.message : null),
+      contractWarning: (next) => setContractWarning(next),
     });
     runtimeRef.current = runtime;
     void runtime.loadSpecimen(findFlightLabSpecimen("wyvern-v2-rig"));
@@ -393,6 +399,14 @@ export default function FlightLabClient() {
     void runtimeRef.current?.setComparisonMode(nextMode);
   };
 
+  const toggleProceduralRig = () => {
+    setProceduralRig((current) => {
+      const next = !current;
+      runtimeRef.current?.setProceduralRigEnabled(next);
+      return next;
+    });
+  };
+
   const toggleAutoOrbit = () => {
     setAutoOrbit((current) => {
       const next = !current;
@@ -475,8 +489,32 @@ export default function FlightLabClient() {
     runtimeRef.current?.clearPins();
   };
 
-  const handleDumpDiagnostics = () => {
-    runtimeRef.current?.dumpDiagnostics();
+  // Writes the ticket + screenshot into the repo instead of the clipboard, so the
+  // next instruction to an agent can be a path. The runtime logs the outcome
+  // (including the download fallback) either way.
+  const handleSaveActivePin = async () => {
+    const result = await runtimeRef.current?.saveActivePinEvidence();
+    if (!result?.ok) return;
+    setSavedPin(true);
+    setTimeout(() => setSavedPin(false), 2600);
+  };
+
+  const handleDumpDiagnostics = async () => {
+    const report = runtimeRef.current?.dumpDiagnostics();
+    if (!report) return;
+    // The console copy is for a human reading devtools; the clipboard copy is
+    // what gets pasted into a ticket. Same string, so they cannot disagree.
+    try {
+      await navigator.clipboard.writeText(report);
+      setCopiedRig(true);
+      setTimeout(() => setCopiedRig(false), 2200);
+    } catch {
+      // clipboard fallback — the report is already in the console
+    }
+  };
+
+  const handleUpdatePinNote = (note: string) => {
+    runtimeRef.current?.updateActivePinNote(note);
   };
 
   const handleToggleInteractiveFlight = useCallback(() => {
@@ -577,6 +615,17 @@ export default function FlightLabClient() {
       }
 
       const keyUpper = event.key.toUpperCase();
+      // `G` is the procedural-rig bypass. It has to be checked before the clip
+      // shortcuts, and Glide moved to `L` so this does not shadow it.
+      if (keyUpper === "G" && !event.metaKey && !event.ctrlKey && !event.altKey) {
+        setProceduralRig((current) => {
+          const next = !current;
+          runtimeRef.current?.setProceduralRigEnabled(next);
+          return next;
+        });
+        return;
+      }
+
       const locomotion = QUICK_LOCOMOTION_ACTIONS.find((a) => a.key === keyUpper);
       if (locomotion) {
         if (!canSpecimenExecuteMode(specimen.kind, "ground")) return;
@@ -691,6 +740,7 @@ export default function FlightLabClient() {
           specimenName={specimen.name}
           loading={loading}
           error={error}
+          contractWarning={contractWarning}
           onRetry={retryLoad}
           showSkeleton={showSkeleton}
           onToggleSkeleton={toggleSkeleton}
@@ -704,6 +754,8 @@ export default function FlightLabClient() {
           onToggleProbes={toggleProbes}
           comparisonMode={comparisonMode}
           onToggleComparison={handleToggleComparison}
+          proceduralRig={proceduralRig}
+          onToggleProceduralRig={toggleProceduralRig}
           autoOrbit={autoOrbit}
           onToggleAutoOrbit={toggleAutoOrbit}
           floorVisible={floorVisible}
@@ -711,7 +763,10 @@ export default function FlightLabClient() {
           telemetry={telemetry}
           onCopyActivePin={handleCopyActivePin}
           copiedPin={copiedPin}
+          savedPin={savedPin}
+          onSaveActivePin={handleSaveActivePin}
           onClearPins={handleClearPins}
+          onUpdatePinNote={handleUpdatePinNote}
           onZoomBy={(amount) => runtimeRef.current?.zoomBy(amount)}
           onScanSeam={() => runtimeRef.current?.scanSeam()}
           onExportEvidence={() => runtimeRef.current?.exportEvidence()}
@@ -725,6 +780,7 @@ export default function FlightLabClient() {
           panelRef={rightPanelRef}
           mode={mode}
           onSelectMode={selectMode}
+          modeCapabilities={telemetry.modeCapabilities}
           onTriggerOneShot={triggerOneShot}
           hasClips={clips.length > 0}
           cameraPreset={cameraPreset}
@@ -770,6 +826,7 @@ export default function FlightLabClient() {
             onCopyLogs={copyLogs}
             onClearLogs={clearLogs}
             onDumpDiagnostics={handleDumpDiagnostics}
+            copiedRig={copiedRig}
             logContainerRef={logContainerRef}
           />
         </FlightControls>

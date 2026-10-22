@@ -12,6 +12,7 @@ interface AnimationLogConsoleProps {
   onCopyLogs: () => void;
   onClearLogs: () => void;
   onDumpDiagnostics?: () => void;
+  copiedRig?: boolean;
   logContainerRef: RefObject<HTMLDivElement | null>;
 }
 
@@ -21,6 +22,7 @@ export function AnimationLogConsole({
   onCopyLogs,
   onClearLogs,
   onDumpDiagnostics,
+  copiedRig = false,
   logContainerRef,
 }: AnimationLogConsoleProps) {
   const [filter, setFilter] = useState<LogFilter>("all");
@@ -57,10 +59,10 @@ export function AnimationLogConsole({
             <button
               type="button"
               onClick={onDumpDiagnostics}
-              title="Dump complete bone hierarchy, symmetry, and pin report"
+              title="Dump complete bone hierarchy, symmetry, and pin report — copied to the clipboard"
               className={styles.dumpBtn}
             >
-              Dump Rig
+              {copiedRig ? "✓ Copied Rig Report" : "Dump Rig"}
             </button>
           )}
           <button

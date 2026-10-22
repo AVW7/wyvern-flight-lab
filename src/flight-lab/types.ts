@@ -3,6 +3,7 @@ import type { FlightLabCameraState } from "./camera";
 import type { FlightLabPlaybackSnapshot } from "./playback";
 import type { FlightLabStrokePhase } from "./anatomicalMap";
 import type { FlightLabPin } from "./inspectionPins";
+import type { ClipResolutionResult } from "./clipResolver";
 
 export type FlightLabMode = "ground" | "takeoff" | "cruise" | "bank-left" | "bank-right" | "boost" | "land";
 export type FlightLabTheme = "dark" | "light";
@@ -17,7 +18,7 @@ export type FlightLabCameraPreset =
   | "sideOrtho"
   | "topOrtho"
   | "threeQuarterOrtho";
-export type FlightLabComparisonMode = "off" | "ghost" | "formation";
+export type FlightLabComparisonMode = "off" | "ghost" | "formation" | "raw";
 
 export type { FlightLabStrokePhase, FlightLabPin };
 
@@ -101,6 +102,11 @@ export interface FlightLabTelemetry {
   activePin?: FlightLabPin | null;
   comparisonMode?: FlightLabComparisonMode;
   pinCount?: number;
+  /**
+   * What each mode actually resolved to on the loaded asset. `exact` is the
+   * authored clip; anything else is a substitution the mode button has to admit.
+   */
+  modeCapabilities?: Partial<Record<FlightLabMode, ClipResolutionResult>>;
   interactiveFlight?: {
     active: boolean;
     airspeedMps: number;
@@ -136,7 +142,22 @@ export interface FlightLabEvents {
   metrics?(metrics: FlightLabMeshMetrics | null): void;
   comparisonMetrics?(metrics: FlightLabComparisonMetrics | null): void;
   error?(error: Error | null): void;
+  /**
+   * Non-fatal contract drift. Separate from `error` on purpose: the model loaded
+   * and plays, but it no longer matches the pinned contract, so the badge, the
+   * clip resolution and the diagnostics are all suspect.
+   */
+  contractWarning?(warning: FlightLabContractWarning | null): void;
   mode?(mode: FlightLabMode): void;
+}
+
+export interface FlightLabContractWarning {
+  /** One-line summary for the banner headline. */
+  message: string;
+  /** What specifically is wrong, one bullet each. */
+  issues: string[];
+  /** The command that repairs it, ready to paste. */
+  command: string;
 }
 
 export interface FlightLabRuntime {
@@ -161,6 +182,8 @@ export interface FlightLabRuntime {
   setFloorVisible(enabled: boolean): void;
   setProbesVisible(enabled: boolean): void;
   setComparisonMode(mode: FlightLabComparisonMode): Promise<void>;
+  setProceduralRigEnabled(enabled: boolean): void;
+  isProceduralRigEnabled(): boolean;
   setInteractiveFlightActive(active: boolean): void;
   isInteractiveFlightActive(): boolean;
   setInteractiveFlightInput(input: Partial<FlightInputState>): void;
@@ -170,9 +193,17 @@ export interface FlightLabRuntime {
   removePin(pinId: string): void;
   clearPins(): void;
   getPins(): FlightLabPin[];
+  updateActivePinNote(note: string): void;
   dumpDiagnostics(): string;
   scanSeam(): void;
-  exportEvidence(): void;
+  /**
+   * Write the screenshot, the issue document and the telemetry sidecar to the
+   * dev inbox. Resolves with the outcome rather than throwing: the caller needs
+   * to know whether to fall back to a browser download.
+   */
+  exportEvidence(): Promise<EvidenceWriteResult>;
+  /** Same, framed around the active pin (`Save for AI` on the pin banner). */
+  saveActivePinEvidence(): Promise<EvidenceWriteResult>;
   zoomBy(amount: number): void;
   focusTarget(targetX: number, targetY: number, distance?: number): void;
   resetCamera(): void;
@@ -182,3 +213,12 @@ export interface FlightLabRuntime {
 }
 
 export type { FlightLabCameraState };
+
+export interface EvidenceWriteResult {
+  ok: boolean;
+  /** Human-readable outcome — the log line and the button toast both use it. */
+  message: string;
+  /** Repo-relative paths, so the UI can tell the user what to hand an agent. */
+  issuePath: string;
+  capturePath: string;
+}

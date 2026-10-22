@@ -9,6 +9,7 @@ import {
   type ClipCategory,
 } from "../../../flight-lab/controlHelpers";
 import { FLIGHT_LAB_SHORTCUTS } from "../../../flight-lab/playback";
+import type { ClipResolutionResult } from "../../../flight-lab/clipResolver";
 import type {
   FlightLabAnimationClipInfo,
   FlightLabCameraPreset,
@@ -44,6 +45,8 @@ interface FlightControlsProps {
   panelRef?: Ref<HTMLElement>;
   mode: FlightLabMode;
   onSelectMode: (mode: FlightLabMode) => void;
+  /** Per-mode resolution on the loaded asset; drives the ALIAS/FALLBACK/N/A badges. */
+  modeCapabilities?: Partial<Record<FlightLabMode, ClipResolutionResult>>;
   onTriggerOneShot: (actionName: string) => void;
   hasClips: boolean;
   cameraPreset: FlightLabCameraPreset;
@@ -77,6 +80,7 @@ export function FlightControls({
   panelRef,
   mode,
   onSelectMode,
+  modeCapabilities,
   onTriggerOneShot,
   hasClips,
   cameraPreset,
@@ -258,6 +262,18 @@ export function FlightControls({
           <div className={styles.modeGrid}>
             {MODES_UI.map((item) => {
               const isActive = mode === item.name;
+              const capability = modeCapabilities?.[item.name as FlightLabMode];
+              // `exact` is the authored clip, so it needs no badge. Everything
+              // else is a substitution the button has to admit: on the V1 asset
+              // cruise/bank/land have no clip at all and used to play silently.
+              const substitution =
+                capability && capability.status !== "exact"
+                  ? capability.status === "alias"
+                    ? "ALIAS"
+                    : capability.status === "fallback"
+                    ? "FALLBACK"
+                    : "N/A"
+                  : null;
               const isSuggested =
                 (mode === "ground" && item.name === "takeoff") ||
                 (mode !== "ground" && mode !== "takeoff" && mode !== "land" && item.name === "land");
@@ -270,10 +286,11 @@ export function FlightControls({
                   key={item.name}
                   type="button"
                   className={styles.modeBtn}
-                  disabled={specimenKind === "egg"}
+                  disabled={specimenKind === "egg" || capability?.status === "unavailable"}
                   data-active={isActive}
                   data-suggested={isSuggested}
                   data-transitioning={isTransitioning}
+                  data-capability={capability?.status}
                   aria-pressed={isActive}
                   onClick={() => onSelectMode(item.name as FlightLabMode)}
                   title={
@@ -286,6 +303,19 @@ export function FlightControls({
                 >
                   <kbd>{item.key}</kbd>
                   <span className={styles.modeLabel}>{item.label}</span>
+                  {substitution && (
+                    <span
+                      className={styles.modeCapabilityBadge}
+                      data-status={capability?.status}
+                      title={
+                        capability?.status === "unavailable"
+                          ? `No clip on this specimen can play mode "${item.name}"`
+                          : `No authored "${item.name}" clip — plays "${capability?.clipName}". ${capability?.reason ?? ""}`
+                      }
+                    >
+                      {substitution}
+                    </span>
+                  )}
                   {isSuggested && !isActive && (
                     <span className={styles.modeSuggestedBadge} title="Recommended transition">
                       {item.name === "takeoff" ? "▲ Launch" : "▼ Land"}

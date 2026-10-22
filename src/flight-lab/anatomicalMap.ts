@@ -12,6 +12,35 @@ export interface LandmarkDefinition {
   color: string;
 }
 
+/**
+ * Layer attribution (Task E2): a joint's final orientation is the product of
+ * three things that are easy to confuse in a screenshot —
+ *
+ *   q_final = q_bind * clipDelta * proceduralDelta
+ *
+ * `q_mixer` is the pose the baked clip produced; everything after it (the flight
+ * rig, the neck spring) is runtime code. Recording both lets a pin say *which
+ * one* to fix instead of describing the symptom.
+ */
+export interface PoseLayerDeltas {
+  /** `q_bind⁻¹ · q_mixer` — authored by the GLB track, relative to bind. */
+  clipDeltaEulerDeg: THREE.Vector3;
+  /** `q_mixer⁻¹ · q_final` — added by `wyvernFlightRig` / `neckSpring`. */
+  proceduralDeltaEulerDeg: THREE.Vector3;
+  /** World orientation with the specimen's heading removed. */
+  worldHorizonEulerDeg: THREE.Vector3;
+  /** Share of the local rotation the clip authored, 0..1. */
+  clipShare: number;
+}
+
+/** Per-bone quaternions the layer maths needs, both in bone-local space. */
+export interface PoseLayerSource {
+  /** Local quaternion at bind, before any mixer ran. */
+  bind: ReadonlyMap<string, THREE.Quaternion>;
+  /** Local quaternion immediately after `mixer.update`, before the procedural rig. */
+  mixer: ReadonlyMap<string, THREE.Quaternion>;
+}
+
 export interface ResolvedLandmark {
   id: string;
   label: string;
@@ -23,6 +52,11 @@ export interface ResolvedLandmark {
   rotationEulerDeg: THREE.Vector3;
   parentBoneName?: string;
   color: string;
+  /** Local quaternion at bind, captured before the mixer first ran. */
+  bindQuaternion: THREE.Quaternion;
+  /** Local quaternion the clip produced this frame. */
+  mixerQuaternion: THREE.Quaternion;
+  layers: PoseLayerDeltas;
 }
 
 export interface BilateralSymmetryMetrics {
@@ -292,6 +326,80 @@ export const CANONICAL_LANDMARKS: LandmarkDefinition[] = [
 
 const _landmarkCache = new WeakMap<THREE.Object3D, ResolvedLandmark[]>();
 const _scratchEuler = new THREE.Euler();
+const _qA = new THREE.Quaternion();
+const _qB = new THREE.Quaternion();
+const _qC = new THREE.Quaternion();
+
+function eulerDegInto(out: THREE.Vector3, q: THREE.Quaternion): void {
+  _scratchEuler.setFromQuaternion(q, "YXZ");
+  out.set(
+    THREE.MathUtils.radToDeg(_scratchEuler.x),
+    THREE.MathUtils.radToDeg(_scratchEuler.y),
+    THREE.MathUtils.radToDeg(_scratchEuler.z)
+  );
+}
+
+function rotationAngleDeg(a: THREE.Quaternion, b: THREE.Quaternion): number {
+  const dot = Math.min(1, Math.abs(a.dot(b)));
+  return THREE.MathUtils.radToDeg(2 * Math.acos(dot));
+}
+
+/**
+ * The bind orientation of `bone`'s chain, as a local-space product from the
+ * model down. Needed because a bone's *absolute* orientation says nothing about
+ * the pose: this rig's `Head` sits at 70.7° pitch and 180° roll in bind, so
+ * reporting the bone frame would make every healthy pin look broken.
+ */
+function bindChainQuaternion(
+  bone: THREE.Bone,
+  model: THREE.Object3D,
+  bind: ReadonlyMap<string, THREE.Quaternion>,
+  out: THREE.Quaternion
+): void {
+  out.identity();
+  let node: THREE.Object3D | null = bone;
+  while (node && node !== model) {
+    const quaternion = bind.get(node.name);
+    if (quaternion) out.premultiply(quaternion);
+    node = node.parent;
+  }
+}
+
+function computePoseLayers(
+  bindQ: THREE.Quaternion,
+  mixerQ: THREE.Quaternion,
+  finalQ: THREE.Quaternion,
+  bone: THREE.Bone,
+  model: THREE.Object3D,
+  bind: ReadonlyMap<string, THREE.Quaternion>,
+  out: PoseLayerDeltas
+): void {
+  // Authored by the baked clip.
+  _qA.copy(bindQ).invert().multiply(mixerQ);
+  eulerDegInto(out.clipDeltaEulerDeg, _qA);
+
+  // Added on top of the clip by runtime code.
+  _qB.copy(mixerQ).invert().multiply(finalQ);
+  eulerDegInto(out.proceduralDeltaEulerDeg, _qB);
+
+  // Cumulative departure from the bind pose, measured in model-aligned axes:
+  // `(chain at bind)⁻¹ · (chain now)`. At bind this is exactly zero, so the
+  // number reads as "how far this joint has been posed", not "where the bone
+  // axis happens to point". The specimen's heading and the airframe's own
+  // pitch/bank cancel out, which is what a rig-repair ticket wants — a banked
+  // airframe is not a rig defect.
+  bone.getWorldQuaternion(_qC);
+  model.getWorldQuaternion(_qA);
+  _qB.copy(_qA).invert().multiply(_qC);
+  bindChainQuaternion(bone, model, bind, _qA);
+  _qC.copy(_qA).invert().multiply(_qB);
+  eulerDegInto(out.worldHorizonEulerDeg, _qC);
+
+  const clipAngle = rotationAngleDeg(bindQ, mixerQ);
+  const proceduralAngle = rotationAngleDeg(mixerQ, finalQ);
+  const total = clipAngle + proceduralAngle;
+  out.clipShare = total > 1e-6 ? clipAngle / total : 0;
+}
 
 function buildLandmarkCache(model: THREE.Object3D): ResolvedLandmark[] {
   const bones = new Map<string, THREE.Bone>();
@@ -352,13 +460,24 @@ function buildLandmarkCache(model: THREE.Object3D): ResolvedLandmark[] {
             ? matchedBone.parent.name
             : undefined,
         color: def.color,
+        bindQuaternion: new THREE.Quaternion(),
+        mixerQuaternion: new THREE.Quaternion(),
+        layers: {
+          clipDeltaEulerDeg: new THREE.Vector3(),
+          proceduralDeltaEulerDeg: new THREE.Vector3(),
+          worldHorizonEulerDeg: new THREE.Vector3(),
+          clipShare: 0,
+        },
       });
     }
   }
   return out;
 }
 
-export function resolveAnatomicalLandmarks(model: THREE.Object3D): ResolvedLandmark[] {
+export function resolveAnatomicalLandmarks(
+  model: THREE.Object3D,
+  layers?: PoseLayerSource
+): ResolvedLandmark[] {
   let cached = _landmarkCache.get(model);
   if (!cached) {
     cached = buildLandmarkCache(model);
@@ -376,6 +495,28 @@ export function resolveAnatomicalLandmarks(model: THREE.Object3D): ResolvedLandm
       THREE.MathUtils.radToDeg(_scratchEuler.y),
       THREE.MathUtils.radToDeg(_scratchEuler.z)
     );
+
+    const bindMap = layers?.bind;
+    const bindQ = bindMap?.get(entry.boneName);
+    const mixerQ = layers?.mixer.get(entry.boneName);
+    if (bindQ && mixerQ && bindMap) {
+      entry.bindQuaternion.copy(bindQ);
+      entry.mixerQuaternion.copy(mixerQ);
+      computePoseLayers(
+        entry.bindQuaternion,
+        entry.mixerQuaternion,
+        bone.quaternion,
+        bone,
+        model,
+        bindMap,
+        entry.layers
+      );
+    } else {
+      entry.layers.clipDeltaEulerDeg.set(0, 0, 0);
+      entry.layers.proceduralDeltaEulerDeg.set(0, 0, 0);
+      entry.layers.worldHorizonEulerDeg.set(0, 0, 0);
+      entry.layers.clipShare = 0;
+    }
   }
 
   return cached;
