@@ -229,8 +229,8 @@ Each task below is self-contained, file-scoped, and paired with an explicit veri
 
 ### Workstream E — Flight Lab AI Co-Pilot, Pose-Anomaly Detector & Blender-to-Runtime Bridge (P0/P1)
 
-- [ ] **Task E1: Upgrade `Scan` (`motionProbe.ts`) with Anatomical Pose-Envelope, Transition-Handoff & Floor-Penetration Detectors**
-  - **Files**: `src/flight-lab/motionProbe.ts`, `src/flight-lab/runtime.ts`, `scripts/validate-wyvern-clips.mjs`, `test/flight-lab.test.js`
+- [ ] **Task E1: Upgrade `Scan` (`motionProbe.ts`) with Anatomical Pose-Envelope, Transition-Handoff & Floor-Penetration Detectors** *(Partial, 2026-10-22 — detector, `Scan` wiring and a real-asset probe landed; see "What landed / what did not" below)*
+  - **Files**: `src/flight-lab/poseEnvelope.ts` (new), `src/flight-lab/runtime.ts`, `tools/audit-v2-pose-envelope.mjs` (new), `test/flight-lab.test.js`, `package.json`; `scripts/validate-wyvern-clips.mjs` deliberately untouched
   - **Action**:
     1. Extend `scanSeam()` in `src/flight-lab/motionProbe.ts` (and `scripts/validate-wyvern-clips.mjs`) into `scanClipAnomalies()` that detects **static and structural pose bugs** in addition to `> 10°` frame jumps:
        - **Bind-Delta & Horizon Pitch Envelope**: Compute per-bone delta from bind (`q_bind^-1 * q_clip`) and cumulative `Body + Spine1..3 + Neck1..2 + Head` world pitch (`netHeadPitchDeg`). Flag an anomaly whenever a non-combat/non-dive clip holds `|bonePitchVsBind| > 18°` (immediately flags `idle`'s `-21.1° / -24.2° / -19.3°` neck raise!) or when a grounded clip holds `netHeadPitchDeg` outside `[-12°, +12°]`.
@@ -239,6 +239,22 @@ Each task below is self-contained, file-scoped, and paired with an explicit veri
        - **Floor Penetration & Root Drift**: Flag any frame where skinned wing/body vertices drop below `footY - 15` rig units (`attack2`/`attackAir2`) or `Body` horizontal drift exceeds `0.5` rig units.
     2. Color-code anomaly probes in the 3D viewport (`#ef4444` pulsing sonar ring on any bone failing the pose envelope) when `Scan` is clicked.
   - **Verify**: Run `node --import tsx --test test/flight-lab.test.js` with a test proving `scanClipAnomalies` flags the pre-fix `-65°` `idle` neck, `walk`'s `+8.6°` jaw, and `land → idle`'s `15.9°` jump.
+
+  **What landed (2026-10-22)**
+  - `src/flight-lab/poseEnvelope.ts`: `captureBindRotations`, `sampleClipPoses`, `detectPoseAnomalies` (pure), `detectTransitionAnomalies` (pure), `scanClipAnomalies`. Five detectors — `bind_delta`, `horizon_pitch`, `open_jaw`, `transition_handoff`, `root_drift` — thresholds `18° / ±12° / 2° / 8° / 0.5 rig units` as specified above.
+  - `runtime.ts`: bind rotations are captured immediately after `normalizedClone()` (before the mixer, the procedural rig or the neck spring can write a bone), and `Scan` now logs a second line, `Pose envelope: …`, alongside the seam result.
+  - `npm run assets:audit-pose-envelope` (`tools/audit-v2-pose-envelope.mjs`) runs every detector over a shipped GLB and exits 1 on any finding, so it can gate a candidate.
+  - **Evidence on the shipped `bef7a09a…` asset: 18/18 clips clean, `takeoff → cruise` 0 bones > 8°, `land → idle` 0 bones > 8°, total 0.** A probe that only ever says green is decoration, so the three historical defects were re-injected into the real rig and the probe was re-run: `idle` + `Neck1 −21.1° / Neck2 −24.2° / Head −19.3°` → **4 anomalies** (horizon −60.0°, Neck2 −28.2°, Neck1 −24.7°, Head −21.1°); `walk` + `Jaw 8.6°` → **1** (`8.7°`); `land` + `Neck2 15.9°` → **1** (`11.3°` at `land → idle`).
+  - **Three measurement decisions, each forced by a measurement:**
+    1. **The static detectors use the median, not the peak.** A wingbeat swings 60° for a few frames and is not a posture; the defects that motivated the detector are held for the whole clip. A peak envelope flags every healthy flight clip.
+    2. **The postural envelope is scoped to `Body, Spine1..3, Neck1..2, Head`**, not all 92 joints — distal wing/digit bones legitimately hold > 18° in every flight clip, and every defect in Part 4.1 is postural.
+    3. **`CANONICAL_TRANSITIONS` is only `takeoff → cruise` and `land → idle`.** The measured reason: on the healthy asset `cruise → bankLeft/bankRight` differ by 8 bones (worst elbow 39.9°) and `idle ↔ walk` by 22 bones (worst `L_Toes` 44.2°). Those pairs are loop-to-loop and `runtime.ts` phase-aligns and crossfades them, so the boundary delta is a stance/phase difference, never a snap — including them would make the detector permanently red and therefore unread.
+  - **A latent bug in the existing `Scan` was found while testing this.** Writing a bone rotation and then calling `mixer.update(0)` on a paused action leaves that action unable to write the pose again: the second seek reads the untouched bone. `scanSeam` borrows the playback mixer, so a second `Scan` press in one session measures a stale pose. `sampleClipPoses` therefore runs a private `AnimationMixer` and reports bind values for bones the clip does not animate; a regression test asserts a repeated scan reproduces the first result. `scanSeam` itself was left alone (out of this task's scope) and still has the defect.
+
+  **What did not land**
+  - **`scripts/validate-wyvern-clips.mjs` was not extended.** The detector is TypeScript; that script is spawned with `process.execPath` (plain `node`) by `test/wyvern-ground-metrics.test.js:124,131`, `test/wyvern-bank-direction.test.js:17,50` and `tools/audit-all-clips.mjs`, so importing the detector would break four call sites. Duplicating the logic there would create the second implementation this repo keeps paying for, so the probe runs the one implementation instead.
+  - **Floor penetration is not in the runtime detector.** It needs skinned vertex positions; `audit-wyvern-rig.mjs` already measures it (`belowFt`) and is gated. `root_drift` is the part that was cheap and provable.
+  - **The pulsing red sonar ring on failing bones in the 3D viewport** (E1.2) is not done — it needs a browser pass, and the animation log carries the same information today.
 
 - [ ] **Task E2: Upgrade Inspection Pins (`inspectionPins.ts` & `ActivePinBanner.tsx`) with Bind-Delta, Layer Attribution & Editable User Notes**
   - **Files**: `src/flight-lab/anatomicalMap.ts`, `src/flight-lab/inspectionPins.ts`, `src/flight-lab/runtime.ts`, `src/app/flight-lab/components/ActivePinBanner.tsx`

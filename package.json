@@ -13,6 +13,7 @@
     "assets:validate-wyvern": "node tools/blender/runtime_rig_contract.mjs",
     "assets:validate-source-clips": "node scripts/validate-wyvern-clips.mjs assets/blender/wyvern-gothic.glb",
     "assets:audit-rig": "node tools/audit-wyvern-rig.mjs",
+    "assets:audit-pose-envelope": "tsx tools/audit-v2-pose-envelope.mjs public/models/wyvern-v2-rig.glb",
     "assets:audit-clips": "node tools/audit-all-clips.mjs public/models/wyvern-v2-rig.glb",
     "assets:audit-dynamics": "node tools/audit-dynamics.mjs public/models/player-wyvern.glb",
     "assets:audit-dynamics:v2": "node tools/audit-dynamics.mjs public/models/wyvern-v2-rig.glb --baseline assets/rig-audits/2026-10-21-dynamics/v1-dynamics-reference.json",

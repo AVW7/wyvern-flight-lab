@@ -44,6 +44,14 @@ import {
   type FlightLabPlaybackStatus,
 } from "./playback";
 import { sampleLandmarks, scanSeam, SEAM_JUMP_THRESHOLD_DEG, SEAM_THRESHOLD_PROVENANCE } from "./motionProbe";
+import {
+  CANONICAL_TRANSITIONS,
+  POSE_ENVELOPE_THRESHOLDS,
+  captureBindRotations,
+  detectTransitionAnomalies,
+  scanClipAnomalies,
+  type PoseBindings,
+} from "./poseEnvelope";
 import { createComparisonRigManager } from "./comparisonRig";
 import { createFlightLabInteractionManager } from "./interactionManager";
 import { exportEvidenceCapture, formatDiagnosticsReport } from "./evidenceExport";
@@ -142,6 +150,9 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
   let riderScale = 1;
   let actions = new Map<string, THREE.AnimationAction>();
   let activeAction: THREE.AnimationAction | null = null;
+  // Bind rotations, captured before the first mixer update. Every pose-envelope
+  // detector measures against this, not against the clip's own first frame.
+  let bindRotations: PoseBindings | null = null;
   let mode: FlightLabMode = "cruise";
   let paused = false;
   let speedScale = 1;
@@ -401,6 +412,7 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
     riderScale = 1;
     model = null;
     mixer = null;
+    bindRotations = null;
     actions.clear();
     activeAction = null;
     isOneShot = false;
@@ -804,6 +816,9 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
         if (!gltf || disposed || controller.signal.aborted) return;
         model = normalizedClone(gltf.scene, specimen.targetSize);
         model.name = `FlightLab:${specimen.id}`;
+        // Bind pose must be read here: before the mixer, the procedural rig or
+        // the neck spring write a single bone rotation.
+        bindRotations = captureBindRotations(model);
         model.rotation.y = specimen.heading;
         cloneMaterials(model);
         configureShadows(model, "hero");
@@ -1286,6 +1301,48 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
           type: "scan",
           message: `Seam scan: ${jumps.length} jumps > ${SEAM_JUMP_THRESHOLD_DEG}° detected`,
           details: top.map((j) => `[${j.jumpType}] ${j.boneName} @ ${j.time.toFixed(2)}s (${j.angleDeg.toFixed(1)}°)`).join(", "),
+        });
+      }
+
+      // Pose envelope: a defect that is *constant* has no seam jump at all, which
+      // is why the -65° idle neck raise and walk's +8.6° jaw both scanned clean.
+      if (!bindRotations) return;
+      const clip = activeAction.getClip();
+      const scan = scanClipAnomalies(model, clip, bindRotations, { fps: inspectionFps });
+      const anomalies = [...scan.anomalies];
+
+      // Boundary deltas are only meaningful where the state machine cuts: a
+      // one-shot finishing into a loop. Loops are crossfaded, so their boundary
+      // difference is a phase, not a snap (see CANONICAL_TRANSITIONS).
+      const lower = clip.name.toLowerCase();
+      for (const [from, to] of CANONICAL_TRANSITIONS) {
+        const partnerName = lower === from ? to : lower === to ? from : null;
+        if (!partnerName) continue;
+        const partner = [...actions.entries()].find(([name]) => name.toLowerCase() === partnerName)?.[1];
+        if (!partner) continue;
+        const partnerScan = scanClipAnomalies(model, partner.getClip(), bindRotations, { fps: inspectionFps });
+        const handoff =
+          lower === from
+            ? detectTransitionAnomalies({ from: scan, to: partnerScan })
+            : detectTransitionAnomalies({ from: partnerScan, to: scan });
+        anomalies.push(...handoff);
+      }
+
+      if (anomalies.length === 0) {
+        events.animationLog?.({
+          id: `${Date.now()}-envelope`,
+          timestamp: new Date().toLocaleTimeString(),
+          type: "scan",
+          message: `Pose envelope: ${clip.name} holds no static or boundary defect`,
+          details: `Bind-delta ±${POSE_ENVELOPE_THRESHOLDS.bindDeltaPitchDeg}°, horizon ±${POSE_ENVELOPE_THRESHOLDS.horizonPitchDeg}°, jaw ${POSE_ENVELOPE_THRESHOLDS.openJawDeg}°`,
+        });
+      } else {
+        events.animationLog?.({
+          id: `${Date.now()}-envelope`,
+          timestamp: new Date().toLocaleTimeString(),
+          type: "scan",
+          message: `Pose envelope: ${anomalies.length} anomalies in ${clip.name}`,
+          details: anomalies.slice(0, 8).map((a) => `[${a.kind}] ${a.message}`).join(" · "),
         });
       }
       publishTelemetry();

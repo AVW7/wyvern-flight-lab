@@ -7,6 +7,11 @@ import { MODE_CLIPS, resolveFlightLabClip } from "../src/flight-lab/clipResolver
 import { computeMeshMetrics } from "../src/flight-lab/diagnostics.ts";
 import { scanSeam } from "../src/flight-lab/motionProbe.ts";
 import {
+  detectPoseAnomalies,
+  detectTransitionAnomalies,
+  scanClipAnomalies,
+} from "../src/flight-lab/poseEnvelope.ts";
+import {
   calculateClipTelemetry,
   calculateEffectiveRate,
   calculateFrameStepTime,
@@ -990,3 +995,177 @@ test("candidate specimens differ from the promoted baseline or are marked as pro
     );
   }
 });
+
+// ---------------------------------------------------------------------------
+// Pose-envelope detectors (Task E1)
+//
+// Every fixture below is the *shape* of a defect that shipped in the V2 rig and
+// that `scanSeam` reported as clean, because the defect was constant across the
+// clip and therefore had no frame-to-frame difference to measure:
+//   - `idle` held a -65° neck raise (seam 0.0000°)
+//   - `walk` held a +8.6° open jaw on a 2-key STEP track
+//   - `land` ended 15.9° (Neck2) from where `idle` started — an inter-clip snap
+//     that no single-clip scan can see at all.
+// ---------------------------------------------------------------------------
+
+const POSE_CHAIN_BONES = ["Body", "Spine1", "Spine2", "Spine3", "Neck1", "Neck2", "Head", "Jaw", "L_WingD0P2"];
+
+/** A rig with identity bind rotations, so a clip rotation *is* the bind delta. */
+function buildPoseFixture() {
+  const root = new THREE.Object3D();
+  const bones = new Map();
+  for (const name of POSE_CHAIN_BONES) {
+    const bone = new THREE.Bone();
+    bone.name = name;
+    root.add(bone);
+    bones.set(name, bone);
+  }
+  const bind = {
+    rotations: new Map([...bones].map(([name, bone]) => [name, bone.quaternion.clone()])),
+  };
+  return { root, bones, bind };
+}
+
+/** Constant local rotation about X for the named bones over `duration`. */
+function heldPitchClip(name, held, duration = 2.0) {
+  const tracks = Object.entries(held).map(([boneName, degrees]) => {
+    const q = new THREE.Quaternion().setFromAxisAngle(
+      new THREE.Vector3(1, 0, 0),
+      THREE.MathUtils.degToRad(degrees),
+    );
+    return new THREE.QuaternionKeyframeTrack(`${boneName}.quaternion`, [0, duration], [
+      q.x, q.y, q.z, q.w, q.x, q.y, q.z, q.w,
+    ]);
+  });
+  return new THREE.AnimationClip(name, duration, tracks);
+}
+
+function sampleClip(root, clip) {
+  const mixer = new THREE.AnimationMixer(root);
+  const action = mixer.clipAction(clip);
+  action.play();
+  return { mixer, action };
+}
+
+test("pose envelope flags the pre-fix idle neck raise that the seam scan called clean", () => {
+  const { root, bind } = buildPoseFixture();
+  // Measured pre-fix `idle`: Neck1 -21.1°, Neck2 -24.2°, Head -19.3° vs bind,
+  // on a Body pitched +12.9° — a -51.7° net head pitch held for the whole clip.
+  const clip = heldPitchClip("idle", { Body: 12.9, Neck1: -21.1, Neck2: -24.2, Head: -19.3 });
+  const { mixer, action } = sampleClip(root, clip);
+
+  assert.equal(scanSeam(mixer, action, root).length, 0, "a held offset has no seam jump to find");
+
+  const { anomalies } = scanClipAnomalies(root, clip, bind);
+  const kinds = new Set(anomalies.map((a) => a.kind));
+  assert.ok(kinds.has("bind_delta"), `expected a bind_delta anomaly, got ${JSON.stringify(anomalies)}`);
+  assert.ok(kinds.has("horizon_pitch"), "expected the grounded head to fail the horizon envelope");
+
+  const neck = anomalies.filter((a) => a.kind === "bind_delta").find((a) => a.boneName === "Neck1");
+  assert.ok(neck, "Neck1 holds a -21.1° offset and must be named");
+  assert.ok(Math.abs(neck.value + 21.1) < 0.5, `Neck1 measured ${neck.value}°, expected -21.1°`);
+
+  const horizon = anomalies.find((a) => a.kind === "horizon_pitch");
+  assert.ok(Math.abs(horizon.value + 51.7) < 0.5, `net head pitch ${horizon.value}°, expected -51.7°`);
+});
+
+test("pose envelope flags walk's held open jaw and stays silent once the jaw is closed", () => {
+  const { root, bind } = buildPoseFixture();
+  const run = (clip) => scanClipAnomalies(root, clip, bind).anomalies;
+
+  const anomalies = run(heldPitchClip("walk", { Jaw: 8.6 }));
+  const jaw = anomalies.find((a) => a.kind === "open_jaw");
+  assert.ok(jaw, `expected an open_jaw anomaly, got ${JSON.stringify(anomalies)}`);
+  assert.equal(jaw.boneName, "Jaw");
+  assert.ok(Math.abs(jaw.value - 8.6) < 0.2, `jaw measured ${jaw.value}°, expected 8.6°`);
+
+  // Mutant: the same clip with the jaw closed must produce nothing. This is the
+  // control that proves the detector reads the jaw rather than always firing.
+  assert.deepEqual(run(heldPitchClip("walk", { Jaw: 0 })), []);
+
+  // A mouth clip is allowed to open: `attack` at 8.6° is authored intent.
+  const mouthClip = run(heldPitchClip("attack", { Jaw: 8.6 }));
+  assert.equal(mouthClip.filter((a) => a.kind === "open_jaw").length, 0, "mouth clips may open the jaw");
+});
+
+test("pose envelope ignores legitimate motion and exempt poses", () => {
+  const { root, bind } = buildPoseFixture();
+  const run = (clip) => scanClipAnomalies(root, clip, bind).anomalies;
+
+  // A wing digit swinging 40° is motion, not posture: it is not on the postural
+  // chain, so the envelope must not fire on the wingbeat of every flight clip.
+  const beat = new THREE.AnimationClip("cruise", 2.0, [
+    new THREE.QuaternionKeyframeTrack("L_WingD0P2.quaternion", [0, 1.0, 2.0], (() => {
+      const a = new THREE.Quaternion();
+      const b = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(40));
+      return [a.x, a.y, a.z, a.w, b.x, b.y, b.z, b.w, a.x, a.y, a.z, a.w];
+    })()),
+  ]);
+  assert.deepEqual(run(beat), []);
+
+  // A death sprawl holds 30° of neck and is exempt by design.
+  assert.deepEqual(run(heldPitchClip("death", { Neck1: 30 })), []);
+
+  // The threshold is what decides: the same idle raise passes at 30°.
+  const lenient = detectPoseAnomalies({
+    clip: "idle",
+    samples: scanClipAnomalies(root, heldPitchClip("idle", { Neck1: -21.1 }), bind).samples,
+    bind,
+    thresholds: { bindDeltaPitchDeg: 30, horizonPitchDeg: 30 },
+  });
+  assert.deepEqual(lenient, [], "raising the limit must silence the same measurement");
+});
+
+test("pose envelope flags a land -> idle handoff snap and a drifting Body", () => {
+  const { root, bind } = buildPoseFixture();
+
+  // `land` ended at Neck2 +15.9° against `idle`'s 0° start; both clips are
+  // internally continuous, so only a boundary check can see it.
+  const land = heldPitchClip("land", { Neck2: 15.9 });
+  const idle = heldPitchClip("idle", { Neck2: 0 });
+  const sampleOf = (clip) => scanClipAnomalies(root, clip, bind);
+
+  const handoff = detectTransitionAnomalies({ from: sampleOf(land), to: sampleOf(idle) });
+  const neck2 = handoff.find((a) => a.boneName === "Neck2");
+  assert.ok(neck2, `expected a Neck2 handoff anomaly, got ${JSON.stringify(handoff)}`);
+  assert.ok(Math.abs(neck2.value - 15.9) < 0.2, `handoff measured ${neck2.value}°, expected 15.9°`);
+  assert.equal(neck2.clip, "land -> idle");
+
+  // A handoff between clips that agree is silent.
+  assert.deepEqual(detectTransitionAnomalies({ from: sampleOf(idle), to: sampleOf(idle) }), []);
+
+  // Horizontal Body drift inside one clip.
+  const drift = new THREE.AnimationClip("takeoff", 2.0, [
+    new THREE.NumberKeyframeTrack("Body.position[x]", [0, 2.0], [0, 2.5]),
+  ]);
+  const anomalies = scanClipAnomalies(root, drift, bind).anomalies;
+  const rootDrift = anomalies.find((a) => a.kind === "root_drift");
+  assert.ok(rootDrift, `expected a root_drift anomaly, got ${JSON.stringify(anomalies)}`);
+  assert.equal(rootDrift.unit, "rig");
+  assert.ok(Math.abs(rootDrift.value - 2.5) < 0.05, `drift measured ${rootDrift.value}, expected 2.5`);
+});
+
+test("clip scan restores the pose it borrowed and repeats its measurement", () => {
+  const { root, bones, bind } = buildPoseFixture();
+  const posed = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), 0.75);
+  bones.get("Neck1").quaternion.copy(posed);
+  bones.get("Body").position.set(3, 4, 5);
+
+  const clip = heldPitchClip("idle", { Neck1: -21.1 });
+  const first = scanClipAnomalies(root, clip, bind);
+
+  assert.ok(bones.get("Neck1").quaternion.equals(posed), "the scan must not leave the rig in the clip pose");
+  assert.deepEqual(bones.get("Body").position.toArray(), [3, 4, 5]);
+
+  // Second scan on the same model must measure the same thing. It does not when
+  // the scan borrows the playback mixer: writing a bone and then updating a
+  // paused action leaves that action unable to write the pose again, so the
+  // repeat reads an untouched bone and reports a clean clip.
+  const second = scanClipAnomalies(root, clip, bind);
+  assert.deepEqual(
+    second.anomalies.map((a) => [a.kind, a.boneName, a.value]),
+    first.anomalies.map((a) => [a.kind, a.boneName, a.value]),
+    "a repeated scan must reproduce the first result",
+  );
+});
+
