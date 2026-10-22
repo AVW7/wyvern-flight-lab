@@ -1,0 +1,559 @@
+{
+  "file": "/Users/ajadvanwyk/wyvern-flight-lab/models/source/wyvern-rig-v1wing.blend",
+  "armature": "WyvernRig",
+  "boneCount": 106,
+  "pairs": [
+    {
+      "left": "L_Calf",
+      "right": "R_Calf",
+      "lengthLeft": 280.3276,
+      "lengthRight": 280.327,
+      "lengthDelta": 0.0006,
+      "orientationErrorDeg": 0.0,
+      "headDelta": 0.0013,
+      "tailDelta": 0.0016
+    },
+    {
+      "left": "L_Foot",
+      "right": "R_Foot",
+      "lengthLeft": 172.6124,
+      "lengthRight": 172.6122,
+      "lengthDelta": 0.0001,
+      "orientationErrorDeg": 0.0,
+      "headDelta": 0.0016,
+      "tailDelta": 0.0016
+    },
+    {
+      "left": "L_LegRoot",
+      "right": "R_LegRoot",
+      "lengthLeft": 228.003,
+      "lengthRight": 228.0028,
+      "lengthDelta": 0.0002,
+      "orientationErrorDeg": 0.0,
+      "headDelta": 0.0005,
+      "tailDelta": 0.0006
+    },
+    {
+      "left": "L_Thigh",
+      "right": "R_Thigh",
+      "lengthLeft": 284.0851,
+      "lengthRight": 284.085,
+      "lengthDelta": 0.0002,
+      "orientationErrorDeg": 0.0,
+      "headDelta": 0.0005,
+      "tailDelta": 0.0045
+    },
+    {
+      "left": "L_Toes",
+      "right": "R_Toes",
+      "lengthLeft": 172.6124,
+      "lengthRight": 172.6122,
+      "lengthDelta": 0.0001,
+      "orientationErrorDeg": 0.0,
+      "headDelta": 0.0019,
+      "tailDelta": 0.0018
+    },
+    {
+      "left": "L_WingBatten040",
+      "right": "R_WingBatten055",
+      "lengthLeft": 517.5432,
+      "lengthRight": 517.5433,
+      "lengthDelta": 0.0001,
+      "orientationErrorDeg": 179.1574,
+      "headDelta": 22.1232,
+      "tailDelta": 1030.3285
+    },
+    {
+      "left": "L_WingBatten041",
+      "right": "R_WingBatten056",
+      "lengthLeft": 367.9866,
+      "lengthRight": 367.9868,
+      "lengthDelta": 0.0002,
+      "orientationErrorDeg": 179.1543,
+      "headDelta": 25.2008,
+      "tailDelta": 724.7634
+    },
+    {
+      "left": "L_WingBatten042",
+      "right": "R_WingBatten057",
+      "lengthLeft": 1777.6482,
+      "lengthRight": 1770.1942,
+      "lengthDelta": 7.454,
+      "orientationErrorDeg": 179.1842,
+      "headDelta": 28.283,
+      "tailDelta": 3534.3083
+    },
+    {
+      "left": "L_WingBatten043",
+      "right": "R_WingBatten058",
+      "lengthLeft": 707.6562,
+      "lengthRight": 707.6571,
+      "lengthDelta": 0.0009,
+      "orientationErrorDeg": 179.0596,
+      "headDelta": 24.229,
+      "tailDelta": 1395.5593
+    },
+    {
+      "left": "L_WingBatten044",
+      "right": "R_WingBatten059",
+      "lengthLeft": 515.0464,
+      "lengthRight": 515.0465,
+      "lengthDelta": 0.0001,
+      "orientationErrorDeg": 179.0382,
+      "headDelta": 15.8098,
+      "tailDelta": 1021.4261
+    },
+    {
+      "left": "L_WingBatten045",
+      "right": "R_WingBatten060",
+      "lengthLeft": 2310.2378,
+      "lengthRight": 2300.5647,
+      "lengthDelta": 9.6731,
+      "orientationErrorDeg": 179.0223,
+      "headDelta": 13.1937,
+      "tailDelta": 4610.2106
+    },
+    {
+      "left": "L_WingBatten046",
+      "right": "R_WingBatten061",
+      "lengthLeft": 842.4853,
+      "lengthRight": 823.5396,
+      "lengthDelta": 18.9457,
+      "orientationErrorDeg": 179.9319,
+      "headDelta": 19.2504,
+      "tailDelta": 1671.85
+    },
+    {
+      "left": "L_WingBatten047",
+      "right": "R_WingBatten062",
+      "lengthLeft": 387.007,
+      "lengthRight": 386.938,
+      "lengthDelta": 0.069,
+      "orientationErrorDeg": 178.5501,
+      "headDelta": 7.6794,
+      "tailDelta": 781.1767
+    },
+    {
+      "left": "L_WingBatten048",
+      "right": "R_WingBatten063",
+      "lengthLeft": 2596.9668,
+      "lengthRight": 2592.0764,
+      "lengthDelta": 4.8904,
+      "orientationErrorDeg": 178.3668,
+      "headDelta": 6.5898,
+      "tailDelta": 5185.7468
+    },
+    {
+      "left": "L_WingBatten049",
+      "right": "R_WingBatten064",
+      "lengthLeft": 894.4227,
+      "lengthRight": 879.5457,
+      "lengthDelta": 14.877,
+      "orientationErrorDeg": 179.5953,
+      "headDelta": 17.8309,
+      "tailDelta": 1770.317
+    },
+    {
+      "left": "L_WingBatten050",
+      "right": "R_WingBatten065",
+      "lengthLeft": 518.2916,
+      "lengthRight": 512.0127,
+      "lengthDelta": 6.2789,
+      "orientationErrorDeg": 178.6016,
+      "headDelta": 27.6065,
+      "tailDelta": 1002.855
+    },
+    {
+      "left": "L_WingBatten051",
+      "right": "R_WingBatten066",
+      "lengthLeft": 2826.2522,
+      "lengthRight": 2816.1436,
+      "lengthDelta": 10.1086,
+      "orientationErrorDeg": 176.1993,
+      "headDelta": 16.5599,
+      "tailDelta": 5633.3455
+    },
+    {
+      "left": "L_WingBatten052",
+      "right": "R_WingBatten067",
+      "lengthLeft": 323.9064,
+      "lengthRight": 323.9067,
+      "lengthDelta": 0.0003,
+      "orientationErrorDeg": 175.3936,
+      "headDelta": 29.8326,
+      "tailDelta": 633.8991
+    },
+    {
+      "left": "L_WingBatten053",
+      "right": "R_WingBatten068",
+      "lengthLeft": 240.1827,
+      "lengthRight": 240.1825,
+      "lengthDelta": 0.0002,
+      "orientationErrorDeg": 178.7804,
+      "headDelta": 30.3885,
+      "tailDelta": 495.775
+    },
+    {
+      "left": "L_WingBatten054",
+      "right": "R_WingBatten069",
+      "lengthLeft": 1337.3158,
+      "lengthRight": 1335.9348,
+      "lengthDelta": 1.381,
+      "orientationErrorDeg": 178.7864,
+      "headDelta": 28.4744,
+      "tailDelta": 2682.4231
+    },
+    {
+      "left": "L_WingD0P0",
+      "right": "R_WingD0P0",
+      "lengthLeft": 56.3928,
+      "lengthRight": 65.4734,
+      "lengthDelta": 9.0806,
+      "orientationErrorDeg": 22.4581,
+      "headDelta": 0.0054,
+      "tailDelta": 9.0815
+    },
+    {
+      "left": "L_WingD0P1",
+      "right": "R_WingD0P1",
+      "lengthLeft": 536.6912,
+      "lengthRight": 536.6912,
+      "lengthDelta": 0.0001,
+      "orientationErrorDeg": 0.0,
+      "headDelta": 0.0088,
+      "tailDelta": 0.009
+    },
+    {
+      "left": "L_WingD0P2",
+      "right": "R_WingD0P2",
+      "lengthLeft": 2839.4675,
+      "lengthRight": 2839.4653,
+      "lengthDelta": 0.0022,
+      "orientationErrorDeg": 0.0,
+      "headDelta": 0.011,
+      "tailDelta": 0.0532
+    },
+    {
+      "left": "L_WingD1P0",
+      "right": "R_WingD1P0",
+      "lengthLeft": 27.1251,
+      "lengthRight": 36.7155,
+      "lengthDelta": 9.5904,
+      "orientationErrorDeg": 0.0885,
+      "headDelta": 0.0055,
+      "tailDelta": 9.5928
+    },
+    {
+      "left": "L_WingD1P1",
+      "right": "R_WingD1P1",
+      "lengthLeft": 470.1552,
+      "lengthRight": 470.1562,
+      "lengthDelta": 0.0009,
+      "orientationErrorDeg": 0.9074,
+      "headDelta": 0.0084,
+      "tailDelta": 0.0087
+    },
+    {
+      "left": "L_WingD1P2",
+      "right": "R_WingD1P2",
+      "lengthLeft": 2769.1431,
+      "lengthRight": 2769.1421,
+      "lengthDelta": 0.001,
+      "orientationErrorDeg": 2.1944,
+      "headDelta": 0.01,
+      "tailDelta": 0.7404
+    },
+    {
+      "left": "L_WingD2P0",
+      "right": "R_WingD2P0",
+      "lengthLeft": 30.429,
+      "lengthRight": 41.3462,
+      "lengthDelta": 10.9173,
+      "orientationErrorDeg": 14.9212,
+      "headDelta": 0.0055,
+      "tailDelta": 10.92
+    },
+    {
+      "left": "L_WingD2P1",
+      "right": "R_WingD2P1",
+      "lengthLeft": 484.5665,
+      "lengthRight": 484.5667,
+      "lengthDelta": 0.0002,
+      "orientationErrorDeg": 4.3932,
+      "headDelta": 0.0073,
+      "tailDelta": 0.0313
+    },
+    {
+      "left": "L_WingD2P2",
+      "right": "R_WingD2P2",
+      "lengthLeft": 2471.0288,
+      "lengthRight": 2471.0251,
+      "lengthDelta": 0.0037,
+      "orientationErrorDeg": 12.3698,
+      "headDelta": 0.0082,
+      "tailDelta": 0.0498
+    },
+    {
+      "left": "L_WingD3P0",
+      "right": "R_WingD3P0",
+      "lengthLeft": 33.1417,
+      "lengthRight": 49.5045,
+      "lengthDelta": 16.3628,
+      "orientationErrorDeg": 16.1702,
+      "headDelta": 0.0051,
+      "tailDelta": 16.3656
+    },
+    {
+      "left": "L_WingD3P1",
+      "right": "R_WingD3P1",
+      "lengthLeft": 543.0881,
+      "lengthRight": 543.0887,
+      "lengthDelta": 0.0005,
+      "orientationErrorDeg": 9.6873,
+      "headDelta": 0.0057,
+      "tailDelta": 0.0065
+    },
+    {
+      "left": "L_WingD3P2",
+      "right": "R_WingD3P2",
+      "lengthLeft": 2074.1902,
+      "lengthRight": 2074.1892,
+      "lengthDelta": 0.001,
+      "orientationErrorDeg": 5.2844,
+      "headDelta": 0.0064,
+      "tailDelta": 0.1298
+    },
+    {
+      "left": "L_WingD4P0",
+      "right": "R_WingD4P0",
+      "lengthLeft": 30.2214,
+      "lengthRight": 55.7967,
+      "lengthDelta": 25.5754,
+      "orientationErrorDeg": 7.4994,
+      "headDelta": 0.0049,
+      "tailDelta": 25.5776
+    },
+    {
+      "left": "L_WingD4P1",
+      "right": "R_WingD4P1",
+      "lengthLeft": 395.762,
+      "lengthRight": 395.7615,
+      "lengthDelta": 0.0005,
+      "orientationErrorDeg": 7.0363,
+      "headDelta": 0.0046,
+      "tailDelta": 0.0297
+    },
+    {
+      "left": "L_WingD4P2",
+      "right": "R_WingD4P2",
+      "lengthLeft": 1516.5314,
+      "lengthRight": 1516.5292,
+      "lengthDelta": 0.0022,
+      "orientationErrorDeg": 11.1695,
+      "headDelta": 0.0046,
+      "tailDelta": 0.0038
+    },
+    {
+      "left": "L_WingD5P0",
+      "right": "R_WingD5P0",
+      "lengthLeft": 95.1961,
+      "lengthRight": 95.1869,
+      "lengthDelta": 0.0093,
+      "orientationErrorDeg": 179.422,
+      "headDelta": 4.2071,
+      "tailDelta": 186.7969
+    },
+    {
+      "left": "L_WingD5P1",
+      "right": "R_WingD5P1",
+      "lengthLeft": 67.6398,
+      "lengthRight": 70.6935,
+      "lengthDelta": 3.0537,
+      "orientationErrorDeg": 178.6058,
+      "headDelta": 3.9921,
+      "tailDelta": 138.9884
+    },
+    {
+      "left": "L_WingD5P2",
+      "right": "R_WingD5P2",
+      "lengthLeft": 1568.467,
+      "lengthRight": 1556.0767,
+      "lengthDelta": 12.3904,
+      "orientationErrorDeg": 178.2065,
+      "headDelta": 19.9124,
+      "tailDelta": 3125.893
+    },
+    {
+      "left": "L_WingElbow",
+      "right": "R_WingElbow",
+      "lengthLeft": 381.3187,
+      "lengthRight": 381.3187,
+      "lengthDelta": 0.0001,
+      "orientationErrorDeg": 0.0,
+      "headDelta": 0.0018,
+      "tailDelta": 0.0019
+    },
+    {
+      "left": "L_WingHand",
+      "right": "R_WingHand",
+      "lengthLeft": 82.986,
+      "lengthRight": 82.9858,
+      "lengthDelta": 0.0002,
+      "orientationErrorDeg": 179.9927,
+      "headDelta": 0.0048,
+      "tailDelta": 0.0069
+    },
+    {
+      "left": "L_WingRoot",
+      "right": "R_WingRoot",
+      "lengthLeft": 116.6715,
+      "lengthRight": 116.6711,
+      "lengthDelta": 0.0005,
+      "orientationErrorDeg": 0.0,
+      "headDelta": 0.0011,
+      "tailDelta": 0.0014
+    },
+    {
+      "left": "L_WingShoulder",
+      "right": "R_WingShoulder",
+      "lengthLeft": 306.2307,
+      "lengthRight": 306.2309,
+      "lengthDelta": 0.0002,
+      "orientationErrorDeg": 0.0,
+      "headDelta": 0.0011,
+      "tailDelta": 0.0009
+    },
+    {
+      "left": "L_WingWrist",
+      "right": "R_WingWrist",
+      "lengthLeft": 554.1143,
+      "lengthRight": 554.1136,
+      "lengthDelta": 0.0006,
+      "orientationErrorDeg": 0.0,
+      "headDelta": 0.0008,
+      "tailDelta": 0.0011
+    }
+  ],
+  "pairCount": 43,
+  "failingPairs": 32,
+  "unmatched": [
+    "L_WingBatten052",
+    "L_WingBatten053",
+    "L_WingBatten054",
+    "L_WingBatten049",
+    "L_WingBatten050",
+    "L_WingBatten051",
+    "L_WingBatten046",
+    "L_WingBatten047",
+    "L_WingBatten048",
+    "L_WingBatten043",
+    "L_WingBatten044",
+    "L_WingBatten045",
+    "L_WingBatten040",
+    "L_WingBatten041",
+    "L_WingBatten042",
+    "R_WingBatten067",
+    "R_WingBatten068",
+    "R_WingBatten069",
+    "R_WingBatten064",
+    "R_WingBatten065",
+    "R_WingBatten066",
+    "R_WingBatten061",
+    "R_WingBatten062",
+    "R_WingBatten063",
+    "R_WingBatten058",
+    "R_WingBatten059",
+    "R_WingBatten060",
+    "R_WingBatten055",
+    "R_WingBatten056",
+    "R_WingBatten057"
+  ],
+  "orphanVertexGroups": [
+    {
+      "object": "WyvernMesh",
+      "group": "L_WingFinger1"
+    },
+    {
+      "object": "WyvernMesh",
+      "group": "L_WingFinger1_end"
+    },
+    {
+      "object": "WyvernMesh",
+      "group": "L_WingFinger2"
+    },
+    {
+      "object": "WyvernMesh",
+      "group": "L_WingFinger2_end"
+    },
+    {
+      "object": "WyvernMesh",
+      "group": "L_WingFinger3"
+    },
+    {
+      "object": "WyvernMesh",
+      "group": "L_WingFinger3_end"
+    },
+    {
+      "object": "WyvernMesh",
+      "group": "L_WingClaw"
+    },
+    {
+      "object": "WyvernMesh",
+      "group": "L_WingMembrane1"
+    },
+    {
+      "object": "WyvernMesh",
+      "group": "L_WingMembrane2"
+    },
+    {
+      "object": "WyvernMesh",
+      "group": "R_WingFinger1"
+    },
+    {
+      "object": "WyvernMesh",
+      "group": "R_WingFinger1_end"
+    },
+    {
+      "object": "WyvernMesh",
+      "group": "R_WingFinger2"
+    },
+    {
+      "object": "WyvernMesh",
+      "group": "R_WingFinger2_end"
+    },
+    {
+      "object": "WyvernMesh",
+      "group": "R_WingFinger3"
+    },
+    {
+      "object": "WyvernMesh",
+      "group": "R_WingFinger3_end"
+    },
+    {
+      "object": "WyvernMesh",
+      "group": "R_WingClaw"
+    },
+    {
+      "object": "WyvernMesh",
+      "group": "R_WingMembrane1"
+    },
+    {
+      "object": "WyvernMesh",
+      "group": "R_WingMembrane2"
+    }
+  ],
+  "zeroUserDatablocks": {
+    "BlendDataMaterials": [
+      "MI_DaenerysDragon",
+      "MI_DaenerysDragon_Head"
+    ]
+  },
+  "scenes": [
+    "Scene"
+  ],
+  "limits": {
+    "orientationDeg": 0.01,
+    "lengthUnits": 0.01
+  },
+  "passed": false
+}

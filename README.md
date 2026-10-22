@@ -17,7 +17,7 @@ Located in `public/models/` and `models/source/`:
 | `public/models/wyvern-v2-membrane-lab-candidate.glb` | **V2 Candidate — retired from Flight Lab** | Byte-identical promoted alias of `wyvern-v2-rig.glb`; retired from the picker for the same reason, file retained for the same gates. |
 | `assets/blender/wyvern-gothic.glb` | **Source GLB** | Uncompressed 92-bone, single-mesh (`SKM_DaenerysDragon.001`, 39,238 tris) reference export before 2-mesh split and panel coordination. |
 | `models/source/wyvern-rig.blend` | **Blender V2 (Legacy)** | 56-bone (39 weighted) legacy 3-finger V2 Blender source file with 16 actions (`idle`/`walk`/`rest` rest-pose & neck donor; missing `WingD0..5` and `WingPanel` chains — see [doc 41](docs/flight-lab/41-v2-and-blender-rig-audit-task-list.md) Task C1 for 92-bone master `.blend` reconstruction). |
-| `models/source/wyvern-rig-v1wing.blend` | **Blender V1 Wing** | 124-bone (106 weighted) rigging study with 33 actions (`18` V2 + `15` `v1_*`), missing the 16 `WingPanel0..3_0..1` bones. |
+| `models/source/wyvern-rig-v1wing.blend` | **Blender V1 Wing** | 106-bone rigging study with **106 vertex groups** (124 before Task C7's purge) and **35 actions** (`18` V2 + `17` `v1_*`), missing the 16 `WingPanel0..3_0..1` bones. Not exported — it is a reference specimen only; L/R edit-bone symmetry is audited by `tools/blender/audit_v1wing_symmetry.py` and fixed by `tools/blender/fix_c7_v1wing_symmetry.py` (Task C7, 2026-10-22). |
 | `models/source/drogon-v1-rig.blend` | **Blender V1** | 292-bone Drogon V1 Blender rig source file with 27 `Sanct_*` actions. |
 | `models/source/wyvern_animated.blend` | **Blender Anim** | 70-bone (`Bip001`) action library with 9 animated takeoff, glide, fly, and walk cycles. |
 
@@ -45,6 +45,7 @@ Located in `scripts/blender/` and `tools/`:
 - `tools/audit-all-clips.mjs` & `scripts/validate-wyvern-clips.mjs`: Measures root motion, loop seams, floor clearance, and bank symmetry across all 18 clips.
 - `tools/audit-dynamics.mjs` & `tools/diagnose-clip-dynamics.mjs`: World-space 60 Hz angular velocity & travel gates against the V1 reference baseline (`assets/rig-audits/2026-10-21-dynamics/v1-dynamics-reference.json`).
 - `tools/blender/sync_v2_pipeline.mjs` (`npm run blender:sync`): Rebuilds the shipped runtime GLB from the pinned snapshot `assets/pipeline/wyvern-v2-stage0.glb` through every GLB-level stage, asserting each stage's output hash. The shipped asset is not an export of any `.blend`, so this — not `cli.py export` — is how it is reproduced. Dry run by default; `--promote` installs the rebuild.
+- `tools/blender/audit_v1wing_symmetry.py` & `tools/blender/fix_c7_v1wing_symmetry.py`: L/R edit-bone roll/length symmetry audit and pure-rest fix for `models/source/wyvern-rig-v1wing.blend` (`43` pairs, `0` failing; also purges orphan vertex groups and zero-user datablocks).
 
 ---
 

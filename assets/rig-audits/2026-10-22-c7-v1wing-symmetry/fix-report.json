@@ -1,0 +1,352 @@
+{
+  "afterWorst": {
+    "headDelta": 0.011,
+    "lengthDelta": 0.0022,
+    "orientationDeg": 0.0,
+    "tailDelta": 0.0532
+  },
+  "blend": "/Users/ajadvanwyk/wyvern-flight-lab/models/source/wyvern-rig-v1wing.blend",
+  "failingAfter": 0,
+  "failingBefore": 32,
+  "fcurvesModified": 0,
+  "limits": {
+    "lengthUnits": 0.01,
+    "orientationDeg": 0.01
+  },
+  "mirrored": [
+    "R_WingBatten055",
+    "R_WingBatten056",
+    "R_WingBatten057",
+    "R_WingBatten058",
+    "R_WingBatten059",
+    "R_WingBatten060",
+    "R_WingBatten061",
+    "R_WingBatten062",
+    "R_WingBatten063",
+    "R_WingBatten064",
+    "R_WingBatten065",
+    "R_WingBatten066",
+    "R_WingBatten067",
+    "R_WingBatten068",
+    "R_WingBatten069",
+    "R_WingD0P0",
+    "R_WingD1P0",
+    "R_WingD1P1",
+    "R_WingD1P2",
+    "R_WingD2P0",
+    "R_WingD2P1",
+    "R_WingD2P2",
+    "R_WingD3P0",
+    "R_WingD3P1",
+    "R_WingD3P2",
+    "R_WingD4P0",
+    "R_WingD4P1",
+    "R_WingD4P2",
+    "R_WingD5P0",
+    "R_WingD5P1",
+    "R_WingD5P2",
+    "R_WingHand"
+  ],
+  "pairsAfter": 43,
+  "pairsBefore": 43,
+  "poseDriftInside": {
+    "dQ": 2.3590643405914307,
+    "dT": 2963.080670940297,
+    "where": [
+      "v1_skyMoveR",
+      80.0,
+      "R_WingBatten066"
+    ]
+  },
+  "poseDriftOutside": {
+    "dQ": 0.0,
+    "dT": 0.0,
+    "where": null
+  },
+  "purged": true,
+  "purgedDetail": {
+    "materials": [
+      "MI_DaenerysDragon",
+      "MI_DaenerysDragon_Head"
+    ],
+    "vertex_groups": [
+      {
+        "group": "L_WingFinger1",
+        "object": "WyvernMesh"
+      },
+      {
+        "group": "L_WingFinger1_end",
+        "object": "WyvernMesh"
+      },
+      {
+        "group": "L_WingFinger2",
+        "object": "WyvernMesh"
+      },
+      {
+        "group": "L_WingFinger2_end",
+        "object": "WyvernMesh"
+      },
+      {
+        "group": "L_WingFinger3",
+        "object": "WyvernMesh"
+      },
+      {
+        "group": "L_WingFinger3_end",
+        "object": "WyvernMesh"
+      },
+      {
+        "group": "L_WingClaw",
+        "object": "WyvernMesh"
+      },
+      {
+        "group": "L_WingMembrane1",
+        "object": "WyvernMesh"
+      },
+      {
+        "group": "L_WingMembrane2",
+        "object": "WyvernMesh"
+      },
+      {
+        "group": "R_WingFinger1",
+        "object": "WyvernMesh"
+      },
+      {
+        "group": "R_WingFinger1_end",
+        "object": "WyvernMesh"
+      },
+      {
+        "group": "R_WingFinger2",
+        "object": "WyvernMesh"
+      },
+      {
+        "group": "R_WingFinger2_end",
+        "object": "WyvernMesh"
+      },
+      {
+        "group": "R_WingFinger3",
+        "object": "WyvernMesh"
+      },
+      {
+        "group": "R_WingFinger3_end",
+        "object": "WyvernMesh"
+      },
+      {
+        "group": "R_WingClaw",
+        "object": "WyvernMesh"
+      },
+      {
+        "group": "R_WingMembrane1",
+        "object": "WyvernMesh"
+      },
+      {
+        "group": "R_WingMembrane2",
+        "object": "WyvernMesh"
+      }
+    ]
+  },
+  "restCollateral": [],
+  "restDrift": {
+    "R_WingBatten055": {
+      "dLen": 6.103515625e-05,
+      "dQ": 0.0,
+      "dT": 0.00014950498918354357
+    },
+    "R_WingBatten056": {
+      "dLen": 0.000152587890625,
+      "dQ": 0.0,
+      "dT": 9.475511435222032e-05
+    },
+    "R_WingBatten057": {
+      "dLen": 0.0,
+      "dQ": 0.0,
+      "dT": 0.00016434218771772778
+    },
+    "R_WingBatten058": {
+      "dLen": 6.103515625e-05,
+      "dQ": 0.0,
+      "dT": 0.000139849111784541
+    },
+    "R_WingBatten059": {
+      "dLen": 0.0001220703125,
+      "dQ": 0.0,
+      "dT": 3.0517578125e-05
+    },
+    "R_WingBatten060": {
+      "dLen": 0.0,
+      "dQ": 0.0,
+      "dT": 6.103515625e-05
+    },
+    "R_WingBatten061": {
+      "dLen": 0.0001220703125,
+      "dQ": 0.0,
+      "dT": 0.00016434218771772778
+    },
+    "R_WingBatten062": {
+      "dLen": 9.1552734375e-05,
+      "dQ": 0.0,
+      "dT": 0.00016434218771772778
+    },
+    "R_WingBatten063": {
+      "dLen": 0.00048828125,
+      "dQ": 0.0,
+      "dT": 0.00012582719804741396
+    },
+    "R_WingBatten064": {
+      "dLen": 0.0,
+      "dQ": 0.0,
+      "dT": 0.00014950498918354357
+    },
+    "R_WingBatten065": {
+      "dLen": 6.103515625e-05,
+      "dQ": 0.0,
+      "dT": 0.00019301011109426145
+    },
+    "R_WingBatten066": {
+      "dLen": 0.000732421875,
+      "dQ": 0.0,
+      "dT": 0.00040943627517696347
+    },
+    "R_WingBatten067": {
+      "dLen": 3.0517578125e-05,
+      "dQ": 0.0,
+      "dT": 0.00022006538546533137
+    },
+    "R_WingBatten068": {
+      "dLen": 3.0517578125e-05,
+      "dQ": 0.0,
+      "dT": 0.00017330652910767437
+    },
+    "R_WingBatten069": {
+      "dLen": 0.0001220703125,
+      "dQ": 0.0,
+      "dT": 0.00022059375449830568
+    },
+    "R_WingD0P0": {
+      "dLen": 7.62939453125e-06,
+      "dQ": 0.0,
+      "dT": 0.00014950498918354357
+    },
+    "R_WingD1P0": {
+      "dLen": 0.0,
+      "dQ": 0.0,
+      "dT": 0.00014950498918354357
+    },
+    "R_WingD1P1": {
+      "dLen": 3.0517578125e-05,
+      "dQ": 0.0,
+      "dT": 0.00025349804269159164
+    },
+    "R_WingD1P2": {
+      "dLen": 0.000244140625,
+      "dQ": 0.0,
+      "dT": 0.00011003269273266568
+    },
+    "R_WingD2P0": {
+      "dLen": 1.9073486328125e-06,
+      "dQ": 0.0,
+      "dT": 0.000139849111784541
+    },
+    "R_WingD2P1": {
+      "dLen": 9.1552734375e-05,
+      "dQ": 0.0,
+      "dT": 0.00025349804269159164
+    },
+    "R_WingD2P2": {
+      "dLen": 0.00048828125,
+      "dQ": 0.0,
+      "dT": 0.00025349804269159164
+    },
+    "R_WingD3P0": {
+      "dLen": 0.0,
+      "dQ": 0.0,
+      "dT": 0.00014950498918354357
+    },
+    "R_WingD3P1": {
+      "dLen": 0.0001220703125,
+      "dQ": 0.0,
+      "dT": 0.000139849111784541
+    },
+    "R_WingD3P2": {
+      "dLen": 0.00048828125,
+      "dQ": 0.0,
+      "dT": 0.00013647875839232116
+    },
+    "R_WingD4P0": {
+      "dLen": 0.0,
+      "dQ": 0.0,
+      "dT": 0.00017531013935968105
+    },
+    "R_WingD4P1": {
+      "dLen": 0.000152587890625,
+      "dQ": 0.0,
+      "dT": 0.00018310546875
+    },
+    "R_WingD4P2": {
+      "dLen": 0.000244140625,
+      "dQ": 0.0,
+      "dT": 0.00012582719804741396
+    },
+    "R_WingD5P0": {
+      "dLen": 1.52587890625e-05,
+      "dQ": 0.0,
+      "dT": 0.00014950498918354357
+    },
+    "R_WingD5P1": {
+      "dLen": 3.814697265625e-05,
+      "dQ": 0.0,
+      "dT": 8.631674575031098e-05
+    },
+    "R_WingD5P2": {
+      "dLen": 0.0006103515625,
+      "dQ": 0.0,
+      "dT": 8.631674575031098e-05
+    },
+    "R_WingHand": {
+      "dLen": 2.288818359375e-05,
+      "dQ": 0.0,
+      "dT": 0.00014950498918354357
+    }
+  },
+  "restWorst": {
+    "dLen": 0.000732421875,
+    "dQ": 0.0,
+    "dT": 0.00040943627517696347
+  },
+  "subtree": [
+    "R_WingBatten055",
+    "R_WingBatten056",
+    "R_WingBatten057",
+    "R_WingBatten058",
+    "R_WingBatten059",
+    "R_WingBatten060",
+    "R_WingBatten061",
+    "R_WingBatten062",
+    "R_WingBatten063",
+    "R_WingBatten064",
+    "R_WingBatten065",
+    "R_WingBatten066",
+    "R_WingBatten067",
+    "R_WingBatten068",
+    "R_WingBatten069",
+    "R_WingD0P0",
+    "R_WingD0P1",
+    "R_WingD0P2",
+    "R_WingD1P0",
+    "R_WingD1P1",
+    "R_WingD1P2",
+    "R_WingD2P0",
+    "R_WingD2P1",
+    "R_WingD2P2",
+    "R_WingD3P0",
+    "R_WingD3P1",
+    "R_WingD3P2",
+    "R_WingD4P0",
+    "R_WingD4P1",
+    "R_WingD4P2",
+    "R_WingD5P0",
+    "R_WingD5P1",
+    "R_WingD5P2",
+    "R_WingHand"
+  ],
+  "written": true
+}
