@@ -1,0 +1,52 @@
+{
+  "status": "experiment",
+  "clips": [
+    "attack",
+    "attack2",
+    "attackAir2",
+    "bankLeft",
+    "bankRight",
+    "breath",
+    "cruise",
+    "death",
+    "dive",
+    "glide",
+    "hover",
+    "idle",
+    "land",
+    "rest",
+    "scout",
+    "speed",
+    "takeoff",
+    "walk"
+  ],
+  "base_path": "public/models/wyvern-v2-rig.glb",
+  "base_sha256": "b2368b6640787698c1e461168e15dc5a936a821b8ffaa5ab6f5b96b44e51fceb",
+  "donor_sha256": {},
+  "output_path": "assets/rig-audits/2026-10-21-dynamics/candidates/wyvern-v2-flight-panels-coordinated.glb",
+  "output_sha256": "645b5f3311a420221e72741b9c3fb6e198b9fb3adf22509c60d02ed2a70c273f",
+  "compact_stats": {
+    "originalBytes": 7037760,
+    "compactedBytes": 6357164,
+    "savedBytes": 680596
+  },
+  "panel_names": [
+    "L_WingPanel0_0",
+    "L_WingPanel0_1",
+    "L_WingPanel1_0",
+    "L_WingPanel1_1",
+    "L_WingPanel2_0",
+    "L_WingPanel2_1",
+    "L_WingPanel3_0",
+    "L_WingPanel3_1",
+    "R_WingPanel0_0",
+    "R_WingPanel0_1",
+    "R_WingPanel1_0",
+    "R_WingPanel1_1",
+    "R_WingPanel2_0",
+    "R_WingPanel2_1",
+    "R_WingPanel3_0",
+    "R_WingPanel3_1"
+  ],
+  "preserved": "all binary data, geometry, skin weights, skeleton, and unmodified non-target channels"
+}
