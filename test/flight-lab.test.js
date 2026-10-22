@@ -11,6 +11,7 @@ import {
   detectTransitionAnomalies,
   scanClipAnomalies,
 } from "../src/flight-lab/poseEnvelope.ts";
+import { createPoseAnomalyOverlay, POSE_ANOMALY_RING_COLOR } from "../src/flight-lab/poseAnomalyOverlay.ts";
 import {
   calculateClipTelemetry,
   calculateEffectiveRate,
@@ -1145,8 +1146,7 @@ test("pose envelope flags a land -> idle handoff snap and a drifting Body", () =
   assert.ok(Math.abs(rootDrift.value - 2.5) < 0.05, `drift measured ${rootDrift.value}, expected 2.5`);
 });
 
-test("clip scan restores the pose it borrowed and repeats its measurement", () => {
-  const { root, bones, bind } = buildPoseFixture();
+test("clip scan restores the pose it borrowed and repeats its measurement", () => {  const { root, bones, bind } = buildPoseFixture();
   const posed = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), 0.75);
   bones.get("Neck1").quaternion.copy(posed);
   bones.get("Body").position.set(3, 4, 5);
@@ -1167,5 +1167,71 @@ test("clip scan restores the pose it borrowed and repeats its measurement", () =
     first.anomalies.map((a) => [a.kind, a.boneName, a.value]),
     "a repeated scan must reproduce the first result",
   );
+});
+
+/** A `PoseAnomaly` with only the fields the overlay reads. */
+function anomaly(kind, boneName, value, threshold = 18) {
+  return { kind, clip: "idle", boneName, value, unit: "deg", threshold, frame: 0, time: 0, message: "" };
+}
+
+test("pose anomaly overlay rings each failing bone once, follows it, and pulses", () => {
+  const scene = new THREE.Scene();
+  const overlay = createPoseAnomalyOverlay(scene);
+
+  const root = new THREE.Object3D();
+  root.name = "rig";
+  const neck = new THREE.Bone();
+  neck.name = "Neck1";
+  neck.position.set(0, 2, 0);
+  const head = new THREE.Bone();
+  head.name = "Head";
+  head.position.set(0, 1, 0);
+  neck.add(head);
+  root.add(neck);
+  scene.add(root);
+  root.updateMatrixWorld(true);
+
+  // `idle`'s historical defect: two bind-delta anomalies plus the cumulative
+  // horizon line, all on three bones. `Tail9` does not exist in this fixture.
+  overlay.setAnomalies(
+    [
+      anomaly("bind_delta", "Neck1", -24.7),
+      anomaly("bind_delta", "Head", -21.1),
+      anomaly("horizon_pitch", "Head", -60.0, 12),
+      anomaly("bind_delta", "Tail9", -30.0),
+    ],
+    root,
+  );
+
+  assert.deepEqual(overlay.getRingedBones(), ["Neck1", "Head"], "one ring per bone, missing bones skipped");
+  assert.equal(overlay.group.visible, true);
+
+  const headRing = overlay.group.children.find((child) => child.name === "PoseAnomaly:Head");
+  assert.ok(headRing, "Head must be ringed");
+  assert.ok(Math.abs(headRing.position.y - 3) < 1e-6, `ring sat at y=${headRing.position.y}, expected 3`);
+
+  const pulse = headRing.children[1];
+  assert.equal(`#${pulse.material.color.getHexString()}`, POSE_ANOMALY_RING_COLOR);
+
+  // The pulse must actually move: a static ring is decoration, not a sonar.
+  const before = pulse.scale.x;
+  overlay.tick(0.4);
+  assert.notEqual(pulse.scale.x, before, "the pulse must expand between ticks");
+  assert.ok(pulse.material.opacity >= 0 && pulse.material.opacity <= 1);
+
+  // The ring is a bone follower, not a snapshot of where the bone was.
+  neck.position.y = 5;
+  root.updateMatrixWorld(true);
+  overlay.tick(0.1);
+  assert.ok(Math.abs(headRing.position.y - 6) < 1e-6, `ring did not follow the bone (y=${headRing.position.y})`);
+
+  overlay.clear();
+  assert.deepEqual(overlay.getRingedBones(), []);
+  assert.equal(overlay.group.visible, false);
+
+  // A clean scan must paint nothing at all.
+  overlay.setAnomalies([], root);
+  assert.equal(overlay.group.visible, false);
+  overlay.dispose();
 });
 

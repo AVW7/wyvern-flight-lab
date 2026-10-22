@@ -178,7 +178,7 @@ export function StageViewport({
     {
       id: "scan",
       label: "Scan",
-      title: "Scan active clip for seam jumps > 10°",
+      title: "Scan active clip for seam jumps > 10° and held pose-envelope defects (failing bones get a red ring)",
       group: "action",
       onClick: onScanSeam,
     },

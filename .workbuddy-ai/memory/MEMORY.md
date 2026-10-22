@@ -3,10 +3,10 @@
 ## Start here
 
 - **Doc-41 state:** A1–A3, B1–B3, C1–C5, D1, D2, D3, D5 done. **D4 partial** (attack shipped;
-  cruise + banks blocked by product invariants). **E1 partial** (`poseEnvelope.ts` + `Scan` wiring +
-  `assets:audit-pose-envelope`; validator wiring + viewport ring open). **Open: C6, C7, D4 remainder,
-  E1 remainder, E2–E4.** Gates: `npm run test:fast` **170/170**, 21/21 Blender unit tests, tsc
-  clean, contract 92 joints.
+  cruise + banks blocked by product invariants). **E1 done** (`poseEnvelope.ts` + `poseAnomalyOverlay.ts`
+  + `Scan` wiring + `assets:audit-pose-envelope` + browser probe; validator wiring and floor
+  penetration deliberately untaken). **Open: C6, C7, D4 remainder, E2–E4.** Gates:
+  `npm run test:fast` **171/171**, 21/21 Blender unit tests, tsc clean, contract 92 joints.
 - **Runtime GLB + contract pinned at** sha256 `bef7a09a…`, 6,368,564 B.
 - **GLB rebuild order** — every stage is NOT idempotent; start each from the *previous* stage's
   committed asset (`git show <commit>:public/models/wyvern-v2-rig.glb`), never its own output:

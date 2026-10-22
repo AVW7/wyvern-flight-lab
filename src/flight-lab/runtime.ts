@@ -53,6 +53,7 @@ import {
   type PoseBindings,
 } from "./poseEnvelope";
 import { createComparisonRigManager } from "./comparisonRig";
+import { createPoseAnomalyOverlay } from "./poseAnomalyOverlay";
 import { createFlightLabInteractionManager } from "./interactionManager";
 import { exportEvidenceCapture, formatDiagnosticsReport } from "./evidenceExport";
 import { createNeckSpring } from "./neckSpring";
@@ -118,6 +119,7 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
   const environment = createFlightLabEnvironment(scene, themeState);
   const cameraController = createFlightLabCamera(container, perspectiveCamera, orthographicCamera);
   const skeletonDiagnostics = createSkeletonDiagnostics(scene, themeState);
+  const poseAnomalyOverlay = createPoseAnomalyOverlay(scene);
   const silhouetteDiagnostics = createSilhouetteDiagnostics(themeState);
   const vortexTrails = createVortexTrails(scene, themeState);
   const comparisonRig = createComparisonRigManager(world, events);
@@ -363,6 +365,9 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
     if (activeAction) next.crossFadeFrom(activeAction, fade, true);
     activeAction = next;
     currentClip = name;
+    // Scan results belong to the clip that was scanned; carrying a ring onto a
+    // different clip would assert something nobody measured.
+    poseAnomalyOverlay.clear();
     events.activeClip?.(name);
 
     comparisonRig.syncAction(mode, effectiveRate, name);
@@ -388,6 +393,7 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
   const clearModel = () => {
     loadController?.abort();
     loadController = null;
+    poseAnomalyOverlay.clear();
     mixer?.stopAllAction();
     skeletonDiagnostics.dispose();
     membraneSurface?.dispose();
@@ -757,6 +763,12 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
 
     const anchorArg = model ? cameraFollowAnchor : undefined;
     cameraController.tick(delta, environment.cameraFill, anchorArg);
+
+    // Rings follow the bones the last `Scan` flagged. Ticked after the camera so
+    // they billboard against this frame's view, and after the mixer so they sit
+    // on this frame's pose. The pulse runs while paused on purpose: it is a UI
+    // marker, not part of the motion being inspected.
+    poseAnomalyOverlay.tick(delta, cameraController.getActiveCamera());
 
     // Synchronize comparison model animation, procedural rig, and membrane surface
     comparisonRig.syncFrame(model, activeAction, lastFrameKinematics, delta);
@@ -1329,6 +1341,7 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
       }
 
       if (anomalies.length === 0) {
+        poseAnomalyOverlay.clear();
         events.animationLog?.({
           id: `${Date.now()}-envelope`,
           timestamp: new Date().toLocaleTimeString(),
@@ -1337,11 +1350,13 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
           details: `Bind-delta ±${POSE_ENVELOPE_THRESHOLDS.bindDeltaPitchDeg}°, horizon ±${POSE_ENVELOPE_THRESHOLDS.horizonPitchDeg}°, jaw ${POSE_ENVELOPE_THRESHOLDS.openJawDeg}°`,
         });
       } else {
+        // A log line says how wrong the rig is; the ring says where.
+        poseAnomalyOverlay.setAnomalies(anomalies, model);
         events.animationLog?.({
           id: `${Date.now()}-envelope`,
           timestamp: new Date().toLocaleTimeString(),
           type: "scan",
-          message: `Pose envelope: ${anomalies.length} anomalies in ${clip.name}`,
+          message: `Pose envelope: ${anomalies.length} anomalies in ${clip.name} (${poseAnomalyOverlay.getRingedBones().length} bones ringed)`,
           details: anomalies.slice(0, 8).map((a) => `[${a.kind}] ${a.message}`).join(" · "),
         });
       }
@@ -1418,6 +1433,7 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
       cameraController.dispose();
       environment.dispose();
       skeletonDiagnostics.dispose();
+      poseAnomalyOverlay.dispose();
       vortexTrails.dispose();
       world.clear();
       releaseWebGLRenderer(renderer);
@@ -1438,6 +1454,7 @@ export function createFlightLabRuntime(container: HTMLElement, events: FlightLab
       getSymmetry: () => currentSymmetry,
       getStrokePhase: () => currentStrokePhase,
       getComparisonSpecimen: () => comparisonRig.getComparisonSpecimen(),
+      getPoseAnomalyRings: () => poseAnomalyOverlay.getRingedBones(),
       dumpDiagnostics,
       triggerPing: (x: number, y: number, z: number, colorHex?: string) =>
         interactionManager.triggerPing(new THREE.Vector3(x, y, z), colorHex),
