@@ -44,6 +44,7 @@ Located in `scripts/blender/` and `tools/`:
 - `tools/blender/runtime_rig_contract.mjs`: Pure runtime contract validator preventing corrupted or bloated rig exports from shipping.
 - `tools/audit-all-clips.mjs` & `scripts/validate-wyvern-clips.mjs`: Measures root motion, loop seams, floor clearance, and bank symmetry across all 18 clips.
 - `tools/audit-dynamics.mjs` & `tools/diagnose-clip-dynamics.mjs`: World-space 60 Hz angular velocity & travel gates against the V1 reference baseline (`assets/rig-audits/2026-10-21-dynamics/v1-dynamics-reference.json`).
+- `tools/blender/sync_v2_pipeline.mjs` (`npm run blender:sync`): Rebuilds the shipped runtime GLB from the pinned snapshot `assets/pipeline/wyvern-v2-stage0.glb` through every GLB-level stage, asserting each stage's output hash. The shipped asset is not an export of any `.blend`, so this — not `cli.py export` — is how it is reproduced. Dry run by default; `--promote` installs the rebuild.
 
 ---
 
@@ -80,4 +81,5 @@ npm run test:fast
 npm run assets:validate-wyvern
 npm run assets:audit-clips
 npm run assets:audit-dynamics:v2
+npm run blender:sync
 ```

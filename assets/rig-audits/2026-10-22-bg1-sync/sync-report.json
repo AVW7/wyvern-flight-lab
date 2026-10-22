@@ -1,0 +1,85 @@
+{
+  "startedAt": "2026-10-22T16:25:54.960Z",
+  "stages": [
+    {
+      "stage": "d2-buzz",
+      "tool": "tools/blender/reshape_buzz_clips.mjs",
+      "tail": "Successfully compacted GLB: 6063612 B -> 5874784 B (Saved 0.18 MB)\n[D2] Wrote /var/folders/kg/qb2qrt1161sf3jsv7slqgfgh0000gq/T/wyvern-sync-sEyS7P/d2-buzz.glb: {\"passed\":true,\"sha256\":\"064b974afefc85facb65da31ab1c0d5e6a4e89d302ff4e4f1f0d45e439969092\",\"bytes\":5874784,\"joints\":92,\"clips\":18}"
+    },
+    {
+      "stage": "d1-stabilize",
+      "tool": "tools/blender/stabilize_v2_body_and_feet.mjs",
+      "tail": "Successfully compacted GLB: 5902068 B -> 5874784 B (Saved 0.03 MB)\n[D1] Wrote /var/folders/kg/qb2qrt1161sf3jsv7slqgfgh0000gq/T/wyvern-sync-sEyS7P/d1-stabilize.glb: {\"passed\":true,\"sha256\":\"b2368b6640787698c1e461168e15dc5a936a821b8ffaa5ab6f5b96b44e51fceb\",\"bytes\":5874784,\"joints\":92,\"clips\":18}"
+    },
+    {
+      "stage": "coordinate-panels",
+      "tool": "tools/blender/coordinate_all_v2_clips.mjs",
+      "tail": "  }\n}"
+    },
+    {
+      "stage": "d3-motion-floor",
+      "tool": "tools/blender/reshape_d3_clips.mjs",
+      "tail": "Successfully compacted GLB: 6470832 B -> 6365644 B (Saved 0.10 MB)\n[D3] Wrote /var/folders/kg/qb2qrt1161sf3jsv7slqgfgh0000gq/T/wyvern-sync-sEyS7P/d3-motion-floor.glb: {\"passed\":true,\"sha256\":\"e10f1733d43213bea54c370b87fc4eeef64e10744174dfc30a9b9a7a3a78374d\",\"bytes\":6365644,\"joints\":92,\"clips\":18}"
+    },
+    {
+      "stage": "d4-attack",
+      "tool": "tools/blender/reshape_d4_clips.mjs",
+      "tail": "Successfully compacted GLB: 6379928 B -> 6368564 B (Saved 0.01 MB)\n[D4] Wrote /var/folders/kg/qb2qrt1161sf3jsv7slqgfgh0000gq/T/wyvern-sync-sEyS7P/d4-attack.glb: {\"passed\":true,\"sha256\":\"950c4321b00cd5e2a5a398b812b6dcfd135eb19965274783c4996ff7ca19e570\",\"bytes\":6368564,\"joints\":92,\"clips\":18}"
+    },
+    {
+      "stage": "c5-weights",
+      "tool": "tools/blender/rebalance_v2_skin_weights.mjs",
+      "tail": "}\ncandidate written to /var/folders/kg/qb2qrt1161sf3jsv7slqgfgh0000gq/T/wyvern-sync-sEyS7P/c5-weights.glb (contract untouched)."
+    },
+    {
+      "stage": "c5-weights",
+      "tool": "tools/blender/compact_v2_glb.mjs",
+      "tail": "Audited: 4950/4960 accessors used, 4950/4960 bufferViews used.\nSuccessfully compacted GLB: 6851312 B -> 6368564 B (Saved 0.46 MB)"
+    },
+    {
+      "stage": "d4-flight",
+      "tool": "tools/blender/reshape_d4_flight_clips.mjs",
+      "tail": "Successfully compacted GLB: 6844272 B -> 6732156 B (Saved 0.11 MB)\n[D4f] Wrote /var/folders/kg/qb2qrt1161sf3jsv7slqgfgh0000gq/T/wyvern-sync-sEyS7P/d4-flight.glb: {\"passed\":true,\"sha256\":\"b5f1c1ef67ad9324212f8ab2075e707abd3ff02280ff77db47ffe96a96f3d08b\",\"bytes\":6732156,\"joints\":92,\"clips\":18}"
+    },
+    {
+      "stage": "c6-jaw-pivot",
+      "tool": "tools/blender/recenter_v2_jaw_pivot.mjs",
+      "tail": "}\nwrote candidate /var/folders/kg/qb2qrt1161sf3jsv7slqgfgh0000gq/T/wyvern-sync-sEyS7P/c6-jaw-pivot.glb"
+    },
+    {
+      "stage": "c6-jaw-restore",
+      "tool": "tools/blender/restore_jaw_amplitude.mjs",
+      "tail": "}\nwrote candidate /var/folders/kg/qb2qrt1161sf3jsv7slqgfgh0000gq/T/wyvern-sync-sEyS7P/c6-jaw-restore.glb"
+    }
+  ],
+  "promoted": false,
+  "final": {
+    "path": "/var/folders/kg/qb2qrt1161sf3jsv7slqgfgh0000gq/T/wyvern-sync-sEyS7P/c6-jaw-restore.glb",
+    "sha256": "f5d768a2946bb7e6e946e3acb927e9be9db9cfa7287c2d5c042940bcd636e11b",
+    "bytes": 6738692
+  },
+  "checks": [
+    {
+      "name": "runtime contract signature",
+      "ok": true,
+      "tail": "  \"clips\": 18\n}"
+    },
+    {
+      "name": "clip validator (strict)",
+      "ok": true,
+      "tail": "wyvern.glb clean: wings mirrored, loops closed, every clip starts at t=0,\nno clip translates the root, and the flight phase group beats as one"
+    },
+    {
+      "name": "pose envelope",
+      "ok": true,
+      "tail": "walk                 0  -\ntotal anomalies: 0"
+    },
+    {
+      "name": "dynamics gate",
+      "ok": true,
+      "tail": "attack2      1849.5/1480.5   1369.2/1372.0   696.7/638.9     37709.8/36902.2   27/43\ndynamics: PASS"
+    }
+  ],
+  "reproducesPin": true,
+  "passed": true
+}

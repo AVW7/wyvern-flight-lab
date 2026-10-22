@@ -24,7 +24,8 @@
     "assets:build-rider": "blender -b --factory-startup --python tools/blender/build_rider.py",
     "assets:validate-rider": "node tools/blender/rider_runtime_contract.mjs",
     "assets:calibrate-rider-mount": "node tools/calibrate-rider-mount.mjs",
-    "assets:audit-source-glb": "python3 scripts/blender/cli.py audit-glb assets/blender/wyvern-gothic.glb"
+    "assets:audit-source-glb": "python3 scripts/blender/cli.py audit-glb assets/blender/wyvern-gothic.glb",
+    "blender:sync": "node tools/blender/sync_v2_pipeline.mjs"
   },
   "dependencies": {
     "next": "16.3.2",

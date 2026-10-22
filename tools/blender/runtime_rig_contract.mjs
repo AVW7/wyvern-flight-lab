@@ -7,7 +7,12 @@ import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
 
 await MeshoptDecoder.ready;
 export const RUNTIME_PATH = fileURLToPath(new URL("../../public/models/wyvern-v2-rig.glb", import.meta.url));
-export const CONTRACT_PATH = fileURLToPath(new URL("../../scripts/blender/wyvern_v2_runtime_contract.json", import.meta.url));
+// A rebuild (tools/blender/sync_v2_pipeline.mjs) validates every intermediate stage against a
+// contract copy it re-signs per stage, so the on-disk pin is never left mid-chain. Absent the
+// variable this is exactly the repo's pinned contract.
+export const CONTRACT_PATH = process.env.WYVERN_RUNTIME_CONTRACT
+  ? resolve(process.env.WYVERN_RUNTIME_CONTRACT)
+  : fileURLToPath(new URL("../../scripts/blender/wyvern_v2_runtime_contract.json", import.meta.url));
 const SOURCE_CONTRACT = fileURLToPath(new URL("../../scripts/blender/wyvern_v2_rig_contract.json", import.meta.url));
 const hash = data => createHash("sha256").update(data).digest("hex");
 

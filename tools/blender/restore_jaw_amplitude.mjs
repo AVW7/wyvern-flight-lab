@@ -286,12 +286,16 @@ async function main() {
   const argv = process.argv.slice(2);
   const outIndex = argv.indexOf("--out");
   const outPath = outIndex >= 0 ? resolve(argv[outIndex + 1]) : null;
+  const inIndex = argv.indexOf("--in");
+  // `--in` lets a rebuild feed this pass a mid-chain candidate instead of the shipped asset.
+  // Without it the input is the runtime asset, which is the only behaviour the pass ever had.
+  const inPath = inIndex >= 0 ? resolve(argv[inIndex + 1]) : RUNTIME_PATH;
   const write = argv.includes("--write");
   const report = argv.includes("--report");
 
   const authored = JSON.parse(readFileSync(BASIS_PATH, "utf8"));
   const reference = JSON.parse(readFileSync(REFERENCE_PATH, "utf8"));
-  const bytes = readFileSync(RUNTIME_PATH);
+  const bytes = readFileSync(inPath);
   const { gltf, binary } = readGlb(bytes);
 
   const rows = analyse(gltf, binary, authored);
@@ -510,19 +514,23 @@ async function main() {
       `assets/rig-audits/2026-10-22-c6-jaw-pivot/jaw-restore.json; ${contract.provenance.evidence}`;
     validateRuntimeRig(encoded, { contract });
 
-    const temporary = `${RUNTIME_PATH}.jaw-restore.tmp`;
+    const temporary = `${inPath}.jaw-restore.tmp`;
     try {
       writeFileSync(temporary, encoded);
-      renameSync(temporary, RUNTIME_PATH);
+      renameSync(temporary, inPath);
     } finally {
       rmSync(temporary, { force: true });
     }
     writeFileSync(CONTRACT_PATH, `${JSON.stringify(contract, null, 2)}\n`);
-    for (const alias of CANDIDATE_ALIASES) writeFileSync(alias, encoded);
+    // Candidate aliases belong to the runtime path only; a mid-chain `--in` rebuild gets its
+    // own promote step in sync_v2_pipeline.mjs.
+    if (inPath === RUNTIME_PATH) {
+      for (const alias of CANDIDATE_ALIASES) writeFileSync(alias, encoded);
+    }
 
     // Re-read from disk: the bytes that will actually ship, against the pin on disk.
-    validateRuntimeRig(readFileSync(RUNTIME_PATH));
-    console.log(`\nre-pinned ${RUNTIME_PATH}`);
+    validateRuntimeRig(readFileSync(inPath));
+    console.log(`\nre-pinned ${inPath}`);
     console.log(`re-signed ${CONTRACT_PATH}`);
     console.log(`synced ${CANDIDATE_ALIASES.length} candidate aliases`);
   } else if (outPath) {

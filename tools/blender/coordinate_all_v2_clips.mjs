@@ -446,6 +446,10 @@ function mathSinCycle(f, nFrames, phase) {
 }
 
 if (process.argv[1] && import.meta.url.endsWith(process.argv[1].replace(/^[./]+/, ""))) {
-  const res = await buildAllCoordinatedV2Glb();
+  // `node tools/blender/coordinate_all_v2_clips.mjs [base.glb] [out.glb]`. Explicit paths let
+  // sync_v2_pipeline.mjs chain this stage between candidates; with no arguments the inputs are
+  // the shipped runtime asset and the historical harvest-candidates output, as before.
+  const [base, out] = process.argv.slice(2);
+  const res = await buildAllCoordinatedV2Glb(base, undefined, out);
   console.log("Coordinated all 18 V2 clips:", JSON.stringify(res, null, 2));
 }
