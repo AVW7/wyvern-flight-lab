@@ -6,11 +6,11 @@
   "blends": [
     {
       "path": "models/source/wyvern-v2-master.blend",
-      "sha256": "99396d8555884265c882ed53ababe57f193f25db53d2014f45d8873ee81ae6fd",
-      "bytes": 15257893,
-      "stage": "C1",
+      "sha256": "8c444461170b3b76035b82d80fecbb5c1a7ae92065e91cdc99ad17d48b4789fc",
+      "bytes": 15301031,
+      "stage": "C6",
       "missingStages": ["C5", "D2", "D3", "D4"],
-      "reason": "Built in Task C1 (5fb3ab1) from tools/blender/build_v2_master_blend.py. D2 (takeoff/death), D3 (idle/walk/attack2 motion floor), D4 (attack amplitude + flight-group retime) and C5 (skin-weight rebalance) were applied at GLB level only, so exporting this blend replaces public/models/wyvern-v2-rig.glb with a C1 asset and silently reverts all four stages."
+      "reason": "Built in Task C1 (5fb3ab1) from tools/blender/build_v2_master_blend.py, then edited by Task C6 (tools/blender/fix_c6_jaw_pivot_and_stub_bones.py): the Jaw hinge moved to the midline mandible joint with a lateral local X, and Body grew from a 0.05-unit stub to Spine1.head. C6 is a blend-level stage, so it is not in shippedStages and the shipped GLB still carries the old jaw pivot. D2 (takeoff/death), D3 (idle/walk/attack2 motion floor), D4 (attack amplitude + flight-group retime) and C5 (skin-weight rebalance) were applied at GLB level only, so exporting this blend replaces public/models/wyvern-v2-rig.glb with a C1+C6 asset and silently reverts all four stages."
     }
   ]
 }

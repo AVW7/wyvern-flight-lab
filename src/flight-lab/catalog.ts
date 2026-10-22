@@ -11,6 +11,20 @@ export type FlightLabSpecimen = {
   promotedAliasOf?: string;
 };
 
+/**
+ * The working set: the main runtime rig and the V1 reference it is compared
+ * against. Nothing else belongs in this picker.
+ *
+ * **Retired 2026-10-22** — `wyvern-v2-locomotion-candidate` and
+ * `wyvern-v2-membrane-candidate` were promoted aliases: byte-identical copies of
+ * `wyvern-v2-rig.glb` kept "for harness compatibility". Four picker entries that
+ * rendered three identical wyverns made it unclear which asset was being worked
+ * on, so they are no longer listed here. The GLB files stay on disk because
+ * `test/asset-provenance.test.js` pins them to the contract hash and
+ * `tools/blender/upgrade_v2_rig_ground_and_membrane.mjs` writes them — retiring
+ * the *picker entry* is the point, not deleting the bytes. `promotedAliasOf`
+ * remains on the type for any future promoted alias.
+ */
 export const FLIGHT_LAB_SPECIMENS: readonly FlightLabSpecimen[] = [
   {
     id: "wyvern-v2-rig",
@@ -22,30 +36,6 @@ export const FLIGHT_LAB_SPECIMENS: readonly FlightLabSpecimen[] = [
     targetSize: 8.4,
     heading: Math.PI,
     kind: "wyvern",
-  },
-  {
-    id: "wyvern-v2-locomotion-candidate",
-    name: "V2 Locomotion Candidate (Idle + Walk)",
-    modelFile: "wyvern-v2-idle-walk-flight-lab-candidate.glb",
-    className: "v2 motion candidate",
-    description:
-      "Promoted alias: the idle/walk review candidate was promoted to the V2 baseline on 2026-10-21 (idle neck re-splice, horizon leveling, jaw and land-handoff fixes) and refreshed to the Stage 3 dynamics baseline on 2026-10-22 (flight group retimed to 1.000 Hz). Retained for harness compatibility; byte-identical to wyvern-v2-rig.glb.",
-    targetSize: 8.4,
-    heading: Math.PI,
-    kind: "wyvern",
-    promotedAliasOf: "wyvern-v2-rig",
-  },
-  {
-    id: "wyvern-v2-membrane-candidate",
-    name: "V2 Membrane Repair Candidate",
-    modelFile: "wyvern-v2-membrane-lab-candidate.glb",
-    className: "v2 membrane candidate",
-    description:
-      "Promoted alias: the membrane repair candidate was promoted to the V2 baseline on 2026-10-21 (panel/Tail1 weight binding, sampler compaction) and refreshed to the Stage 3 dynamics baseline on 2026-10-22 (flight group retimed to 1.000 Hz). Retained for harness compatibility; byte-identical to wyvern-v2-rig.glb.",
-    targetSize: 8.4,
-    heading: Math.PI,
-    kind: "wyvern",
-    promotedAliasOf: "wyvern-v2-rig",
   },
   {
     id: "wyvern-v1-rig",

@@ -1,0 +1,6116 @@
+{
+  "action_count": 18,
+  "actions": [
+    "attack",
+    "attack2",
+    "attackAir2",
+    "bankLeft",
+    "bankRight",
+    "breath",
+    "cruise",
+    "death",
+    "dive",
+    "glide",
+    "hover",
+    "idle",
+    "land",
+    "rest",
+    "scout",
+    "speed",
+    "takeoff",
+    "walk"
+  ],
+  "armature": "WyvernRig",
+  "armature_world": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0
+  ],
+  "blend": "/Users/ajadvanwyk/wyvern-flight-lab/models/source/wyvern-v2-master.blend",
+  "bone_weight_totals": {
+    "Body": 272.9882,
+    "Head": 12151.2118,
+    "Jaw": 228.0863,
+    "L_Calf": 66.5059,
+    "L_Foot": 84.0706,
+    "L_LegRoot": 41.7216,
+    "L_Thigh": 43.7529,
+    "L_Toes": 450.0667,
+    "L_WingD0P0": 190.8471,
+    "L_WingD0P1": 116.4157,
+    "L_WingD0P2": 186.5098,
+    "L_WingD1P0": 170.6078,
+    "L_WingD1P1": 136.1961,
+    "L_WingD1P2": 273.4863,
+    "L_WingD2P0": 196.9294,
+    "L_WingD2P1": 171.7333,
+    "L_WingD2P2": 297.1843,
+    "L_WingD3P0": 178.1333,
+    "L_WingD3P1": 175.4078,
+    "L_WingD3P2": 363.5647,
+    "L_WingD4P0": 294.5882,
+    "L_WingD4P1": 234.9961,
+    "L_WingD4P2": 267.9569,
+    "L_WingD5P0": 53.1686,
+    "L_WingD5P1": 49.6,
+    "L_WingD5P2": 31.9882,
+    "L_WingElbow": 262.1804,
+    "L_WingHand": 92.8118,
+    "L_WingPanel0_1": 0.4549,
+    "L_WingPanel1_1": 7.9255,
+    "L_WingPanel2_0": 1.1451,
+    "L_WingPanel2_1": 2.9961,
+    "L_WingPanel3_0": 0.2627,
+    "L_WingPanel3_1": 9.5686,
+    "L_WingRoot": 0.949,
+    "L_WingShoulder": 237.8667,
+    "L_WingWrist": 155.7961,
+    "Neck1": 414.0118,
+    "Neck2": 1032.3098,
+    "R_Calf": 66.5451,
+    "R_Foot": 79.8784,
+    "R_LegRoot": 41.3098,
+    "R_Thigh": 43.902,
+    "R_Toes": 454.2314,
+    "R_WingD0P0": 184.5216,
+    "R_WingD0P1": 114.3098,
+    "R_WingD0P2": 184.7765,
+    "R_WingD1P0": 170.4667,
+    "R_WingD1P1": 136.5686,
+    "R_WingD1P2": 270.9647,
+    "R_WingD2P0": 197.0235,
+    "R_WingD2P1": 170.5373,
+    "R_WingD2P2": 294.6078,
+    "R_WingD3P0": 179.651,
+    "R_WingD3P1": 174.8,
+    "R_WingD3P2": 362.0,
+    "R_WingD4P0": 293.6196,
+    "R_WingD4P1": 237.7137,
+    "R_WingD4P2": 269.9451,
+    "R_WingD5P0": 61.3333,
+    "R_WingD5P1": 40.5451,
+    "R_WingD5P2": 38.0,
+    "R_WingElbow": 258.9726,
+    "R_WingHand": 88.8824,
+    "R_WingPanel0_1": 0.4314,
+    "R_WingPanel1_1": 8.0157,
+    "R_WingPanel2_0": 1.1373,
+    "R_WingPanel2_1": 2.8902,
+    "R_WingPanel3_0": 0.2784,
+    "R_WingPanel3_1": 9.6784,
+    "R_WingRoot": 2.1608,
+    "R_WingShoulder": 234.1098,
+    "R_WingWrist": 154.1059,
+    "Spine1": 270.9882,
+    "Spine2": 280.8392,
+    "Spine3": 5971.302,
+    "Tail10": 340.7333,
+    "Tail2": 543.0941,
+    "Tail3": 280.9804,
+    "Tail4": 230.3216,
+    "Tail5": 154.1686,
+    "Tail6": 241.6706,
+    "Tail7": 206.5804,
+    "Tail8": 193.9647,
+    "Tail9": 288.4471
+  },
+  "bones": {
+    "Body": {
+      "children": [
+        "Spine1",
+        "Tail1"
+      ],
+      "head": [
+        0.0,
+        432.1173,
+        711.6467
+      ],
+      "length": 164.0669,
+      "parent": "RootMotion",
+      "present": true,
+      "rest_quat": [
+        0.038133,
+        0.999273,
+        0.0,
+        -0.0
+      ],
+      "roll_deg": 0.0001,
+      "tail": [
+        0.0002,
+        268.5276,
+        724.1505
+      ],
+      "use_deform": true,
+      "y_axis": [
+        0.0,
+        -0.9971,
+        0.0762
+      ]
+    },
+    "Head": {
+      "children": [
+        "Jaw"
+      ],
+      "head": [
+        0.001,
+        -547.3044,
+        793.3042
+      ],
+      "length": 82.9733,
+      "parent": "Neck2",
+      "present": true,
+      "rest_quat": [
+        0.167437,
+        -0.985883,
+        0.0,
+        -5e-06
+      ],
+      "roll_deg": -0.0001,
+      "tail": [
+        0.0011,
+        -625.6254,
+        765.9108
+      ],
+      "use_deform": true,
+      "y_axis": [
+        0.0,
+        -0.9439,
+        -0.3301
+      ]
+    },
+    "Jaw": {
+      "children": [],
+      "head": [
+        0.0,
+        -565.0,
+        785.0
+      ],
+      "length": 82.9733,
+      "parent": "Head",
+      "present": true,
+      "rest_quat": [
+        0.282557,
+        -0.959251,
+        0.0,
+        -0.0
+      ],
+      "roll_deg": -0.0,
+      "tail": [
+        0.0,
+        -634.7244,
+        740.0213
+      ],
+      "use_deform": true,
+      "y_axis": [
+        0.0,
+        -0.8403,
+        -0.5421
+      ]
+    },
+    "Neck1": {
+      "children": [
+        "Neck2"
+      ],
+      "head": [
+        0.0006,
+        -201.5478,
+        812.2365
+      ],
+      "length": 177.2085,
+      "parent": "Spine3",
+      "present": true,
+      "rest_quat": [
+        0.06935,
+        0.997592,
+        -0.0,
+        -9e-06
+      ],
+      "roll_deg": -0.0001,
+      "tail": [
+        0.0007,
+        -377.0518,
+        836.756
+      ],
+      "use_deform": true,
+      "y_axis": [
+        0.0,
+        -0.9904,
+        0.1384
+      ]
+    },
+    "Root": {
+      "children": [
+        "RootMotion"
+      ],
+      "head": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "length": 1.0,
+      "parent": null,
+      "present": true,
+      "rest_quat": [
+        0.707107,
+        0.707107,
+        0.0,
+        0.0
+      ],
+      "roll_deg": 0.0,
+      "tail": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "use_deform": true,
+      "y_axis": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "RootMotion": {
+      "children": [
+        "Body"
+      ],
+      "head": [
+        -0.0,
+        -0.0002,
+        -0.0001
+      ],
+      "length": 832.5665,
+      "parent": "Root",
+      "present": true,
+      "rest_quat": [
+        0.755454,
+        0.655202,
+        0.0,
+        0.0
+      ],
+      "roll_deg": 0.0,
+      "tail": [
+        0.0,
+        117.7425,
+        824.1986
+      ],
+      "use_deform": true,
+      "y_axis": [
+        0.0,
+        0.1414,
+        0.9899
+      ]
+    },
+    "Spine1": {
+      "children": [
+        "L_LegRoot",
+        "R_LegRoot",
+        "Spine2"
+      ],
+      "head": [
+        0.0002,
+        268.5276,
+        724.1505
+      ],
+      "length": 134.8095,
+      "parent": "Body",
+      "present": true,
+      "rest_quat": [
+        0.079598,
+        0.996827,
+        0.0,
+        -4e-06
+      ],
+      "roll_deg": -0.0,
+      "tail": [
+        0.0003,
+        135.4263,
+        745.5434
+      ],
+      "use_deform": true,
+      "y_axis": [
+        0.0,
+        -0.9873,
+        0.1587
+      ]
+    }
+  },
+  "jaw_actions": {
+    "attack": {
+      "curves": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            36.0
+          ],
+          "keys": 37,
+          "value_range": [
+            -6e-06,
+            3e-06
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            36.0
+          ],
+          "keys": 37,
+          "value_range": [
+            2.5e-05,
+            0.000236
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            36.0
+          ],
+          "keys": 37,
+          "value_range": [
+            -0.000166,
+            4.4e-05
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            36.0
+          ],
+          "keys": 37,
+          "value_range": [
+            0.961127,
+            0.999834
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            36.0
+          ],
+          "keys": 37,
+          "value_range": [
+            -0.275505,
+            9e-05
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            36.0
+          ],
+          "keys": 37,
+          "value_range": [
+            -0.018237,
+            -0.017494
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            36.0
+          ],
+          "keys": 37,
+          "value_range": [
+            0.000131,
+            0.005153
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            36.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            36.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            36.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "slots": 1
+    },
+    "attack2": {
+      "curves": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            80.0
+          ],
+          "keys": 81,
+          "value_range": [
+            -5.9e-05,
+            0.000107
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            80.0
+          ],
+          "keys": 81,
+          "value_range": [
+            3.5e-05,
+            0.000244
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            80.0
+          ],
+          "keys": 81,
+          "value_range": [
+            -0.000228,
+            0.000138
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            80.0
+          ],
+          "keys": 81,
+          "value_range": [
+            0.978004,
+            0.999834
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            80.0
+          ],
+          "keys": 81,
+          "value_range": [
+            -0.207789,
+            9e-05
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            80.0
+          ],
+          "keys": 81,
+          "value_range": [
+            -0.018183,
+            -0.017494
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            80.0
+          ],
+          "keys": 81,
+          "value_range": [
+            0.001403,
+            0.005153
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            80.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            80.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            80.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "slots": 1
+    },
+    "attackAir2": {
+      "curves": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            80.0
+          ],
+          "keys": 81,
+          "value_range": [
+            -2.9e-05,
+            3.7e-05
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            80.0
+          ],
+          "keys": 81,
+          "value_range": [
+            -2.3e-05,
+            0.00022
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            80.0
+          ],
+          "keys": 81,
+          "value_range": [
+            -0.000373,
+            0.000102
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            80.0
+          ],
+          "keys": 81,
+          "value_range": [
+            0.961127,
+            0.999834
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            80.0
+          ],
+          "keys": 81,
+          "value_range": [
+            -0.275505,
+            9e-05
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            80.0
+          ],
+          "keys": 81,
+          "value_range": [
+            -0.018237,
+            -0.017494
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            80.0
+          ],
+          "keys": 81,
+          "value_range": [
+            0.000131,
+            0.005153
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            80.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            80.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            80.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "slots": 1
+    },
+    "bankLeft": {
+      "curves": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -8.6e-05,
+            5.4e-05
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            4e-05,
+            0.000232
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.000273,
+            0.0001
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            0.99983,
+            0.999834
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.002527,
+            0.002708
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.017508,
+            -0.017481
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            0.005107,
+            0.005199
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.000001,
+            1.000001
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.000008,
+            1.000008
+          ]
+        }
+      ],
+      "slots": 1
+    },
+    "bankRight": {
+      "curves": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -5.6e-05,
+            6.3e-05
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            4e-06,
+            0.000218
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.000218,
+            6.3e-05
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            0.99983,
+            0.999834
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.002527,
+            0.002708
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.017508,
+            -0.017481
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            0.005107,
+            0.005199
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.000002,
+            1.000002
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.000008,
+            1.000008
+          ]
+        }
+      ],
+      "slots": 1
+    },
+    "breath": {
+      "curves": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            48.0
+          ],
+          "keys": 49,
+          "value_range": [
+            -2.8e-05,
+            3.2e-05
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            48.0
+          ],
+          "keys": 49,
+          "value_range": [
+            3.6e-05,
+            0.000235
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            48.0
+          ],
+          "keys": 49,
+          "value_range": [
+            -0.000396,
+            3.9e-05
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            48.0
+          ],
+          "keys": 49,
+          "value_range": [
+            0.831428,
+            0.999834
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            48.0
+          ],
+          "keys": 49,
+          "value_range": [
+            -0.555333,
+            9e-05
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            48.0
+          ],
+          "keys": 49,
+          "value_range": [
+            -0.018237,
+            -0.017409
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            48.0
+          ],
+          "keys": 49,
+          "value_range": [
+            -0.005433,
+            0.005153
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            48.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            48.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            48.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "slots": 1
+    },
+    "cruise": {
+      "curves": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -5e-06,
+            5e-06
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            1.7e-05,
+            0.000199
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.000168,
+            4.9e-05
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            0.99983,
+            0.999834
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.002527,
+            0.002708
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.017508,
+            -0.017481
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            0.005107,
+            0.005199
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.000001,
+            1.000001
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.000007,
+            1.000007
+          ]
+        }
+      ],
+      "slots": 1
+    },
+    "death": {
+      "curves": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            96.0
+          ],
+          "keys": 97,
+          "value_range": [
+            -4e-05,
+            2.8e-05
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            96.0
+          ],
+          "keys": 97,
+          "value_range": [
+            -5e-05,
+            0.000352
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            96.0
+          ],
+          "keys": 97,
+          "value_range": [
+            -0.000259,
+            8.8e-05
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            96.0
+          ],
+          "keys": 97,
+          "value_range": [
+            0.906195,
+            0.999834
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            96.0
+          ],
+          "keys": 97,
+          "value_range": [
+            -0.422466,
+            9e-05
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            96.0
+          ],
+          "keys": 97,
+          "value_range": [
+            -0.018237,
+            -0.017494
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            96.0
+          ],
+          "keys": 97,
+          "value_range": [
+            -0.002723,
+            0.005153
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            96.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            96.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            96.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "slots": 1
+    },
+    "dive": {
+      "curves": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -5e-06,
+            4e-06
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            6.9e-05,
+            0.000229
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.000217,
+            1.7e-05
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            0.99983,
+            0.999834
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.002527,
+            0.002708
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.017508,
+            -0.017481
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            0.005107,
+            0.005199
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.000001,
+            1.000001
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.000007,
+            1.000007
+          ]
+        }
+      ],
+      "slots": 1
+    },
+    "glide": {
+      "curves": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -1.3e-05,
+            1.9e-05
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            1.6e-05,
+            0.000247
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.000268,
+            8.5e-05
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            0.999827,
+            0.999834
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.0034,
+            0.00358
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.017512,
+            -0.017476
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            0.005092,
+            0.005214
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.000001,
+            1.000001
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.000007,
+            1.000007
+          ]
+        }
+      ],
+      "slots": 1
+    },
+    "hover": {
+      "curves": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -3.2e-05,
+            3.1e-05
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -4e-05,
+            0.000234
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.000276,
+            0.000106
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            0.99983,
+            0.999834
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.002488,
+            0.002668
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.017508,
+            -0.017481
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            0.005108,
+            0.005198
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.000001,
+            1.000001
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.000007,
+            1.000007
+          ]
+        }
+      ],
+      "slots": 1
+    },
+    "idle": {
+      "curves": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -1.2e-05,
+            2.1e-05
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.000254,
+            0.000396
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.000356,
+            5.5e-05
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            0.999827,
+            0.999834
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.003399,
+            0.003581
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.017512,
+            -0.017476
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            0.005092,
+            0.005214
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "slots": 1
+    },
+    "land": {
+      "curves": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            72.0
+          ],
+          "keys": 73,
+          "value_range": [
+            -6e-06,
+            5e-06
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            72.0
+          ],
+          "keys": 73,
+          "value_range": [
+            -4e-06,
+            0.000251
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            72.0
+          ],
+          "keys": 73,
+          "value_range": [
+            -0.000227,
+            0.000124
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            72.0
+          ],
+          "keys": 73,
+          "value_range": [
+            0.999832,
+            0.999834
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            72.0
+          ],
+          "keys": 73,
+          "value_range": [
+            -0.001651,
+            0.001833
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            72.0
+          ],
+          "keys": 73,
+          "value_range": [
+            -0.017503,
+            -0.017485
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            72.0
+          ],
+          "keys": 73,
+          "value_range": [
+            0.005122,
+            0.005183
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            72.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            72.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            72.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "slots": 1
+    },
+    "rest": {
+      "curves": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -4e-06,
+            4e-06
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -3.7e-05,
+            0.000155
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.000258,
+            -5.1e-05
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            0.999832,
+            0.999834
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.001654,
+            0.001836
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.017503,
+            -0.017485
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            0.005122,
+            0.005183
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.000007,
+            1.000007
+          ]
+        }
+      ],
+      "slots": 1
+    },
+    "scout": {
+      "curves": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.000103,
+            0.000111
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            1.3e-05,
+            0.000256
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.000318,
+            5.6e-05
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            0.99983,
+            0.999834
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.002527,
+            0.002708
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            -0.017508,
+            -0.017481
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 145,
+          "value_range": [
+            0.005107,
+            0.005199
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.000001,
+            1.000001
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            144.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.000007,
+            1.000007
+          ]
+        }
+      ],
+      "slots": 1
+    },
+    "speed": {
+      "curves": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            120.0
+          ],
+          "keys": 121,
+          "value_range": [
+            -5e-06,
+            4e-06
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            120.0
+          ],
+          "keys": 121,
+          "value_range": [
+            4.3e-05,
+            0.000274
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            120.0
+          ],
+          "keys": 121,
+          "value_range": [
+            -0.000269,
+            2.9e-05
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            120.0
+          ],
+          "keys": 2,
+          "value_range": [
+            0.999834,
+            0.999834
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            120.0
+          ],
+          "keys": 2,
+          "value_range": [
+            9e-05,
+            9e-05
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            120.0
+          ],
+          "keys": 2,
+          "value_range": [
+            -0.017494,
+            -0.017494
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            120.0
+          ],
+          "keys": 2,
+          "value_range": [
+            0.005153,
+            0.005153
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            120.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            120.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.000002,
+            1.000002
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            120.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.000008,
+            1.000008
+          ]
+        }
+      ],
+      "slots": 1
+    },
+    "takeoff": {
+      "curves": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            72.0
+          ],
+          "keys": 73,
+          "value_range": [
+            -8e-06,
+            5e-06
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            72.0
+          ],
+          "keys": 73,
+          "value_range": [
+            -3.8e-05,
+            0.000262
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            72.0
+          ],
+          "keys": 73,
+          "value_range": [
+            -0.000286,
+            6.8e-05
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            72.0
+          ],
+          "keys": 2,
+          "value_range": [
+            0.999834,
+            0.999834
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            72.0
+          ],
+          "keys": 2,
+          "value_range": [
+            9e-05,
+            9e-05
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            72.0
+          ],
+          "keys": 2,
+          "value_range": [
+            -0.017494,
+            -0.017494
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            72.0
+          ],
+          "keys": 2,
+          "value_range": [
+            0.005153,
+            0.005153
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            72.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            72.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            72.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "slots": 1
+    },
+    "walk": {
+      "curves": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            59.0
+          ],
+          "keys": 60,
+          "value_range": [
+            -4.4e-05,
+            0.000176
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            59.0
+          ],
+          "keys": 60,
+          "value_range": [
+            -0.000418,
+            0.000678
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].location",
+          "frame_range": [
+            0.0,
+            59.0
+          ],
+          "keys": 60,
+          "value_range": [
+            -0.000658,
+            0.000119
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            59.0
+          ],
+          "keys": 60,
+          "value_range": [
+            0.999827,
+            0.999834
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            59.0
+          ],
+          "keys": 60,
+          "value_range": [
+            -0.003399,
+            0.003581
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            59.0
+          ],
+          "keys": 60,
+          "value_range": [
+            -0.017512,
+            -0.017476
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Jaw\"].rotation_quaternion",
+          "frame_range": [
+            0.0,
+            59.0
+          ],
+          "keys": 60,
+          "value_range": [
+            0.005092,
+            0.005214
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            59.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            59.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Jaw\"].scale",
+          "frame_range": [
+            0.0,
+            59.0
+          ],
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "slots": 1
+    }
+  },
+  "jaw_mesh": {
+    "jaw_weight_extent_world": [
+      [
+        -174.6785,
+        -1120.0013,
+        519.1106
+      ],
+      [
+        191.7727,
+        -367.0,
+        924.424
+      ]
+    ],
+    "vertices_scanned": 32777,
+    "vertices_with_jaw_weight": 1287
+  },
+  "stub_bone_actions": {
+    "Body": {
+      "attack": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 37,
+          "value_range": [
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 37,
+          "value_range": [
+            0.00013649,
+            0.00026357
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 37,
+          "value_range": [
+            -8.00008202,
+            17.99994278
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 37,
+          "value_range": [
+            0.99862957,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 37,
+          "value_range": [
+            -0.05233595,
+            0.03489947
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 37,
+          "value_range": [
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 37,
+          "value_range": [
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999988,
+            0.99999988
+          ]
+        }
+      ],
+      "attack2": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            0.00021316,
+            0.00021316
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            -1.406e-05,
+            -1.406e-05
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 81,
+          "value_range": [
+            0.96896601,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 81,
+          "value_range": [
+            -0.05078134,
+            0.03470835
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 81,
+          "value_range": [
+            -0.24159041,
+            0.10446481
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 81,
+          "value_range": [
+            -0.01266122,
+            7.407e-05
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999988,
+            0.99999988
+          ]
+        }
+      ],
+      "attackAir2": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 81,
+          "value_range": [
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 81,
+          "value_range": [
+            8.488e-05,
+            0.00026417
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 81,
+          "value_range": [
+            -19.99990845,
+            15.00003338
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 81,
+          "value_range": [
+            0.97814763,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 81,
+          "value_range": [
+            -0.13917321,
+            0.20791164
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 81,
+          "value_range": [
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 81,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999988,
+            0.99999988
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.00000036,
+            1.00000036
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.00000024,
+            1.00000024
+          ]
+        }
+      ],
+      "bankLeft": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            -8.842e-05,
+            -8.842e-05
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            0.00035738,
+            0.00035738
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            -0.0001459,
+            -0.0001459
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -3.576e-05,
+            -3.576e-05
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            9e-08,
+            9e-08
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            2e-08,
+            2e-08
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.00000036,
+            1.00000036
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.00000036,
+            1.00000036
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.00000083,
+            1.00000083
+          ]
+        }
+      ],
+      "bankRight": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            -1.212e-05,
+            -1.212e-05
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0004464,
+            0.0004464
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0002764,
+            0.0002764
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -3.576e-05,
+            -3.576e-05
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            8e-08,
+            8e-08
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            2e-08,
+            2e-08
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999994,
+            0.99999994
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "breath": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            0.00025164,
+            0.00025164
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            0.00010574,
+            0.00010574
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 49,
+          "value_range": [
+            0.99756396,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 49,
+          "value_range": [
+            -0.06975642,
+            0.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 49,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 49,
+          "value_range": [
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999988,
+            0.99999988
+          ]
+        }
+      ],
+      "cruise": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            1.182e-05,
+            1.182e-05
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            0.00021316,
+            0.00021316
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            -1.406e-05,
+            -1.406e-05
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -3.576e-05,
+            -3.576e-05
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            7e-08,
+            7e-08
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            2e-08,
+            2e-08
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "death": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 97,
+          "value_range": [
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 97,
+          "value_range": [
+            0.00010586,
+            0.00025332
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 97,
+          "value_range": [
+            -19.99990845,
+            519.99987793
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 97,
+          "value_range": [
+            0.97600847,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 97,
+          "value_range": [
+            -0.10452846,
+            0.11200102
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 97,
+          "value_range": [
+            -0.0,
+            0.16772225
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 97,
+          "value_range": [
+            0.0,
+            0.08205138
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999988,
+            0.99999988
+          ]
+        }
+      ],
+      "dive": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 145,
+          "value_range": [
+            0.0,
+            2e-08
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 145,
+          "value_range": [
+            -5.347e-05,
+            0.00032234
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 145,
+          "value_range": [
+            -4.99998665,
+            9.98770428
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 145,
+          "value_range": [
+            0.96858317,
+            0.97196102
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 145,
+          "value_range": [
+            0.23514214,
+            0.24868995
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 145,
+          "value_range": [
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 145,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.00000036,
+            1.00000036
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.00000036,
+            1.00000036
+          ]
+        }
+      ],
+      "glide": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 145,
+          "value_range": [
+            2e-08,
+            4e-08
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 145,
+          "value_range": [
+            4.053e-05,
+            0.00059819
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 145,
+          "value_range": [
+            -4.9997406,
+            5.00062847
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 145,
+          "value_range": [
+            0.99986255,
+            0.99995399
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 145,
+          "value_range": [
+            0.00959921,
+            0.01657993
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 145,
+          "value_range": [
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 145,
+          "value_range": [
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999964,
+            0.99999964
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999964,
+            0.99999964
+          ]
+        }
+      ],
+      "hover": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 145,
+          "value_range": [
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 145,
+          "value_range": [
+            0.00011083,
+            0.00024104
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 145,
+          "value_range": [
+            -7.96955967,
+            7.96953583
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 145,
+          "value_range": [
+            0.99959219,
+            0.99999988
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 145,
+          "value_range": [
+            -0.00237933,
+            0.02855533
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 145,
+          "value_range": [
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 145,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999976,
+            0.99999976
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999982,
+            0.99999982
+          ]
+        }
+      ],
+      "idle": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            0.01696137,
+            0.01696137
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            1119.0793457,
+            1119.0793457
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            366.33105469,
+            366.33105469
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.99362528,
+            0.99362528
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.1127342,
+            0.1127342
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -6e-08,
+            -6e-08
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.00000012,
+            1.00000012
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "land": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 73,
+          "value_range": [
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 73,
+          "value_range": [
+            0.00010967,
+            0.00024414
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 73,
+          "value_range": [
+            -35.00006866,
+            29.99995041
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 73,
+          "value_range": [
+            0.97029573,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 73,
+          "value_range": [
+            -0.2419219,
+            0.11233613
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 73,
+          "value_range": [
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 73,
+          "value_range": [
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999988,
+            0.99999994
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999988,
+            0.99999988
+          ]
+        }
+      ],
+      "rest": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            -3.529e-05,
+            -3.529e-05
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            0.02011106,
+            0.02011106
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            279.99996948,
+            279.99996948
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 145,
+          "value_range": [
+            0.99958432,
+            0.99988937
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 145,
+          "value_range": [
+            -0.02882963,
+            -0.01487046
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 145,
+          "value_range": [
+            -6e-08,
+            -6e-08
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 145,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "scout": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            1e-08,
+            1e-08
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            0.00011377,
+            0.00011377
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 2,
+          "value_range": [
+            -0.00012984,
+            -0.00012984
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 145,
+          "value_range": [
+            0.99977356,
+            0.9999274
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 145,
+          "value_range": [
+            0.00959846,
+            0.01657882
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 145,
+          "value_range": [
+            -0.01570597,
+            0.01570597
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 145,
+          "value_range": [
+            -0.00022632,
+            0.00022632
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999994,
+            0.99999994
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999988,
+            0.99999988
+          ]
+        }
+      ],
+      "speed": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 121,
+          "value_range": [
+            2e-08,
+            4e-08
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 121,
+          "value_range": [
+            3.022e-05,
+            0.00038743
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 121,
+          "value_range": [
+            -2.24591017,
+            2.86642671
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 121,
+          "value_range": [
+            0.98927224,
+            0.99121559
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 121,
+          "value_range": [
+            0.13225639,
+            0.14608303
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 121,
+          "value_range": [
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 121,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.00000012,
+            1.00000012
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "takeoff": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 73,
+          "value_range": [
+            -0.0,
+            0.017
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 73,
+          "value_range": [
+            0.00012969,
+            1119.05322266
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 73,
+          "value_range": [
+            -1.406e-05,
+            366.41091919
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 73,
+          "value_range": [
+            0.99254608,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 73,
+          "value_range": [
+            -0.12186939,
+            0.11276975
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 73,
+          "value_range": [
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 73,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999994,
+            1.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999976,
+            0.99999988
+          ]
+        }
+      ],
+      "walk": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 60,
+          "value_range": [
+            -70.3900528,
+            133.67803955
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 60,
+          "value_range": [
+            959.65252686,
+            1058.53186035
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].location",
+          "keys": 60,
+          "value_range": [
+            313.92355347,
+            319.07345581
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 60,
+          "value_range": [
+            0.98859185,
+            0.99846697
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 60,
+          "value_range": [
+            -0.09197756,
+            -0.04161383
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 60,
+          "value_range": [
+            -0.10966353,
+            0.12791057
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"Body\"].rotation_quaternion",
+          "keys": 60,
+          "value_range": [
+            -0.12407064,
+            0.1113944
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999994,
+            0.99999994
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.00000012,
+            1.00000012
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"Body\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    "RootMotion": {
+      "attack": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0001528,
+            0.0001528
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            -0.00020643,
+            -0.00020643
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.99999988,
+            0.99999988
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999994,
+            0.99999994
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "attack2": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0001528,
+            0.0001528
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            -0.00020643,
+            -0.00020643
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.99999988,
+            0.99999988
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999994,
+            0.99999994
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "attackAir2": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0001528,
+            0.0001528
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            -0.00020643,
+            -0.00020643
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.99999988,
+            0.99999988
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999994,
+            0.99999994
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "bankLeft": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0001528,
+            0.0001528
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            -0.00020643,
+            -0.00020643
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.98480761,
+            0.98480761
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            1.4e-07,
+            1.4e-07
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -1e-08,
+            -1e-08
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.17364836,
+            0.17364836
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999976,
+            0.99999976
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.00000048,
+            1.00000048
+          ]
+        }
+      ],
+      "bankRight": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0001528,
+            0.0001528
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            -0.00020643,
+            -0.00020643
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.98480761,
+            0.98480761
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            1.6e-07,
+            1.6e-07
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            3e-08,
+            3e-08
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.17364833,
+            -0.17364833
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999976,
+            0.99999976
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999952,
+            0.99999952
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "breath": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0001528,
+            0.0001528
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            -0.00020643,
+            -0.00020643
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.99999988,
+            0.99999988
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999994,
+            0.99999994
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "cruise": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0001528,
+            0.0001528
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            -0.00020643,
+            -0.00020643
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.99999988,
+            0.99999988
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            1e-08,
+            1e-08
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999994,
+            0.99999994
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "death": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0001528,
+            0.0001528
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            -0.00020643,
+            -0.00020643
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.99999988,
+            0.99999988
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999994,
+            0.99999994
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "dive": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0001528,
+            0.0001528
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            -0.00020643,
+            -0.00020643
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.96592563,
+            0.96592563
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.25881934,
+            0.25881934
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999964,
+            0.99999964
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999976,
+            0.99999976
+          ]
+        }
+      ],
+      "glide": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0001528,
+            0.0001528
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            -0.00020643,
+            -0.00020643
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.99756402,
+            0.99756402
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.06975649,
+            0.06975649
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999958,
+            0.99999958
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999928,
+            0.99999928
+          ]
+        }
+      ],
+      "hover": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0001528,
+            0.0001528
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            -0.00020643,
+            -0.00020643
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.99999988,
+            0.99999988
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999964,
+            0.99999964
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "idle": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0001528,
+            0.0001528
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            -0.00020643,
+            -0.00020643
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.99999988,
+            0.99999988
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999994,
+            0.99999994
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "land": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0001528,
+            0.0001528
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            -0.00020643,
+            -0.00020643
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.99999988,
+            0.99999988
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999994,
+            0.99999994
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "rest": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0001528,
+            0.0001528
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            -0.00020643,
+            -0.00020643
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.99999988,
+            0.99999988
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999994,
+            0.99999994
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "scout": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0001528,
+            0.0001528
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            -0.00020643,
+            -0.00020643
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.99999988,
+            0.99999988
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999994,
+            0.99999994
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "speed": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0001528,
+            0.0001528
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            -0.00020643,
+            -0.00020643
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.99144477,
+            0.99144477
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.13052623,
+            0.13052623
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999994,
+            0.99999994
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "takeoff": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0001528,
+            0.0001528
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            -0.00020643,
+            -0.00020643
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.99999988,
+            0.99999988
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999994,
+            0.99999994
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "walk": [
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            0.0001528,
+            0.0001528
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].location",
+          "keys": 2,
+          "value_range": [
+            -0.00020643,
+            -0.00020643
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            0.99999988,
+            0.99999988
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            1e-08,
+            1e-08
+          ]
+        },
+        {
+          "array_index": 3,
+          "data_path": "pose.bones[\"RootMotion\"].rotation_quaternion",
+          "keys": 2,
+          "value_range": [
+            -0.0,
+            -0.0
+          ]
+        },
+        {
+          "array_index": 0,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "array_index": 1,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            0.99999994,
+            0.99999994
+          ]
+        },
+        {
+          "array_index": 2,
+          "data_path": "pose.bones[\"RootMotion\"].scale",
+          "keys": 2,
+          "value_range": [
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    }
+  }
+}

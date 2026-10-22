@@ -91,20 +91,20 @@ check(
   `no substitution badges on V2 (${JSON.stringify(v2Badges)})`,
 );
 
-// --- 2. a partial V2 candidate must NOT be called contract drift ------------
-const candidateButton = page.locator("button", { hasText: /V2 Locomotion Candidate/i }).first();
-check((await candidateButton.count()) === 1, "the V2 locomotion candidate is selectable");
-await candidateButton.click();
-await page.waitForTimeout(500);
-await waitForClip(performance.now());
-await page.waitForTimeout(700);
-
-const candidate = await readState();
-check(
-  Array.isArray(candidate.issues) && candidate.issues.length === 0,
-  `a deliberately partial candidate raises no contract banner (${JSON.stringify(candidate.issues)})`,
-);
-check(candidate.banner === null, "no banner over the candidate");
+// --- 2. the picker holds only the working set -------------------------------
+// Retired 2026-10-22: the two promoted-alias candidates. The sidebar prints
+// "<visible> / <total>", so this also proves the total shrank rather than the
+// rows merely being filtered out.
+const picker = await page.evaluate(() => {
+  const sidebar = document.querySelector("[aria-label='Wyvern specimens']");
+  return {
+    count: sidebar?.querySelector("[class*='resultCount']")?.textContent?.trim() ?? null,
+    text: sidebar?.innerText ?? "",
+  };
+});
+check(picker.count === "2 / 2", `the specimen picker offers two specimens (${picker.count})`);
+check(picker.text.includes("V2 Rig") && picker.text.includes("V1 Rig"), "it lists the V2 runtime rig and the V1 reference");
+check(picker.text.includes("Candidate") === false, "no retired candidate is listed in the picker");
 
 // --- 3. switch to V1: the badges have to appear ------------------------------
 const v1Button = page.locator("button", { hasText: /V1 Rig/i }).first();

@@ -1,0 +1,112 @@
+{
+  "task": "C6 follow-up — Jaw taken out of the D2/D3/D4 gain solve; the authored mouth restored in the shipped GLB",
+  "tool": "tools/blender/restore_jaw_amplitude.mjs",
+  "date": "2026-10-22",
+  "inputSha256": "04dbda5c94e50fc190d10d8a43ef13955ef5d7457b059eaa57c68af2725de8d8",
+  "inputBytes": 6738716,
+  "outputSha256": "f5d768a2946bb7e6e946e3acb927e9be9db9cfa7287c2d5c042940bcd636e11b",
+  "outputBytes": 6738692,
+  "defect": {
+    "summary": "The gain passes amplify every rotation channel about its own bind rotation. `Jaw` is neither PROTECTED nor PANEL_COUPLED, so the mouth was amplified with the rig: attack 32.0->176.9deg (5.53x), attack2 24.0->53.7deg (2.24x), death 50.0->179.1deg (3.58x). A jaw cannot open 177deg, so the shipped pose is not a stronger bite, it is an inverted one.",
+    "localisedBy": "breath, attackAir2 and idle were never gain-passed and agree with the blend to 0.0000deg, so the divergence is the gain pass and not the export."
+  },
+  "exportRelation": {
+    "form": "channel(k) = rest_glb * basis(0)^-1 * basis(k)",
+    "why": "The exporter writes the frame-0 pose as the node TRS, not the armature-rest pose. `rest_glb * basis(k)` is off by the constant basis(0), which for this rig is the C6 compensation of 2.090deg.",
+    "controlResidualsDeg": { "breath": 0.0, "attackAir2": 0.0, "idle": 0.0001 }
+  },
+  "clips": [
+    {
+      "clip": "attack",
+      "shippedJawMaxDeg": 176.9,
+      "authoredJawMaxDeg": 32.0,
+      "compensation": null,
+      "dynamics": {
+        "before": { "peak": 4930.9, "p95": 4390.9, "mean": 1664.3, "accelMax": 144869.1 },
+        "after": { "peak": 4931.0, "p95": 4390.9, "mean": 1664.3, "accelMax": 144869.0 },
+        "note": "Free: the jaw never holds a frame's maximum angular rate here, so the restore changes no digit of the metric."
+      }
+    },
+    {
+      "clip": "attack2",
+      "shippedJawMaxDeg": 53.7,
+      "authoredJawMaxDeg": 24.0,
+      "compensation": null,
+      "dynamics": {
+        "before": { "peak": 1849.5, "p95": 1369.2, "mean": 696.7, "accelMax": 37709.8 },
+        "after": { "peak": 1849.5, "p95": 1369.2, "mean": 696.7, "accelMax": 37709.8 },
+        "note": "Free, same reason."
+      }
+    },
+    {
+      "clip": "death",
+      "shippedJawMaxDeg": 179.1,
+      "authoredJawMaxDeg": 50.0,
+      "compensation": {
+        "gain": 1.9,
+        "capDegFromBind": 165,
+        "coupledSet": { "bones": 52, "maxExcursionDeg": 179.29, "appliedGain": 1, "note": "The membrane panels must move as one set, so the coupled group shares one gain computed from its worst member; that member is already past the cap, so the whole set is left untouched." },
+        "bonesAmplified": 29,
+        "bonesHeldAboveCap": 10,
+        "amplifiedNames": ["Root", "RootMotion", "Body", "Spine1", "Spine2", "Spine3", "Neck1", "Neck2", "Head", "L_WingRoot", "L_WingWrist", "R_WingRoot", "R_WingWrist", "L_LegRoot", "L_Foot", "L_Toes", "R_LegRoot", "R_Foot", "R_Toes", "Tail1", "Tail2", "Tail3", "Tail4", "Tail5", "Tail6", "Tail7", "Tail8", "Tail9", "Tail10"]
+      },
+      "dynamics": {
+        "before": { "peak": 1738.0, "p95": 888.0, "mean": 354.0, "accelMax": 44919.0, "meanMargin": 0.006 },
+        "restoreOnly": { "peak": 1738.0, "p95": 560.0, "mean": 305.0, "accelMax": 44919.0, "passes": false, "note": "p95 560 < floor 734.2 and mean 305 < floor 351.8. The mouth set the maximum in 158 of 240 frames." },
+        "after": { "peak": 1728.3, "p95": 862.0, "mean": 418.2, "accelMax": 44935.0, "peakJoint": "L_WingPanel0_0", "worstMargin": 0.174, "passes": true },
+        "referenceV1": { "peak": 1500.2, "p95": 917.7, "mean": 502.6, "accelMax": 43855.5 }
+      }
+    }
+  ],
+  "rejectedAlternatives": [
+    { "repair": "uniform non-jaw gain, no cap", "result": "unsafe", "evidence": "The shipped clip already carries 21 bones more than 150deg from bind (R_Thigh 179.1deg, every WingD* panel 179.3deg). qpow past 180deg wraps the short way, so gain 1.8 turns a 179deg bone into -38deg: it inverts the pose. It measures best of all (mean 512, 102% of V1) and is still wrong." },
+    { "repair": "uniform gain alone at gain<=1.05", "result": "insufficient", "evidence": "The accel ceiling binds at about 1.05x (accel 48588 > 46128 at 1.1x) while p95 needs about 1.31x (560 -> 734). Contradiction." },
+    { "repair": "tail ripple", "result": "invisible", "evidence": "All 10 Tail* channels match GROUPS.tail and ripple() returns non-null, but the tail never holds a per-frame maximum: 2..14deg at 2..4 cycles changes no digit of the metric (p95 560, mean 305 throughout)." },
+    { "repair": "neck-only gain 1.6x", "result": "fitted", "evidence": "Clears at p95 764 against the 734 floor — a 3.9% margin chosen to clear a floor rather than to make the clip better." },
+    { "repair": "uniform gain + smoothing", "result": "safe but lossy", "evidence": "Smoothing buys the accel headroom a bare gain cannot, and takes the peak from 1738 to 1383 for no other reason (gain 1.8, 2 passes)." }
+  ],
+  "probe": {
+    "tool": "tools/blender/probe_death_jaw_gain.mjs",
+    "command": "node tools/blender/probe_death_jaw_gain.mjs --base <pre-restore 04dbda5c asset>",
+    "base": "04dbda5c94e50fc190d10d8a43ef13955ef5d7457b059eaa57c68af2725de8d8",
+    "note": "`wrapped` is computed from the pre-gain excursion, not from the built pose: a shortest-arc angle can never exceed 180deg, so once qpow wraps the measurement reads `360 - gain*excursion` and the instrument that produced it can no longer see the wrap.",
+    "rows": [
+      { "scenario": "asset as-is", "peak": 1738, "p95": 888, "mean": 354, "accelMax": 44919, "gate": "pass", "wrapped": 0, "peakExcursionDeg": 179.3 },
+      { "scenario": "jaw re-applied, no gain", "peak": 1738, "p95": 560, "mean": 305, "accelMax": 44919, "gate": "FAIL", "wrapped": 0, "peakExcursionDeg": 179.3 },
+      { "scenario": "jaw + uniform gain 1.05", "peak": 1812, "p95": 582, "mean": 320, "accelMax": 46783, "gate": "FAIL", "wrapped": 20, "peakExcursionDeg": 188.3 },
+      { "scenario": "jaw + uniform gain 1.80", "peak": 2469, "p95": 917, "mean": 521, "accelMax": 68544, "gate": "FAIL", "wrapped": 24, "peakExcursionDeg": 322.7 },
+      { "scenario": "jaw + capped gain 1.90 (cap 165deg)", "peak": 1728, "p95": 862, "mean": 418, "accelMax": 44935, "gate": "pass", "wrapped": 0, "peakExcursionDeg": 179.3 }
+    ],
+    "reading": "A uniform gain does not fix death at any size: at 1.05x it already wraps 20 bones and still fails, and at 1.8x it reaches V1's p95/mean while wrapping 24 bones to 322.7deg (i.e. -37.3deg, an inverted pose) and blowing the accel ceiling (68,544 against 54,819). The capped row wraps nothing and keeps the shipped peak and accel."
+  },
+  "hinge": {
+    "note": "Re-measured with tools/blender/recenter_v2_jaw_pivot.mjs after the restore. The hinge stays exactly lateral and every clip now opens to its authored amplitude.",
+    "axisVsWorldXDeg": {
+      "attack": 0.0,
+      "attack2": 0.0,
+      "attackAir2": 0.0,
+      "breath": 0.0,
+      "death": 0.0,
+      "idle": 0.0039
+    },
+    "openDeg": { "attack": 32.0, "attack2": 24.0, "attackAir2": 32.0, "breath": 67.49, "death": 50.0, "idle": 0.4 },
+    "jawVerticesMaxLateralDrift": 0.0,
+    "syntheticAxisVsWorldX": 0.0
+  },
+  "gates": {
+    "validateWyvern": "passed — 92 joints / 18 clips / 6,738,692 B",
+    "checkProvenance": "passed — blend stage C6, NOT export-safe",
+    "auditDynamicsV2": "PASS (18 clips)",
+    "auditPoseEnvelope": "18/18 clean, 0 anomalies",
+    "selftestPoseEnvelope": "6/6 expected findings fired",
+    "testFast": "190/190",
+    "tsc": "clean",
+    "blenderUnitTests": "31/31",
+    "aliases": "all three shipped GLBs byte-identical at f5d768a2…"
+  },
+  "warnings": [
+    "attack passes its dynamics gate with a 0.5% margin (mean 1664.3 against a 1673.7 ceiling, i.e. 139.3% of V1's 1194.8). Pre-existing and unchanged by this pass: the jaw never holds a frame maximum there, so the restore moves nothing. The risk is that attack is more energetic than V1, not less."
+  ],
+  "idempotent": "Re-running `--write` after the pass reports \"nothing to write — every clip already carries its authored jaw\". The compensation is only ever applied as part of a jaw restore, so there is nothing left to re-apply.",
+  "determinismCheck": "Two independent runs both land on f5d768a2…, 6,738,692 B from 04dbda5c… — the pass is byte-deterministic. Separately, the C6 asset was reproduced from git HEAD (b5f1c1ef…) with recenter_v2_jaw_pivot.mjs --write and came back byte-identical at 04dbda5c…, 6,738,716 B, which re-confirms that pass independently."
+}

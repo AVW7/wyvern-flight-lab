@@ -73,11 +73,27 @@ test("flight states resolve authored clips and degrade to generic flight clips",
   assert.equal(resolveFlightLabClip("cruise", []), null);
 });
 
-test("specimen catalog contains the v2 rig and v1 comparison specimen", () => {
+test("the specimen picker holds exactly the working set: V2 runtime + V1 reference", () => {
+  // Retired 2026-10-22: the two V2 *candidates* were byte-identical promoted
+  // aliases, so the picker showed three identical wyverns. They are gone from
+  // the catalogue on purpose — the GLBs stay on disk for the provenance gate.
+  assert.deepEqual(
+    FLIGHT_LAB_SPECIMENS.map((specimen) => specimen.id),
+    ["wyvern-v2-rig", "wyvern-v1-rig"],
+  );
+  for (const retired of ["wyvern-v2-locomotion-candidate", "wyvern-v2-membrane-candidate"]) {
+    assert.equal(
+      FLIGHT_LAB_SPECIMENS.some((specimen) => specimen.id === retired),
+      false,
+      `${retired} is retired from the picker`,
+    );
+    // ...and `findFlightLabSpecimen` falls back to the primary rig rather than
+    // resurrecting it through the default.
+    assert.equal(findFlightLabSpecimen(retired).id, "wyvern-v2-rig");
+  }
+
   const wyverns = FLIGHT_LAB_SPECIMENS.filter((s) => s.kind === "wyvern");
-  assert.ok(wyverns.some((w) => w.id === "wyvern-v2-membrane-candidate"));
-  assert.ok(wyverns.some((w) => w.id === "wyvern-v2-rig"));
-  assert.ok(wyverns.some((w) => w.id === "wyvern-v1-rig"));
+  assert.equal(wyverns.length, 2);
   for (const w of wyverns) {
     assert.equal(w.kind, "wyvern");
     assert.ok(w.modelFile.endsWith(".glb"));
@@ -978,12 +994,13 @@ test("comparison rig and specimen positioning preserve base grounding offset acr
   assert.equal(Number(v1LowestWorldY.toFixed(2)), -5.45);
 });
 
-test("isV2RigSpecimen identifies all V2 Gothic rebuild specimens and excludes V1 reference", async () => {
+test("isV2RigSpecimen identifies V2 Gothic rebuild ids and excludes V1 reference", async () => {
   const { isV2RigSpecimen } = await import("../src/flight-lab/catalog.ts");
   assert.equal(isV2RigSpecimen("wyvern-v2-rig"), true);
-  assert.equal(isV2RigSpecimen("wyvern-v2-locomotion-candidate"), true);
-  assert.equal(isV2RigSpecimen("wyvern-v2-membrane-candidate"), true);
-  assert.equal(isV2RigSpecimen({ id: "wyvern-v2-membrane-candidate" }), true);
+  assert.equal(isV2RigSpecimen({ id: "wyvern-v2-rig" }), true);
+  // The rule is a prefix rule, not a catalogue lookup: a retired or future V2
+  // asset id still classifies as V2, which is what `comparisonRig` needs.
+  assert.equal(isV2RigSpecimen("wyvern-v2-some-future-candidate"), true);
   assert.equal(isV2RigSpecimen("wyvern-v1-rig"), false);
   assert.equal(isV2RigSpecimen(null), false);
 });
@@ -1805,9 +1822,19 @@ test("the contract guard names what drifted, and stays quiet on a clean V2 load"
 
   // Nor are the V2 *candidates*: they are deliberately partial (a couple of
   // clips, sometimes fewer bones), so a banner on every switch would be noise
-  // that trains the user to ignore the real one.
-  const candidate = findFlightLabSpecimen("wyvern-v2-locomotion-candidate");
-  assert.ok(candidate.modelFile.includes("candidate"), "the candidate is not the pinned file");
+  // that trains the user to ignore the real one. The ref is built inline because
+  // the candidates were retired from the picker on 2026-10-22 — the rule still
+  // has to hold for any future partial asset.
+  const candidate = {
+    id: "wyvern-v2-locomotion-candidate",
+    name: "V2 Locomotion Candidate",
+    modelFile: "wyvern-v2-idle-walk-flight-lab-candidate.glb",
+    className: "v2 motion candidate",
+    description: "",
+    targetSize: 8.4,
+    heading: 0,
+    kind: "wyvern",
+  };
   assert.deepEqual(
     validateLoadedContract({ specimen: candidate, model: makeModel(88), clipNames: ["idle", "walk"], mixer }),
     [],

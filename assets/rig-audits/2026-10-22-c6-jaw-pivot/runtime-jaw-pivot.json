@@ -1,0 +1,62 @@
+{
+  "task": "C6 runtime half — Jaw hinge pivot moved to the mandible joint in the shipped GLB",
+  "tool": "tools/blender/recenter_v2_jaw_pivot.mjs",
+  "inputSha256": "b5f1c1ef67ad9324212f8ab2075e707abd3ff02280ff77db47ffe96a96f3d08b",
+  "inputBytes": 6732156,
+  "outputSha256": "04dbda5c94e50fc190d10d8a43ef13955ef5d7457b059eaa57c68af2725de8d8",
+  "outputBytes": 6738716,
+  "change": {
+    "fields": [
+      "bindMatrices.sha256: b0d61f919611… → 298d713649c3…",
+      "nodes[Jaw].translation: [3.6228530406951904,9.795537948608398,-82.31343841552734] → [-0.0010136751117871025,19.444506306367572,1.9968276747141545]",
+      "nodes[Jaw].rotation: [0.11802421510219574,-0.017984632402658463,0.003054492175579071,0.9928431510925293] → [0.11795431010893886,-0.000004988118930259288,0.000001295106702296366,0.9930190233324666]"
+    ],
+    "unchanged": [
+      "bones",
+      "roots",
+      "skeleton",
+      "skinName",
+      "meshes",
+      "materials",
+      "textures",
+      "samplers",
+      "images",
+      "extensionsUsed",
+      "extensionsRequired",
+      "bindMatrices",
+      "clips (inventory + targets)"
+    ]
+  },
+  "hinge": {
+    "syntheticAxisVsWorldXBefore": 2.0899,
+    "syntheticAxisVsWorldXAfter": 0,
+    "worstClipAxisVsWorldXBefore": 2.0917,
+    "worstClipAxisVsWorldXAfter": 0.0078,
+    "maxOpenBefore": 179.106,
+    "maxOpenAfter": 179.106,
+    "unmeasuredClips": [
+      "speed",
+      "takeoff"
+    ],
+    "bindMapDrift": 0.0002953
+  },
+  "jawVerticesAt45Deg": {
+    "before": {
+      "vertices": 947,
+      "maxLateralDrift": 2.816158,
+      "maxDisplacement": 96.93
+    },
+    "after": {
+      "vertices": 947,
+      "maxLateralDrift": 0,
+      "maxDisplacement": 91.6
+    }
+  },
+  "selftest": {
+    "injectedDeg": 2.0899,
+    "openDeg": 5,
+    "measuredDeg": 2.0899000000000663,
+    "deformationDeg": 4.999999999999906
+  },
+  "idempotent": "re-running the tool on the shipped asset reproduces 04dbda5c… byte for byte"
+}

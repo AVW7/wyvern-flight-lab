@@ -3,14 +3,14 @@
   "asset": {
     "id": "wyvern-v2-flight-lab-runtime",
     "path": "public/models/wyvern-v2-rig.glb",
-    "sha256": "b5f1c1ef67ad9324212f8ab2075e707abd3ff02280ff77db47ffe96a96f3d08b",
-    "bytes": 6732156
+    "sha256": "f5d768a2946bb7e6e946e3acb927e9be9db9cfa7287c2d5c042940bcd636e11b",
+    "bytes": 6738692
   },
   "provenance": {
     "sourceAsset": "assets/blender/wyvern-gothic.glb",
     "sourceSha256": "f334e78569c701bbfefe43ef9816147e200c56bdcb3a8a58889a9f13c6d2956e",
-    "baseline": "2026-10-21: idle Neck1/Neck2/Head rotation channels re-spliced from a fresh models/source/wyvern-rig.blend export (tools/blender/splice_neck_head_channels.mjs); the retired idle-v2-fold-candidate.glb donor had baked a ~-65deg neck raise into ground-mode idle. walk/land/cruise and all non-neck idle channels untouched. 2026-10-14: 18-clip wing-panel coordination, ground/combat fold easing, and constant-track compaction",
-    "evidence": "docs/plans/flight-lab/14-v2-runtime-contract-cleanup.md; docs/flight-lab/evidence/2026-10-21-idle-before.png; docs/flight-lab/evidence/2026-10-21-idle-after.png",
+    "baseline": "2026-10-22: Jaw taken out of the D2/D3/D4 gain solve — the authored mouth restored in attack, attack2, death; where that broke a gate the non-jaw gain was re-solved (death gain 1.90x capped at 165deg from bind). tools/blender/restore_jaw_amplitude.mjs. 2026-10-22: Jaw hinge pivot moved from the 84.9-units-high stub to the mandible joint (tools/blender/recenter_v2_jaw_pivot.mjs; blend side is stage C6). Node rest TRS, the Jaw inverse bind matrix and all 18 clips' Jaw rotation/translation channels; no other field changed. Hinge axis 2.0899deg -> 0.0000deg off world X. 2026-10-22: Jaw taken out of the D2/D3/D4 gain solve — the authored mouth restored in attack, attack2, death; where that broke a gate the non-jaw gain was re-solved (death gain 1.90x capped at 165deg from bind). tools/blender/restore_jaw_amplitude.mjs. 2026-10-22: Jaw hinge pivot moved from the 84.9-units-high stub to the mandible joint (tools/blender/recenter_v2_jaw_pivot.mjs; blend side is stage C6). Node rest TRS, the Jaw inverse bind matrix and all 18 clips' Jaw rotation/translation channels; no other field changed. Hinge axis 2.0899deg -> 0.0000deg off world X. 2026-10-22: Jaw taken out of the D2/D3/D4 gain solve — the authored mouth restored in attack, attack2, death; where that broke a gate the non-jaw gain was re-solved (death gain 1.90x capped at 165deg from bind). tools/blender/restore_jaw_amplitude.mjs. 2026-10-22: Jaw hinge pivot moved from the 84.9-units-high stub to the mandible joint (tools/blender/recenter_v2_jaw_pivot.mjs; blend side is stage C6). Node rest TRS, the Jaw inverse bind matrix and all 18 clips' Jaw rotation/translation channels; no other field changed. Hinge axis 2.0899deg -> 0.0000deg off world X. 2026-10-21: idle Neck1/Neck2/Head rotation channels re-spliced from a fresh models/source/wyvern-rig.blend export (tools/blender/splice_neck_head_channels.mjs); the retired idle-v2-fold-candidate.glb donor had baked a ~-65deg neck raise into ground-mode idle. walk/land/cruise and all non-neck idle channels untouched. 2026-10-14: 18-clip wing-panel coordination, ground/combat fold easing, and constant-track compaction",
+    "evidence": "assets/rig-audits/2026-10-22-c6-jaw-pivot/jaw-restore.json; assets/rig-audits/2026-10-22-c6-jaw-pivot/runtime-jaw-pivot.json; assets/rig-audits/2026-10-22-c6-jaw-pivot/jaw-restore.json; assets/rig-audits/2026-10-22-c6-jaw-pivot/runtime-jaw-pivot.json; assets/rig-audits/2026-10-22-c6-jaw-pivot/jaw-restore.json; assets/rig-audits/2026-10-22-c6-jaw-pivot/runtime-jaw-pivot.json; docs/plans/flight-lab/14-v2-runtime-contract-cleanup.md; docs/flight-lab/evidence/2026-10-21-idle-before.png; docs/flight-lab/evidence/2026-10-21-idle-after.png",
     "qualification": "Structural baseline; visual idle, contact, Blender round-trip and gameplay approval remain separate"
   },
   "signature": {
@@ -19,15 +19,15 @@
         "name": "Jaw",
         "children": [],
         "translation": [
-          3.6228530406951904,
-          9.795537948608398,
-          -82.31343841552734
+          -0.0010136751117871025,
+          19.444506306367572,
+          1.9968276747141545
         ],
         "rotation": [
-          0.11802421510219574,
-          -0.017984632402658463,
-          0.003054492175579071,
-          0.9928431510925293
+          0.11795431010893886,
+          -0.000004988118930259288,
+          0.000001295106702296366,
+          0.9930190233324666
         ],
         "scale": [
           1,
@@ -2462,7 +2462,7 @@
       "componentType": 5126,
       "normalized": false,
       "count": 92,
-      "sha256": "b0d61f91961121516673755c70d3245cf159996365aaa1c86df6bdc807172a4f"
+      "sha256": "298d713649c321a5be40962bda87bfa6529aa5fac1e0b40e084aa8d7762f1389"
     },
     "meshes": [
       {

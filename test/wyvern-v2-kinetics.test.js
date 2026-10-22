@@ -6,6 +6,14 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
 import { createWyvernFlightRig } from "../src/flight-lab/rig/wyvernFlightRig.ts";
 
+// The Jaw node's rest translation in the Head's local space — the socket the jaw hinges
+// on. Task C6 moved the hinge from a stub 82.8 units above the mandible joint to the
+// joint itself (blend stage C6 + tools/blender/recenter_v2_jaw_pivot.mjs), which moved
+// this value 9.80 -> 19.44. The vendor asset sat at 351.38, i.e. the jaw was detached and
+// buried in the skull; that is the regression these assertions exist to catch, so the
+// number stays pinned rather than being compared against whatever the file happens to say.
+const JAW_REST_SOCKET_Y = 19.44;
+
 async function loadWyvernV2Scene() {
   const glbPath = process.env.WYVERN_V2_GLB_PATH || new URL("../public/models/wyvern-v2-rig.glb", import.meta.url);
   const bytes = readFileSync(glbPath);
@@ -490,8 +498,8 @@ test("wyvern v2 kinetics: jaw remains closed during cruise without 180-degree in
   assert.ok(maxJawAngle < 20.0, `Jaw must remain closed and avoid 180-deg flip; got ${maxJawAngle}°`);
   assert.ok(jawSeamDeg < 0.2, `Jaw loop seam snapped by ${jawSeamDeg}°`);
   assert.ok(
-    Math.abs(jaw.position.y - 9.80) < 0.2,
-    `Jaw socket must remain seated at rest socket (~9.80); got y=${jaw.position.y.toFixed(2)} (vendor was 351.38)`
+    Math.abs(jaw.position.y - JAW_REST_SOCKET_Y) < 0.2,
+    `Jaw socket must remain seated at rest socket (~${JAW_REST_SOCKET_Y}); got y=${jaw.position.y.toFixed(2)} (vendor was 351.38)`
   );
 });
 
@@ -644,8 +652,8 @@ test("wyvern v2 kinetics: jaw remains closed during bankLeft and bankRight witho
       `Jaw in ${clipName} loop seam snapped by ${jawSeamDeg.toFixed(4)}°`
     );
     assert.ok(
-      Math.abs(jaw.position.y - 9.80) < 0.2,
-      `Jaw socket in ${clipName} must remain seated at rest socket (~9.80); got y=${jaw.position.y.toFixed(2)} (vendor was 351.38)`
+      Math.abs(jaw.position.y - JAW_REST_SOCKET_Y) < 0.2,
+      `Jaw socket in ${clipName} must remain seated at rest socket (~${JAW_REST_SOCKET_Y}); got y=${jaw.position.y.toFixed(2)} (vendor was 351.38)`
     );
   }
 });
@@ -865,8 +873,8 @@ test("wyvern v2 kinetics: jaw remains closed during glide and dive without 180-d
       `Jaw in ${clipName} loop seam snapped by ${jawSeamDeg.toFixed(4)}°`
     );
     assert.ok(
-      Math.abs(jaw.position.y - 9.80) < 0.2,
-      `Jaw socket in ${clipName} must remain seated at rest socket (~9.80); got y=${jaw.position.y.toFixed(2)} (vendor was 351.38)`
+      Math.abs(jaw.position.y - JAW_REST_SOCKET_Y) < 0.2,
+      `Jaw socket in ${clipName} must remain seated at rest socket (~${JAW_REST_SOCKET_Y}); got y=${jaw.position.y.toFixed(2)} (vendor was 351.38)`
     );
   }
 });
@@ -1042,8 +1050,8 @@ test("wyvern v2 kinetics: jaw remains closed during takeoff and land without 180
       `Jaw in ${clipName} must remain closed and avoid 180-deg flip; got ${maxJawAngle.toFixed(2)}°`
     );
     assert.ok(
-      Math.abs(jaw.position.y - 9.80) < 0.2,
-      `Jaw socket in ${clipName} must remain seated at rest socket (~9.80); got y=${jaw.position.y.toFixed(2)} (vendor was 351.38)`
+      Math.abs(jaw.position.y - JAW_REST_SOCKET_Y) < 0.2,
+      `Jaw socket in ${clipName} must remain seated at rest socket (~${JAW_REST_SOCKET_Y}); got y=${jaw.position.y.toFixed(2)} (vendor was 351.38)`
     );
   }
 });
@@ -1224,10 +1232,10 @@ test("wyvern v2 kinetics: attack and attack2 execute ground melee jaw snap and c
       `${clipName} jaw must clamp shut at rest (~13.56°); got ${endJawPitch.toFixed(2)}°`
     );
 
-    // 3. Jaw socket remains seated at natural rest socket (y ~ 9.80, avoiding 351.38 penetration)
+    // 3. Jaw socket remains seated at the rest socket (avoiding the vendor 351.38 penetration)
     assert.ok(
-      Math.abs(jaw.position.y - 9.80) < 0.2,
-      `${clipName} jaw socket must remain seated at rest socket (~9.80); got y=${jaw.position.y.toFixed(2)}`
+      Math.abs(jaw.position.y - JAW_REST_SOCKET_Y) < 0.2,
+      `${clipName} jaw socket must remain seated at rest socket (~${JAW_REST_SOCKET_Y}); got y=${jaw.position.y.toFixed(2)}`
     );
 
     // 4. Dynamic skull counter-pitch recoil
@@ -1970,56 +1978,79 @@ test("wyvern v2 kinetics: wing membrane is properly skinned and spans to the win
   const action = mixer.clipAction(clip);
   action.play();
 
-  // Evaluate at mid-wingbeat t=1.0s
-  mixer.setTime(1.0);
-  scene.updateMatrixWorld(true);
-  membraneMesh.skeleton.update();
-
   const geom = membraneMesh.geometry;
   const pos = geom.attributes.position;
   const skinIndices = geom.attributes.skinIndex;
   const skinWeights = geom.attributes.skinWeight;
   const boneMatrices = membraneMesh.skeleton.boneMatrices;
 
-  let maxMembraneX = -Infinity;
   const v = new Vector3();
   const skinVertex = new Vector3();
   const temp = new Vector3();
   const bMat = new Matrix4();
-
-  for (let i = 0; i < pos.count; i++) {
-    v.fromBufferAttribute(pos, i);
-    skinVertex.set(0, 0, 0);
-
-    for (let k = 0; k < 4; k++) {
-      const weight = skinWeights.getComponent(i, k);
-      if (weight > 0) {
-        const boneIndex = skinIndices.getComponent(i, k);
-        bMat.fromArray(boneMatrices, boneIndex * 16);
-        temp.copy(v).applyMatrix4(bMat).multiplyScalar(weight);
-        skinVertex.add(temp);
-      }
-    }
-    skinVertex.applyMatrix4(membraneMesh.matrixWorld);
-    if (skinVertex.x > maxMembraneX) maxMembraneX = skinVertex.x;
-  }
-
   const wingTipPos = new Vector3();
-  lWingTip.getWorldPosition(wingTipPos);
+
+  // Sweep the whole wingbeat, not one hand-picked frame. The old probe read a
+  // single instant (t=1.0s), so a membrane that only tears loose from the digit
+  // bones mid-stroke — or a wingtip that outruns its membrane on the upstroke —
+  // read as a pass. Both assertions below are now extrema over every frame, and
+  // each carries the time it was found at so a failure names the pose.
+  const samples = 48;
+  let maxMembraneX = -Infinity;
+  let maxMembraneXAt = 0;
+  let minAttachment = Infinity;
+  let minAttachmentAt = 0;
+
+  for (let frame = 0; frame <= samples; frame++) {
+    mixer.setTime((clip.duration * frame) / samples);
+    scene.updateMatrixWorld(true);
+    membraneMesh.skeleton.update();
+
+    let frameMaxX = -Infinity;
+    for (let i = 0; i < pos.count; i++) {
+      v.fromBufferAttribute(pos, i);
+      skinVertex.set(0, 0, 0);
+
+      for (let k = 0; k < 4; k++) {
+        const weight = skinWeights.getComponent(i, k);
+        if (weight > 0) {
+          const boneIndex = skinIndices.getComponent(i, k);
+          bMat.fromArray(boneMatrices, boneIndex * 16);
+          temp.copy(v).applyMatrix4(bMat).multiplyScalar(weight);
+          skinVertex.add(temp);
+        }
+      }
+      skinVertex.applyMatrix4(membraneMesh.matrixWorld);
+      if (skinVertex.x > frameMaxX) frameMaxX = skinVertex.x;
+    }
+
+    lWingTip.getWorldPosition(wingTipPos);
+    const attachment = frameMaxX - wingTipPos.x;
+
+    if (frameMaxX > maxMembraneX) {
+      maxMembraneX = frameMaxX;
+      maxMembraneXAt = (clip.duration * frame) / samples;
+    }
+    if (attachment < minAttachment) {
+      minAttachment = attachment;
+      minAttachmentAt = (clip.duration * frame) / samples;
+    }
+  }
 
   mixer.stopAllAction();
   mixer.uncacheRoot(scene);
 
   // In the broken model, maxMembraneX was only 1453 units while wingtip was at 2380 units.
-  // In the correctly skinned model, maxMembraneX reaches > 2700 units (measured 2780.9 units),
-  // properly enclosing and extending to the wing digit tips.
+  // In the correctly skinned model the sweep peaks at 3015.9 units (t=0.875s) and stays
+  // 286.4 units clear of the wingtip bone at the tightest frame (t=0.188s) — the old
+  // single-frame probe read t=1.0s, where the clearance happens to be a looser 372.3.
   assert.ok(
     maxMembraneX > 2500.0,
-    `Wing membrane must span out with the wing digit bones (> 2500 units); got ${maxMembraneX.toFixed(1)} units (broken was 1453 units)`
+    `Wing membrane must span out with the wing digit bones (> 2500 units); got ${maxMembraneX.toFixed(1)} units at t=${maxMembraneXAt.toFixed(3)}s (broken was 1453 units)`
   );
   assert.ok(
-    maxMembraneX >= wingTipPos.x,
-    `Wing membrane extent (${maxMembraneX.toFixed(1)}) must reach or exceed wingtip bone position (${wingTipPos.x.toFixed(1)})`
+    minAttachment >= 0,
+    `Wing membrane must reach or exceed the wingtip bone position on every frame of the wingbeat; worst was ${minAttachment.toFixed(1)} units short at t=${minAttachmentAt.toFixed(3)}s (peak span ${maxMembraneX.toFixed(1)} at t=${maxMembraneXAt.toFixed(3)}s)`
   );
 });
 

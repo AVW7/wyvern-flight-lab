@@ -23,7 +23,7 @@ Start here for all current V2 wyvern model, Blender pipeline, and Flight Lab wor
 
 Focused rebuild plan: [10 V2 body motion and vertical camera follow](10-v2-body-motion-and-camera-plan.md), 13 September 2026. Plan [09 Flight Lab improvement plan](09-flight-lab-improvement-plan.md) (13 September 2026) and [08 Animation and Flight Lab delivery plan](08-animation-and-flight-lab-delivery-plan.md) retain earlier V2 lab and animation qualification history; studies `18` through `34` cover V1-to-V2 wing harvesting, membrane crease studies, and corrective morph bakes.
 
-The initial 5-stage roadmap (`01`–`05`) below is historical context from 5 September 2026 (the current catalogue in `src/flight-lab/catalog.ts` holds 4 wyvern specimens: `wyvern-v2-rig`, `wyvern-v2-locomotion-candidate`, `wyvern-v2-membrane-candidate`, and `wyvern-v1-rig`).
+The initial 5-stage roadmap (`01`–`05`) below is historical context from 5 September 2026. The catalogue in `src/flight-lab/catalog.ts` now holds **two** wyvern specimens — `wyvern-v2-rig` (the runtime rig) and `wyvern-v1-rig` (its comparison reference). The two V2 *candidates* were byte-identical promoted aliases and were retired from the picker on 2026-10-22 so the lab only offers the assets under active work; their GLBs remain on disk for the provenance gate.
 
 | Plan | Priority | Depends on | Deliverable |
 | --- | --- | --- | --- |

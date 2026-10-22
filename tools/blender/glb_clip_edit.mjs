@@ -24,10 +24,42 @@ export function decodeFloats(gltf, binary, index) {
     data = d; offset = a.byteOffset ?? 0;
   }
   assert.equal(a.componentType, 5126);
-  const comps = { SCALAR: 1, VEC3: 3, VEC4: 4 }[a.type];
+  const comps = { SCALAR: 1, VEC3: 3, VEC4: 4, MAT4: 16 }[a.type];
   const stride = v.byteStride ?? ext?.byteStride ?? comps * 4;
   return Array.from({ length: a.count * comps },
     (_, i) => data.readFloatLE(offset + Math.floor(i / comps) * stride + (i % comps) * 4));
+}
+
+/**
+ * Overwrite a float accessor's data in place, when the accessor is a plain tight array.
+ *
+ * The alternative — `makeAppendor` — leaves the old bufferView behind, unreferenced but
+ * still in the BIN chunk. On the C6 jaw pivot that was 37 orphaned accessors and 69 kB
+ * of dead weight in a shipped asset. Most animation accessors in this rig are already
+ * uncompressed with their own bufferView, so they can simply be rewritten; the append
+ * path stays for compressed ones (the inverse bind matrices are meshopt).
+ *
+ * `binary` is a view onto the caller's file bytes, so this mutates them. Returns false
+ * when the accessor cannot be written in place and the caller must append instead.
+ */
+export function writeFloatsInPlace(gltf, binary, index, values) {
+  const a = gltf.accessors[index];
+  const v = gltf.bufferViews[a.bufferView];
+  if (a.componentType !== 5126) return false;
+  if (v.extensions?.EXT_meshopt_compression) return false;
+  if ((a.byteOffset ?? 0) !== 0) return false;
+  const comps = { SCALAR: 1, VEC3: 3, VEC4: 4, MAT4: 16 }[a.type];
+  if (!comps || values.length !== a.count * comps) return false;
+  if ((v.byteStride ?? comps * 4) !== comps * 4) return false;
+  const start = v.byteOffset ?? 0;
+  if (start + values.length * 4 > binary.length) return false;
+  for (let i = 0; i < values.length; i++) binary.writeFloatLE(values[i], start + i * 4);
+  // min/max are optional on animation accessors, but a stale pair is a validation error.
+  if (a.min || a.max) {
+    a.min = Array.from({ length: comps }, (_, c) => Math.min(...values.filter((_, i) => i % comps === c)));
+    a.max = Array.from({ length: comps }, (_, c) => Math.max(...values.filter((_, i) => i % comps === c)));
+  }
+  return true;
 }
 
 /** Appends new float accessors/bufferViews and returns a finished BIN chunk. */
@@ -36,7 +68,7 @@ export function makeAppendor(gltf, binary) {
   let binLength = binary.length;
   return {
     appendFloats(values, type) {
-      const comps = { SCALAR: 1, VEC3: 3, VEC4: 4 }[type];
+      const comps = { SCALAR: 1, VEC3: 3, VEC4: 4, MAT4: 16 }[type];
       const count = values.length / comps;
       const buf = Buffer.alloc(values.length * 4);
       const mins = Array(comps).fill(Infinity), maxs = Array(comps).fill(-Infinity);

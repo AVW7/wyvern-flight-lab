@@ -1,0 +1,192 @@
+{
+  "action": null,
+  "blend": "/Users/ajadvanwyk/wyvern-flight-lab/models/source/wyvern-v2-master.blend",
+  "bones": {
+    "Jaw": {
+      "delta_axis_local": [
+        1.0,
+        -0.0,
+        0.0
+      ],
+      "delta_vs_bind_deg": 45.0,
+      "head_world": [
+        3.623,
+        -583.7261,
+        867.7683
+      ],
+      "pose_quat": [
+        0.92388,
+        0.382683,
+        0.0,
+        0.0
+      ],
+      "tail_world": [
+        0.9659,
+        -601.223,
+        786.7043
+      ]
+    }
+  },
+  "clip": "isolated jaw 45deg about local X",
+  "frame": 0,
+  "jaw_open_deg": 45.0,
+  "meshes": {
+    "WyvernBody_Rebuild": {
+      "all_max_displacement": 112.7586,
+      "hinge": {
+        "angle_deg": 45.0,
+        "axis_vs_world_x_deg": 2.09,
+        "axis_world": [
+          0.99933,
+          0.01031,
+          -0.03498
+        ],
+        "pivot_world": [
+          3.623,
+          -583.726,
+          867.768
+        ]
+      },
+      "jaw": {
+        "dx_range": [
+          -3.2591,
+          1.982
+        ],
+        "dy_range": [
+          -27.6417,
+          91.2672
+        ],
+        "dz_range": [
+          -66.2828,
+          48.476
+        ],
+        "max_abs_dx": 3.2591,
+        "max_abs_dy": 91.2672,
+        "max_abs_dz": 66.2828,
+        "max_displacement": 112.7586,
+        "mean_displacement": 29.6449,
+        "vertices": 1287
+      },
+      "vertices": 24528
+    },
+    "WyvernMembrane_ExportSafe": {
+      "all_max_displacement": 0.0005,
+      "hinge": {
+        "angle_deg": 45.0,
+        "axis_vs_world_x_deg": 2.09,
+        "axis_world": [
+          0.99933,
+          0.01031,
+          -0.03498
+        ],
+        "pivot_world": [
+          3.623,
+          -583.726,
+          867.768
+        ]
+      },
+      "jaw": {
+        "vertices": 0
+      },
+      "vertices": 8249
+    }
+  },
+  "mode": "isolate",
+  "rest_axes": {
+    "Body": {
+      "x_axis": [
+        1.0,
+        -0.0,
+        -3e-05
+      ],
+      "x_axis_vs_world_x_deg": 0.0,
+      "y_axis": [
+        0.0,
+        -0.99709,
+        0.07624
+      ],
+      "y_axis_vs_world_x_deg": 89.9999,
+      "z_axis": [
+        -3e-05,
+        -0.07624,
+        -0.99709
+      ]
+    },
+    "Head": {
+      "x_axis": [
+        1.0,
+        -0.0,
+        1e-05
+      ],
+      "x_axis_vs_world_x_deg": 0.0,
+      "y_axis": [
+        0.0,
+        -0.94393,
+        -0.33015
+      ],
+      "y_axis_vs_world_x_deg": 89.9999,
+      "z_axis": [
+        1e-05,
+        0.33015,
+        -0.94393
+      ]
+    },
+    "Jaw": {
+      "x_axis": [
+        0.99933,
+        0.01031,
+        -0.03498
+      ],
+      "x_axis_vs_world_x_deg": 2.0899,
+      "y_axis": [
+        -0.01031,
+        -0.84028,
+        -0.54206
+      ],
+      "y_axis_vs_world_x_deg": 89.4094,
+      "z_axis": [
+        -0.03498,
+        0.54206,
+        -0.83961
+      ]
+    },
+    "RootMotion": {
+      "x_axis": [
+        1.0,
+        0.0,
+        -0.0
+      ],
+      "x_axis_vs_world_x_deg": 0.0,
+      "y_axis": [
+        0.0,
+        0.14142,
+        0.98995
+      ],
+      "y_axis_vs_world_x_deg": 90.0,
+      "z_axis": [
+        0.0,
+        -0.98995,
+        0.14142
+      ]
+    },
+    "Spine1": {
+      "x_axis": [
+        1.0,
+        -0.0,
+        -1e-05
+      ],
+      "x_axis_vs_world_x_deg": 0.0,
+      "y_axis": [
+        0.0,
+        -0.98733,
+        0.15869
+      ],
+      "y_axis_vs_world_x_deg": 90.0,
+      "z_axis": [
+        -1e-05,
+        -0.15869,
+        -0.98733
+      ]
+    }
+  }
+}

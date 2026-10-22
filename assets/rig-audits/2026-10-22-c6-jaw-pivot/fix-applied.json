@@ -1,0 +1,248 @@
+{
+  "actions_compensated": 18,
+  "blend": "/tmp/pristine-v2-master.blend",
+  "body": {
+    "length_after": 164.0669,
+    "length_before": 0.0505,
+    "tail_after": [
+      0.0002,
+      268.5276,
+      724.1505
+    ]
+  },
+  "compensated_bones": [
+    "Jaw",
+    "Body"
+  ],
+  "jaw": {
+    "head_after": [
+      0.0,
+      -565.0,
+      785.0
+    ],
+    "head_before": [
+      3.623,
+      -583.7261,
+      867.7684
+    ],
+    "length": 82.9733,
+    "tail_after": [
+      0.0,
+      -634.7244,
+      740.0213
+    ],
+    "x_axis_after": [
+      1.0,
+      -0.0,
+      0.0
+    ],
+    "x_axis_before": [
+      0.999335,
+      0.010308,
+      -0.034981
+    ],
+    "x_axis_vs_world_x_deg_after": 0.0,
+    "x_axis_vs_world_x_deg_before": 2.0896
+  },
+  "per_action": {
+    "attack": {
+      "Body": {
+        "location_keys": 37,
+        "rotation_keys": 37
+      },
+      "Jaw": {
+        "location_keys": 37,
+        "rotation_keys": 37
+      }
+    },
+    "attack2": {
+      "Body": {
+        "location_keys": 2,
+        "rotation_keys": 81
+      },
+      "Jaw": {
+        "location_keys": 81,
+        "rotation_keys": 81
+      }
+    },
+    "attackAir2": {
+      "Body": {
+        "location_keys": 81,
+        "rotation_keys": 81
+      },
+      "Jaw": {
+        "location_keys": 81,
+        "rotation_keys": 81
+      }
+    },
+    "bankLeft": {
+      "Body": {
+        "location_keys": 2,
+        "rotation_keys": 2
+      },
+      "Jaw": {
+        "location_keys": 145,
+        "rotation_keys": 145
+      }
+    },
+    "bankRight": {
+      "Body": {
+        "location_keys": 2,
+        "rotation_keys": 2
+      },
+      "Jaw": {
+        "location_keys": 145,
+        "rotation_keys": 145
+      }
+    },
+    "breath": {
+      "Body": {
+        "location_keys": 2,
+        "rotation_keys": 49
+      },
+      "Jaw": {
+        "location_keys": 49,
+        "rotation_keys": 49
+      }
+    },
+    "cruise": {
+      "Body": {
+        "location_keys": 2,
+        "rotation_keys": 2
+      },
+      "Jaw": {
+        "location_keys": 145,
+        "rotation_keys": 145
+      }
+    },
+    "death": {
+      "Body": {
+        "location_keys": 97,
+        "rotation_keys": 97
+      },
+      "Jaw": {
+        "location_keys": 97,
+        "rotation_keys": 97
+      }
+    },
+    "dive": {
+      "Body": {
+        "location_keys": 145,
+        "rotation_keys": 145
+      },
+      "Jaw": {
+        "location_keys": 145,
+        "rotation_keys": 145
+      }
+    },
+    "glide": {
+      "Body": {
+        "location_keys": 145,
+        "rotation_keys": 145
+      },
+      "Jaw": {
+        "location_keys": 145,
+        "rotation_keys": 145
+      }
+    },
+    "hover": {
+      "Body": {
+        "location_keys": 145,
+        "rotation_keys": 145
+      },
+      "Jaw": {
+        "location_keys": 145,
+        "rotation_keys": 145
+      }
+    },
+    "idle": {
+      "Body": {
+        "location_keys": 2,
+        "rotation_keys": 2
+      },
+      "Jaw": {
+        "location_keys": 145,
+        "rotation_keys": 145
+      }
+    },
+    "land": {
+      "Body": {
+        "location_keys": 73,
+        "rotation_keys": 73
+      },
+      "Jaw": {
+        "location_keys": 73,
+        "rotation_keys": 73
+      }
+    },
+    "rest": {
+      "Body": {
+        "location_keys": 2,
+        "rotation_keys": 145
+      },
+      "Jaw": {
+        "location_keys": 145,
+        "rotation_keys": 145
+      }
+    },
+    "scout": {
+      "Body": {
+        "location_keys": 2,
+        "rotation_keys": 145
+      },
+      "Jaw": {
+        "location_keys": 145,
+        "rotation_keys": 145
+      }
+    },
+    "speed": {
+      "Body": {
+        "location_keys": 121,
+        "rotation_keys": 121
+      },
+      "Jaw": {
+        "location_keys": 121,
+        "rotation_keys": 2
+      }
+    },
+    "takeoff": {
+      "Body": {
+        "location_keys": 73,
+        "rotation_keys": 73
+      },
+      "Jaw": {
+        "location_keys": 73,
+        "rotation_keys": 2
+      }
+    },
+    "walk": {
+      "Body": {
+        "location_keys": 60,
+        "rotation_keys": 60
+      },
+      "Jaw": {
+        "location_keys": 60,
+        "rotation_keys": 60
+      }
+    }
+  },
+  "rest_orientation_drift_deg": {
+    "Body": 0.002174,
+    "Jaw": 2.089987,
+    "RootMotion": 0.0
+  },
+  "rootmotion": {
+    "tail_after": [
+      0.0,
+      117.7425,
+      824.1986
+    ],
+    "tail_before": [
+      0.0,
+      117.7425,
+      824.1986
+    ]
+  },
+  "rootmotion_flat": false,
+  "written": false
+}

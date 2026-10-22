@@ -1,0 +1,59 @@
+{
+  "checks": [
+    {
+      "detail": "Jaw.head.x = 3.622993",
+      "name": "jaw head sits on the midline",
+      "passed": false
+    },
+    {
+      "detail": "local X is 2.0899deg off world X",
+      "name": "jaw hinge axis is lateral",
+      "passed": false
+    },
+    {
+      "detail": "Body.length = 0.0505 (limit > 150.0)",
+      "name": "body bone has a usable length",
+      "passed": false
+    },
+    {
+      "detail": "|Body.tail - Spine1.head| = 164.016382",
+      "name": "body tail reaches Spine1.head",
+      "passed": false
+    },
+    {
+      "detail": "RootMotion.tail = [0.0, 117.7425, 824.1986]",
+      "name": "rootmotion lies flat on the floor",
+      "passed": false
+    },
+    {
+      "detail": "max |delta_x| = 3.259102 at 45deg open (limit 0.01)",
+      "name": "isolated jaw pitch has no lateral drift",
+      "passed": false
+    },
+    {
+      "detail": "worst deviation 0.000000 (limit 0.001)",
+      "name": "Body world pose is unchanged in every clip",
+      "passed": true
+    },
+    {
+      "detail": "worst deviation 0.000000 (limit 0.001)",
+      "name": "RootMotion world pose is unchanged in every clip",
+      "passed": true
+    },
+    {
+      "detail": "worst deviation 0.000000deg (limit 0.001)",
+      "name": "Jaw world rotation is unchanged in every clip",
+      "passed": true
+    }
+  ],
+  "lateral_drift": {
+    "max_abs_dx": 3.259102,
+    "per_mesh": {
+      "WyvernBody_Rebuild": {
+        "max_abs_dx": 3.259102,
+        "vertices": 1287
+      }
+    }
+  },
+  "passed": false
+}

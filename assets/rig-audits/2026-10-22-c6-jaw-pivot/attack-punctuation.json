@@ -1,0 +1,77 @@
+{
+  "generatedBy": "tools/blender/probe_attack_punctuation.mjs",
+  "asset": { "sha256": "f5d768a2946bb7e6e946e3acb927e9be9db9cfa7287c2d5c042940bcd636e11b", "bytes": 6738692 },
+  "clip": "attack",
+  "reference": "AttackBite",
+  "verdict": "NOT SHIPPABLE — needs authored motion in the blend",
+  "before": { "peak": 4930.9, "p95": 4390.9, "mean": 1664.3, "accelMax": 144869.1, "sustained": true },
+  "referenceMetrics": { "peak": 5471.4, "p95": 4749.7, "mean": 1194.8, "accelMax": 296705.4 },
+  "gate": { "peakFloor": 3830.0, "p95Floor": 3799.8, "meanBand": [836.4, 1672.7], "accelCeiling": 370881.8 },
+  "cause": {
+    "summary": "shape, not scale — peak/mean is 2.96 against V1's 4.58",
+    "meanBudget": {
+      "Head": { "framesHoldingMax": 39, "sum": 76503, "shareOfMean": 0.511 },
+      "Jaw": { "framesHoldingMax": 19, "sum": 39054, "shareOfMean": 0.261 },
+      "L_WingPanel3_1": { "framesHoldingMax": 5, "sum": 10185, "shareOfMean": 0.068 },
+      "R_WingPanel3_1": { "framesHoldingMax": 3, "sum": 5967, "shareOfMean": 0.040 },
+      "R_WingPanel0_0": { "framesHoldingMax": 3, "sum": 5303, "shareOfMean": 0.035 },
+      "L_WingPanel0_1": { "framesHoldingMax": 2, "sum": 5040, "shareOfMean": 0.034 },
+      "Tail10": { "framesHoldingMax": 13, "sum": 3247, "shareOfMean": 0.022 },
+      "L_WingD4P0": { "framesHoldingMax": 2, "sum": 3133, "shareOfMean": 0.021 },
+      "Tail7": { "framesHoldingMax": 4, "sum": 1357, "shareOfMean": 0.009 }
+    },
+    "jawIsHeadInherited": "Jaw is parented to Head and holds a constant local rotation outside t=0.10..0.40, so its world rate equals the head's; Head therefore carries ~77% of the mean.",
+    "clipStructure": "windup t=0.017-0.183 (Head 296->1715), wing flourish t=0.183-0.400 (1715->2133), strike t=0.400-0.600 (peak 4931 at t=0.567), recoil t=0.600-0.883 (p95 4391 at t=0.733), second jaw/head cycle t=0.883-1.183, tail settle t=1.183-1.500"
+  },
+  "approachesMeasured": [
+    {
+      "approach": "uniform gain on every non-jaw, non-protected channel",
+      "sweep": [
+        { "gain": 1.0, "peak": 4931, "p95": 4391, "mean": 1664 },
+        { "gain": 0.95, "peak": 4684, "p95": 4171, "mean": 1581 },
+        { "gain": 0.9, "peak": 4438, "p95": 3952, "mean": 1498 },
+        { "gain": 0.85, "peak": 4191, "p95": 3732, "mean": 1414 }
+      ],
+      "verdict": "rejected — 0.85x FAILS the p95 floor (3732 < 3799.8); best achievable worst-margin ~5.5%, and it only moves the thin margin from the mean channel to the p95 channel"
+    },
+    {
+      "approach": "uniform gain on the PANEL_COUPLED set alone",
+      "sweep": [
+        { "gain": 1.0, "mean": 1664 },
+        { "gain": 0.5, "mean": 1650 },
+        { "gain": 0.0, "mean": 1637 }
+      ],
+      "verdict": "rejected — a near no-op. The panels that hold the frame max are static AT BIND (excursion 0.0), so a gain about bind does nothing to them; their world motion is inherited from ancestors further up the chain."
+    },
+    {
+      "approach": "uniform gain on the head/neck chain (Neck1, Neck2, Head)",
+      "sweep": [
+        { "gain": 0.7, "peak": 3471, "p95": 3087, "mean": 1291 },
+        { "gain": 0.5, "peak": 2498, "p95": 2272, "mean": 1056 }
+      ],
+      "verdict": "rejected — kills the peak. 3471 is below the 3830 floor because the peak IS the head."
+    },
+    {
+      "approach": "time-varying gain: 1.0 inside a window on the peak frame, bg outside, raised-cosine blend",
+      "windowCentre": 0.567,
+      "windowHalf": 0.2,
+      "blend": 0.08,
+      "solved": { "bg": 0.324, "peak": 4931, "p95": 4483, "mean": 1422, "accelMax": 158338, "sustained": true, "worstMargin": 0.15, "channelsRewritten": 41, "channelsSkippedCollapsedStatic": 36, "excursionsGrew": 0 },
+      "variantQuietEdges": { "windowCentre": 0.465, "windowHalf": 0.365, "solved": { "bg": 0.617, "peak": 4931, "p95": 4379, "mean": 1422, "accelMax": 144839 } },
+      "verdict": "REACHES THE TARGET AND IS STILL REJECTED — it injects angular velocity into the wing chain at every window edge, and the gate cannot see it."
+    }
+  ],
+  "whyRejected": {
+    "mechanism": "The wing is a 6-deep chain (Shoulder > Elbow > Wrist > Hand > Digit > Panel). A chain's composed angular velocity picks up a term proportional to the sum of the per-bone gain derivatives, so a gain that varies in time injects a jerk wherever it changes.",
+    "measuredArtifactPeakWindow": { "frame": 0.317, "before": 2023, "after": 4670, "joint": "L_WingPanel3_1", "ratio": 2.31 },
+    "measuredArtifactQuietEdges": { "framesRose": 11, "largestRise": { "frame": 0.25, "before": 2031, "after": 2892, "joint": "L_WingPanel0_0", "delta": 861 } },
+    "gateBlindness": "measureClipDynamics takes the per-frame MAXIMUM rate across bones, so a rate rise reads as MORE energy and only improves the gate numbers. An instrument that rewards the artifact is the failure mode this project keeps measuring for."
+  },
+  "safetyChecksThatDidPass": [
+    "peak and p95 held exactly (4931 / 4391) at the peak-window variant",
+    "accelMax unchanged at the quiet-edges variant (144839)",
+    "zero channels ended further from bind than they started (all gains <= 1)",
+    "Jaw excluded outright, so the authored 32.0deg mouth is untouched and restore_jaw_amplitude.mjs still reads attack as a control clip"
+  ],
+  "conclusion": "attack needs authored motion in the blend — a sharper, more punctuated bite with a quieter anticipation and recovery. The 0.5% margin is a pass and is recorded as an open item rather than traded for a membrane jerk."
+}

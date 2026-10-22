@@ -59,7 +59,7 @@ test("the blend provenance gate passes on the current tree and refuses a stale s
   });
   assert.equal(clean.error, undefined, `could not run the gate: ${clean.error?.message}`);
   assert.equal(clean.status, 0, `provenance gate failed on a clean tree:\n${clean.stdout}${clean.stderr}`);
-  assert.match(clean.stdout, /wyvern-v2-master\.blend\s+stage C1\s+NOT export-safe/);
+  assert.match(clean.stdout, /wyvern-v2-master\.blend\s+stage C6\s+NOT export-safe/);
 
   // Prove the gate can fail: a stamp that no longer matches its file must be an
   // error, not a warning. Without this the check is decoration.

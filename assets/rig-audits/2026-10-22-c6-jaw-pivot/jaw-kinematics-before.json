@@ -1,0 +1,93 @@
+{
+  "action": "breath",
+  "blend": "/Users/ajadvanwyk/wyvern-flight-lab/models/source/wyvern-v2-master.blend",
+  "bones": {
+    "Jaw": {
+      "delta_axis_local": [
+        0.98932,
+        -0.14427,
+        -0.02089
+      ],
+      "delta_vs_bind_deg": 304.0184,
+      "head_world": [
+        -3.5141,
+        -591.0796,
+        838.797
+      ],
+      "pose_quat": [
+        0.831516,
+        -0.555501,
+        0.0,
+        0.0
+      ],
+      "tail_world": [
+        -8.2734,
+        -667.6144,
+        870.4884
+      ]
+    }
+  },
+  "frame": 22,
+  "jaw_open_deg": 67.4904,
+  "meshes": {
+    "WyvernBody_Rebuild": {
+      "all_max_displacement": 1108.7644,
+      "hinge": {
+        "angle_deg": 304.0184,
+        "axis_vs_world_x_deg": 7.7449,
+        "axis_world": [
+          0.99088,
+          0.1201,
+          0.06113
+        ],
+        "pivot_world": [
+          -3.514,
+          -591.08,
+          838.797
+        ]
+      },
+      "jaw": {
+        "dx_range": [
+          -12.713,
+          34.3024
+        ],
+        "dy_range": [
+          -32.7101,
+          75.7073
+        ],
+        "dz_range": [
+          -130.4066,
+          94.7557
+        ],
+        "max_abs_dx": 34.3024,
+        "max_abs_dy": 75.7073,
+        "max_abs_dz": 130.4066,
+        "max_displacement": 150.2278,
+        "mean_displacement": 49.5006,
+        "vertices": 1287
+      },
+      "vertices": 24528
+    },
+    "WyvernMembrane_ExportSafe": {
+      "all_max_displacement": 4179.6246,
+      "hinge": {
+        "angle_deg": 304.0184,
+        "axis_vs_world_x_deg": 7.7449,
+        "axis_world": [
+          0.99088,
+          0.1201,
+          0.06113
+        ],
+        "pivot_world": [
+          -3.514,
+          -591.08,
+          838.797
+        ]
+      },
+      "jaw": {
+        "vertices": 0
+      },
+      "vertices": 8249
+    }
+  }
+}
